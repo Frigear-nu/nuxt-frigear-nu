@@ -2,6 +2,7 @@
 title: Frigear
 seo:
   title: frigear.nu
+  description: ""
 ---
 
 ::u-page-hero
@@ -15,7 +16,7 @@ orientation: horizontal
 Bliv frivillig!
 
 #links
-  :::u-button{:to='null' color="primary" size="xl" variant="subtle"}
+  :::u-button{color="primary" size="xl" to="/#contact" variant="subtle"}
   Kontakt os
   :::
 
@@ -24,7 +25,7 @@ Bliv frivillig!
   :::
 ::
 
-::u-container{.mb-4.flex.flex-col.md:flex-row.md:justify-between.gap-4}
+::u-container{#contact .mb-4.flex.flex-col.lg:flex-row.md:justify-between.gap-4}
   :::u-page-feature
   #title
   Kontakt os
@@ -69,7 +70,7 @@ Bliv frivillig!
     ::::
   :::
 
-  :::u-card{.w-full.md:w-lg variant="subtle"}
+  :::u-card{.w-full.lg:w-lg variant="subtle"}
     ::::site-contact-form
     ::::
   :::
