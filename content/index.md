@@ -9,7 +9,12 @@ seo:
 ---
 orientation: horizontal
 ---
-![Fgr](https://frigear.nu/_next/image?url=%2Flogo_with_rf_bgr.jpg\&w=384\&q=75\&dpl=dpl_4pDmg1nXvax7mLXtC2uekcFmQCT9){.rounded-full.p-8.bg-secondary}
+:::nuxt-img
+---
+class: "rounded-full p-4 bg-neutral-800 max-w-sm md:max-w-full"
+src: https://frigear.nu/_next/image?url=%2Flogo_with_rf_bgr.jpg&w=384&q=75&dpl=dpl_4pDmg1nXvax7mLXtC2uekcFmQCT9
+---
+:::
 
 #title
 [{{ $doc.title }}]{.text-primary} :br
@@ -63,7 +68,7 @@ Bliv frivillig!
       icon: i-simple-icons-linkedin
       size: xl
       target: _blank
-      to: /
+      to: "https://www.linkedin.com/company/frigear/"
       variant: subtle
       ---
       :::::
