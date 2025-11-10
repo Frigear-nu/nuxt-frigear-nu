@@ -12,8 +12,8 @@ export default defineNuxtConfig({
     studio: {
         repository: {
             provider: 'github',
-            owner: 'hareland',
-            repo: 'hareland-eu',
+            owner: 'Frigear-nu',
+            repo: 'nuxt-frigear-nu',
             branch: process.env.STUDIO_GITHUB_BRANCH_NAME || 'main',
         },
     },
