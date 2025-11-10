@@ -1,0 +1,54 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+#      - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+#    defaults:
+#      run:
+#        working-directory: /apps/web
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.19.0
+
+      - name: Use Node.js 24.6
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.6
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        env:
+          STUDIO_GITHUB_CLIENT_SECRET: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
+          STUDIO_GITHUB_CLIENT_ID: ${{ vars.STUDIO_GITHUB_CLIENT_ID }}
+          NITRO_PRESET: ${{ vars.NITRO_PRESET }}
+        run: NODE_OPTIONS="--max-old-space-size=8192" pnpm build
+
+      #      - name: Deploy to ${{github.ref_name}}
+      #        if: github.ref_name != 'main'
+      #        run: CLOUDFLARE_ENV=${{github.ref_name}} CLOUDFLARE_API_TOKEN=${{ secrets.CLOUDFLARE_API_TOKEN }} pnpm cf:deploy
+
+      - name: Deploy to production
+        if: github.ref_name == 'main'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          STUDIO_GITHUB_CLIENT_SECRET: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
+          STUDIO_GITHUB_CLIENT_ID: ${{ vars.STUDIO_GITHUB_CLIENT_ID }}
+        run: pnpm cf:deploy
+
+#      - name: Apply DB migrations
+#        if: success() && (github.ref_name == 'staging' || github.ref_name == 'main')
+#        run: pnpm db:migrate

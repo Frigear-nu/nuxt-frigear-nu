@@ -1,0 +1,8 @@
+socials:
+  - label: INFO
+    to: /info
+  - label: SUPPORT
+    to: /#contact
+  - label: GDPR
+    to: /gdpr
+  - label: SIKKERHED

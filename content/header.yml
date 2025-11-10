@@ -1,0 +1,22 @@
+title: Frigear
+logo:
+  light: https://frigear.nu/_next/image?url=%2FFGR_logo_white.png&w=64&q=75&dpl=dpl_4pDmg1nXvax7mLXtC2uekcFmQCT9
+  dark: https://frigear.nu/_next/image?url=%2FFGR_logo_white.png&w=64&q=75&dpl=dpl_4pDmg1nXvax7mLXtC2uekcFmQCT9
+  class: h-16 p-1
+navigation:
+  - label: Hjem
+    to: /
+  - label: Priser
+    to: /pricing
+path: /
+body:
+  title: Frigear
+  logo:
+    light: https://frigear.nu/_next/image?url=%2FFGR_logo_white.png&w=64&q=75&dpl=dpl_4pDmg1nXvax7mLXtC2uekcFmQCT9
+    dark: https://frigear.nu/_next/image?url=%2FFGR_logo_white.png&w=64&q=75&dpl=dpl_4pDmg1nXvax7mLXtC2uekcFmQCT9
+    class: h-16 p-1
+  navigation:
+    - label: Hjem
+      to: /
+    - label: Priser
+      to: /pricing

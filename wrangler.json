@@ -1,0 +1,31 @@
+{
+  "name": "hareland-eu",
+  "compatibility_date": "2025-10-16",
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true
+    }
+  },
+  "preview_urls": false,
+  "routes": [
+    {
+      "custom_domain": true,
+      "pattern": "nuxt-test.frigear.nu"
+    }
+  ],
+  "assets": {
+    "directory": ".output/public"
+  },
+  "keep_vars": true,
+  "compatibility_flags": [
+    "nodejs_als",
+    "nodejs_compat",
+    "no_nodejs_compat_v2"
+  ],
+  "d1_databases": [{
+    "database_id": "03188510-ac62-4ffb-80dd-0d9912aa3d55",
+    "binding": "DB"
+  }]
+}

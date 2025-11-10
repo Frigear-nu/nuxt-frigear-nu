@@ -1,0 +1,24 @@
+{
+  "name": "nuxt-frigear-nu",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "nuxt dev --extends simple-content-site",
+    "build": "nuxt build --extends simple-content-site",
+    "lint": "eslint .",
+    "cf:deploy": "npx wrangler --cwd .output/ deploy"
+  },
+  "dependencies": {
+    "simple-content-site": "latest",
+    "better-sqlite3": "^12.2.0",
+    "nuxt": "^4.2.0",
+    "nuxt-studio": "^1.0.0-alpha.1",
+    "minimatch": "^10.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.37.0",
+    "@nuxt/eslint": "^1.9.0",
+    "@nuxt/eslint-config": "^1.9.0"
+  },
+  "packageManager": "pnpm@10.19.0"
+}
