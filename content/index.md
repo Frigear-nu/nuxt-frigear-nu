@@ -9,12 +9,7 @@ seo:
 ---
 orientation: horizontal
 ---
-:::nuxt-img
----
-class: "rounded-full p-4 bg-neutral-800 max-w-sm md:max-w-full"
-src: https://frigear.nu/_next/image?url=%2Flogo_with_rf_bgr.jpg&w=384&q=75&dpl=dpl_4pDmg1nXvax7mLXtC2uekcFmQCT9
----
-:::
+:nuxt-img{.rounded-full.p-4.bg-neutral-800.max-w-sm.md:max-w-full.mx-auto :height='384' :width='384' alt="Frigear logo" src="https://frigear.nu/_next/image?url=%2Flogo_with_rf_bgr.jpg&w=384&q=75&dpl=dpl_4pDmg1nXvax7mLXtC2uekcFmQCT9"}
 
 #title
 [{{ $doc.title }}]{.text-primary} :br
@@ -48,7 +43,7 @@ Bliv frivillig!
       icon: i-simple-icons-instagram
       size: xl
       target: _blank
-      to: /
+      to: https://www.instagram.com/frigear.nu
       variant: subtle
       ---
       :::::
@@ -58,7 +53,7 @@ Bliv frivillig!
       icon: i-simple-icons-facebook
       size: xl
       target: _blank
-      to: /
+      to: https://www.facebook.com/Frigear.nu
       variant: subtle
       ---
       :::::
@@ -68,7 +63,7 @@ Bliv frivillig!
       icon: i-simple-icons-linkedin
       size: xl
       target: _blank
-      to: "https://www.linkedin.com/company/frigear/"
+      to: https://www.linkedin.com/company/frigear
       variant: subtle
       ---
       :::::
