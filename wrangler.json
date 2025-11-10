@@ -12,7 +12,7 @@
   "routes": [
     {
       "custom_domain": true,
-      "pattern": "nuxt-test.frigear.nu"
+      "pattern": "nuxt.frigear.nu"
     }
   ],
   "assets": {
