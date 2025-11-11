@@ -6,6 +6,7 @@
     "dev": "nuxt dev --extends simple-content-site",
     "build": "nuxt build --extends simple-content-site",
     "lint": "eslint .",
+    "clean": "rm -rf pnpm-lock.yaml node_modules .nuxt ",
     "cf:deploy": "npx wrangler --cwd .output/ deploy"
   },
   "dependencies": {
