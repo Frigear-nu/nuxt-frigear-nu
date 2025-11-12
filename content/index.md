@@ -13,7 +13,7 @@ orientation: horizontal
 
 #title
 [{{ $doc.title }}]{.text-primary} :br
-Bliv frivillig!
+Bliv frivillig!!
 
 #links
   :::u-button{color="primary" size="xl" to="/#contact" variant="subtle"}
