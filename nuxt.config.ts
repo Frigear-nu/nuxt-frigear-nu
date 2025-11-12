@@ -4,6 +4,9 @@ export default defineNuxtConfig({
   site: {
     name: 'Frigear.nu',
   },
+  colorMode: {
+    preference: 'dark',
+  },
   nitro: {
     cloudflare: {
       nodeCompat: true,
