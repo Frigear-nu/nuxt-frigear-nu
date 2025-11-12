@@ -13,14 +13,16 @@ orientation: horizontal
 
 #title
 [{{ $doc.title }}]{.text-primary} :br
-::typewriter-effect
-Non-profit
-Frivillig drevet
-Forening og fond
-Projectorienteret
-Skal du være med?
-Bliv frivillig
-::
+
+  :::typewriter-effect
+  Non-profit2
+  Frivillig drevet
+  Forening og fond
+  Projectorienteret
+  Skal du være med?
+  Bliv frivillig
+  :::
+
 #links
   :::u-button{color="primary" size="xl" to="/#contact" variant="subtle"}
   Kontakt os
