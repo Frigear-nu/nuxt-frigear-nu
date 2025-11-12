@@ -34,7 +34,7 @@ Medlemskab
 ::
 
 ::u-container{.mt-8.max-w-md}
-:::pricing-plans{:subscriptions='meta.subscriptions' mode="tabs"}
+:::pricing-plans{:subscriptions='meta.subscriptions' :mode="meta.mode" orientation="horizontal"}
 :::
 ::
 

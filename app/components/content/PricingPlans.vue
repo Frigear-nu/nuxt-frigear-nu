@@ -5,6 +5,7 @@ import { withoutLeadingSlash } from 'ufo'
 const props = defineProps<{
   subscriptions: TabsItem[] | never[] | string
   mode: 'list' | 'tabs'
+  orientation?: 'horizontal' | 'vertical'
 }>()
 
 const items = computed(() => {
@@ -41,7 +42,10 @@ const items = computed(() => {
       This page can be edited in <code>app/pages/pricing.vue</code>.
     </template>
   </UEmpty>
-  <UPricingPlans v-if="mode === 'list'">
+  <UPricingPlans
+    v-if="mode === 'list'"
+    :orientation="orientation"
+  >
     <UPricingPlan
       v-for="(plan, index) in items"
       :key="index"
@@ -52,6 +56,7 @@ const items = computed(() => {
     v-if="mode === 'tabs'"
     :items="items"
     default-value="annual"
+    :orientation="orientation"
   >
     <template
       #content="{ item }"
