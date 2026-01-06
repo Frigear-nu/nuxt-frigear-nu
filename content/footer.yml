@@ -1,8 +1,19 @@
-socials:
+left:
+  - '&copy; {fullYear} **FRIGEAR** ★ CVR-nr: 44353261'
+right:
   - label: INFO
+    variant: link
     to: /info
   - label: SUPPORT
+    variant: link
     to: /#contact
   - label: GDPR
+    variant: link
     to: /gdpr
   - label: SIKKERHED
+    variant: link
+  - icon: i-simple-icons-github
+    target: _BLANK
+    to: https://github.com/frigear-nu/nuxt-frigear-nu
+sections: [ ]
+socials: [ ]

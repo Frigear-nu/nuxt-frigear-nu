@@ -15,7 +15,7 @@ orientation: horizontal
 [{{ $doc.title }}]{.text-primary} :br
 
   :::typewriter-effect
-  Non-profit2
+  Non-profit
   Frivillig drevet
   Forening og fond
   Projectorienteret
@@ -24,7 +24,13 @@ orientation: horizontal
   :::
 
 #links
-  :::u-button{color="primary" size="xl" to="/#contact" variant="subtle"}
+  :::u-button
+  ---
+  color: primary
+  size: xl
+  to: /#contact
+  variant: subtle
+  ---
   Kontakt os
   :::
 
@@ -37,14 +43,13 @@ orientation: horizontal
   :::u-page-feature
   #title
   Kontakt os
-  
+
   #description
   Smid os en besked hvis du har nogen spørgsmål, så vender en Frigear frivillig tilbage ASAP 💜 :br
   Tjek vores SoMe mens du venter 🐼
-  
-    ::::u-separator
-    ::::
-  
+
+  :u-separator
+
     ::::div{.my-2.flex.gap-2}
       :::::u-button
       ---
@@ -55,7 +60,7 @@ orientation: horizontal
       variant: subtle
       ---
       :::::
-    
+
       :::::u-button
       ---
       icon: i-simple-icons-facebook
@@ -65,7 +70,7 @@ orientation: horizontal
       variant: subtle
       ---
       :::::
-    
+
       :::::u-button
       ---
       icon: i-simple-icons-linkedin
@@ -79,7 +84,6 @@ orientation: horizontal
   :::
 
   :::u-card{.w-full.lg:w-lg variant="subtle"}
-    ::::site-contact-form
-    ::::
+  :site-contact-form
   :::
 ::
