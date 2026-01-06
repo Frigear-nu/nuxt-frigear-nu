@@ -1,12 +1,12 @@
 export default defineAppConfig({
-    site: {
-        name: 'Frigear.nu',
+  site: {
+    name: 'Frigear.nu',
+  },
+  ui: {
+    colors: {
+      primary: 'violet',
+      neutral: 'neutral',
+      secondary: 'indigo',
     },
-    ui: {
-        colors: {
-            primary: 'violet',
-            neutral: 'neutral',
-            secondary: 'indigo'
-        },
-    },
+  },
 })
