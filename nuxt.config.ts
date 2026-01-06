@@ -1,5 +1,6 @@
 export default defineNuxtConfig({
-  modules: ['nuxt-studio', '@nuxt/ui', '@nuxt/content'],
+  extends: ['simple-content-site'],
+  modules: ['@nuxt/content', 'nuxt-studio', '@nuxt/ui'],
   css: ['~/assets/css/main.css'],
   site: {
     name: 'Frigear.nu',
@@ -19,7 +20,7 @@ export default defineNuxtConfig({
       owner: 'Frigear-nu',
       repo: 'nuxt-frigear-nu',
       branch: process.env.STUDIO_GITHUB_BRANCH_NAME || 'main',
-      public: true,
+      private: false,
     },
   },
 
