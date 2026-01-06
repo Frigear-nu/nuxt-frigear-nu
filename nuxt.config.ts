@@ -19,6 +19,7 @@ export default defineNuxtConfig({
       owner: 'Frigear-nu',
       repo: 'nuxt-frigear-nu',
       branch: process.env.STUDIO_GITHUB_BRANCH_NAME || 'main',
+      public: true,
     },
   },
 
