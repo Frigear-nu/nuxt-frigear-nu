@@ -1,5 +1,5 @@
 left:
-  - '&copy; {fullYear} **FRIGEAR** ★ CVR-nr: 44353261'
+  - '&copy; {fullYear} **[FRIGEAR]{.text-primary}** ★ CVR-nr: 44353261'
 right:
   - label: INFO
     variant: link
