@@ -10,10 +10,11 @@
     "cf:deploy": "npx wrangler --cwd .output/ deploy"
   },
   "dependencies": {
-    "simple-content-site": "^2.0.1",
+    "simple-content-site": "^2.1.0",
     "better-sqlite3": "^12.5.0",
     "nuxt": "^4.2.2",
-    "minimatch": "^10.1.1"
+    "minimatch": "^10.1.1",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "eslint": "^9.37.0",
