@@ -30,6 +30,7 @@ export default defineNuxtConfig({
       callback: '/auth/callback',
       // todo: naming?
       include: ['/account(/*)?'],
+      saveRedirectToCookie: true,
     },
   },
 })
