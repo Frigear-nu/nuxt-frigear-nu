@@ -27,7 +27,7 @@ export default defineNuxtConfig({
   supabase: {
     redirectOptions: {
       login: '/sign-in',
-      callback: '/auth/callback',
+      callback: '/auth/confirm',
       // todo: naming?
       include: ['/account(/*)?'],
       saveRedirectToCookie: true,
