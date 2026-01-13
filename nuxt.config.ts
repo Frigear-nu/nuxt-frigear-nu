@@ -8,6 +8,17 @@ export default defineNuxtConfig({
   colorMode: {
     preference: 'dark',
   },
+  routeRules: {
+    '/sign-in': {
+      prerender: false,
+    },
+    '/sign-up': {
+      prerender: false,
+    },
+    '/account**': {
+      prerender: false,
+    },
+  },
   nitro: {
     cloudflare: {
       nodeCompat: true,
