@@ -18,6 +18,9 @@ export default defineNuxtConfig({
     '/account': {
       prerender: false,
     },
+    '/account/**': {
+      prerender: false,
+    },
     // Redirects: should be removed in 2027 possibly.
     '/signin/password_signin': { redirect: { to: '/sign-in', statusCode: 301 } },
     '/signin/email_signin': { redirect: { to: '/sign-in?provider=link', statusCode: 301 } },
