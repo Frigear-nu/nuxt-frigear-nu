@@ -9,7 +9,7 @@ seo:
 ---
 orientation: horizontal
 ---
-:nuxt-img{.rounded-full.p-4.dark:bg-neutral-800.bg-neutral-200.max-w-sm.md:max-w-full.mx-auto :height='384' :width='384' alt="Frigear logo" src="https://frigear.nu/_next/image?url=%2Flogo_with_rf_bgr.jpg&w=384&q=75&dpl=dpl_4pDmg1nXvax7mLXtC2uekcFmQCT9"}
+:nuxt-img{.rounded-full.p-4.dark:bg-neutral-800.bg-neutral-200.max-w-fit.md:max-w-full.mx-auto :height='384' :width='384' alt="Frigear logo" src="/logo-with-rf-bg.jpg"}
 
 #title
 [{{ $doc.title }}]{.text-primary} :br
