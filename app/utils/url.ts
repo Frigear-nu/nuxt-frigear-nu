@@ -1,5 +1,5 @@
-export const withLeadingUrl = (path: string) => {
+export const withBaseUrl = (path?: string) => {
   const url = useRequestURL()
-  url.pathname = path
+  url.pathname = path ?? ''
   return url.toString()
 }
