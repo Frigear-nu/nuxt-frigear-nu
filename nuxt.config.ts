@@ -18,6 +18,11 @@ export default defineNuxtConfig({
     '/account': {
       prerender: false,
     },
+    // Redirects: should be removed in 2027 possibly.
+    '/signin/password_signin': { redirect: { to: '/sign-in', statusCode: 301 } },
+    '/signin/email_signin': { redirect: { to: '/sign-in?provider=link', statusCode: 301 } },
+    '/signin/forgot_password': { redirect: { to: '/forgot-password', statusCode: 301 } },
+    '/signin/signup': { redirect: { to: '/sign-up', statusCode: 301 } },
   },
   nitro: {
     cloudflare: {
