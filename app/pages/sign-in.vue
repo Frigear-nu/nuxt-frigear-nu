@@ -17,14 +17,23 @@ definePageMeta({
       />
     </NuxtLink>
 
-    <AuthForm />
+    <AuthSignInCard />
 
-    <UButton
-      icon="i-lucide-x"
-      variant="soft"
-      to="/"
-    >
-      Avbryt
-    </UButton>
+    <div class="flex gap-4">
+      <UButton
+        icon="i-lucide-x"
+        variant="soft"
+        to="/"
+      >
+        Avbryt
+      </UButton>
+      <UButton
+        trailing-icon="i-lucide-arrow-right"
+        variant="subtle"
+        to="/sign-up"
+      >
+        Opret konto
+      </UButton>
+    </div>
   </UContainer>
 </template>

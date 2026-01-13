@@ -1,5 +1,6 @@
 ---
 title: Pricing
+links: []
 mode: tabs
 subscriptions:
   - id: annual
