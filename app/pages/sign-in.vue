@@ -1,53 +1,27 @@
 <script lang="ts" setup>
+import { useUrlSearchParams } from '@vueuse/core'
+
 definePageMeta({
   header: false,
+  layout: 'auth',
 })
 
-// todo: check if ssr MUST be disabled or if we need this check every time.
+const params = useUrlSearchParams<{
+  mode?: 'up' | 'in'
+}>('history')
 
-const user = useSupabaseUser()
-const redirectInfo = useSupabaseCookieRedirect()
-
-watch(user, () => {
-  if (user.value) {
-    // Get redirect path, and clear it from the cookie
-    const path = redirectInfo.pluck()
-    // Redirect to the saved path, or fallback to home
-    return navigateTo(path || '/account')
-  }
-}, { immediate: true })
+const mode = computed<'up' | 'in'>({
+  get: () => {
+    if (!params.mode) return 'in'
+    return params.mode === 'up' ? 'up' : 'in'
+  },
+  set: (v) => {
+    if (v === 'in') params.mode = undefined
+    else params.mode = v
+  },
+})
 </script>
 
 <template>
-  <UContainer class="h-[calc(100vh-var(--ui-header-height))] flex items-center justify-center px-4 flex-col gap-4">
-    <NuxtLink
-      class="flex justify-center"
-      to="/"
-    >
-      <UColorModeImage
-        light="/logo.png"
-        dark="/logo-dark.png"
-        class="size-24"
-      />
-    </NuxtLink>
-
-    <AuthSignInCard />
-
-    <div class="flex gap-4">
-      <UButton
-        icon="i-lucide-x"
-        variant="soft"
-        to="/"
-      >
-        Avbryt
-      </UButton>
-      <UButton
-        trailing-icon="i-lucide-arrow-right"
-        variant="subtle"
-        to="/sign-up"
-      >
-        Opret konto
-      </UButton>
-    </div>
-  </UContainer>
+  <AuthCard v-model:mode="mode" />
 </template>
