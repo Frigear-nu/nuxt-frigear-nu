@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     },
     '/account**': {
       prerender: false,
+      ssr: false,
     },
   },
   nitro: {
@@ -36,6 +37,7 @@ export default defineNuxtConfig({
   },
 
   supabase: {
+    useSsrCookies: true,
     redirectOptions: {
       login: '/sign-in',
       callback: '/auth/confirm',
