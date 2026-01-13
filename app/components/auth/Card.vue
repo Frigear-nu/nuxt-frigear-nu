@@ -3,11 +3,12 @@ import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 
 const toast = useToast()
-const { fields } = useSiteAuth()
+const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
 const supabase = useSupabaseClient()
 const authForm = useTemplateRef('authForm')
 const displayMagicLinkModal = ref(false)
 const emailWasDispatched = ref(false)
+const { fields, buildProviders } = useSiteAuth()
 
 const emailField = computed<string | undefined>({
   get: () => authForm.value?.state?.email,
@@ -17,21 +18,20 @@ const emailField = computed<string | undefined>({
   },
 })
 
-const providers = [{
-  label: 'Google',
-  icon: 'i-simple-icons-google',
-  onClick: () => {
-    toast.add(formatToastError(new Error('Provider not implemented.')))
-  },
-},
-{
-  label: 'Magic Link',
-  icon: 'i-lucide-at-sign',
-  onClick: () => {
-    displayMagicLinkModal.value = true
-  },
-},
-]
+const providers = buildProviders((provider) => {
+  switch (provider) {
+    case 'link':
+      displayMagicLinkModal.value = true
+      break
+    case 'google':
+    // case 'github':
+      return supabase.auth.signInWithOAuth({
+        provider,
+      })
+    default:
+      toast.add(formatToastError(new Error(`Provider '${provider}', is not implemented.`)))
+  }
+})
 
 // TODO: Translations
 const schema = z.object({
@@ -41,23 +41,38 @@ const schema = z.object({
 
 type Schema = z.output<typeof schema>
 
-async function onSubmitEmailAndPassword(payload: FormSubmitEvent<Schema>) {
+const signIn = async (email: string, password: string) => {
   const { data, error } = await supabase.auth.signInWithPassword({
-    email: payload.data.email,
-    password: payload.data.password,
+    email,
+    password,
   })
 
-  if (error) {
-    toast.add(formatToastError(error))
+  if (error) toast.add(formatToastError(error))
+  if (!data.user) throw createError('Could not load user.')
 
-    return
+  // todo: not sure if this redirect is correct.
+  return navigateTo('/account')
+}
+
+const signUp = async (email: string, password: string) => {
+  const { error } = await supabase.auth.signUp({ email, password })
+
+  if (error) toast.add(formatToastError(error))
+  else {
+    toast.add({
+      title: 'Sign up successful!',
+      icon: 'i-lucide-check-circle',
+      color: 'success',
+    })
+    await signIn(email, password)
   }
+}
 
-  if (!data.user) {
-    throw createError('Could not load user.')
-  }
-
-  navigateTo('/account')
+async function onSubmit(payload: FormSubmitEvent<Schema>) {
+  const email = payload.data.email
+  const password = payload.data.password
+  if (mode.value === 'up') await signUp(email, password)
+  else await signIn(email, password)
 }
 
 function onMagicLinkDispatched(email: string) {
@@ -95,35 +110,47 @@ function onMagicLinkError(err: Error) {
       v-else
       ref="authForm"
       :schema="schema"
-      title="Sign In"
+      :title="mode === 'up' ? 'Sign Up' : 'Sign In'"
       :fields="fields"
       :providers="providers"
       :separator="{ label: 'OR' }"
-      @submit="onSubmitEmailAndPassword"
+      :submit="mode === 'up' ? { label: 'Sign Up' } : { label: 'Sign In' }"
+      @submit="onSubmit"
     >
       <template #description>
-        Don't have an account?
+        {{ mode === 'up' ? 'Already have an account?' : 'Don\'t have an account?' }}
         <ULink
-          to="#"
           class="text-primary font-medium"
-        >Sign up
+          @click="mode = mode === 'up' ? 'in' : 'up'"
+        >
+          {{ mode === 'up' ? 'Sign in' : 'Sign up' }}
         </ULink>
         .
-      </template>
-      <template #password-hint>
-        <ULink
-          to="#"
-          class="text-primary font-medium"
-          tabindex="-1"
-        >Forgot password?
-        </ULink>
       </template>
     </UAuthForm>
     <AuthMagicLinkModal
       v-model:open="displayMagicLinkModal"
       v-model:email="emailField"
+      v-model:mode="mode"
       @error="onMagicLinkError"
       @success="onMagicLinkDispatched"
     />
   </UPageCard>
+
+  <div class="flex gap-4">
+    <UButton
+      icon="i-lucide-x"
+      variant="soft"
+      to="/"
+    >
+      Avbryt
+    </UButton>
+    <UButton
+      trailing-icon="i-lucide-arrow-right"
+      variant="subtle"
+      @click="mode = mode === 'up' ? 'in' : 'up'"
+    >
+      {{ mode === 'in' ? 'Opret konto' : 'Log ind' }}
+    </UButton>
+  </div>
 </template>
