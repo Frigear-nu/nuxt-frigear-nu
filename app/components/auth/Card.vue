@@ -7,6 +7,7 @@ const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
 const supabase = useSupabaseClient()
 const authForm = useTemplateRef('authForm')
 const displayMagicLinkModal = ref(false)
+const displayForgotPasswordModal = ref(false)
 const emailWasDispatched = ref(false)
 const { fields, buildProviders } = useSiteAuth()
 
@@ -92,6 +93,18 @@ function onMagicLinkError(err: Error) {
 
   displayMagicLinkModal.value = false
 }
+
+function onPasswordResetDispatched(email: string) {
+  emailField.value = email
+  displayForgotPasswordModal.value = false
+  emailWasDispatched.value = true
+  toast.add({
+    title: 'Mail away!',
+    description: 'We\'ve sent you an email to reset your password.',
+    icon: 'i-lucide-check',
+    color: 'success',
+  })
+}
 </script>
 
 <template>
@@ -124,8 +137,18 @@ function onMagicLinkError(err: Error) {
           @click="mode = mode === 'up' ? 'in' : 'up'"
         >
           {{ mode === 'up' ? 'Sign in' : 'Sign up' }}
+        </ULink>.
+      </template>
+      <template
+        v-if="mode === 'in'"
+        #password-hint
+      >
+        <ULink
+          class="text-primary font-medium"
+          tabindex="-1"
+          @click="displayForgotPasswordModal = true"
+        >Forgot password?
         </ULink>
-        .
       </template>
     </UAuthForm>
     <AuthMagicLinkModal
@@ -134,6 +157,11 @@ function onMagicLinkError(err: Error) {
       v-model:mode="mode"
       @error="onMagicLinkError"
       @success="onMagicLinkDispatched"
+    />
+    <AuthForgotPasswordModal
+      v-model:open="displayForgotPasswordModal"
+      v-model:email="emailField"
+      @success="onPasswordResetDispatched"
     />
   </UPageCard>
 
