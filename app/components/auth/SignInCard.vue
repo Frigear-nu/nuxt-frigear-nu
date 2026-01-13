@@ -21,7 +21,12 @@ const providers = [{
   label: 'Google',
   icon: 'i-simple-icons-google',
   onClick: () => {
-    toast.add(formatToastError(new Error('Provider not implemented.')))
+    return supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: import.meta.dev ? withBaseUrl() : 'https://nuxt.frigear.nu',
+      },
+    })
   },
 },
 {
