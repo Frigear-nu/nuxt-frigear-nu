@@ -85,7 +85,9 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
     </template>
     <template #footer>
       <UButton
+        v-if="form"
         type="submit"
+        :loading="form.loading"
         @click="form.submit()"
       >
         Submit
