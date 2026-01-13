@@ -15,9 +15,8 @@ export default defineNuxtConfig({
     '/sign-up': {
       prerender: false,
     },
-    '/account**': {
+    '/account': {
       prerender: false,
-      ssr: false,
     },
   },
   nitro: {
