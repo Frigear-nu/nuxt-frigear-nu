@@ -174,6 +174,7 @@ function onPasswordResetDispatched(email: string) {
       Avbryt
     </UButton>
     <UButton
+      v-if="!emailWasDispatched"
       trailing-icon="i-lucide-arrow-right"
       variant="subtle"
       @click="mode = mode === 'up' ? 'in' : 'up'"
