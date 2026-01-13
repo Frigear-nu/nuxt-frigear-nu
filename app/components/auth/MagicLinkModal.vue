@@ -39,12 +39,7 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
 
   $emits('loading')
 
-  const { error: supabaseError } = await supabase.auth.signInWithOtp({
-    email,
-    options: {
-      emailRedirectTo: withLeadingUrl('/auth/confirm'),
-    },
-  })
+  const { error: supabaseError } = await supabase.auth.signInWithOtp({ email })
 
   if (supabaseError) {
     return $emits('error', supabaseError)
