@@ -76,6 +76,8 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
         >
           <UInput
             v-model="state.email"
+            type="email"
+            autocomplete="email"
             class="min-w-sm max-w-md"
           />
         </UFormField>
