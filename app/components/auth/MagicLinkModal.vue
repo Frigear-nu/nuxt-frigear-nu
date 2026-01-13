@@ -2,7 +2,6 @@
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import type { AuthError } from '@supabase/auth-js'
-import { withRequestUrl } from '~/utils/url'
 
 const schema = z.object({
   email: z.email('Ugyldig e-post.'),
@@ -44,7 +43,7 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
     email,
     options: {
       // todo: change this to /auth/confirm when the redirect url has been added to supabase
-      emailRedirectTo: withBaseUrl(),
+      emailRedirectTo: import.meta.dev ? withBaseUrl() : 'https://nuxt.frigear.nu',
     },
   })
 
