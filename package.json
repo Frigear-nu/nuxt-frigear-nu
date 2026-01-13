@@ -10,15 +10,18 @@
     "cf:deploy": "npx wrangler --cwd .output/ deploy"
   },
   "dependencies": {
-    "simple-content-site": "^2.0.1",
+    "@nuxtjs/supabase": "2.0.3",
     "better-sqlite3": "^12.5.0",
+    "minimatch": "^10.1.1",
     "nuxt": "^4.2.2",
-    "minimatch": "^10.1.1"
+    "simple-content-site": "^2.1.0",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
-    "eslint": "^9.37.0",
     "@nuxt/eslint": "^1.9.0",
-    "@nuxt/eslint-config": "^1.9.0"
+    "@nuxt/eslint-config": "^1.9.0",
+    "eslint": "^9.37.0",
+    "supabase": "^2.72.6"
   },
   "packageManager": "pnpm@10.19.0"
 }

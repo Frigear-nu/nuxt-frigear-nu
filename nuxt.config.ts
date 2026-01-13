@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   extends: ['simple-content-site'],
-  modules: ['@nuxt/content', 'nuxt-studio', '@nuxt/ui'],
+  modules: ['@nuxtjs/supabase', '@nuxt/content', 'nuxt-studio', '@nuxt/ui'],
   css: ['~/assets/css/main.css'],
   site: {
     name: 'Frigear.nu',
@@ -24,4 +24,13 @@ export default defineNuxtConfig({
     },
   },
 
+  supabase: {
+    redirectOptions: {
+      login: '/sign-in',
+      callback: '/auth/confirm',
+      // todo: naming?
+      include: ['/account(/*)?'],
+      saveRedirectToCookie: true,
+    },
+  },
 })
