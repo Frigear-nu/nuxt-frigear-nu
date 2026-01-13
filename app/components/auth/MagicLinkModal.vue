@@ -2,7 +2,6 @@
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import type { AuthError } from '@supabase/auth-js'
-import { withLeadingUrl } from '#shared/supabase'
 
 const schema = z.object({
   email: z.email('Ugyldig e-post.'),
@@ -23,7 +22,7 @@ const displayModal = defineModel<boolean>('open', {
   default: false,
 })
 
-const state = reactive({
+const state = reactive<Partial<Schema>>({
   email: undefined,
 })
 
