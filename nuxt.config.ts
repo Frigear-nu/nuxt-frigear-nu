@@ -12,12 +12,21 @@ export default defineNuxtConfig({
     '/sign-in': {
       prerender: false,
     },
-    '/sign-up': {
-      prerender: false,
-    },
     '/account': {
       prerender: false,
     },
+    '/account/**': {
+      prerender: false,
+    },
+
+    // Static Redirects
+    '/sign-up': { redirect: { to: '/sign-in?mode=up' } },
+
+    // Temporary Redirects: should be removed in 2027 possibly.
+    '/signin/password_signin': { redirect: { to: '/sign-in', statusCode: 301 } },
+    '/signin/email_signin': { redirect: { to: '/sign-in?provider=link', statusCode: 301 } },
+    '/signin/forgot_password': { redirect: { to: '/forgot-password', statusCode: 301 } },
+    '/signin/signup': { redirect: { to: '/sign-in?mode=up', statusCode: 301 } },
   },
   nitro: {
     cloudflare: {

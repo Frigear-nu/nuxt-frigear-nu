@@ -18,9 +18,8 @@ const $emits = defineEmits<{
 const supabase = useSupabaseClient()
 const form = useTemplateRef('form')
 const emailValue = defineModel<string | undefined>('email')
-const displayModal = defineModel<boolean>('open', {
-  default: false,
-})
+const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
+const displayModal = defineModel<boolean>('open', { default: false })
 
 const state = reactive<Partial<Schema>>({
   email: undefined,
@@ -44,6 +43,7 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
     options: {
       // todo: change this to /auth/confirm when the redirect url has been added to supabase
       emailRedirectTo: import.meta.dev ? withBaseUrl() : 'https://nuxt.frigear.nu',
+      shouldCreateUser: true,
     },
   })
 
@@ -58,7 +58,7 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
 <template>
   <UModal
     v-model:open="displayModal"
-    title="Sign in with Magic Link"
+    :title="mode === 'in' ? 'Sign in with Magic Link' : 'Sign up with Magic Link'"
     description="Fyll ut skjemaet så sender vi deg en magic link, så slipper du streve med passord."
   >
     <template #body>
