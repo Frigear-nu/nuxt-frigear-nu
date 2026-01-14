@@ -42,7 +42,7 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
     email,
     options: {
       // todo: change this to /auth/confirm when the redirect url has been added to supabase
-      emailRedirectTo: import.meta.dev ? withBaseUrl() : 'https://nuxt.frigear.nu',
+      emailRedirectTo: withBaseUrl('/auth/confirm'),
       shouldCreateUser: true,
     },
   })
