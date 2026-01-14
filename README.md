@@ -21,19 +21,38 @@ UI [nuxt-content/studio](https://github.com/nuxt-content/studio).
 
 ## Local development
 
-### Install dependencies
+### Prerequisites
+
+- Docker (also running when you require supabase)
+- pnpm & npm
+
+### 1. Clone repository
+
+```bash
+git clone https://github.com/Frigear-nu/nuxt-frigear-nu.git
+```
+
+### 2. Configure
+
+```bash
+cp .env.example .env
+```
+
+> You must fill out all the required variables in the new .env file.
+
+### 3. Install dependencies
 
 ```bash
 pnpm install
 ```
 
-### Start supabase
+### 4. Start supabase
 
 ```bash
 pnpx supabase start
 ```
 
-### Start dev server
+### 5. Start dev server
 
 ```bash
 pnpm dev
