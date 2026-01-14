@@ -28,6 +28,9 @@ const providers = buildProviders((provider) => {
     // case 'github':
       return supabase.auth.signInWithOAuth({
         provider,
+        options: {
+          redirectTo: withBaseUrl('/auth/confirm'),
+        },
       })
     default:
       toast.add(formatToastError(new Error(`Provider '${provider}', is not implemented.`)))
@@ -56,7 +59,13 @@ const signIn = async (email: string, password: string) => {
 }
 
 const signUp = async (email: string, password: string) => {
-  const { error } = await supabase.auth.signUp({ email, password })
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: withBaseUrl('/auth/confirm'),
+    },
+  })
 
   if (error) toast.add(formatToastError(error))
   else {
