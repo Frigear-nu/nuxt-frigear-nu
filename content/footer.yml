@@ -1,5 +1,5 @@
 left:
-  - '&copy; {fullYear} **[FRIGEAR]{.text-primary}** ★ CVR-nr: 44353261'
+  - "&copy; 2023 - {fullYear} **[FRIGEAR]{.text-primary}** ★ CVR-nr: 44353261"
 right:
   - label: INFO
     variant: link
@@ -15,5 +15,5 @@ right:
   - icon: i-simple-icons-github
     target: _BLANK
     to: https://github.com/frigear-nu/nuxt-frigear-nu
-sections: [ ]
-socials: [ ]
+sections: []
+socials: []
