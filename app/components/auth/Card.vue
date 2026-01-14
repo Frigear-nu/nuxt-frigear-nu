@@ -69,11 +69,7 @@ const signUp = async (email: string, password: string) => {
 
   if (error) toast.add(formatToastError(error))
   else {
-    toast.add({
-      title: 'Sign up successful!',
-      icon: 'i-lucide-check-circle',
-      color: 'success',
-    })
+    toast.add(formatToastSuccess('Sign up successful!'))
     await signIn(email, password)
   }
 }
@@ -89,17 +85,11 @@ function onMagicLinkDispatched(email: string) {
   emailField.value = email
   displayMagicLinkModal.value = false
   emailWasDispatched.value = true
-  toast.add({
-    title: 'Yay!',
-    description: 'Check your email for a link, it might be in your spam folder.',
-    icon: 'i-lucide-check',
-    color: 'success',
-  })
+  toast.add(formatToastSuccess('Yay!', 'Check your email for a link, it might be in your spam folder.'))
 }
 
 function onMagicLinkError(err: Error) {
   toast.add(formatToastError(err))
-
   displayMagicLinkModal.value = false
 }
 
@@ -107,12 +97,7 @@ function onPasswordResetDispatched(email: string) {
   emailField.value = email
   displayForgotPasswordModal.value = false
   emailWasDispatched.value = true
-  toast.add({
-    title: 'Mail away!',
-    description: 'We\'ve sent you an email to reset your password.',
-    icon: 'i-lucide-check',
-    color: 'success',
-  })
+  toast.add(formatToastSuccess('Mail away!', 'We\'ve sent you an email to reset your password.'))
 }
 </script>
 

@@ -16,7 +16,7 @@ const user = useSupabaseUser()
   </UButton>
   <UButton
     v-else
-    :label="t('Sign In') || 'Logg Ind'"
+    :label="t('Sign In') || 'Log Ind'"
     to="/sign-in"
     trailing-icon="i-lucide-lock"
   />

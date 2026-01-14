@@ -1,5 +1,4 @@
 title: Frigear
-path: /
 logo:
   light: /logo.png
   dark: /logo-dark.png
@@ -7,5 +6,5 @@ logo:
 navigation:
   - label: Hjem
     to: /
-  - label: Priser
+  - label: Medlemskab
     to: /pricing

@@ -127,7 +127,10 @@ const keystroke = (cps: number) => {
 const punctPause = (ch: string) => (/[.,!?;:]/.test(ch) ? props.punctPauseMs : 0)
 
 const tick = (ts: number) => {
-  if (!hasItems.value) { raf = requestAnimationFrame(tick); return }
+  if (!hasItems.value) {
+    raf = requestAnimationFrame(tick)
+    return
+  }
   if (!lastTs) lastTs = ts
   const dt = ts - lastTs
   lastTs = ts
@@ -143,7 +146,9 @@ const tick = (ts: number) => {
       else {
         phase.value = 'pause'
         if (endPauseTimer) clearTimeout(endPauseTimer)
-        endPauseTimer = window.setTimeout(() => { phase.value = 'deleting' }, props.pauseMs) as unknown as number
+        endPauseTimer = window.setTimeout(() => {
+          phase.value = 'deleting'
+        }, props.pauseMs) as unknown as number
       }
     }
   }
@@ -200,7 +205,10 @@ function sliceMdc(node: any, take: { n: number }): any | null {
 
   if (typeof node === 'string') {
     const g = splitG(node)
-    if (g.length <= take.n) { take.n -= g.length; return node }
+    if (g.length <= take.n) {
+      take.n -= g.length
+      return node
+    }
     const part = g.slice(0, take.n).join('')
     take.n = 0
     return part
@@ -278,7 +286,10 @@ function truncateVNodes(nodes: any[], takeChars: number): any[] {
 
     if (typeof node === 'string' || typeof node === 'number') {
       const g = splitG(String(node))
-      if (g.length <= remaining) { remaining -= g.length; return String(node) }
+      if (g.length <= remaining) {
+        remaining -= g.length
+        return String(node)
+      }
       const part = g.slice(0, remaining).join('')
       remaining = 0
       return part
@@ -301,7 +312,10 @@ function truncateVNodes(nodes: any[], takeChars: number): any[] {
 
       if (typeof c === 'string' || typeof c === 'number') {
         const g = splitG(String(c))
-        if (g.length <= remaining) { remaining -= g.length; return h(type, p, c) }
+        if (g.length <= remaining) {
+          remaining -= g.length
+          return h(type, p, c)
+        }
         const part = g.slice(0, remaining).join('')
         remaining = 0
         return h(type, p, part)
@@ -355,5 +369,9 @@ function truncateVNodes(nodes: any[], takeChars: number): any[] {
 </template>
 
 <style scoped>
-@keyframes blink { to { visibility: hidden; } }
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
 </style>
