@@ -32,7 +32,6 @@
   "d1_databases": [{
     "database_id": "03188510-ac62-4ffb-80dd-0d9912aa3d55",
     "binding": "DB",
-    "database_name": "nuxt-frigear-nu",
     "migrations_dir": "./server/db/migrations"
   }]
 }
