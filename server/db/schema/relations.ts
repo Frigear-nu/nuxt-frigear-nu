@@ -4,13 +4,20 @@ import * as user from './user'
 import { relations } from 'drizzle-orm'
 
 export const usersRelations = relations(user.users, ({ many }) => ({
-  stripeAccounts: many(user.stripeUsers),
+  stripeCustomers: many(stripe.stripeCustomers),
 }))
 
-export const scripeUsersRelations = relations(user.stripeUsers, ({ one }) => ({
+export const stripeUsersRelations = relations(stripe.stripeCustomers, ({ one, many }) => ({
   user: one(user.users, {
-    fields: [user.stripeUsers.userId],
+    fields: [stripe.stripeCustomers.userId],
     references: [user.users.id],
   }),
+  subscriptions: many(stripe.stripeSubscriptions),
+}))
 
+export const stripeSubscriptionsRelations = relations(stripe.stripeSubscriptions, ({ one }) => ({
+  customer: one(stripe.stripeCustomers, {
+    fields: [stripe.stripeSubscriptions.userId],
+    references: [stripe.stripeCustomers.id],
+  }),
 }))

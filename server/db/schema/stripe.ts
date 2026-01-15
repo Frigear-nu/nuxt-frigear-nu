@@ -1,5 +1,5 @@
-import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
-import { stripeUsers } from './user'
+import { sqliteTable, text, integer, uniqueIndex } from 'drizzle-orm/sqlite-core'
+import { users } from './user'
 
 export const stripeProducts = sqliteTable('stripe_products', {
   id: text().primaryKey(),
@@ -33,7 +33,7 @@ export type NewStripePrices = typeof stripePrices.$inferInsert
 
 export const stripeSubscriptions = sqliteTable('stripe_subscriptions', {
   id: text().primaryKey(),
-  userId: text('user_id').notNull().references(() => stripeUsers.stripeCustomerId),
+  userId: text('user_id').notNull().references(() => stripeCustomers.id),
   status: text().notNull(),
   metadata: text().notNull(),
   priceId: text('price_id').notNull().references(() => stripePrices.id),
@@ -47,3 +47,15 @@ export const stripeSubscriptions = sqliteTable('stripe_subscriptions', {
 
 export type StripeSubscriptions = typeof stripeSubscriptions.$inferInsert
 export type NewStripeSubscriptions = typeof stripeSubscriptions.$inferInsert
+
+export const stripeCustomers = sqliteTable('stripe_customers', {
+  id: text('stripe_customer_id').primaryKey(),
+  userId: integer().references(() => users.id),
+}, (t) => {
+  return {
+    unique: uniqueIndex('unique_idx').on(t.id, t.userId),
+  }
+})
+
+export type StripeCustomers = typeof stripeCustomers.$inferInsert
+export type NewStripeCustomers = typeof stripeCustomers.$inferInsert

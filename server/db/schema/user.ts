@@ -1,15 +1,4 @@
-import { sqliteTable, text, integer, uniqueIndex } from 'drizzle-orm/sqlite-core'
-
-export const stripeUsers = sqliteTable('stripe_customers', {
-  userId: integer().primaryKey().references(() => users.id),
-  stripeCustomerId: text('stripe_customer_id'),
-}, (t) => {
-  return {
-    unique: uniqueIndex('unique_idx').on(t.stripeCustomerId, t.userId),
-  }
-})
-
-export type StripeUsers = typeof stripeUsers.$inferInsert
+import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
 
 export const users = sqliteTable('users', {
   id: integer().primaryKey({ autoIncrement: true }),
