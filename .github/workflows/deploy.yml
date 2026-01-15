@@ -53,7 +53,7 @@ jobs:
 
       - name: migrate db
         if: github.ref_name == 'main'
-        run: npx wrangler d1 migrations apply nuxt-frigear-nu
+        run: npx wrangler d1 migrations apply nuxt-frigear-nu --remote
 #        run: pnpm db:migrate
 
       - name: deploy to production
