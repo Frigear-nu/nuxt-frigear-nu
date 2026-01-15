@@ -38,7 +38,8 @@ git clone https://github.com/Frigear-nu/nuxt-frigear-nu.git
 cp .env.example .env
 ```
 
-> You must fill out all the required variables in the new .env file.
+> **You must _fill out all_ the required variables in the new .env file**, most of the values will be output when you run
+`pnpx supabase start` later on.
 
 ### 3. Install dependencies
 
