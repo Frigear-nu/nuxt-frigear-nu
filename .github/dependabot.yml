@@ -6,4 +6,5 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "cron"
+      cronjob: "0 7 1,14 * *" # At 07:00 on day-of-month 1 and 14.
