@@ -1,5 +1,6 @@
 ---
-title: Pricing
+title: Medlemskab
+description: Frigear medlemskab
 links: []
 mode: tabs
 subscriptions:
