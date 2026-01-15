@@ -28,11 +28,5 @@
     "nodejs_als",
     "nodejs_compat",
     "no_nodejs_compat_v2"
-  ],
-  "d1_databases": [{
-    "database_id": "03188510-ac62-4ffb-80dd-0d9912aa3d55",
-    "binding": "DB",
-    "migrations_table": "_hub_migrations",
-    "migrations_dir": "./server/db/migrations"
-  }]
+  ]
 }
