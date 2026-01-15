@@ -1,6 +1,17 @@
 export default defineNuxtConfig({
   extends: ['simple-content-site'],
-  modules: ['@nuxtjs/supabase', '@nuxt/content', 'nuxt-studio', '@nuxt/ui'],
+  modules: [
+    '@nuxthub/core',
+    '@nuxtjs/supabase',
+    '@nuxt/content',
+    'nuxt-studio',
+    '@nuxt/ui',
+  ],
+  $development: {
+    hub: {
+      db: 'sqlite',
+    },
+  },
   css: ['~/assets/css/main.css'],
   site: {
     name: 'Frigear.nu',
@@ -33,6 +44,14 @@ export default defineNuxtConfig({
     cloudflare: {
       nodeCompat: true,
       deployConfig: true,
+    },
+  },
+  hub: {
+    // nice to know about preview env: https://hub.nuxt.com/docs/getting-started/deploy#cloudflare
+    db: {
+      dialect: 'sqlite',
+      driver: 'd1',
+      connection: { databaseId: '03188510-ac62-4ffb-80dd-0d9912aa3d55' },
     },
   },
   studio: {
