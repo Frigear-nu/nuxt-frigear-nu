@@ -15,6 +15,13 @@
       "when": 1768498442802,
       "tag": "0001_tired_hulk",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1768498526022,
+      "tag": "0002_ordinary_zodiak",
+      "breakpoints": true
     }
   ]
 }

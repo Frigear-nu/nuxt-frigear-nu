@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer /* uniqueIndex */ } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text, integer, uniqueIndex } from 'drizzle-orm/sqlite-core'
 
 export const stripeProducts = sqliteTable('stripe_products', {
   id: text().primaryKey(),
@@ -38,21 +38,6 @@ export const stripeSubscriptions = sqliteTable('stripe_subscriptions', {
   endedAt: integer('ended_at', { mode: 'timestamp' }),
 })
 
-// // create table public.customers (
-// //   id uuid not null,
-// //   stripe_customer_id text null,
-// //   constraint customers_pkey primary key (id),
-// //   constraint customers_id_fkey foreign KEY (id) references auth.users (id)
-// // ) TABLESPACE pg_default;
-// export const stripeUsers = sqliteTable('stripe_customers', {
-//   userId: integer().primaryKey(),
-//   stripeCustomerId: text('stripe_customer_id'),
-// }, (t) => {
-//   return {
-//     unique: uniqueIndex('unique_idx').on(t.stripeCustomerId, t.userId),
-//   }
-// })
-
 export const users = sqliteTable('users', {
   id: integer().primaryKey({ autoIncrement: true }),
   name: text().notNull(),
@@ -60,6 +45,15 @@ export const users = sqliteTable('users', {
   password: text().notNull(),
   avatar: text().notNull(),
   createdAt: integer({ mode: 'timestamp' }).notNull(),
+})
+
+export const stripeUsers = sqliteTable('stripe_customers', {
+  userId: integer().primaryKey(),
+  stripeCustomerId: text('stripe_customer_id'),
+}, (t) => {
+  return {
+    unique: uniqueIndex('unique_idx').on(t.stripeCustomerId, t.userId),
+  }
 })
 
 export type StripeProducts = typeof stripeProducts.$inferSelect
