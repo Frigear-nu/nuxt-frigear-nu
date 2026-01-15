@@ -1,4 +1,5 @@
 import { sqliteTable, text, integer, uniqueIndex } from 'drizzle-orm/sqlite-core'
+import { users } from './user'
 
 export const stripeProducts = sqliteTable('stripe_products', {
   id: text().primaryKey(),
@@ -10,9 +11,12 @@ export const stripeProducts = sqliteTable('stripe_products', {
   taxCodeId: text('tax_code_id'),
 })
 
+export type StripeProducts = typeof stripeProducts.$inferSelect
+export type NewStripeProducts = typeof stripeProducts.$inferInsert
+
 export const stripePrices = sqliteTable('stripe_prices', {
   id: text().primaryKey(),
-  productId: text('product_id').notNull(),
+  productId: text('product_id').notNull().references(() => stripeProducts.id),
   active: integer({ mode: 'boolean' }).notNull(),
   description: text(),
   unitAmount: integer('unit_amount').notNull(),
@@ -24,13 +28,16 @@ export const stripePrices = sqliteTable('stripe_prices', {
   metadata: text({ mode: 'json' }),
 })
 
+export type StripePrices = typeof stripePrices.$inferInsert
+export type NewStripePrices = typeof stripePrices.$inferInsert
+
 export const stripeSubscriptions = sqliteTable('stripe_subscriptions', {
   id: text().primaryKey(),
-  // userId: text('user_id').notNull(),
+  userId: text('user_id').notNull().references(() => stripeCustomers.id),
   status: text().notNull(),
   metadata: text().notNull(),
-  priceId: text('price_id').notNull(),
-  quantity: integer().notNull(),
+  priceId: text('price_id').notNull().references(() => stripePrices.id),
+  quantity: integer().notNull().default(1),
   cancelAtPeriodEnd: integer('cancel_at_period_end', { mode: 'boolean' }).notNull(),
   created: integer({ mode: 'timestamp' }).notNull(),
   currentPeriodStart: integer('current_period_start', { mode: 'timestamp' }).notNull(),
@@ -38,24 +45,17 @@ export const stripeSubscriptions = sqliteTable('stripe_subscriptions', {
   endedAt: integer('ended_at', { mode: 'timestamp' }),
 })
 
-export const users = sqliteTable('users', {
-  id: integer().primaryKey({ autoIncrement: true }),
-  name: text().notNull(),
-  email: text().notNull().unique(),
-  password: text().notNull(),
-  avatar: text().notNull(),
-  createdAt: integer({ mode: 'timestamp' }).notNull(),
-})
+export type StripeSubscriptions = typeof stripeSubscriptions.$inferInsert
+export type NewStripeSubscriptions = typeof stripeSubscriptions.$inferInsert
 
-export const stripeUsers = sqliteTable('stripe_customers', {
-  userId: integer().primaryKey(),
-  stripeCustomerId: text('stripe_customer_id'),
+export const stripeCustomers = sqliteTable('stripe_customers', {
+  id: text('stripe_customer_id').primaryKey(),
+  userId: integer().references(() => users.id),
 }, (t) => {
   return {
-    unique: uniqueIndex('unique_idx').on(t.stripeCustomerId, t.userId),
+    unique: uniqueIndex('unique_idx').on(t.id, t.userId),
   }
 })
 
-export type StripeProducts = typeof stripeProducts.$inferSelect
-export type StripePrices = typeof stripePrices.$inferInsert
-export type StripeSubscriptions = typeof stripeSubscriptions.$inferInsert
+export type StripeCustomers = typeof stripeCustomers.$inferInsert
+export type NewStripeCustomers = typeof stripeCustomers.$inferInsert
