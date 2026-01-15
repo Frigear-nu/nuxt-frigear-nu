@@ -53,16 +53,14 @@ export const stripeSubscriptions = sqliteTable('stripe_subscriptions', {
 //   }
 // })
 
-// Users table
-// export const users = sqliteTable('users', {
-//   id: integer().primaryKey({ autoIncrement: true }),
-//   name: text().notNull(),
-//   email: text().notNull().unique(),
-//   password: text().notNull(),
-//   avatar: text().notNull(),
-//   createdAt: integer({ mode: 'timestamp' }).notNull(),
-// })
-//
+export const users = sqliteTable('users', {
+  id: integer().primaryKey({ autoIncrement: true }),
+  name: text().notNull(),
+  email: text().notNull().unique(),
+  password: text().notNull(),
+  avatar: text().notNull(),
+  createdAt: integer({ mode: 'timestamp' }).notNull(),
+})
 
 export type StripeProducts = typeof stripeProducts.$inferSelect
 export type StripePrices = typeof stripePrices.$inferInsert
