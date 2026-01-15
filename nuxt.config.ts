@@ -40,12 +40,6 @@ export default defineNuxtConfig({
     '/signin/signup': { redirect: { to: '/sign-in?mode=up', statusCode: 301 } },
     '/pricing': { redirect: { to: '/membership', statusCode: 301 } },
   },
-  nitro: {
-    cloudflare: {
-      nodeCompat: true,
-      deployConfig: true,
-    },
-  },
   hub: {
     // nice to know about preview env: https://hub.nuxt.com/docs/getting-started/deploy#cloudflare
     db: {
