@@ -12,8 +12,8 @@ importers:
         specifier: ^0.17.0
         version: 0.17.0
       '@nuxthub/core':
-        specifier: 0.10.4
-        version: 0.10.4(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2)(magicast@0.5.1)(typescript@5.9.3)
+        specifier: https://pkg.pr.new/@nuxthub/core@759
+        version: https://pkg.pr.new/@nuxthub/core@759(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2)(magicast@0.5.1)(typescript@5.9.3)
       '@nuxtjs/supabase':
         specifier: 2.0.3
         version: 2.0.3
@@ -1565,8 +1565,9 @@ packages:
       rolldown:
         optional: true
 
-  '@nuxthub/core@0.10.4':
-    resolution: {integrity: sha512-X/tu4r12KTNimDFK9FICKPqVhX+EFkJ8uOuUq6BkGP8kxIQiahDWQQ6H9zJcTdcks4JeuN0UQP+hVwszrfFOaA==}
+  '@nuxthub/core@https://pkg.pr.new/@nuxthub/core@759':
+    resolution: {tarball: https://pkg.pr.new/@nuxthub/core@759}
+    version: 0.10.4
     hasBin: true
 
   '@nuxtjs/color-mode@3.5.2':
@@ -9606,7 +9607,7 @@ snapshots:
       - vue-tsc
       - yaml
 
-  '@nuxthub/core@0.10.4(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2)(magicast@0.5.1)(typescript@5.9.3)':
+  '@nuxthub/core@https://pkg.pr.new/@nuxthub/core@759(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2)(magicast@0.5.1)(typescript@5.9.3)':
     dependencies:
       '@cloudflare/workers-types': 4.20260115.0
       '@nuxt/kit': 4.2.2(magicast@0.5.1)
