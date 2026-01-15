@@ -36,23 +36,8 @@ export default defineNuxtConfig({
     '/pricing': { redirect: { to: '/membership', statusCode: 301 } },
   },
   compatibilityDate: '2025-12-11',
-  nitro: {
-    cloudflare: {
-      wrangler: {
-        routes: [
-          { custom_domain: true, pattern: 'nuxt.frigear.nu' },
-          { custom_domain: true, pattern: 'nuxt.frigear.dev' },
-        ],
-
-      },
-    },
-  },
   hub: {
-    db: {
-      dialect: 'sqlite',
-      driver: 'd1',
-      connection: { databaseId: '03188510-ac62-4ffb-80dd-0d9912aa3d55' },
-    },
+    db: 'sqlite',
   },
   studio: {
     repository: {

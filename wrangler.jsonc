@@ -1,0 +1,39 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nuxt-frigear-nu",
+  "compatibility_date": "2025-10-16",
+  "account_id": "c2a45bb0103936627aeb1d147b5e3413",
+  "keep_vars": true,
+  "observability": {
+    "logs": {
+      "enabled": true
+    }
+  },
+  "d1_databases": [
+    {
+      "database_id": "03188510-ac62-4ffb-80dd-0d9912aa3d55",
+      "binding": "DB",
+      "migrations_table": "_hub_migrations",
+      "migrations_dir": ".output/server/db/migrations/"
+    }
+  ],
+  "preview_urls": false,
+  "routes": [
+    {
+      "custom_domain": true,
+      "pattern": "nuxt.frigear.dev"
+    },
+    {
+      "custom_domain": true,
+      "pattern": "nuxt.frigear.nu"
+    }
+  ],
+  "assets": {
+    "directory": ".output/public"
+  },
+  "compatibility_flags": [
+    "nodejs_als",
+    "nodejs_compat",
+    "no_nodejs_compat_v2"
+  ]
+}
