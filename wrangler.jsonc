@@ -11,8 +11,10 @@
   },
   "d1_databases": [
     {
-      "database_id": "03188510-ac62-4ffb-80dd-0d9912aa3d55",
+//      "database_id": "03188510-ac62-4ffb-80dd-0d9912aa3d55",
+      "database_id": "38a09939-7e77-49ac-858b-d43fafc7762b",
       "binding": "DB",
+      "migrations_table": "_hub_migrations",
       "migrations_dir": ".output/server/db/migrations/"
     }
   ],
