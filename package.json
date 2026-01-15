@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@nuxtjs/supabase": "2.0.3",
-    "better-sqlite3": "^12.5.0",
+    "better-sqlite3": "^12.6.0",
     "minimatch": "^10.1.1",
     "nuxt": "^4.2.2",
     "simple-content-site": "^2.2.0",
