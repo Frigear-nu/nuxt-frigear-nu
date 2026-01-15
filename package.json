@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.12.1",
-    "@nuxt/eslint-config": "^1.9.0",
+    "@nuxt/eslint-config": "^1.12.1",
     "eslint": "^9.39.2",
     "supabase": "^2.72.6"
   },
