@@ -16,7 +16,7 @@
       "binding": "DB",
       "migrations_table": "_hub_migrations",
       "database_name": "nuxt-frigear-nu",
-      "migrations_dir": ".output/server/db/migrations/"
+      "migrations_dir": ".output/server/db/migrations/sqlite"
     }
   ],
   "preview_urls": false,
