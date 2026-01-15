@@ -10,9 +10,8 @@
     "cf:deploy": "npx wrangler --cwd .output/ deploy",
     "db:generate": "npx nuxt db generate",
     "db:migrate": "npx nuxt db migrate",
-    "db:rollback": "npx nuxt db rollback",
-    "db:reset": "npx drizzle-kit reset",
-    "db:push": "npx drizzle-kit push"
+    "db:drop-all": "npx nuxt db drop-all",
+    "db:reset": "pnpm run db:drop-all && pnpm run db:migrate"
   },
   "dependencies": {
     "@libsql/client": "^0.17.0",

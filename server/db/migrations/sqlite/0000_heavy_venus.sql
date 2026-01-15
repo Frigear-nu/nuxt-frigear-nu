@@ -27,10 +27,29 @@ CREATE TABLE `stripe_subscriptions` (
 	`status` text NOT NULL,
 	`metadata` text NOT NULL,
 	`price_id` text NOT NULL,
-	`quantity` integer NOT NULL,
+	`quantity` integer DEFAULT 1 NOT NULL,
 	`cancel_at_period_end` integer NOT NULL,
 	`created` integer NOT NULL,
 	`current_period_start` integer NOT NULL,
 	`current_period_end` integer NOT NULL,
 	`ended_at` integer
 );
+--> statement-breakpoint
+CREATE TABLE `stripe_customers` (
+	`userId` integer PRIMARY KEY NOT NULL,
+	`stripe_customer_id` text
+);
+--> statement-breakpoint
+CREATE UNIQUE INDEX `unique_idx` ON `stripe_customers` (`stripe_customer_id`,`userId`);--> statement-breakpoint
+CREATE TABLE `users` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`name` text NOT NULL,
+	`email` text NOT NULL,
+	`password` text,
+	`avatar` text,
+	`createdAt` integer,
+	`last_login_at` integer,
+	`is_migrated` integer DEFAULT false NOT NULL
+);
+--> statement-breakpoint
+CREATE UNIQUE INDEX `users_email_unique` ON `users` (`email`);
