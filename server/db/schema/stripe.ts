@@ -1,4 +1,5 @@
-import { sqliteTable, text, integer, uniqueIndex } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
+import { stripeUsers } from './user'
 
 export const stripeProducts = sqliteTable('stripe_products', {
   id: text().primaryKey(),
@@ -15,7 +16,7 @@ export type NewStripeProducts = typeof stripeProducts.$inferInsert
 
 export const stripePrices = sqliteTable('stripe_prices', {
   id: text().primaryKey(),
-  productId: text('product_id').notNull(),
+  productId: text('product_id').notNull().references(() => stripeProducts.id),
   active: integer({ mode: 'boolean' }).notNull(),
   description: text(),
   unitAmount: integer('unit_amount').notNull(),
@@ -32,10 +33,10 @@ export type NewStripePrices = typeof stripePrices.$inferInsert
 
 export const stripeSubscriptions = sqliteTable('stripe_subscriptions', {
   id: text().primaryKey(),
-  // userId: text('user_id').notNull(),
+  userId: text('user_id').notNull().references(() => stripeUsers.stripeCustomerId),
   status: text().notNull(),
   metadata: text().notNull(),
-  priceId: text('price_id').notNull(),
+  priceId: text('price_id').notNull().references(() => stripePrices.id),
   quantity: integer().notNull().default(1),
   cancelAtPeriodEnd: integer('cancel_at_period_end', { mode: 'boolean' }).notNull(),
   created: integer({ mode: 'timestamp' }).notNull(),

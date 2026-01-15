@@ -1,7 +1,7 @@
 import { sqliteTable, text, integer, uniqueIndex } from 'drizzle-orm/sqlite-core'
 
 export const stripeUsers = sqliteTable('stripe_customers', {
-  userId: integer().primaryKey(),
+  userId: integer().primaryKey().references(() => users.id),
   stripeCustomerId: text('stripe_customer_id'),
 }, (t) => {
   return {
