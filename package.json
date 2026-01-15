@@ -20,7 +20,7 @@
   "devDependencies": {
     "@nuxt/eslint": "^1.9.0",
     "@nuxt/eslint-config": "^1.9.0",
-    "eslint": "^9.37.0",
+    "eslint": "^9.39.2",
     "supabase": "^2.72.6"
   },
   "packageManager": "pnpm@10.19.0"
