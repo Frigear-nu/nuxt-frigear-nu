@@ -4,57 +4,56 @@ on:
   push:
     branches:
       - main
-#      - staging
 
 jobs:
   deploy:
     runs-on: ubuntu-22.04
-#    defaults:
-#      run:
-#        working-directory: /apps/web
+
+    env:
+      node_options: --max-old-space-size=8192
+
+      studio_github_client_secret: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
+      studio_github_client_id: ${{ vars.STUDIO_GITHUB_CLIENT_ID }}
+
+      nitro_preset: ${{ vars.NITRO_PRESET }}
+
+      nuxt_public_supabase_key: ${{ vars.NUXT_PUBLIC_SUPABASE_KEY }}
+      nuxt_public_supabase_url: ${{ vars.NUXT_PUBLIC_SUPABASE_URL }}
+
+      supabase_secret_key: ${{ secrets.SUPABASE_SECRET_KEY }}
+      supabase_google_client_id: ${{ secrets.SUPABASE_GOOGLE_CLIENT_ID }}
+      supabase_google_secret: ${{ secrets.SUPABASE_GOOGLE_SECRET }}
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pnpm
+      - name: install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10.19.0
 
-      - name: Use Node.js 24.6
+      - name: use node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24.6
-          cache: 'pnpm'
+          cache: pnpm
 
-      - name: Install dependencies
+      - name: install dependencies
         run: pnpm install
 
-      - name: Build
-        env:
-          STUDIO_GITHUB_CLIENT_SECRET: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
-          STUDIO_GITHUB_CLIENT_ID: ${{ vars.STUDIO_GITHUB_CLIENT_ID }}
-          NITRO_PRESET: ${{ vars.NITRO_PRESET }}
-          NUXT_PUBLIC_SUPABASE_KEY: ${{ vars.NUXT_PUBLIC_SUPABASE_KEY }}
-          NUXT_PUBLIC_SUPABASE_URL: ${{ vars.NUXT_PUBLIC_SUPABASE_URL }}
-          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
-          SUPABASE_GOOGLE_CLIENT_ID: ${{ secrets.SUPABASE_GOOGLE_CLIENT_ID }}
-          SUPABASE_GOOGLE_SECRET: ${{ secrets.SUPABASE_GOOGLE_SECRET }}
-        run: NODE_OPTIONS="--max-old-space-size=8192" pnpm build
+      - name: build
+        run: pnpm build
 
-      #      - name: Deploy to ${{github.ref_name}}
-      #        if: github.ref_name != 'main'
-      #        run: CLOUDFLARE_ENV=${{github.ref_name}} CLOUDFLARE_API_TOKEN=${{ secrets.CLOUDFLARE_API_TOKEN }} pnpm cf:deploy
-
-      - name: Deploy to production
+      - name: migrate db
         if: github.ref_name == 'main'
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          STUDIO_GITHUB_CLIENT_SECRET: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
-          STUDIO_GITHUB_CLIENT_ID: ${{ vars.STUDIO_GITHUB_CLIENT_ID }}
-        run: pnpm cf:deploy
+          cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          cloudflare_account_id: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: pnpm db:migrate
 
-#      - name: Apply DB migrations
-#        if: success() && (github.ref_name == 'staging' || github.ref_name == 'main')
-#        run: pnpm db:migrate
+      - name: deploy to production
+        if: github.ref_name == 'main'
+        env:
+          cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          cloudflare_account_id: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: pnpm cf:deploy
