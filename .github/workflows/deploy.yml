@@ -1,4 +1,4 @@
-name: Deploy
+name: deploy
 
 on:
   push:
@@ -10,19 +10,19 @@ jobs:
     runs-on: ubuntu-22.04
 
     env:
-      node_options: --max-old-space-size=8192
+      NODE_OPTIONS: --max-old-space-size=8192
 
-      studio_github_client_secret: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
-      studio_github_client_id: ${{ vars.STUDIO_GITHUB_CLIENT_ID }}
+      STUDIO_GITHUB_CLIENT_SECRET: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
+      STUDIO_GITHUB_CLIENT_ID: ${{ vars.STUDIO_GITHUB_CLIENT_ID }}
 
-      nitro_preset: ${{ vars.NITRO_PRESET }}
+      NITRO_PRESET: ${{ vars.NITRO_PRESET }}
 
-      nuxt_public_supabase_key: ${{ vars.NUXT_PUBLIC_SUPABASE_KEY }}
-      nuxt_public_supabase_url: ${{ vars.NUXT_PUBLIC_SUPABASE_URL }}
+      NUXT_PUBLIC_SUPABASE_KEY: ${{ vars.NUXT_PUBLIC_SUPABASE_KEY }}
+      NUXT_PUBLIC_SUPABASE_URL: ${{ vars.NUXT_PUBLIC_SUPABASE_URL }}
 
-      supabase_secret_key: ${{ secrets.SUPABASE_SECRET_KEY }}
-      supabase_google_client_id: ${{ secrets.SUPABASE_GOOGLE_CLIENT_ID }}
-      supabase_google_secret: ${{ secrets.SUPABASE_GOOGLE_SECRET }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_GOOGLE_CLIENT_ID: ${{ secrets.SUPABASE_GOOGLE_CLIENT_ID }}
+      SUPABASE_GOOGLE_SECRET: ${{ secrets.SUPABASE_GOOGLE_SECRET }}
 
     steps:
       - uses: actions/checkout@v4
@@ -47,13 +47,13 @@ jobs:
       - name: migrate db
         if: github.ref_name == 'main'
         env:
-          cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          cloudflare_account_id: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
         run: pnpm db:migrate
 
       - name: deploy to production
         if: github.ref_name == 'main'
         env:
-          cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          cloudflare_account_id: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
         run: pnpm cf:deploy
