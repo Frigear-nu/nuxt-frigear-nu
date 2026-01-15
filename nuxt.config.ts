@@ -7,13 +7,6 @@ export default defineNuxtConfig({
     'nuxt-studio',
     '@nuxt/ui',
   ],
-  $production: {
-    hub: {
-      db: {
-        dialect: 'sqlite',
-      },
-    },
-  },
   css: ['~/assets/css/main.css'],
   site: {
     name: 'Frigear.nu',
