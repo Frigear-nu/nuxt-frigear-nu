@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@libsql/client": "^0.17.0",
-    "@nuxthub/core": "0.10.4",
+    "@nuxthub/core": "https://pkg.pr.new/@nuxthub/core@759",
     "@nuxtjs/supabase": "2.0.3",
     "better-sqlite3": "^12.6.0",
     "drizzle-kit": "^0.31.8",
