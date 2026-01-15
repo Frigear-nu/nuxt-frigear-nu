@@ -7,11 +7,6 @@ export default defineNuxtConfig({
     'nuxt-studio',
     '@nuxt/ui',
   ],
-  $development: {
-    hub: {
-      db: 'sqlite',
-    },
-  },
   css: ['~/assets/css/main.css'],
   site: {
     name: 'Frigear.nu',
@@ -40,13 +35,9 @@ export default defineNuxtConfig({
     '/signin/signup': { redirect: { to: '/sign-in?mode=up', statusCode: 301 } },
     '/pricing': { redirect: { to: '/membership', statusCode: 301 } },
   },
+  compatibilityDate: '2025-12-11',
   hub: {
-    // nice to know about preview env: https://hub.nuxt.com/docs/getting-started/deploy#cloudflare
-    db: {
-      dialect: 'sqlite',
-      driver: 'd1',
-      connection: { databaseId: '03188510-ac62-4ffb-80dd-0d9912aa3d55' },
-    },
+    db: 'sqlite',
   },
   studio: {
     repository: {
