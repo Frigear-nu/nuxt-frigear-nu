@@ -13,7 +13,6 @@
     {
       "database_id": "03188510-ac62-4ffb-80dd-0d9912aa3d55",
       "binding": "DB",
-      "migrations_table": "_hub_migrations",
       "migrations_dir": ".output/server/db/migrations/"
     }
   ],
