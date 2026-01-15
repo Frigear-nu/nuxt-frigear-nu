@@ -11,7 +11,6 @@ export default defineNuxtConfig({
     hub: {
       db: {
         dialect: 'sqlite',
-
       },
     },
   },
