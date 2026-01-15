@@ -27,6 +27,7 @@ export default defineNuxtConfig({
     '/signin/email_signin': { redirect: { to: '/sign-in?provider=link', statusCode: 301 } },
     '/signin/forgot_password': { redirect: { to: '/forgot-password', statusCode: 301 } },
     '/signin/signup': { redirect: { to: '/sign-in?mode=up', statusCode: 301 } },
+    '/pricing': { redirect: { to: '/membership', statusCode: 301 } },
   },
   nitro: {
     cloudflare: {
