@@ -38,7 +38,10 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2025-12-11',
   hub: {
-    db: 'sqlite',
+    db: {
+      dialect: 'sqlite',
+      casing: 'snake_case',
+    },
   },
   studio: {
     repository: {
