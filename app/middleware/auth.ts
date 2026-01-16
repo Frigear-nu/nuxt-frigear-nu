@@ -4,5 +4,5 @@ export default defineNuxtRouteMiddleware((to) => {
   const { loggedIn } = useUserSession()
 
   if (loggedIn.value) return
-  return navigateTo('/sign-in?redirect=' + to.fullPath, { replace: true })
+  return navigateTo(`/sign-in?redirect=${encodeURIComponent(to.fullPath)}`, { replace: true })
 })
