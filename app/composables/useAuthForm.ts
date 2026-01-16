@@ -16,7 +16,7 @@ const providers: Provider[] = [
   },
 ]
 
-const useSiteAuth = () => {
+const useAuthForm = () => {
   const fields = ref<AuthFormField[]>([
     {
       name: 'email',
@@ -35,6 +35,20 @@ const useSiteAuth = () => {
     },
   ])
 
+  const signUpFields = computed<AuthFormField[]>(() => {
+    return [
+      {
+        name: 'name',
+        type: 'text',
+        autocomplete: 'name',
+        label: 'fields.name',
+        placeholder: 'labels.name',
+        required: true,
+      },
+      ...toValue(fields) as AuthFormField[],
+    ]
+  })
+
   const buildProviders = (handler: ProviderHandler): ButtonProps[] => {
     return providers.map((provider) => {
       return {
@@ -44,7 +58,7 @@ const useSiteAuth = () => {
     })
   }
 
-  return { fields, buildProviders }
+  return { fields, signUpFields, buildProviders }
 }
 
-export default useSiteAuth
+export default useAuthForm
