@@ -1,5 +1,6 @@
 import { serverSupabaseServiceRole } from '#supabase/server'
 import { eq } from 'drizzle-orm'
+import { ServerError } from '@nitrotool/errors'
 
 export default defineOAuthGoogleEventHandler({
   config: {
@@ -31,11 +32,10 @@ export default defineOAuthGoogleEventHandler({
       }
     }
 
-    await setUserSession(event, {
-      user: dbUser,
-      loggedInAt: Date.now(),
-    })
+    // todo: check if this might be triggered.
+    if (!dbUser) throw ServerError()
 
-    return sendRedirect(event, '/')
+    // todo: centralize redirect storage.
+    return authenticateUser(event, dbUser, '/')
   },
 })
