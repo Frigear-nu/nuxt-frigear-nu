@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     'nuxt-studio',
     '@nuxt/ui',
     'nuxt-auth-utils',
+    '@unlok-co/nuxt-stripe',
   ],
   css: ['~/assets/css/main.css'],
   site: {
@@ -14,6 +15,9 @@ export default defineNuxtConfig({
   },
   colorMode: {
     preference: 'dark',
+  },
+  runtimeConfig: {
+    stripeWebhookSecret: '',
   },
   routeRules: {
     '/sign-in': {
@@ -41,6 +45,17 @@ export default defineNuxtConfig({
     db: {
       dialect: 'sqlite',
       casing: 'snake_case',
+    },
+  },
+  stripe: {
+    server: {
+      key: process.env.STRIPE_SECRET_KEY!,
+      options: {/* https://github.com/stripe/stripe-node?tab=readme-ov-file#configuration */},
+    },
+    client: {
+      key: process.env.STRIPE_PUBLISHABLE_KEY!,
+      manualClientLoad: true,
+      options: { /* your api options override for stripe client side https://stripe.com/docs/js/initializing#init_stripe_js-options */},
     },
   },
   studio: {

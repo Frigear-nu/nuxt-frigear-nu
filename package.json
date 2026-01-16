@@ -17,6 +17,7 @@
     "@libsql/client": "^0.17.0",
     "@nuxthub/core": "https://pkg.pr.new/@nuxthub/core@759",
     "@nuxtjs/supabase": "2.0.3",
+    "@unlok-co/nuxt-stripe": "6.0.2",
     "better-sqlite3": "^12.6.0",
     "drizzle-kit": "^0.31.8",
     "drizzle-orm": "^0.45.1",
