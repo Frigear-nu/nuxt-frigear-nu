@@ -88,7 +88,7 @@ function onMagicLinkError(err: Error) {
 }
 
 function onMagicLinkDevelopment(magicLink: unknown) {
-  toast.add(formatToastSuccess('Check the console 👨‍💻'))
+  toast.add(formatToastSuccess('Check the terminal for Magic Link 👨‍💻'))
   if (import.meta.dev) console.log({ magicLink })
   displayMagicLinkModal.value = false
   if (!emailWasDispatched.value) emailWasDispatched.value = true

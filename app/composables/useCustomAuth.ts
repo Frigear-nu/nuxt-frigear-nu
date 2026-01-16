@@ -12,6 +12,9 @@ export const useCustomAuth = () => {
     })
     if (!result) throw new Error('Could not send magic link.')
 
+    if (result.local) {
+      return result
+    }
     return true
   }
 

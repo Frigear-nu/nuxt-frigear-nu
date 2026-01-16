@@ -45,8 +45,10 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
     }
   })
 
-  if (magicLink.local) {
-    $emits('development', magicLink)
+  if (import.meta.dev) console.log({ magicLink })
+
+  if (typeof magicLink === 'object' && magicLink?.local) {
+    return $emits('development', magicLink)
   }
 
   $emits('success', email)
