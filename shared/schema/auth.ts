@@ -9,3 +9,23 @@ export const signUpSchema = z.object({
 })
 
 export type SignUpSchema = z.infer<typeof signUpSchema>
+
+export const forgotPasswordSchema = z.object({
+  email: z.email(),
+})
+
+export type ForgotPasswordSchema = z.infer<typeof forgotPasswordSchema>
+
+export const signInWithMagicLinksSchema = z.object({
+  token: z.string(),
+  redirect: z.string().optional(),
+})
+
+export type SignInWithMagicLinksSchema = z.infer<typeof signInWithMagicLinksSchema>
+
+export const magicLinkSchema = z.object({
+  email: z.email(),
+  redirect: z.string().optional(),
+})
+
+export type MagicLinkSchema = z.infer<typeof magicLinkSchema>
