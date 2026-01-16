@@ -15,11 +15,14 @@
   },
   "dependencies": {
     "@libsql/client": "^0.17.0",
+    "@nitrotool/errors": "^0.0.9",
     "@nitrotool/jwt": "^0.0.9",
     "@nuxthub/core": "https://pkg.pr.new/@nuxthub/core@759",
     "@nuxtjs/supabase": "2.0.3",
+    "@paralleldrive/cuid2": "^3.0.6",
     "@unlok-co/nuxt-stripe": "6.0.2",
     "better-sqlite3": "^12.6.0",
+    "date-fns": "^4.1.0",
     "drizzle-kit": "^0.31.8",
     "drizzle-orm": "^0.45.1",
     "h3-zod": "^0.5.3",
@@ -34,6 +37,8 @@
     "@nuxt/eslint-config": "^1.12.1",
     "eslint": "^9.39.2",
     "supabase": "^2.72.7",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.2.2",
     "wrangler": "^4.59.2"
   },
   "packageManager": "pnpm@10.19.0"
