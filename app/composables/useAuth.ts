@@ -6,7 +6,7 @@ export const useAuth = () => {
   const customAuth = useCustomAuth()
 
   const authMode = computed<'custom' | 'supabase'>(() => {
-    return 'custom'
+    return 'supabase'
   })
 
   const currentUser = computed(() => {
