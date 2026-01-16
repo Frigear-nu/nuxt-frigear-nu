@@ -49,7 +49,7 @@ export type StripeSubscriptions = typeof stripeSubscriptions.$inferInsert
 export type NewStripeSubscriptions = typeof stripeSubscriptions.$inferInsert
 
 export const stripeCustomers = sqliteTable('stripe_customers', {
-  id: text('stripe_customer_id').primaryKey(),
+  id: text().primaryKey(),
   userId: integer().references(() => users.id),
 }, (t) => {
   return {
