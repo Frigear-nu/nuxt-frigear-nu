@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import * as z from 'zod'
+import { signInWithPasswordSchema, type SignUpWithPasswordSchema } from '#shared/schema/auth'
+import { signUpWithPasswordSchema } from '#shared/schema/auth'
 import type { FormSubmitEvent } from '@nuxt/ui'
 
 const toast = useToast()
@@ -9,7 +10,7 @@ const authForm = useTemplateRef('authForm')
 const displayMagicLinkModal = ref(false)
 const displayForgotPasswordModal = ref(false)
 const emailWasDispatched = ref(false)
-const { fields, buildProviders } = useSiteAuth()
+const { fields, signUpFields, buildProviders } = useAuthForm()
 
 const emailField = computed<string | undefined>({
   get: () => authForm.value?.state?.email,
@@ -36,14 +37,6 @@ const providers = buildProviders((provider) => {
       toast.add(formatToastError(new Error(`Provider '${provider}', is not implemented.`)))
   }
 })
-
-// TODO: Translations
-const schema = z.object({
-  email: z.email('Ugyldig e-post.'),
-  password: z.string('Passord er påkrævet').min(8, 'Must be at least 8 characters'),
-})
-
-type Schema = z.output<typeof schema>
 
 const signIn = async (email: string, password: string) => {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -74,7 +67,7 @@ const signUp = async (email: string, password: string) => {
   }
 }
 
-async function onSubmit(payload: FormSubmitEvent<Schema>) {
+async function onSubmit(payload: FormSubmitEvent<SignUpWithPasswordSchema>) {
   const email = payload.data.email
   const password = payload.data.password
   if (mode.value === 'up') await signUp(email, password)
@@ -116,9 +109,9 @@ function onPasswordResetDispatched(email: string) {
     <UAuthForm
       v-else
       ref="authForm"
-      :schema="schema"
+      :schema="mode === 'up' ? signUpWithPasswordSchema : signInWithPasswordSchema"
       :title="mode === 'up' ? 'Sign Up' : 'Sign In'"
-      :fields="fields"
+      :fields="mode === 'up' ? signUpFields : fields"
       :providers="providers"
       :separator="{ label: 'OR' }"
       :submit="mode === 'up' ? { label: 'Sign Up' } : { label: 'Sign In' }"
