@@ -13,9 +13,10 @@ const $emits = defineEmits<{
   (e: 'loading'): void
   (e: 'success', email: string): void
   (e: 'error', error: Error | AuthError | z.ZodError): void
+  (e: 'development', magicLink: unknown): void
 }>()
 
-const supabase = useSupabaseClient()
+const { sendMagicLink } = useAuth()
 const form = useTemplateRef('form')
 const emailValue = defineModel<string | undefined>('email')
 const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
@@ -38,17 +39,14 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
 
   $emits('loading')
 
-  const { error: supabaseError } = await supabase.auth.signInWithOtp({
-    email,
-    options: {
-      // todo: change this to /auth/confirm when the redirect url has been added to supabase
-      emailRedirectTo: withBaseUrl('/auth/confirm'),
-      shouldCreateUser: true,
-    },
+  const magicLink = await sendMagicLink(email).catch((error) => {
+    if (error) {
+      $emits('error', error)
+    }
   })
 
-  if (supabaseError) {
-    return $emits('error', supabaseError)
+  if (magicLink.local) {
+    $emits('development', magicLink)
   }
 
   $emits('success', email)
