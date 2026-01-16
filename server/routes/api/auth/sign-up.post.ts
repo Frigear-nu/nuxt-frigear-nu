@@ -1,6 +1,5 @@
 import { signUpSchema } from '#shared/schema/auth'
 import { useValidatedBody } from 'h3-zod'
-import { serverSupabaseServiceRole } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
   const { user } = await getUserSession(event)
