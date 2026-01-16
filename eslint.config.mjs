@@ -10,6 +10,7 @@ export default createConfigForNuxt({
   {
     rules: {
       'vue/multi-word-component-names': 'off',
+      'unicorn/throw-new-error': 'off',
     },
   },
 )
