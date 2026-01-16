@@ -1,4 +1,4 @@
-import { signUpSchema } from '#shared/auth'
+import { signUpSchema } from '#shared/schema/auth'
 import { useValidatedBody } from 'h3-zod'
 
 export default defineEventHandler(async (event) => {
