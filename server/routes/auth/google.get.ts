@@ -26,7 +26,7 @@ export default defineOAuthGoogleEventHandler({
 
       if (sbUser) {
         await migrateSupabaseAccountById(serviceRole, dbUser.id, sbUser.id)
-        await db.update(schema.users).set({ isMigrated: true }).where(eq(schema.users.id, dbUser.id)).returning()
+        await db.update(schema.users).set({ isMigrated: true }).where(eq(schema.users.id, dbUser.id))
         dbUser = await findUserByEmail(email)
       }
     }
