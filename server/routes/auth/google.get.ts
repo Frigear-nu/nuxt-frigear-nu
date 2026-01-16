@@ -17,10 +17,12 @@ export default defineOAuthGoogleEventHandler({
         .returning()
     }
 
+    if (!dbUser.isMigrated) {
+      // find
+    }
+
     await setUserSession(event, {
-      user: {
-        google: user.email,
-      },
+      user: dbUser,
       loggedInAt: Date.now(),
     })
 

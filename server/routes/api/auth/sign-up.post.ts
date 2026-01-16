@@ -13,13 +13,6 @@ export default defineEventHandler(async (event) => {
 
   if (internalUser) throw createError({ statusCode: 400, message: 'User already exists.' })
 
-  // todo: migrate the user coming from supabase somehow but via email link.
-  const sb = serverSupabaseServiceRole(event)
-  const { data: sbUser } = await sb.from('users')
-    .select('*')
-    .eq('email', email)
-    .maybeSingle<{ id: string }>()
-
   //
   let [createdUser] = await db.insert(schema.users).values({
     name,
@@ -27,9 +20,12 @@ export default defineEventHandler(async (event) => {
     password: await hashPassword(password),
   }).returning()
 
+  const serviceRole = serverSupabaseServiceRole(event)
+  const sbUser = await findSupabaseUserByEmail(serviceRole, email)
   if (sbUser) {
-    await migrateSupabaseAccountById(createdUser.id, sbUser.id)
+    await migrateSupabaseAccountById(serviceRole, createdUser.id, sbUser.id)
     createdUser = await findUserByEmail(createdUser.email)
+    if (!createdUser.isMigrated) throw new Error('Could not migrate supabase account.')
   }
 
   // todo: some mapping probably needs to be done here.

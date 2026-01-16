@@ -1,8 +1,7 @@
-import { serverSupabaseServiceRole } from '#supabase/server'
+import type { serverSupabaseServiceRole } from '#supabase/server'
 
-export const migrateSupabaseAccountById = async (internalId: number, supabaseId: string) => {
+export const migrateSupabaseAccountById = async (serviceRole: ReturnType<typeof serverSupabaseServiceRole>, internalId: number, supabaseId: string) => {
   // connect to sb postgres so we can query the public and the auth schema (for social auth matching)
-  const serviceRole = serverSupabaseServiceRole(useEvent())
 
   const { data: sbAuthUser } = await serviceRole.from('auth.users')
     .select('*')
@@ -24,4 +23,15 @@ export const migrateSupabaseAccountById = async (internalId: number, supabaseId:
     userId: internalId,
     id: sbStripeCustomer.id,
   })
+}
+
+export const findSupabaseUserByEmail = async (serviceRole: ReturnType<typeof serverSupabaseServiceRole>, email: string) => {
+  const { data: sbUser } = await serviceRole.from('users')
+    .select('*')
+    .eq('email', email)
+    .maybeSingle<{ id: string }>()
+
+  if (!sbUser) return undefined
+
+  return sbUser
 }
