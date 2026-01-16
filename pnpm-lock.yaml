@@ -18,8 +18,8 @@ importers:
         specifier: ^0.0.9
         version: 0.0.9(h3@1.15.5)
       '@nuxthub/core':
-        specifier: https://pkg.pr.new/@nuxthub/core@759
-        version: https://pkg.pr.new/@nuxthub/core@759(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2)(magicast@0.5.1)(synckit@0.11.12)(typescript@5.9.3)(vue-tsc@3.2.2(typescript@5.9.3))
+        specifier: ^0.10.4
+        version: 0.10.4(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2)(magicast@0.5.1)(synckit@0.11.12)(typescript@5.9.3)(vue-tsc@3.2.2(typescript@5.9.3))
       '@nuxtjs/supabase':
         specifier: 2.0.3
         version: 2.0.3
@@ -32,6 +32,9 @@ importers:
       better-sqlite3:
         specifier: ^12.6.0
         version: 12.6.0
+      consola:
+        specifier: ^3.4.2
+        version: 3.4.2
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -1755,9 +1758,8 @@ packages:
       rolldown:
         optional: true
 
-  '@nuxthub/core@https://pkg.pr.new/@nuxthub/core@759':
-    resolution: {tarball: https://pkg.pr.new/@nuxthub/core@759}
-    version: 0.10.4
+  '@nuxthub/core@0.10.4':
+    resolution: {integrity: sha512-X/tu4r12KTNimDFK9FICKPqVhX+EFkJ8uOuUq6BkGP8kxIQiahDWQQ6H9zJcTdcks4JeuN0UQP+hVwszrfFOaA==}
     hasBin: true
 
   '@nuxtjs/color-mode@3.5.2':
@@ -10320,7 +10322,7 @@ snapshots:
       - vue-tsc
       - yaml
 
-  '@nuxthub/core@https://pkg.pr.new/@nuxthub/core@759(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2)(magicast@0.5.1)(synckit@0.11.12)(typescript@5.9.3)(vue-tsc@3.2.2(typescript@5.9.3))':
+  '@nuxthub/core@0.10.4(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2)(magicast@0.5.1)(synckit@0.11.12)(typescript@5.9.3)(vue-tsc@3.2.2(typescript@5.9.3))':
     dependencies:
       '@cloudflare/workers-types': 4.20260115.0
       '@nuxt/kit': 4.2.2(magicast@0.5.1)
