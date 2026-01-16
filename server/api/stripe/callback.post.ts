@@ -3,21 +3,37 @@ import { useServerStripe } from '#stripe/server'
 export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig(event)
   const webhookSecret = runtimeConfig.stripeWebhookSecret || undefined
-  const signature = event.headers.get('stripe-signature')
 
-  if (!webhookSecret || !signature) {
-    throw createError({ statusCode: 400, message: 'Missing webhook secret or signature' })
+  if (!webhookSecret) {
+    throw createError({ statusCode: 400, message: 'Missing webhook secret.' })
   }
 
-  const stripe = useServerStripe(event)
+  const signature = event.headers.get('stripe-signature')
+  if (!signature) {
+    throw createError({ statusCode: 400, message: 'Missing signature.' })
+  }
 
   const rawBody = await readRawBody(event)
   if (!rawBody) {
     throw createError({ statusCode: 400, message: 'Missing body.' })
   }
 
-  const eventNotification = stripe.parseEventNotification(rawBody, signature, webhookSecret)
-  const stripeEvent = await stripe.events.retrieve(eventNotification.id)
+  let stripeEvent
+  const stripe = useServerStripe(event)
+  try {
+    stripeEvent = stripe.webhooks.constructEvent(
+      rawBody,
+      signature,
+      webhookSecret,
+    )
+  }
+  catch (err: unknown) {
+    throw createError({ statusCode: 400, message: 'Invalid signature.', cause: err })
+  }
+
+  if (!stripeEvent) {
+    throw createError({ statusCode: 400, message: 'Invalid stripe event.' })
+  }
 
   switch (stripeEvent.type) {
     // Todo: Handle the events listed
