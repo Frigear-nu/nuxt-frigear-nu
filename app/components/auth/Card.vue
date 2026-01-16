@@ -5,12 +5,19 @@ import type { FormSubmitEvent } from '@nuxt/ui'
 
 const toast = useToast()
 const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
-const supabase = useSupabaseClient()
 const authForm = useTemplateRef('authForm')
 const displayMagicLinkModal = ref(false)
 const displayForgotPasswordModal = ref(false)
 const emailWasDispatched = ref(false)
 const { fields, signUpFields, buildProviders } = useAuthForm()
+const {
+  authMode,
+  signInWithPassword,
+  signInWithProvider,
+  signUpWithPassword,
+} = useAuth()
+
+const isDevelopment = computed(() => import.meta.dev ?? false)
 
 const emailField = computed<string | undefined>({
   get: () => authForm.value?.state?.email,
@@ -26,45 +33,39 @@ const providers = buildProviders((provider) => {
       displayMagicLinkModal.value = true
       break
     case 'google':
-    // case 'github':
-      return supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: withBaseUrl('/auth/confirm'),
-        },
-      })
+      // case 'github':
+      return signInWithProvider(provider)
     default:
       toast.add(formatToastError(new Error(`Provider '${provider}', is not implemented.`)))
   }
 })
 
 const signIn = async (email: string, password: string) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
+  const signedInUser = await signInWithPassword(email, password).catch((error) => {
+    if (error) toast.add(formatToastError(error))
   })
-
-  if (error) toast.add(formatToastError(error))
-  if (!data.user) throw createError('Could not load user.')
+  if (!signedInUser) throw createError('Could not load user.')
 
   // todo: not sure if this redirect is correct.
   return navigateTo('/account')
 }
 
 const signUp = async (email: string, password: string) => {
-  const { error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      emailRedirectTo: withBaseUrl('/auth/confirm'),
-    },
+  const createdUser = await signUpWithPassword(email, password).catch((error) => {
+    if (error) toast.add(formatToastError(error))
   })
 
-  if (error) toast.add(formatToastError(error))
-  else {
-    toast.add(formatToastSuccess('Sign up successful!'))
-    await signIn(email, password)
+  if (!createdUser) {
+    throw new Error('Could not create user.')
   }
+
+  if (!createdUser.emailConfirmedAt) {
+    toast.add(formatToastSuccess('Check your mail for a confirmation email'))
+    emailWasDispatched.value = true
+    return
+  }
+
+  return navigateTo('/account')
 }
 
 async function onSubmit(payload: FormSubmitEvent<SignUpWithPasswordSchema>) {
@@ -84,6 +85,13 @@ function onMagicLinkDispatched(email: string) {
 function onMagicLinkError(err: Error) {
   toast.add(formatToastError(err))
   displayMagicLinkModal.value = false
+}
+
+function onMagicLinkDevelopment(magicLink: unknown) {
+  toast.add(formatToastSuccess('Check the console 👨‍💻'))
+  if (import.meta.dev) console.log({ magicLink })
+  displayMagicLinkModal.value = false
+  if (!emailWasDispatched.value) emailWasDispatched.value = true
 }
 
 function onPasswordResetDispatched(email: string) {
@@ -124,7 +132,15 @@ function onPasswordResetDispatched(email: string) {
           @click="mode = mode === 'up' ? 'in' : 'up'"
         >
           {{ mode === 'up' ? 'Sign in' : 'Sign up' }}
-        </ULink>.
+        </ULink>
+        .
+
+        <UBadge
+          v-if="isDevelopment"
+          color="error"
+        >
+          Auth: {{ authMode }}
+        </UBadge>
       </template>
       <template
         v-if="mode === 'in'"
@@ -144,6 +160,7 @@ function onPasswordResetDispatched(email: string) {
       v-model:mode="mode"
       @error="onMagicLinkError"
       @success="onMagicLinkDispatched"
+      @development="onMagicLinkDevelopment"
     />
     <AuthForgotPasswordModal
       v-model:open="displayForgotPasswordModal"
