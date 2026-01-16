@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     preference: 'dark',
   },
   runtimeConfig: {
+    jwtSecret: 'some-string-longer-than-32-chars-to-issue-jwt',
     stripeWebhookSecret: '',
   },
   routeRules: {
