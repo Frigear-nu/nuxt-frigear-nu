@@ -1,3 +1,10 @@
+CREATE TABLE `stripe_customers` (
+	`stripe_customer_id` text PRIMARY KEY NOT NULL,
+	`user_id` integer,
+	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
+CREATE UNIQUE INDEX `unique_idx` ON `stripe_customers` (`stripe_customer_id`,`user_id`);--> statement-breakpoint
 CREATE TABLE `stripe_prices` (
 	`id` text PRIMARY KEY NOT NULL,
 	`product_id` text NOT NULL,
@@ -39,20 +46,13 @@ CREATE TABLE `stripe_subscriptions` (
 	FOREIGN KEY (`price_id`) REFERENCES `stripe_prices`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
-CREATE TABLE `stripe_customers` (
-	`userId` integer PRIMARY KEY NOT NULL,
-	`stripe_customer_id` text,
-	FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
-);
---> statement-breakpoint
-CREATE UNIQUE INDEX `unique_idx` ON `stripe_customers` (`stripe_customer_id`,`userId`);--> statement-breakpoint
 CREATE TABLE `users` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`name` text NOT NULL,
 	`email` text NOT NULL,
 	`password` text,
 	`avatar` text,
-	`createdAt` integer,
+	`created_at` integer,
 	`last_login_at` integer,
 	`is_migrated` integer DEFAULT false NOT NULL
 );
