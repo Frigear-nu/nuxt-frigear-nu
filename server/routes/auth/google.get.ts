@@ -5,15 +5,16 @@ export default defineOAuthGoogleEventHandler({
     },
   },
   async onSuccess(event, { user }) {
-    // build shared utils as "queries"
-    const findUserByEmail = (email: string) => db.query.users.findFirst({ where: { email } })
-
     // TODO: Check if signed in with google before - and matching email.
     //  - if not create user and provider details.
-    let dbUser = await findUserByEmail(user.email)
+    const email: string = user.email || ''
+    let dbUser = await findUserByEmail(email)
 
     if (!dbUser) {
-      dbUser = await db.insert(schema.users).values({ data: { email: user.email } }).returning()
+      [dbUser] = await db.insert(schema.users)
+      // todo: get full_name from google?
+        .values({ email, name: email })
+        .returning()
     }
 
     await setUserSession(event, {
