@@ -62,11 +62,21 @@ export const useSupabaseAuth = () => {
     return data.user
   }
 
+  const dispatchPasswordReset = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo,
+    })
+
+    if (error) throw error
+    return true
+  }
+
   return {
     currentUser,
     sendMagicLink,
     signInWithProvider,
     signInWithPassword,
     signUpWithPassword,
+    dispatchPasswordReset,
   }
 }
