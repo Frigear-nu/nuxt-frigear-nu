@@ -1,3 +1,6 @@
+import { serverSupabaseServiceRole } from '#supabase/server'
+import { eq } from 'drizzle-orm'
+
 export default defineOAuthGoogleEventHandler({
   config: {
     authorizationParams: {
@@ -18,7 +21,14 @@ export default defineOAuthGoogleEventHandler({
     }
 
     if (!dbUser.isMigrated) {
-      // find
+      const serviceRole = serverSupabaseServiceRole(event)
+      const sbUser = await findSupabaseUserByEmail(serviceRole, email)
+
+      if (sbUser) {
+        await migrateSupabaseAccountById(serviceRole, dbUser.id, sbUser.id)
+        await db.update(schema.users).set({ isMigrated: true }).where(eq(schema.users.id, dbUser.id)).returning()
+        dbUser = await findUserByEmail(email)
+      }
     }
 
     await setUserSession(event, {
