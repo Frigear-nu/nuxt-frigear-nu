@@ -1,7 +1,7 @@
 import type { AuthProvider } from '~/types'
 
 export const useCustomAuth = () => {
-  const { session } = useUserSession()
+  const { session, fetch: refreshSession, clear: clearSession } = useUserSession()
 
   const currentUser = computed(() => session.value?.user)
 
@@ -26,10 +26,20 @@ export const useCustomAuth = () => {
   }
 
   const signInWithPassword = async (email: string, password: string) => {
+    await refreshSession()
     throw new Error('Not yet implemented.')
   }
   const signUpWithPassword = async (email: string, password: string) => {
+    await refreshSession()
     throw new Error('Not yet implemented.')
+  }
+
+  const refresh = async () => {
+    await refreshSession()
+  }
+
+  const signOut = async () => {
+    await clearSession()
   }
 
   return {
@@ -38,5 +48,9 @@ export const useCustomAuth = () => {
     signInWithProvider,
     signInWithPassword,
     signUpWithPassword,
+    custom: {
+      refresh,
+      signOut,
+    },
   }
 }

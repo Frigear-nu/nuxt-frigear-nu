@@ -78,5 +78,6 @@ export const useSupabaseAuth = () => {
     signInWithPassword,
     signUpWithPassword,
     dispatchPasswordReset,
+    supabase,
   }
 }
