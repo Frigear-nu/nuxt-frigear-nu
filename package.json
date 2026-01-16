@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@libsql/client": "^0.17.0",
+    "@nitrotool/jwt": "^0.0.9",
     "@nuxthub/core": "https://pkg.pr.new/@nuxthub/core@759",
     "@nuxtjs/supabase": "2.0.3",
     "@unlok-co/nuxt-stripe": "6.0.2",

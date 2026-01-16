@@ -11,6 +11,9 @@ importers:
       '@libsql/client':
         specifier: ^0.17.0
         version: 0.17.0
+      '@nitrotool/jwt':
+        specifier: ^0.0.9
+        version: 0.0.9(h3@1.15.5)
       '@nuxthub/core':
         specifier: https://pkg.pr.new/@nuxthub/core@759
         version: https://pkg.pr.new/@nuxthub/core@759(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2)(magicast@0.5.1)(synckit@0.11.12)(typescript@5.9.3)
@@ -1560,6 +1563,14 @@ packages:
 
   '@neon-rs/load@0.0.4':
     resolution: {integrity: sha512-kTPhdZyTQxB+2wpiRcFWrDcejc4JI6tkPuS7UZCG4l6Zvc5kU/gGQ/ozvHTh1XR5tS+UlfAfGuPajjzQjCiHCw==}
+
+  '@nitrotool/errors@0.0.9':
+    resolution: {integrity: sha512-i6MBJ+eLuBu+gQigamevka8MbfaeHRZPLGu2jVPaiQupA1EojQdz8xzVKxesEyNPPtjg7/gxpLniLPRkr5we/g==}
+
+  '@nitrotool/jwt@0.0.9':
+    resolution: {integrity: sha512-4Sxi5SmSb1v3P9NhJKxQ6GSg1C+gc1FKsM2tyWTyRe57iNNZ1CidSTL0nf2y4aLmH7zGHJ6Hl3feRplEbZsjJw==}
+    peerDependencies:
+      h3: ^1.15.3
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -3223,6 +3234,9 @@ packages:
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
+
+  '@tsndr/cloudflare-worker-jwt@3.2.1':
+    resolution: {integrity: sha512-1AfDEgu7DTbU0sXDSOKh4D5t7+RJ0dIRRaDmoX3LFeW0AxQdunuqTQ7AVGwNJqOnxrbxiruyvX01cf9HHqEvXQ==}
 
   '@tybys/wasm-util@0.10.1':
     resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
@@ -9602,6 +9616,16 @@ snapshots:
 
   '@neon-rs/load@0.0.4': {}
 
+  '@nitrotool/errors@0.0.9':
+    dependencies:
+      h3: 1.15.5
+
+  '@nitrotool/jwt@0.0.9(h3@1.15.5)':
+    dependencies:
+      '@nitrotool/errors': 0.0.9
+      '@tsndr/cloudflare-worker-jwt': 3.2.1
+      h3: 1.15.5
+
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -11558,6 +11582,8 @@ snapshots:
 
   '@trysound/sax@0.2.0':
     optional: true
+
+  '@tsndr/cloudflare-worker-jwt@3.2.1': {}
 
   '@tybys/wasm-util@0.10.1':
     dependencies:
