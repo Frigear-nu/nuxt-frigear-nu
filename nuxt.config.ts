@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     '@nuxt/content',
     'nuxt-studio',
     '@nuxt/ui',
+    'nuxt-auth-utils',
   ],
   css: ['~/assets/css/main.css'],
   site: {
