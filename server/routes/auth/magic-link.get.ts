@@ -2,27 +2,25 @@ import { signInWithMagicLinksSchema } from '#shared/schema/auth'
 import { useValidatedQuery } from 'h3-zod'
 import { isAfter } from 'date-fns'
 import { NotFoundError, ServerError } from '@nitrotool/errors'
-import { eq } from 'drizzle-orm'
+import { and, eq, gt, isNull } from 'drizzle-orm'
 
 export default defineEventHandler(async (event) => {
   const { token, redirect } = await useValidatedQuery(event, signInWithMagicLinksSchema)
   const currentTime = new Date()
   const magicLink = await db.query.magicLinks.findFirst({
-    where: {
-      // @ts-expect-error Drizzle has some bugs with types
-      token,
-      usedAt: null,
-      expiresAt: { gt: currentTime },
-    },
+    where: and(
+      eq(schema.magicLinks.token, token),
+      isNull(schema.magicLinks.usedAt),
+      gt(schema.magicLinks.expiresAt, currentTime),
+    ),
   })
 
-  if (!magicLink || isAfter(magicLink.expiresAt, currentTime)) {
+  if (!magicLink || isAfter(currentTime, magicLink.expiresAt)) {
     throw ServerError('Invalid link.')
   }
 
   let user = await db.query.users.findFirst({
-    // @ts-expect-error Drizzle Shenanigans.
-    where: { id: magicLink.userId },
+    where: eq(schema.users.id, magicLink.userId),
   })
 
   if (!user) throw NotFoundError()
