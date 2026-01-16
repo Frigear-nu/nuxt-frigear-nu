@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 const toast = useToast()
-const supabase = useSupabaseClient()
-const user = useSupabaseUser()
+const { currentUser, authMode, signOut } = useAuth()
 
 async function onSignOut() {
-  await supabase.auth.signOut()
+  await signOut()
   toast.add({
     title: 'You\'re signed out.',
   })
@@ -19,7 +18,14 @@ async function onSignOut() {
       description="An overview of your account"
     >
       <template #footer>
-        <pre>{{ user }}</pre>
+        <div class="flex flex-col">
+          <div>
+            <UBadge color="error">
+              Auth: <b>{{ authMode.toUpperCase() }}</b>
+            </UBadge>
+            <pre>{{ currentUser }}</pre>
+          </div>
+        </div>
       </template>
 
       <UButton
