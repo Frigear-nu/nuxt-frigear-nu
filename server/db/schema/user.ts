@@ -1,5 +1,4 @@
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
-import type { z } from 'zod'
 
 export const users = sqliteTable('users', {
   id: integer().primaryKey({ autoIncrement: true }),
@@ -77,7 +76,7 @@ export const passkeys = sqliteTable('passkeys', {
   lastUsedAt: integer('last_used_at'),
 })
 
-export type Passkeys = z.infer<typeof passkeys>
-export type NewPasskeys = z.infer<typeof passkeys>
+export type Passkeys = typeof passkeys.$inferSelect
+export type NewPasskeys = typeof passkeys.$inferInsert
 
 // todo: in the future build sessions table for revocable JWT's
