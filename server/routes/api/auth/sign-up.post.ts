@@ -12,14 +12,13 @@ export default defineEventHandler(async (event) => {
 
   if (internalUser) throw createError({ statusCode: 409, message: 'error.exists' })
 
-  //
+  // todo: check if email verification is enabled.
+  // @ts-expect-error Drizzle has some bugs with types
   const [createdUser] = await db.insert(schema.users).values({
     name,
     email,
     password: await hashPassword(password),
   }).returning()
-
-  // check if email verification is enabled.
 
   // todo: some mapping probably needs to be done here.
   await setUserSession(event, { user: createdUser })
