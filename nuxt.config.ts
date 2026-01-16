@@ -75,7 +75,10 @@ export default defineNuxtConfig({
       login: '/sign-in',
       callback: '/auth/confirm',
       // todo: naming?
-      include: ['/account(/*)?'],
+      include: [
+        /* '/account(/*)?', */
+        '/only/supabase',
+      ],
       saveRedirectToCookie: true,
     },
   },
