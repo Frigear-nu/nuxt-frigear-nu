@@ -1,7 +1,6 @@
 import { createId } from '@paralleldrive/cuid2'
 import type { Users } from 'hub:db:schema'
 import type { H3Event } from 'h3'
-import { encodeJwt } from '@nitrotool/jwt'
 
 export const createSafeId = () => createId()
 
