@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
   extends: ['simple-content-site'],
   modules: [
+    '@nitrotool/jwt',
     '@nuxthub/core',
     '@nuxtjs/supabase',
     '@nuxt/content',
