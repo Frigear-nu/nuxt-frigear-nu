@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
   extends: ['simple-content-site'],
   modules: [
+    '@nuxtjs/i18n',
     '@nitrotool/jwt',
     '@nuxthub/core',
     '@nuxtjs/supabase',
@@ -48,6 +49,14 @@ export default defineNuxtConfig({
       dialect: 'sqlite',
       casing: 'snake_case',
     },
+  },
+  i18n: {
+    defaultLocale: 'en',
+    locales: [
+      { code: 'en', iso: 'en-US', name: 'English' },
+      { code: 'da', iso: 'da-dk', name: 'Dansk' },
+    ],
+
   },
   stripe: {
     server: {
