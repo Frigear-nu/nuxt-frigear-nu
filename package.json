@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@libsql/client": "^0.17.0",
-    "@nitrotool/errors": "^0.0.9",
-    "@nitrotool/jwt": "^0.0.9",
+    "@nitrotool/errors": "^1.0.1",
+    "@nitrotool/jwt": "^1.0.1",
     "@nuxthub/core": "^0.10.4",
     "@nuxtjs/supabase": "2.0.3",
     "@paralleldrive/cuid2": "^3.0.6",
