@@ -17,7 +17,7 @@ export default defineOAuthGoogleEventHandler({
     if (!dbUser) {
       [dbUser] = await db.insert(schema.users)
       // todo: get full_name from google?
-        .values({ email, name: email })
+        .values({ email, name: user?.full_name || email })
         .returning()
     }
 
