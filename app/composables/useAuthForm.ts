@@ -6,12 +6,12 @@ type ProviderHandler = (provider: string) => void
 const providers: Provider[] = [
   {
     id: 'google',
-    label: 'Google',
+    label: 'labels.google',
     icon: 'i-simple-icons-google',
   },
   {
     id: 'link',
-    label: 'Magic Link',
+    label: 'labels.magic-link',
     icon: 'i-lucide-at-sign',
   },
 ]
@@ -22,15 +22,15 @@ const useAuthForm = () => {
       name: 'email',
       type: 'email',
       autocomplete: 'email',
-      label: 'Email',
-      placeholder: 'Din najs email...',
+      label: 'fields.email',
+      placeholder: 'labels.email',
       required: true,
     },
     {
       name: 'password',
-      label: 'Password',
       type: 'password',
-      placeholder: 'Enter your password',
+      label: 'fields.password',
+      placeholder: 'labels.password',
       required: true,
     },
   ])
