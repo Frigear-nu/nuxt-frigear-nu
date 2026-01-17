@@ -4,6 +4,8 @@ import type { H3Event } from 'h3'
 
 export const createSafeId = () => createId()
 
+// todo: investigate usage of function,
+//  if it would be easier to use JWT in the session?
 export const authenticateUser = async (event: H3Event, user: Users, redirect?: string) => {
   await setUserSession(event, {
     // todo: decide on structure here:
