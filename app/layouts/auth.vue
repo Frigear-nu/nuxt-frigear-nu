@@ -7,11 +7,11 @@ definePageMeta({
 
 const user = useSupabaseUser()
 const redirectInfo = useSupabaseCookieRedirect()
-const route = useRoute()
+// const route = useRoute()
 
-const mode = computed<'in' | 'up'>(() => {
-  return route.fullPath.includes('mode=up') ? 'up' : 'in'
-})
+// const mode = computed<'in' | 'up'>(() => {
+//   return route.fullPath.includes('mode=up') ? 'up' : 'in'
+// })
 
 watch(user, () => {
   if (user.value) {
