@@ -1,15 +1,22 @@
 import { createContactFormSchema } from '#shared/forms/contact/schema'
 import { contactSubjectLabels } from '#shared/forms/contact/subjects'
+import { Resend } from 'resend'
 import escapeHtml from 'escape-html'
 
 export default defineEventHandler(async (event) => {
-  const { emails } = useResend()
-  const { from, to } = useRuntimeConfig().resend
+  const config = useRuntimeConfig().resend
+  const resend = new Resend(config.apiKey)
+  const { from, to } = config
+
   const schema = createContactFormSchema()
   const data = await readValidatedBody(event, d => schema.parse(d))
 
   if (!from || !to) {
     throw createError({ statusCode: 500, message: 'Missing from or to address.' })
+  }
+
+  if (!config.apiKey) {
+    throw createError({ statusCode: 500, message: 'Missing API-Key.' })
   }
 
   const subjectLabel = contactSubjectLabels[data.subject]
@@ -29,12 +36,12 @@ export default defineEventHandler(async (event) => {
     <pre style="white-space:pre-wrap">${escapeHtml(data.message)}</pre>
   `.trim()
 
-  const response = await emails.send({
+  const response = await resend.emails.send({
     from,
     to: [to],
     subject: safeSubject,
     html,
-    // Resend’s Node SDK uses replyTo (camelCase) - but the API expects reply_to (snake_case) and it works. - DONT CHANGE TO replyTo
+    // Resend’s Node SDK uses replyTo (camelCase) - but the API expects reply_to (snake_case) and it works. - DONT CHANGE
     reply_to: data.email,
   })
 
