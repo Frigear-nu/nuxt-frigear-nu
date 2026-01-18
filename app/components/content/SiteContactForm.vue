@@ -60,7 +60,7 @@ watch(
     state.subject = candidate
 
     const q = { ...route.query }
-    delete (q as any).subject
+    delete (q as typeof q).subject
     router.replace({ query: q })
   },
   { immediate: true },
