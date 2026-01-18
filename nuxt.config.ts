@@ -1,7 +1,6 @@
 export default defineNuxtConfig({
   extends: ['simple-content-site'],
   modules: [
-    '@nuxtjs/i18n',
     '@nitrotool/jwt',
     '@nuxthub/core',
     '@nuxtjs/supabase',
@@ -21,21 +20,14 @@ export default defineNuxtConfig({
   runtimeConfig: {
     jwtSecret: 'some-string-longer-than-32-chars-to-issue-jwt',
     stripeWebhookSecret: '',
+    customI18n: true,
   },
   routeRules: {
-    '/sign-in': {
-      prerender: false,
-    },
-    '/account': {
-      prerender: false,
-    },
-    '/account/**': {
-      prerender: false,
-    },
-
+    '/sign-in': { prerender: false },
+    '/account': { prerender: false },
+    '/account/**': { prerender: false },
     // Static Redirects
     '/sign-up': { redirect: { to: '/sign-in?mode=up' } },
-
     // Temporary Redirects: should be removed in 2027 possibly.
     '/signin/password_signin': { redirect: { to: '/sign-in', statusCode: 301 } },
     '/signin/email_signin': { redirect: { to: '/sign-in?provider=link', statusCode: 301 } },
@@ -49,14 +41,6 @@ export default defineNuxtConfig({
       dialect: 'sqlite',
       casing: 'snake_case',
     },
-  },
-  i18n: {
-    defaultLocale: 'en',
-    locales: [
-      { code: 'en', iso: 'en-US', name: 'English' },
-      { code: 'da', iso: 'da-dk', name: 'Dansk' },
-    ],
-
   },
   stripe: {
     server: {
