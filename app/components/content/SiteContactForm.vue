@@ -30,22 +30,12 @@ async function onSubmit(event: FormSubmitEvent<ContactFormOutput>) {
   try {
     await $fetch('/api/send', { method: 'POST', body: event.data })
 
-    toast.add({
-      icon: 'lucide-check-circle',
-      title: 'Besked sendt!',
-      description: 'Vi vender tilbage hurtigst muligt.',
-      color: 'success',
-    })
+    toast.add(formatToastSuccess('Besked sendt!', 'Vi vender tilbage hurtigst muligt.'))
 
     Object.assign(state, DEFAULT_STATE)
   }
-  catch (err: Error) {
-    toast.add({
-      icon: 'lucide-alert-circle',
-      title: 'Noget gik galt',
-      description: err?.data?.message ?? err?.message ?? 'Ukendt fejl. Prøv igen senere.',
-      color: 'error',
-    })
+  catch (err: unknown) {
+    toast.add(formatToastError(err as Error, { title: 'Noget gik galt' }))
     throw err
   }
   finally {
