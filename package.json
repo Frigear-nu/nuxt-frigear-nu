@@ -31,7 +31,7 @@
     "minimatch": "^10.1.1",
     "nuxt": "^4.2.2",
     "nuxt-auth-utils": "0.5.27",
-    "simple-content-site": "^2.2.1",
+    "simple-content-site": "^2.2.2",
     "zod": "^4.3.5"
   },
   "devDependencies": {
