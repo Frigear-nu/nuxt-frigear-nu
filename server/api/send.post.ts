@@ -18,22 +18,23 @@ export default defineEventHandler(async (event) => {
     = data.subject === 'other' && data.subjectOther?.trim()
       ? `${subjectLabel}: ${data.subjectOther.trim()}`
       : subjectLabel
+  const safeSubject = subjectLine.replace(/[\r\n]+/g, ' ').trim()
 
   const html = `
     <h2>Ny besked fra kontaktformular</h2>
     <p><strong>Navn:</strong> ${escapeHtml(data.name)}</p>
     <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
     <p><strong>Telefon:</strong> ${escapeHtml(data.phone ?? '')}</p>
-    <p><strong>Emne:</strong> ${escapeHtml(subjectLine)}</p>
+    <p><strong>Emne:</strong> ${escapeHtml(safeSubject)}</p>
     <pre style="white-space:pre-wrap">${escapeHtml(data.message)}</pre>
   `.trim()
 
   const response = await emails.send({
     from,
     to: [to],
-    subject: subjectLine,
+    subject: safeSubject,
     html,
-    // Resend’s Node SDK uses replyTo (camelCase) ??
+    // Resend’s Node SDK uses replyTo (camelCase) - but the API expects reply_to (snake_case) and it works. - DONT CHANGE TO replyTo
     reply_to: data.email,
   })
 
