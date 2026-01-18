@@ -3,7 +3,8 @@ import {
   h, Fragment, onBeforeUnmount, onMounted, ref, computed, useSlots, watch, defineComponent, resolveComponent,
 } from 'vue'
 
-type AnyObj = Record<string, any>
+/* eslint-disable no-use-before-define */
+type AnyObj = Record<string, unknown>
 type Props = {
   items?: Array<string | AnyObj> // strings or MDC AST objects
   speed?: number
@@ -31,11 +32,11 @@ const props = withDefaults(defineProps<Props>(), {
 
 const MDCComp = resolveComponent('MDC')
 
-const Rendered = defineComponent<{ nodes: any[] }>({
+const Rendered = defineComponent<{ nodes: unknown[] }>({
   name: 'Rendered',
   props: { nodes: { type: Array, required: true } },
   setup(p) {
-    return () => h(Fragment, null, p.nodes)
+    return () => h(Fragment as never, null, p.nodes)
   },
 })
 
