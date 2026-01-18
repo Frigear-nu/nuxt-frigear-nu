@@ -1,5 +1,6 @@
 import { createContactFormSchema } from '#shared/forms/contact/schema'
 import { contactSubjectLabels } from '#shared/forms/contact/subjects'
+import escapeHtml from 'escape-html'
 
 export default defineEventHandler(async (event) => {
   const { emails } = useResend()
@@ -42,12 +43,3 @@ export default defineEventHandler(async (event) => {
 
   return { ok: true }
 })
-
-function escapeHtml(input: string) {
-  return input
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll('\'', '&#039;')
-}
