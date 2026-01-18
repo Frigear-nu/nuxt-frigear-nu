@@ -3,7 +3,6 @@ import { signInWithPasswordSchema, type SignUpWithPasswordSchema } from '#shared
 import { signUpWithPasswordSchema } from '#shared/schema/auth'
 import type { AuthFormField, FormSubmitEvent } from '@nuxt/ui'
 import type { AuthProvider } from '~/types'
-import { useSiteI18n } from '#imports'
 
 const toast = useToast()
 const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
@@ -18,7 +17,6 @@ const {
   signInWithProvider,
   signUpWithPassword,
 } = useAuth()
-const { t } = useSiteI18n()
 
 const isDevelopment = computed(() => import.meta.dev ?? false)
 
@@ -30,23 +28,15 @@ const emailField = computed<string | undefined>({
   },
 })
 
-const translateField = (field: AuthFormField & { placeholder?: string }) => {
-  return {
-    ...field,
-    label: t(field.label),
-    placeholder: field.placeholder ? t(field.placeholder) : undefined,
-  }
-}
-
-const fields = computed<AuthFormField[]>(() => {
+const fields = computed<AuthFormField[]>((): AuthFormField[] => {
   if (mode.value === 'in') {
-    return toValue(signInFields).map(translateField)
+    return toValue(signInFields) as AuthFormField[]
   }
 
-  return toValue(signUpFields).map(translateField)
+  return toValue(signUpFields)
 })
 
-const providers = buildProviders((provider: AuthProvider) => {
+const providers = buildProviders((provider) => {
   switch (provider) {
     case 'link':
       displayMagicLinkModal.value = true

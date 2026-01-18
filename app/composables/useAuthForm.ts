@@ -22,7 +22,7 @@ const useAuthForm = () => {
       placeholder: t('form.placeholder.password'),
       required: true,
     },
-  ])
+  ] as AuthFormField[])
 
   const signUpFields = computed<AuthFormField[]>(() => {
     return [
