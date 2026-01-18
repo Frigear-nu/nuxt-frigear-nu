@@ -6,12 +6,12 @@ type ProviderHandler = (provider: string) => void
 const providers: Provider[] = [
   {
     id: 'google',
-    label: 'labels.google',
+    label: 'form.placeholder.google',
     icon: 'i-simple-icons-google',
   },
   {
     id: 'link',
-    label: 'labels.magic-link',
+    label: 'form.placeholder.magic-link',
     icon: 'i-lucide-at-sign',
   },
 ]
@@ -22,15 +22,15 @@ const useAuthForm = () => {
       name: 'email',
       type: 'email',
       autocomplete: 'email',
-      label: 'fields.email',
-      placeholder: 'labels.email',
+      label: 'form.label.email',
+      placeholder: 'form.placeholder.email',
       required: true,
     },
     {
       name: 'password',
       type: 'password',
-      label: 'fields.password',
-      placeholder: 'labels.password',
+      label: 'form.label.password',
+      placeholder: 'form.placeholder.password',
       required: true,
     },
   ])
@@ -41,8 +41,8 @@ const useAuthForm = () => {
         name: 'name',
         type: 'text',
         autocomplete: 'name',
-        label: 'fields.name',
-        placeholder: 'labels.name',
+        label: 'form.label.name',
+        placeholder: 'form.placeholder.name',
         required: true,
       },
       ...toValue(fields) as AuthFormField[],
