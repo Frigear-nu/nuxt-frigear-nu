@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     'nuxt-studio',
     '@nuxt/ui',
     '@unlok-co/nuxt-stripe',
+    'nuxt-resend',
   ],
   css: ['~/assets/css/main.css'],
   site: {
@@ -74,4 +75,5 @@ export default defineNuxtConfig({
       saveRedirectToCookie: true,
     },
   },
+
 })
