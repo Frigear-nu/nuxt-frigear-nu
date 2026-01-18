@@ -1,36 +1,25 @@
 import type { AuthFormField, ButtonProps } from '@nuxt/ui'
+import { useSiteI18n } from '#imports'
 
 type Provider = ButtonProps & { id: string }
 type ProviderHandler = (provider: string) => void
 
-const providers: Provider[] = [
-  {
-    id: 'google',
-    label: 'form.placeholder.google',
-    icon: 'i-simple-icons-google',
-  },
-  {
-    id: 'link',
-    label: 'form.placeholder.magic-link',
-    icon: 'i-lucide-at-sign',
-  },
-]
-
 const useAuthForm = () => {
+  const { t } = useSiteI18n()
   const fields = ref<AuthFormField[]>([
     {
       name: 'email',
       type: 'email',
       autocomplete: 'email',
-      label: 'form.label.email',
-      placeholder: 'form.placeholder.email',
+      label: t('form.label.email'),
+      placeholder: t('form.placeholder.email'),
       required: true,
     },
     {
       name: 'password',
       type: 'password',
-      label: 'form.label.password',
-      placeholder: 'form.placeholder.password',
+      label: t('form.label.password'),
+      placeholder: t('form.placeholder.password'),
       required: true,
     },
   ])
@@ -41,18 +30,32 @@ const useAuthForm = () => {
         name: 'name',
         type: 'text',
         autocomplete: 'name',
-        label: 'form.label.name',
-        placeholder: 'form.placeholder.name',
+        label: t('form.label.name'),
+        placeholder: t('form.placeholder.name'),
         required: true,
       },
       ...toValue(fields) as AuthFormField[],
     ]
   })
 
+  const providers = ref<Provider[]>([
+    {
+      id: 'google',
+      label: 'form.placeholder.google',
+      icon: 'i-simple-icons-google',
+    },
+    {
+      id: 'link',
+      label: 'form.placeholder.magic-link',
+      icon: 'i-lucide-at-sign',
+    },
+  ])
+
   const buildProviders = (handler: ProviderHandler): ButtonProps[] => {
-    return providers.map((provider) => {
+    return toValue(providers).map((provider) => {
       return {
         ...provider,
+        label: t(provider.label),
         onClick: () => handler(provider.id),
       }
     })
