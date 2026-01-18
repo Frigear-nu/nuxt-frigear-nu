@@ -3,12 +3,12 @@ import { useSiteI18n } from '#imports'
 
 const { t } = useSiteI18n()
 
-const user = useSupabaseUser()
+const { isLoggedIn } = useAuth()
 </script>
 
 <template>
   <UButton
-    v-if="user"
+    v-if="isLoggedIn"
     to="/account"
     trailing-icon="i-lucide-layout-dashboard"
   >
