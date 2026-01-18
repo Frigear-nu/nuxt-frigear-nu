@@ -18,6 +18,10 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     stripeWebhookSecret: '',
+    resend: {
+      from: 'noreply@frigear.nu',
+      to: 'kontakt@frigear.nu',
+    },
   },
   routeRules: {
     '/sign-in': {
@@ -75,5 +79,4 @@ export default defineNuxtConfig({
       saveRedirectToCookie: true,
     },
   },
-
 })
