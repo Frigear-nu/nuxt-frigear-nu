@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { signInWithPasswordSchema, type SignUpWithPasswordSchema } from '#shared/schema/auth'
 import { signUpWithPasswordSchema } from '#shared/schema/auth'
-import type { FormSubmitEvent } from '@nuxt/ui'
+import type { AuthFormField, FormSubmitEvent } from '@nuxt/ui'
+import type { AuthProvider } from '~/types'
+import { useSiteI18n } from '#imports'
 
 const toast = useToast()
 const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
@@ -9,13 +11,14 @@ const authForm = useTemplateRef('authForm')
 const displayMagicLinkModal = ref(false)
 const displayForgotPasswordModal = ref(false)
 const emailWasDispatched = ref(false)
-const { fields, signUpFields, buildProviders } = useAuthForm()
+const { fields: signInFields, signUpFields, buildProviders } = useAuthForm()
 const {
   authMode,
   signInWithPassword,
   signInWithProvider,
   signUpWithPassword,
 } = useAuth()
+const { t } = useSiteI18n()
 
 const isDevelopment = computed(() => import.meta.dev ?? false)
 
@@ -27,7 +30,23 @@ const emailField = computed<string | undefined>({
   },
 })
 
-const providers = buildProviders((provider) => {
+const translateField = (field: AuthFormField & { placeholder?: string }) => {
+  return {
+    ...field,
+    label: t(field.label),
+    placeholder: field.placeholder ? t(field.placeholder) : undefined,
+  }
+}
+
+const fields = computed<AuthFormField[]>(() => {
+  if (mode.value === 'in') {
+    return toValue(signInFields).map(translateField)
+  }
+
+  return toValue(signUpFields).map(translateField)
+})
+
+const providers = buildProviders((provider: AuthProvider) => {
   switch (provider) {
     case 'link':
       displayMagicLinkModal.value = true
@@ -119,7 +138,7 @@ function onPasswordResetDispatched(email: string) {
       ref="authForm"
       :schema="mode === 'up' ? signUpWithPasswordSchema : signInWithPasswordSchema"
       :title="mode === 'up' ? 'Sign Up' : 'Sign In'"
-      :fields="mode === 'up' ? signUpFields : fields"
+      :fields="fields"
       :providers="providers"
       :separator="{ label: 'OR' }"
       :submit="mode === 'up' ? { label: 'Sign Up' } : { label: 'Sign In' }"

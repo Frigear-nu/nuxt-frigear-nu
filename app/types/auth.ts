@@ -24,3 +24,4 @@ export type AuthProvider
     | 'workos'
     | 'zoom'
     | 'fly'
+    | 'link'
