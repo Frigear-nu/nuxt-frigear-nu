@@ -1,0 +1,48 @@
+{
+  "auth": {
+    "signIn": "Sign In"
+  },
+  "contact": {
+    "title": "Contact",
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Hello, what's your name?"
+      },
+      "email": {
+        "label": "Your awesome E-mail",
+        "placeholder": "volunteerHero{'@'}someDomain.lol"
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "12345678",
+        "hint": "Phone be a length of 8 characters (optional)."
+      },
+      "subject": {
+        "label": "Subject",
+        "placeholder": "Choose subject...",
+        "items": {
+          "volunteering": "Volunteering",
+          "partnership": "Collaboration",
+          "support": "Support",
+          "payment": "Payment",
+          "governance": "Board",
+          "finance": "Finance",
+          "complaint": "Complaint",
+          "other": "Other"
+        }
+      },
+      "subjectOther": {
+        "label": "Other (specify)",
+        "placeholder": "What is this about?"
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "I want to talk about an awesome Frigear project..."
+      },
+      "submit": {
+        "label": "Send message"
+      }
+    }
+  }
+}
