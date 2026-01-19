@@ -42,8 +42,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2)(magicast@0.5.1)(vue@3.5.26(typescript@5.9.3))
       simple-content-site:
-        specifier: ^2.3.1
-        version: 2.3.1(bb92cb59af91f9c4dc725c90bc06e678)
+        specifier: https://pkg.pr.new/simple-content-site@34
+        version: https://pkg.pr.new/simple-content-site@34(bb92cb59af91f9c4dc725c90bc06e678)
       zod:
         specifier: ^4.3.5
         version: 4.3.5
@@ -7241,8 +7241,9 @@ packages:
   simple-concat@1.0.1:
     resolution: {integrity: sha512-cSFtAPtRhljv69IK0hTVZQ+OfE9nePi/rtJmw5UjHeVyVroEqJXP1sFztKUy1qU+xvz3u/sfYJLa947b7nAN2Q==}
 
-  simple-content-site@2.3.1:
-    resolution: {integrity: sha512-uzg7txEr+UyRFF++ySqr/Bhnqv/NlKm9dadJ8oUVbDlS/yQd+XSdweNzaXTu/gJYhpLmotAEuwrewk3FLbgF9Q==}
+  simple-content-site@https://pkg.pr.new/simple-content-site@34:
+    resolution: {tarball: https://pkg.pr.new/simple-content-site@34}
+    version: 2.3.1
     peerDependencies:
       better-sqlite3: 12.x
       nuxt: 4.x
@@ -16738,7 +16739,7 @@ snapshots:
 
   simple-concat@1.0.1: {}
 
-  simple-content-site@2.3.1(bb92cb59af91f9c4dc725c90bc06e678):
+  simple-content-site@https://pkg.pr.new/simple-content-site@34(bb92cb59af91f9c4dc725c90bc06e678):
     dependencies:
       '@iconify-json/lucide': 1.2.85
       '@iconify-json/simple-icons': 1.2.65
