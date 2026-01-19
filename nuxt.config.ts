@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxthub/core',
     '@nuxtjs/supabase',
+    '@nuxtjs/i18n',
     '@nuxt/content',
     'nuxt-studio',
     '@nuxt/ui',
@@ -50,6 +51,17 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-12-11',
   hub: {
     db: 'sqlite',
+  },
+  i18n: {
+    defaultLocale: 'da',
+    strategy: 'prefix_except_default',
+    locales: [{
+      code: 'da',
+      name: 'Dansk',
+    }, {
+      code: 'en',
+      name: 'English',
+    }],
   },
   stripe: {
     server: {
