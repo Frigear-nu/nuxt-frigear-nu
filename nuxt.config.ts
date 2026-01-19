@@ -3,12 +3,12 @@ export default defineNuxtConfig({
   modules: [
     '@nuxthub/core',
     '@nuxtjs/supabase',
-    '@nuxtjs/i18n',
-    '@nuxt/content',
     'nuxt-studio',
+    '@nuxt/content',
     '@nuxt/ui',
     '@unlok-co/nuxt-stripe',
     'nuxt-resend',
+    '@nuxtjs/i18n',
   ],
   css: ['~/assets/css/main.css'],
   site: {
