@@ -2,7 +2,7 @@ import { contactFormSchema, contactSubjectLabels } from '#shared/schema/forms/co
 import escapeHtml from 'escape-html'
 
 export default defineEventHandler(async (event) => {
-  const { mail: { to, from } } = useRuntimeConfig()
+  const { mail: { to, from } } = useRuntimeConfig(event)
 
   const data = await readValidatedBody(event, d => contactFormSchema.parse(d))
 
