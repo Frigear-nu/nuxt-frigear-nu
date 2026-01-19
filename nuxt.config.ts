@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     'nuxt-auth-utils',
     '@unlok-co/nuxt-stripe',
+    'nuxt-resend',
   ],
   css: ['~/assets/css/main.css'],
   site: {
@@ -20,7 +21,13 @@ export default defineNuxtConfig({
   runtimeConfig: {
     jwtSecret: 'some-string-longer-than-32-chars-to-issue-jwt',
     stripeWebhookSecret: '',
-    customI18n: true,
+    resend: {
+      apiKey: '',
+    },
+    mail: {
+      from: '',
+      to: '',
+    },
   },
   routeRules: {
     '/sign-in': { prerender: false },
