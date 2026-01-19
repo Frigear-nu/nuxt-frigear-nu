@@ -6,7 +6,7 @@
     "dev": "nuxt dev",
     "build": "nuxt build",
     "lint": "eslint .",
-    "lint:md":"npx mdclint 'content/**/*.md'",
+    "lint:md": "npx mdclint 'content/**/*.md'",
     "clean": "rm -rf pnpm-lock.yaml node_modules .nuxt ",
     "cf:deploy": "npx wrangler --cwd .output/ deploy",
     "db:generate": "npx nuxt db generate",
@@ -22,6 +22,7 @@
     "better-sqlite3": "^12.6.0",
     "drizzle-kit": "^0.31.8",
     "drizzle-orm": "^0.45.1",
+    "escape-html": "^1.0.3",
     "minimatch": "^10.1.1",
     "nuxt": "^4.2.2",
     "simple-content-site": "^2.2.2",
@@ -30,7 +31,10 @@
   "devDependencies": {
     "@nuxt/eslint": "^1.12.1",
     "@nuxt/eslint-config": "^1.12.1",
+    "@types/escape-html": "^1.0.4",
+    "baseline-browser-mapping": "^2.9.15",
     "eslint": "^9.39.2",
+    "nuxt-resend": "^0.0.2",
     "supabase": "^2.72.7",
     "wrangler": "^4.59.2"
   },

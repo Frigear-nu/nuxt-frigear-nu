@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     'nuxt-studio',
     '@nuxt/ui',
     '@unlok-co/nuxt-stripe',
+    'nuxt-resend',
   ],
   css: ['~/assets/css/main.css'],
   site: {
@@ -17,6 +18,11 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     stripeWebhookSecret: '',
+    resend: {
+      apiKey: '',
+      from: 'noreply@frigear.nu',
+      to: '',
+    },
   },
   routeRules: {
     '/sign-in': {

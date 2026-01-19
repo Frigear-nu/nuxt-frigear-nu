@@ -67,7 +67,6 @@ Use the drag handle on the left side of any block to reorder, duplicate, delete,
 
 Type `/` anywhere to access quick insertion commands for headings, lists, code blocks, tables, images, and more.
 
-
 ### Mentions & Emojis
 
 Mention collaborators with `@` (To be announced) and add emojis with `:` syntax 🚀
