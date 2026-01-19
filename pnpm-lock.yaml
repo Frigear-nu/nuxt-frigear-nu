@@ -38,9 +38,12 @@ importers:
       nuxt:
         specifier: ^4.2.2
         version: 4.2.2(@azure/identity@4.13.0)(@libsql/client@0.17.0)(@parcel/watcher@2.5.1)(@types/node@24.10.8)(@vue/compiler-sfc@3.5.26)(better-sqlite3@12.6.0)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0))(eslint@9.39.2(jiti@2.6.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(optionator@0.9.4)(rolldown@1.0.0-beta.57)(rollup@4.53.2)(terser@5.44.1)(tsx@4.21.0)(typescript@5.9.3)(vite@7.3.0(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(yaml@2.8.2)
+      nuxt-studio:
+        specifier: ^1.1.0
+        version: 1.1.0(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2)(magicast@0.5.1)(vue@3.5.26(typescript@5.9.3))
       simple-content-site:
-        specifier: ^2.3.0
-        version: 2.3.0(bb92cb59af91f9c4dc725c90bc06e678)
+        specifier: ^2.3.1
+        version: 2.3.1(bb92cb59af91f9c4dc725c90bc06e678)
       zod:
         specifier: ^4.3.5
         version: 4.3.5
@@ -7238,8 +7241,8 @@ packages:
   simple-concat@1.0.1:
     resolution: {integrity: sha512-cSFtAPtRhljv69IK0hTVZQ+OfE9nePi/rtJmw5UjHeVyVroEqJXP1sFztKUy1qU+xvz3u/sfYJLa947b7nAN2Q==}
 
-  simple-content-site@2.3.0:
-    resolution: {integrity: sha512-cfxDbATrYEuVop5EtP3NjrouunTjCtfHM4H1t1K5hxMnYJxkIsn90kspW7Yhb43fO47goHFfa0wgGZtqjc+Z6g==}
+  simple-content-site@2.3.1:
+    resolution: {integrity: sha512-uzg7txEr+UyRFF++ySqr/Bhnqv/NlKm9dadJ8oUVbDlS/yQd+XSdweNzaXTu/gJYhpLmotAEuwrewk3FLbgF9Q==}
     peerDependencies:
       better-sqlite3: 12.x
       nuxt: 4.x
@@ -16735,7 +16738,7 @@ snapshots:
 
   simple-concat@1.0.1: {}
 
-  simple-content-site@2.3.0(bb92cb59af91f9c4dc725c90bc06e678):
+  simple-content-site@2.3.1(bb92cb59af91f9c4dc725c90bc06e678):
     dependencies:
       '@iconify-json/lucide': 1.2.85
       '@iconify-json/simple-icons': 1.2.65
@@ -16756,7 +16759,6 @@ snapshots:
       motion-v: 1.7.4(@vueuse/core@13.9.0(vue@3.5.26(typescript@5.9.3)))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(vue@3.5.26(typescript@5.9.3))
       nuxt: 4.2.2(@azure/identity@4.13.0)(@libsql/client@0.17.0)(@parcel/watcher@2.5.1)(@types/node@24.10.8)(@vue/compiler-sfc@3.5.26)(better-sqlite3@12.6.0)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0))(eslint@9.39.2(jiti@2.6.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(optionator@0.9.4)(rolldown@1.0.0-beta.57)(rollup@4.53.2)(terser@5.44.1)(tsx@4.21.0)(typescript@5.9.3)(vite@7.3.0(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(yaml@2.8.2)
       nuxt-og-image: 5.1.13(@unhead/vue@2.0.19(vue@3.5.26(typescript@5.9.3)))(h3@1.15.5)(magicast@0.5.1)(unstorage@1.17.3(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2))(vite@7.3.0(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.26(typescript@5.9.3))
-      nuxt-studio: 1.1.0(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2)(magicast@0.5.1)(vue@3.5.26(typescript@5.9.3))
       pkg-types: 2.3.0
       scule: 1.3.0
       tailwindcss: 4.1.18
