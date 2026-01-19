@@ -37,6 +37,7 @@ export const contactFormSchema = z
       .transform(v => v.replace(/[\s-]/g, ''))
       .refine(v => v === '' || /^\d{8}$/.test(v), { error: 'Telefon skal være 8 cifre.' })
       .optional(),
+    phonePrefix: z.string().optional(),
     subject: z.enum(contactSubjectKeys, { error: 'Vælg et emne.' }),
     subjectOther: z.string().trim().max(120, { error: 'For langt.' }).optional(),
     message: z.string('Besked er påkrævet.').min(1).max(5000, { error: 'Besked er for lang.' }),

@@ -17,12 +17,10 @@ const { t } = useSiteI18n()
 
 type PhonePrefixItem = { label: string, value: string }
 const phonePrefixes = ref<PhonePrefixItem[]>([
-  { label: '+45', value: 'dk' },
-  { label: '+46', value: 'se' },
-  { label: `+47`, value: 'no' },
+  { label: '+45', value: '+45' },
+  { label: '+46', value: '+46' },
+  { label: `+47`, value: '+47' },
 ])
-
-const selectedPhonePrefix = ref<PhonePrefixItem['value']>('dk')
 
 const contactSubjectSelectItems = computed(() => {
   return contactSubjectKeys.map(value => ({
@@ -35,6 +33,7 @@ const DEFAULT_STATE: Partial<ContactFormSchema> = {
   name: undefined,
   email: undefined,
   phone: undefined,
+  phonePrefix: '+45',
   subject: undefined,
   subjectOther: undefined,
   message: undefined,
@@ -115,14 +114,14 @@ watch(() => state.phone, (phone) => {
     }
 
     // lastly, attempt by the already selected item.
-    return p && p.value === selectedPhonePrefix.value && phone.startsWith(p.label)
+    return p && p.value === state.phonePrefix && phone.startsWith(p.label)
   })
 
   if (!selected) return
 
   // prefill countryCode if not the same as set.
-  if (selected.value !== selectedPhonePrefix.value) {
-    selectedPhonePrefix.value = selected.value
+  if (selected.value !== state.phonePrefix) {
+    state.phonePrefix = selected.value
   }
 
   if (!phone.startsWith(selected.label)) return
@@ -186,7 +185,7 @@ function onError(event: FormErrorEvent) {
       >
         <UFieldGroup class="flex content-stretch">
           <USelect
-            v-model="selectedPhonePrefix"
+            v-model="state.phonePrefix"
             :items="phonePrefixes"
             class="min-w-3/12"
           />
