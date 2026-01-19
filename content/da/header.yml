@@ -7,4 +7,4 @@ navigation:
   - label: Hjem
     to: /
   - label: Medlemskab
-    to: /pricing
+    to: /membership
