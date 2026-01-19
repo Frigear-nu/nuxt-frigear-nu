@@ -22,7 +22,7 @@ export default defineNuxtConfig({
       apiKey: '',
     },
     mail: {
-      from: 'noreply@frigear.nu',
+      from: '',
       to: '',
     },
   },
