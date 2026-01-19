@@ -1,21 +1,11 @@
 import { contactFormSchema, contactSubjectLabels } from '#shared/schema/forms/contact'
-import { Resend } from 'resend'
 import escapeHtml from 'escape-html'
 
 export default defineEventHandler(async (event) => {
-  const { apiKey, to, from } = useRuntimeConfig().resend
-
-  if (!apiKey) {
-    throw createError({ statusCode: 500, message: 'Missing API-Key.' })
-  }
+  const { mail: { to, from } } = useRuntimeConfig()
 
   const data = await readValidatedBody(event, d => contactFormSchema.parse(d))
 
-  if (!from || !to) {
-    throw createError({ statusCode: 500, message: 'Missing from or to address.' })
-  }
-
-  const resend = new Resend(apiKey)
   const subjectLabel = contactSubjectLabels[data.subject]
 
   const subjectLine
@@ -33,18 +23,13 @@ export default defineEventHandler(async (event) => {
     <pre style="white-space:pre-wrap">${escapeHtml(data.message)}</pre>
   `.trim()
 
-  const response = await resend.emails.send({
+  await sendEmail(event, {
+    to,
     from,
-    to: [to],
     subject: safeSubject,
     html,
-    // Resend’s Node SDK uses replyTo (camelCase) - but the API expects reply_to (snake_case) and it works. - DONT CHANGE
-    reply_to: data.email,
+    replyTo: data.email,
   })
-
-  if (response.error) {
-    throw createError({ statusCode: 502, message: response.error.message ?? 'Error sending email' })
-  }
 
   return { ok: true }
 })
