@@ -15,6 +15,7 @@ export const contactSubjectKeys = [
 
 export type ContactSubjectKey = (typeof contactSubjectKeys)[number]
 
+// todo: remove this and replace with the full translation path to be used in the sending of contact form.
 export const contactSubjectLabels: Record<ContactSubjectKey, string> = {
   volunteering: 'Frivillig',
   partnership: 'Samarbejde',
@@ -25,11 +26,6 @@ export const contactSubjectLabels: Record<ContactSubjectKey, string> = {
   complaint: 'Klage',
   other: 'Andet',
 } as const
-
-export const contactSubjectSelectItems = contactSubjectKeys.map(value => ({
-  value,
-  label: contactSubjectLabels[value],
-}))
 
 export const contactFormSchema = z
   .object({

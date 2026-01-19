@@ -16,11 +16,7 @@ orientation: horizontal
 
   :::typewriter-effect
   Non-profit
-  Frivillig drevet
-  Forening og fond
-  Projectorienteret
-  Skal du være med?
-  Bliv frivillig
+  Volunteer now
   :::
 
 #links
@@ -31,22 +27,22 @@ orientation: horizontal
   to: /#contact
   variant: subtle
   ---
-  Kontakt os
+  Contact us
   :::
 
   :::u-button{color="primary" size="xl" to="/pricing"}
-  Bliv medlem
+  Become a member
   :::
 ::
 
 ::u-container{#contact .mb-4.flex.flex-col.lg:flex-row.md:justify-between.gap-4}
   :::u-page-feature
   #title
-  Kontakt os
+  Contact us
 
   #description
-  Smid os en besked hvis du har nogen spørgsmål, så vender en Frigear frivillig tilbage ASAP 💜 :br
-  Tjek vores SoMe mens du venter 🐼
+  Send us a message if you have any questions, a Frigear volunteer will get back to you ASAP 💜 :br
+  Check our social media while you are waiting 🐼
 
   :u-separator
 
