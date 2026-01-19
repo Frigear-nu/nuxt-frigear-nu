@@ -34,7 +34,7 @@ orientation: horizontal
   Kontakt os
   :::
 
-  :::u-button{color="primary" size="xl" to="/pricing"}
+  :::u-button{color="primary" size="xl" to="/membership"}
   Bliv medlem
   :::
 ::
