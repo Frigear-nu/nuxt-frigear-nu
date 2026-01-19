@@ -1,5 +1,4 @@
-import { createContactFormSchema } from '#shared/forms/contact/schema'
-import { contactSubjectLabels } from '#shared/forms/contact/subjects'
+import { contactFormSchema, contactSubjectLabels } from '#shared/forms/contact/contact-schema'
 import { Resend } from 'resend'
 import escapeHtml from 'escape-html'
 
@@ -8,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const resend = new Resend(config.apiKey)
   const { from, to } = config
 
-  const schema = createContactFormSchema()
+  const schema = contactFormSchema
   const data = await readValidatedBody(event, d => schema.parse(d))
 
   if (!from || !to) {

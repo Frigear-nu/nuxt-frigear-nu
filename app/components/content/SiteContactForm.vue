@@ -1,16 +1,18 @@
-<script setup lang="ts">
-import type { FormSubmitEvent, FormErrorEvent } from '@nuxt/ui'
+<script setup lang='ts'>
+import type { FormSubmitEvent } from '@nuxt/ui'
+import type { LocationQueryRaw } from 'vue-router'
+
 import {
-  createContactFormSchema,
-  contactSubjectSelectItems,
+  contactFormSchema,
   contactSubjectKeys,
-  type ContactFormOutput,
-  type ContactFormSubjectKey,
-} from '#shared/forms/contact/forms'
+  contactSubjectSelectItems,
+  type ContactForm,
+  type ContactSubjectKey,
+} from '#shared/forms/contact/contact-schema'
 
-const schema = createContactFormSchema()
+const schema = contactFormSchema
 
-type ContactFormState = Partial<ContactFormOutput>
+type ContactFormState = Partial<ContactForm>
 
 const DEFAULT_STATE: ContactFormState = {
   name: undefined,
@@ -25,17 +27,32 @@ const isSubmitting = ref(false)
 const state = reactive<ContactFormState>({ ...DEFAULT_STATE })
 const toast = useToast()
 
-async function onSubmit(event: FormSubmitEvent<ContactFormOutput>) {
+async function onSubmit(event: FormSubmitEvent<ContactForm>) {
   isSubmitting.value = true
   try {
     await $fetch('/api/send', { method: 'POST', body: event.data })
 
-    toast.add(formatToastSuccess('Besked sendt!', 'Vi vender tilbage hurtigst muligt.'))
+    toast.add({
+      icon: 'lucide-check-circle',
+      title: 'Whooop!, -Besked fyret afsted!',
+      description: 'Vi vender tilbage så snart en frivillig har set den.',
+      color: 'success',
+    })
 
     Object.assign(state, DEFAULT_STATE)
   }
   catch (err: unknown) {
-    toast.add(formatToastError(err as Error, { title: 'Noget gik galt' }))
+    let description = 'Ukendt fejl. Prøv lige igen senere.'
+    if (typeof err === 'object' && err !== null) {
+      const e = err as { data?: { message?: string }, message?: string }
+      description = e.data?.message ?? e.message ?? description
+    }
+    toast.add({
+      icon: 'lucide-alert-circle',
+      title: 'Noget gik galt, -Beskeden blev ikke sendt.',
+      description,
+      color: 'error',
+    })
     throw err
   }
   finally {
@@ -43,11 +60,10 @@ async function onSubmit(event: FormSubmitEvent<ContactFormOutput>) {
   }
 }
 
-function isSubjectKey(v: unknown): v is ContactFormSubjectKey {
+function isSubjectKey(v: unknown): v is ContactSubjectKey {
   return typeof v === 'string' && (contactSubjectKeys as readonly string[]).includes(v)
 }
 
-// Prefill subject from query (?subject=volunteering|support|other|...)
 const route = useRoute()
 const router = useRouter()
 
@@ -59,15 +75,21 @@ watch(
 
     state.subject = candidate
 
-    const q = { ...route.query }
-    delete (q as typeof q).subject
+    const q: LocationQueryRaw = { ...route.query }
+    delete q.subject
     router.replace({ query: q })
   },
   { immediate: true },
 )
 
-function onError(event: FormErrorEvent) {
-  const id = event?.errors?.[0]?.id
+function onError(event: unknown) {
+  let id: string | undefined
+
+  if (typeof event === 'object' && event !== null) {
+    const e = event as { error?: Array<{ id?: string }>, errors?: Array<{ id?: string }> }
+    id = e.error?.[0]?.id ?? e.errors?.[0]?.id
+  }
+
   if (!id) return
   const el = document.getElementById(id)
   el?.focus()
