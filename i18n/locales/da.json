@@ -1,0 +1,48 @@
+{
+  "auth": {
+    "signIn": "Logg ind"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "form": {
+      "name": {
+        "label": "Dit seje navn",
+        "placeholder": "Hej, hva hedder du? .. put her"
+      },
+      "email": {
+        "label": "Din awesome E-mail",
+        "placeholder": "volunteerHero{'@'}someDomain.lol"
+      },
+      "phone": {
+        "label": "Telefon",
+        "placeholder": "12345678",
+        "hint": "Telefon skal være 8 cifre (valgfrit)."
+      },
+      "subject": {
+        "label": "Emne",
+        "placeholder": "Vælg emne",
+        "items": {
+          "volunteering": "Frivillig",
+          "partnership": "Samarbejde",
+          "support": "Support",
+          "payment": "Betaling",
+          "governance": "Bestyrelse",
+          "finance": "Økonomi",
+          "complaint": "Klage",
+          "other": "Andet"
+        }
+      },
+      "subjectOther": {
+        "label": "Andet (uddyb)",
+        "placeholder": "Hvad drejer det sig om?"
+      },
+      "message": {
+        "label": "Besked",
+        "placeholder": "Jeg vil snakke om et awesome Frigear projekt..."
+      },
+      "submit": {
+        "label": "Send besked"
+      }
+    }
+  }
+}
