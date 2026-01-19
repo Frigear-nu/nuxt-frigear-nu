@@ -55,6 +55,9 @@ export default defineNuxtConfig({
   i18n: {
     defaultLocale: 'da',
     strategy: 'prefix_except_default',
+    experimental: {
+      localeDetector: 'localeDetector.ts',
+    },
     locales: [{
       code: 'da',
       name: 'Dansk',
