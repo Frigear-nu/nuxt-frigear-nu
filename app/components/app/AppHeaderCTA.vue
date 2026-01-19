@@ -12,11 +12,11 @@ const user = useSupabaseUser()
     to="/account"
     trailing-icon="i-lucide-layout-dashboard"
   >
-    Dashboard
+    {{ t('auth.dashboard') }}
   </UButton>
   <UButton
     v-else
-    :label="t('Sign In') || 'Log Ind'"
+    :label="t('auth.signIn')"
     to="/sign-in"
     trailing-icon="i-lucide-lock"
   />
