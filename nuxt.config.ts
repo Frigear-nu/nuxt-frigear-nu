@@ -55,6 +55,7 @@ export default defineNuxtConfig({
   i18n: {
     defaultLocale: 'da',
     strategy: 'prefix_except_default',
+    detectBrowserLanguage: false, // otherwise we get issues with redirect.
     experimental: {
       localeDetector: 'localeDetector.ts',
     },
