@@ -9,15 +9,13 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 500, message: 'Missing API-Key.' })
   }
 
-  const resend = new Resend(apiKey)
-
-  const schema = contactFormSchema
-  const data = await readValidatedBody(event, d => schema.parse(d))
+  const data = await readValidatedBody(event, d => contactFormSchema.parse(d))
 
   if (!from || !to) {
     throw createError({ statusCode: 500, message: 'Missing from or to address.' })
   }
 
+  const resend = new Resend(apiKey)
   const subjectLabel = contactSubjectLabels[data.subject]
 
   const subjectLine
