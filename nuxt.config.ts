@@ -20,7 +20,9 @@ export default defineNuxtConfig({
     stripeWebhookSecret: '',
     resend: {
       apiKey: '',
-      from: 'noreply@frigear.nu',
+    },
+    mail: {
+      from: '',
       to: '',
     },
   },

@@ -29,7 +29,7 @@ const state = reactive<typeof DEFAULT_STATE>({ ...DEFAULT_STATE })
 async function onSubmit(event: FormSubmitEvent<ContactFormSchema>) {
   isSubmitting.value = true
   try {
-    await $fetch('/api/send', { method: 'POST', body: event.data })
+    await $fetch('/api/contact', { method: 'POST', body: event.data })
 
     toast.add({
       icon: 'lucide-check-circle',
