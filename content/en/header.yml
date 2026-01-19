@@ -1,0 +1,10 @@
+title: Frigear
+logo:
+  light: /logo.png
+  dark: /logo-dark.png
+  class: h-16 p-1
+navigation:
+  - label: Home
+    to: /en
+  - label: Membership
+    to: /en/pricing
