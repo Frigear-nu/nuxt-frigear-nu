@@ -6,15 +6,16 @@ import {
   contactFormSchema,
   contactSubjectKeys,
   contactSubjectSelectItems,
-  type ContactForm,
+  type ContactFormSchema,
   type ContactSubjectKey,
-} from '#shared/forms/contact/contact-schema'
+} from '#shared/schema/forms/contact'
 
-const schema = contactFormSchema
+const isSubmitting = ref(false)
+const toast = useToast()
+const route = useRoute()
+const router = useRouter()
 
-type ContactFormState = Partial<ContactForm>
-
-const DEFAULT_STATE: ContactFormState = {
+const DEFAULT_STATE: Partial<ContactFormSchema> = {
   name: undefined,
   email: undefined,
   phone: undefined,
@@ -23,11 +24,9 @@ const DEFAULT_STATE: ContactFormState = {
   message: undefined,
 }
 
-const isSubmitting = ref(false)
-const state = reactive<ContactFormState>({ ...DEFAULT_STATE })
-const toast = useToast()
+const state = reactive<typeof DEFAULT_STATE>({ ...DEFAULT_STATE })
 
-async function onSubmit(event: FormSubmitEvent<ContactForm>) {
+async function onSubmit(event: FormSubmitEvent<ContactFormSchema>) {
   isSubmitting.value = true
   try {
     await $fetch('/api/send', { method: 'POST', body: event.data })
@@ -63,9 +62,6 @@ async function onSubmit(event: FormSubmitEvent<ContactForm>) {
 function isSubjectKey(v: unknown): v is ContactSubjectKey {
   return typeof v === 'string' && (contactSubjectKeys as readonly string[]).includes(v)
 }
-
-const route = useRoute()
-const router = useRouter()
 
 watch(
   () => route.query.subject,
@@ -103,7 +99,7 @@ function onError(event: unknown) {
     class="w-full max-w-lg"
   >
     <UForm
-      :schema="schema"
+      :schema="contactFormSchema"
       :state="state"
       class="flex flex-col gap-2"
       :loading-auto="true"

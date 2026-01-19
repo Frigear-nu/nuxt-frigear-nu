@@ -1,21 +1,21 @@
-import { contactFormSchema, contactSubjectLabels } from '#shared/forms/contact/contact-schema'
+import { contactFormSchema, contactSubjectLabels } from '#shared/schema/forms/contact'
 import { Resend } from 'resend'
 import escapeHtml from 'escape-html'
 
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig().resend
-  const resend = new Resend(config.apiKey)
-  const { from, to } = config
+  const { apiKey, to, from } = useRuntimeConfig().resend
+
+  if (!apiKey) {
+    throw createError({ statusCode: 500, message: 'Missing API-Key.' })
+  }
+
+  const resend = new Resend(apiKey)
 
   const schema = contactFormSchema
   const data = await readValidatedBody(event, d => schema.parse(d))
 
   if (!from || !to) {
     throw createError({ statusCode: 500, message: 'Missing from or to address.' })
-  }
-
-  if (!config.apiKey) {
-    throw createError({ statusCode: 500, message: 'Missing API-Key.' })
   }
 
   const subjectLabel = contactSubjectLabels[data.subject]
