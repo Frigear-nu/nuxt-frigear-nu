@@ -7,6 +7,7 @@ import { eq } from 'drizzle-orm'
 import { withQuery } from 'ufo'
 
 export default defineEventHandler(async (event) => {
+  const { mail: { from } } = useRuntimeConfig(event)
   const { email, redirect } = await useValidatedBody(event, magicLinkSchema)
 
   console.log(email)
@@ -25,11 +26,12 @@ export default defineEventHandler(async (event) => {
     token,
     expiresAt: expiresAt,
     userId: resolvedUser.id,
+    redirectUrl: redirect,
   }).returning()
 
   if (!createdMagicLink) throw ClientError('Could not create magic link.')
 
-  const signInUrl = withBaseUrl(withQuery('/auth/magic-link', { token, redirect: redirect || '/auth/confirm' }))
+  const signInUrl = withBaseUrl(withQuery('/auth/magic-link', { token }))
   if (import.meta.dev) {
     logger.success(`Sign in with this URL: ${signInUrl}`)
     return {
@@ -39,7 +41,14 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  // todo: send email with link
+  await sendEmail(event, {
+    to: email,
+    from,
+    subject: 'Magic Link',
+    html: `<a href="${signInUrl}">Sign in</a> or copy this URL into a browser to sign in: ${signInUrl}`,
+    replyTo: email,
+  })
+
   return {
     message: 'Success',
     expiresAt,
