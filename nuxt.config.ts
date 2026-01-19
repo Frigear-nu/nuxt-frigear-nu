@@ -19,9 +19,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     stripeWebhookSecret: '',
     resend: {
-      apiKey: process.env.NUXT_RESEND_API_KEY || '',
-      from: process.env.NUXT_RESEND_CONTACT_FROM || 'noreply@frigear.nu',
-      to: process.env.NUXT_RESEND_CONTACT_TO || '',
+      apiKey: '',
+      from: 'noreply@frigear.nu',
+      to: '',
     },
   },
   routeRules: {
