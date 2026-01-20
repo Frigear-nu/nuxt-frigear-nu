@@ -10,8 +10,6 @@ export default defineEventHandler(async (event) => {
   const { mail: { from } } = useRuntimeConfig(event)
   const { email, redirect } = await useValidatedBody(event, magicLinkSchema)
 
-  console.log(email)
-
   const resolvedUser = await db.query.users.findFirst({
     where: eq(schema.users.email, email),
   })
@@ -45,7 +43,7 @@ export default defineEventHandler(async (event) => {
     to: email,
     from,
     subject: 'Magic Link',
-    html: `<a href="${signInUrl}">Sign in</a> or copy this URL into a browser to sign in: ${signInUrl}`,
+    html: `<a href="${signInUrl}">Sign in by clicking here</a> or copy this URL into a browser to sign in: ${signInUrl}`,
     replyTo: email,
   })
 
