@@ -76,6 +76,7 @@ export default defineNuxtConfig({
       external: ['node:async_hooks'],
     },
     rollupConfig: {
+      // @ts-expect-error This fails due to not having types
       plugins: [vue()],
     },
   },
