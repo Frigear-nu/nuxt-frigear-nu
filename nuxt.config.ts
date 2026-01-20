@@ -29,6 +29,10 @@ export default defineNuxtConfig({
       from: '',
       to: '',
     },
+    auth: {
+      verifyEmail: true,
+      migrateSupabase: true,
+    },
   },
   routeRules: {
     '/sign-in': { prerender: false },
