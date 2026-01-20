@@ -68,9 +68,6 @@ importers:
       nuxt-auth-utils:
         specifier: 0.5.27
         version: 0.5.27(magicast@0.5.1)
-      nuxt-email-renderer:
-        specifier: 2.1.2
-        version: 2.1.2(@nuxtjs/i18n@10.2.1(@azure/identity@4.13.0)(@vue/compiler-dom@3.5.27)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(eslint@9.39.2(jiti@2.6.1))(ioredis@5.8.2)(magicast@0.5.1)(rollup@4.55.2)(vue@3.5.26(typescript@5.9.3)))(magicast@0.5.1)(vite@7.3.0(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vue-i18n@11.1.12(vue@3.5.26(typescript@5.9.3)))(vue@3.5.26(typescript@5.9.3))
       nuxt-studio:
         specifier: ^1.1.1
         version: 1.1.1(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2)(magicast@0.5.1)(vue@3.5.26(typescript@5.9.3))
@@ -1670,11 +1667,6 @@ packages:
 
   '@nuxt/devalue@2.0.2':
     resolution: {integrity: sha512-GBzP8zOc7CGWyFQS6dv1lQz8VVpz5C2yRszbXufwG/9zhStTIH50EtD87NmWbTMwXDvZLNg8GIpb1UFdH93JCA==}
-
-  '@nuxt/devtools-kit@2.7.0':
-    resolution: {integrity: sha512-MIJdah6CF6YOW2GhfKnb8Sivu6HpcQheqdjOlZqShBr+1DyjtKQbAKSCAyKPaoIzZP4QOo2SmTFV6aN8jBeEIQ==}
-    peerDependencies:
-      vite: '>=6.0'
 
   '@nuxt/devtools-kit@3.1.1':
     resolution: {integrity: sha512-sjiKFeDCOy1SyqezSgyV4rYNfQewC64k/GhOsuJgRF+wR2qr6KTVhO6u2B+csKs74KrMrnJprQBgud7ejvOXAQ==}
@@ -6742,17 +6734,6 @@ packages:
   nuxt-define@1.0.0:
     resolution: {integrity: sha512-CYZ2WjU+KCyCDVzjYUM4eEpMF0rkPmkpiFrybTqqQCRpUbPt2h3snswWIpFPXTi+osRCY6Og0W/XLAQgDL4FfQ==}
 
-  nuxt-email-renderer@2.1.2:
-    resolution: {integrity: sha512-1/bVMF6oVyjocz7YsP13XFdLXYIxb3SVa5jVOPz1zMN3gjMJwpgJlN8MFc7hvN+y9FSHbCNtLexUdbjJtmnEJQ==}
-    peerDependencies:
-      '@nuxtjs/i18n': '>=10.0.0'
-      vue-i18n: '>=11.0.0'
-    peerDependenciesMeta:
-      '@nuxtjs/i18n':
-        optional: true
-      vue-i18n:
-        optional: true
-
   nuxt-og-image@5.1.13:
     resolution: {integrity: sha512-H9kqGlmcEb9agWURwT5iFQjbr7Ec7tcQHZZaYSpC/JXKq2/dFyRyAoo6oXTk6ob20dK9aNjkJDcX2XmgZy67+w==}
     engines: {node: '>=18.0.0'}
@@ -10380,14 +10361,6 @@ snapshots:
       - utf-8-validate
 
   '@nuxt/devalue@2.0.2': {}
-
-  '@nuxt/devtools-kit@2.7.0(magicast@0.5.1)(vite@7.3.0(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))':
-    dependencies:
-      '@nuxt/kit': 3.20.2(magicast@0.5.1)
-      execa: 8.0.1
-      vite: 7.3.0(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2)
-    transitivePeerDependencies:
-      - magicast
 
   '@nuxt/devtools-kit@3.1.1(magicast@0.5.1)(vite@7.3.0(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))':
     dependencies:
@@ -16439,24 +16412,6 @@ snapshots:
       - magicast
 
   nuxt-define@1.0.0: {}
-
-  nuxt-email-renderer@2.1.2(@nuxtjs/i18n@10.2.1(@azure/identity@4.13.0)(@vue/compiler-dom@3.5.27)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(eslint@9.39.2(jiti@2.6.1))(ioredis@5.8.2)(magicast@0.5.1)(rollup@4.55.2)(vue@3.5.26(typescript@5.9.3)))(magicast@0.5.1)(vite@7.3.0(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vue-i18n@11.1.12(vue@3.5.26(typescript@5.9.3)))(vue@3.5.26(typescript@5.9.3)):
-    dependencies:
-      '@nuxt/devtools-kit': 2.7.0(magicast@0.5.1)(vite@7.3.0(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
-      '@nuxt/kit': 4.2.2(magicast@0.5.1)
-      '@vitejs/plugin-vue': 6.0.3(vite@7.3.0(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.26(typescript@5.9.3))
-      html-to-text: 9.0.5
-      js-beautify: 1.15.4
-      marked: 7.0.4
-      shiki: 3.21.0
-      zod: 4.3.5
-    optionalDependencies:
-      '@nuxtjs/i18n': 10.2.1(@azure/identity@4.13.0)(@vue/compiler-dom@3.5.27)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(eslint@9.39.2(jiti@2.6.1))(ioredis@5.8.2)(magicast@0.5.1)(rollup@4.55.2)(vue@3.5.26(typescript@5.9.3))
-      vue-i18n: 11.1.12(vue@3.5.26(typescript@5.9.3))
-    transitivePeerDependencies:
-      - magicast
-      - vite
-      - vue
 
   nuxt-og-image@5.1.13(@unhead/vue@2.0.19(vue@3.5.26(typescript@5.9.3)))(h3@1.15.5)(magicast@0.5.1)(unstorage@1.17.4(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2))(vite@7.3.0(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.26(typescript@5.9.3)):
     dependencies:
