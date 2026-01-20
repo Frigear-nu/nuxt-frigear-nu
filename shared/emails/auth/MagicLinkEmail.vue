@@ -12,7 +12,7 @@ import {
   Hr,
   Tailwind,
 } from '@vue-email/components'
-import EmailHeader from './components/EmailHeader.vue'
+import EmailHeader from '../components/EmailHeader.vue'
 
 defineProps<{
   signInUrl: string
