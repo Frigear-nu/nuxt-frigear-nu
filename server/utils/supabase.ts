@@ -3,7 +3,6 @@ import { eq } from 'drizzle-orm'
 
 export const migrateSupabaseAccountById = async (serviceRole: ReturnType<typeof serverSupabaseServiceRole>, internalId: number, supabaseId: string) => {
   // connect to sb postgres so we can query the public and the auth schema (for social auth matching)
-
   const { data: sbAuthUser } = await serviceRole.from('auth.users')
     .select('*')
     .eq('id', supabaseId)
