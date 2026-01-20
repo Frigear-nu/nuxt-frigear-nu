@@ -69,7 +69,6 @@ export default defineNuxtConfig({
     experimental: {
       tasks: true,
       asyncContext: true,
-      wasm: true,
     },
     unenv: {
       external: ['node:async_hooks'],
