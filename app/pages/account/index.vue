@@ -2,22 +2,22 @@
 import type { PageCardProps } from '@nuxt/ui'
 import { useSiteI18n } from '#imports'
 
-const { t } = useSiteI18n()
+const { t, localePath } = useSiteI18n()
 
-const cards = ref<PageCardProps[]>([
+const cards = computed<PageCardProps[]>(() => ([
   {
     title: t('account.settings.title'),
     description: t('account.settings.description'),
     icon: 'i-lucide-cog',
-    to: '/account/settings',
+    to: localePath('/account/settings'),
   },
   {
     title: t('account.membership.title'),
     description: t('account.membership.description'),
     icon: 'i-lucide-credit-card',
-    to: '/account/membership',
+    to: localePath('/account/membership'),
   },
-])
+]))
 </script>
 
 <template>
