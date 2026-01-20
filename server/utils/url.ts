@@ -3,3 +3,11 @@ export const withBaseUrl = (path?: string) => {
   url.pathname = path ?? ''
   return url.toString()
 }
+
+export const isInternalUrl = (url: string) => {
+  if (url.startsWith('http')) return false
+
+  if (!url.startsWith('/')) return false
+
+  return true
+}
