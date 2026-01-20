@@ -2,7 +2,7 @@
 // This is a kind of "layout" for pages inside /account
 import { useAuth, useSiteI18n } from '#imports'
 
-const { t } = useSiteI18n()
+const { t, localePath } = useSiteI18n()
 const { signOut } = useAuth()
 const route = useRoute()
 
@@ -49,7 +49,7 @@ const onSignOut = async () => {
             v-if="!isAccountRoot"
             variant="link"
             icon="i-lucide-arrow-left"
-            :to="`/${basePath}`"
+            :to="localePath(`/${basePath}`)"
             :label="`${t('actions.backTo')} ${t('account.title')}`"
             class="-ml-3 mt-2"
           />
