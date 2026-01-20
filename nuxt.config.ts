@@ -12,6 +12,14 @@ export default defineNuxtConfig({
     'nuxt-resend',
     '@nuxtjs/i18n',
   ],
+  $production: {
+    image: {
+      cloudflare: {
+        baseURL: process.env.CLOUDFLARE_IMAGE_BASE_URL,
+      },
+      quality: 80,
+    },
+  },
   css: ['~/assets/css/main.css'],
   site: {
     name: 'Frigear.nu',

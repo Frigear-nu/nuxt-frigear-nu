@@ -33,6 +33,7 @@ jobs:
       NUXT_RESEND_API_KEY: ${{ secrets.NUXT_RESEND_API_KEY }}
       NUXT_MAIL_FROM: ${{ vars.NUXT_MAIL_FROM }}
       NUXT_MAIL_TO: ${{ vars.NUXT_MAIL_TO }}
+      CLOUDFLARE_IMAGE_BASE_URL: ${{ vars.CLOUDFLARE_IMAGE_BASE_URL }}
 
     steps:
       - uses: actions/checkout@v4
