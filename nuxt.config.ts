@@ -1,6 +1,4 @@
-import { createResolver } from '@nuxt/kit'
-
-const { resolve } = createResolver(import.meta.url)
+import vue from '@vitejs/plugin-vue'
 
 export default defineNuxtConfig({
   extends: ['simple-content-site'],
@@ -15,16 +13,15 @@ export default defineNuxtConfig({
     '@unlok-co/nuxt-stripe',
     'nuxt-resend',
     '@nuxtjs/i18n',
-    'nuxt-email-renderer',
-    resolve('./app/modules/email-templates-typing'),
   ],
   $production: {
     image: {
       provider: 'cloudflare',
+      quality: 80,
+      format: ['webp', 'avif', 'jpeg'],
       cloudflare: {
         baseURL: process.env.CLOUDFLARE_IMAGE_BASE_URL,
       },
-      quality: 80,
     },
   },
   css: ['~/assets/css/main.css'],
@@ -33,6 +30,11 @@ export default defineNuxtConfig({
   },
   colorMode: {
     preference: 'dark',
+  },
+  content: {
+    experimental: {
+      sqliteConnector: 'native',
+    },
   },
   runtimeConfig: {
     jwtSecret: 'some-string-longer-than-32-chars-to-issue-jwt',
@@ -73,6 +75,9 @@ export default defineNuxtConfig({
     unenv: {
       external: ['node:async_hooks'],
     },
+    rollupConfig: {
+      plugins: [vue()],
+    },
   },
   hub: {
     db: {
@@ -94,6 +99,12 @@ export default defineNuxtConfig({
       code: 'en',
       name: 'English',
     }],
+  },
+  ogImage: {
+
+    zeroRuntime: true,
+    // @ts-expect-error Not sure why this is not typed: https://nuxtseo.com/docs/og-image/guides/emojis
+    emojiStrategy: 'fetch',
   },
   resend: {
     apiKey: process.env.NUXT_RESEND_API_KEY!,

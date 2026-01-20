@@ -2,3 +2,7 @@
 @import "@nuxt/ui";
 
 @source "../../../content/**/*.{md,yml,yaml}";
+
+/*@theme {*/
+/*    --font-display: "Inter", "sans-serif";*/
+/*}*/

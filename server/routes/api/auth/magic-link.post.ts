@@ -5,6 +5,7 @@ import { addMinutes } from 'date-fns'
 import { db } from 'hub:db'
 import { eq } from 'drizzle-orm'
 import { withQuery } from 'ufo'
+import MagicLinkEmail from '#shared/emails/auth/MagicLinkEmail.vue'
 
 export default defineEventHandler(async (event) => {
   const { mail: { from, to: replyTo } } = useRuntimeConfig(event)
@@ -38,15 +39,15 @@ export default defineEventHandler(async (event) => {
       local: true,
     }
   }
-
+  //
   await sendEmailTemplate(event, {
     to: email,
     from,
     replyTo,
     subject: 'Magic Link',
-    template: 'AuthMagicLinkEmail',
+    component: MagicLinkEmail,
     props: {
-      magicLink: signInUrl,
+      signInUrl,
     },
   })
 

@@ -2,7 +2,7 @@ import type { AuthProvider } from '~/types'
 
 export const useAuth = () => {
   // const nuxtApp = useNuxtApp()
-  const sbAuth = useSupabaseAuth()
+  // const sbAuth = useSupabaseAuth()
   const customAuth = useCustomAuth()
 
   const authMode = computed<'custom' | 'supabase'>(() => {
@@ -10,7 +10,7 @@ export const useAuth = () => {
   })
 
   const currentUser = computed(() => {
-    return authMode.value === 'supabase' ? sbAuth.currentUser.value : customAuth.currentUser.value
+    return customAuth.currentUser.value
   })
 
   const isLoggedIn = computed(() => {
@@ -19,8 +19,8 @@ export const useAuth = () => {
 
   const sendMagicLink = async (email: string) => {
     switch (authMode.value) {
-      case 'supabase':
-        return sbAuth.sendMagicLink(email)
+      // case 'supabase':
+      //   return sbAuth.sendMagicLink(email)
       case 'custom':
         return customAuth.sendMagicLink(email)
       default:
@@ -30,8 +30,8 @@ export const useAuth = () => {
 
   const signInWithProvider = async (provider: AuthProvider) => {
     switch (authMode.value) {
-      case 'supabase':
-        return sbAuth.signInWithProvider(provider)
+      // case 'supabase':
+      //   return sbAuth.signInWithProvider(provider)
       case 'custom':
         return customAuth.signInWithProvider(provider)
       default:
@@ -41,8 +41,8 @@ export const useAuth = () => {
 
   const signInWithPassword = async (email: string, password: string) => {
     switch (authMode.value) {
-      case 'supabase':
-        return sbAuth.signInWithPassword(email, password)
+      // case 'supabase':
+      //   return sbAuth.signInWithPassword(email, password)
       case 'custom':
         return customAuth.signInWithPassword(email, password)
       default:
@@ -51,8 +51,8 @@ export const useAuth = () => {
   }
   const signUpWithPassword = async (email: string, password: string, meta?: { name?: string }) => {
     switch (authMode.value) {
-      case 'supabase':
-        return sbAuth.signUpWithPassword(email, password)
+      // case 'supabase':
+      // return sbAuth.signUpWithPassword(email, password)
       case 'custom':
         return customAuth.signUpWithPassword(meta?.name || email, email, password)
       default:
@@ -62,9 +62,9 @@ export const useAuth = () => {
 
   const refresh = async () => {
     switch (authMode.value) {
-      case 'supabase':
-        await sbAuth.supabase.auth.refreshSession()
-        break
+      // case 'supabase':
+      //   await sbAuth.supabase.auth.refreshSession()
+      //   break
       case 'custom':
         await customAuth.custom.refresh()
         break
@@ -75,9 +75,9 @@ export const useAuth = () => {
 
   const signOut = async () => {
     switch (authMode.value) {
-      case 'supabase':
-        await sbAuth.supabase.auth.signOut()
-        break
+      // case 'supabase':
+      //   await sbAuth.supabase.auth.signOut()
+      //   break
       case 'custom':
         await customAuth.custom.signOut()
         break

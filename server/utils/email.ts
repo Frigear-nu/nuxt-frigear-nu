@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
-import type { EmailTemplateName, EmailTemplateProps } from '#build/types/email-templates.generated'
+import { type ExtractComponentProps, type Options, render } from '@vue-email/render'
+import type { Component } from 'vue'
 
 export type EmailMessage = {
   to: string | string[]
@@ -41,12 +42,12 @@ export const sendEmail = async (event: H3Event, message: EmailMessage) => {
   }
 }
 
-export type EmailTemplateMessage<T extends EmailTemplateName = EmailTemplateName>
-  = Omit<EmailMessage, 'html'> & { template: T, props?: EmailTemplateProps[T] }
+export type EmailComponentMessage<T extends Component> = Omit<EmailMessage, 'html'> & { component: T, props?: ExtractComponentProps<T> }
 
-export const sendEmailTemplate = async <T extends EmailTemplateName>(
+export const sendEmailTemplate = async <T extends Component>(
   event: H3Event,
-  envelope: EmailTemplateMessage<T>,
+  envelope: EmailComponentMessage<T>,
+  options?: Omit<Options, 'plainText'>,
 ) => {
   assertResendApiKey(event)
   assertFromTo(envelope)
@@ -57,9 +58,33 @@ export const sendEmailTemplate = async <T extends EmailTemplateName>(
     to: envelope.to,
     subject: envelope.subject,
     reply_to: envelope.replyTo,
-    html: await renderEmailComponent(envelope.template, envelope.props),
-    text: await renderEmailComponent(envelope.template, envelope.props, { plainText: true }),
+    html: await render(envelope.component, envelope.props, options),
+    text: await render(envelope.component, envelope.props, { ...options, plainText: true }),
   })
 
   if (error) throw createError({ statusCode: 502, message: error.message ?? 'Error sending email' })
 }
+
+// type EmailTemplateMessage = Omit<EmailMessage, 'html'> & {
+//   template: string
+//   props?: Record<string, unknown>
+// }
+//
+// export const sendEmailTemplate = async (event: H3Event, message: EmailTemplateMessage) => {
+//   assertResendApiKey(event)
+//   assertFromTo(message)
+//
+//   const { emails } = useResend()
+//   const { error } = await emails.send({
+//     from: message.from,
+//     to: message.to,
+//     subject: message.subject,
+//     reply_to: message.replyTo,
+//     template: {
+//       id: message.template,
+//       variables: message.props,
+//     },
+//   })
+//
+//   if (error) throw createError({ statusCode: 502, message: error.message ?? 'Error sending email' })
+// }

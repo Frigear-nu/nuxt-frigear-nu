@@ -6,6 +6,6 @@ ignoredBuiltDependencies:
   - vue-demi
 
 onlyBuiltDependencies:
-  - better-sqlite3
   - sharp
   - supabase
+#  - better-sqlite3
