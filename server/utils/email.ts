@@ -17,7 +17,7 @@ const assertResendApiKey = (event: H3Event) => {
   }
 }
 
-const assertFromTo = (message: EmailMessage) => {
+const assertFromTo = (message: Pick<EmailMessage, 'from' | 'to'>) => {
   if (!message.from || !message.to) {
     throw createError({ statusCode: 500, message: 'Missing from or to address.' })
   }
@@ -49,6 +49,7 @@ export const sendEmailTemplate = async <T extends EmailTemplateName>(
   envelope: EmailTemplateMessage<T>,
 ) => {
   assertResendApiKey(event)
+  assertFromTo(envelope)
   const { emails } = useResend()
 
   const { error } = await emails.send({
