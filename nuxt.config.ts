@@ -63,6 +63,9 @@ export default defineNuxtConfig({
       asyncContext: true,
       wasm: true,
     },
+    unenv: {
+      external: ['node:async_hooks'],
+    },
   },
   hub: {
     db: {
