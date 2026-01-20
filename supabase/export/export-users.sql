@@ -1,7 +1,7 @@
 -- This SQL exports all users with some more details from Supabase.
 select
-    u.id as user_id,
-    coalesce(i.provider, 'email') as provider,
+    u.id as supabase_id,
+    coalesce(i.provider, 'email') as supabase_provider,
     coalesce(
             i.identity_data ->> 'email',
             u.email
