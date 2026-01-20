@@ -5,18 +5,18 @@ import { NotFoundError, ServerError } from '@nitrotool/errors'
 import { and, eq, gt, isNull } from 'drizzle-orm'
 
 export default defineEventHandler(async (event) => {
-  const { token, redirect } = await useValidatedQuery(event, signInWithMagicLinksSchema)
+  const { token } = await useValidatedQuery(event, signInWithMagicLinksSchema)
   const currentTime = new Date()
-  const magicLink = await db.query.magicLinks.findFirst({
-    where: and(
-      eq(schema.magicLinks.token, token),
-      isNull(schema.magicLinks.usedAt),
-      gt(schema.magicLinks.expiresAt, currentTime),
-    ),
-  })
+  const [magicLink] = await db.update(schema.magicLinks).set({
+    usedAt: currentTime,
+  }).where(and(
+    eq(schema.magicLinks.token, token),
+    isNull(schema.magicLinks.usedAt),
+    gt(schema.magicLinks.expiresAt, currentTime),
+  )).returning()
 
   if (!magicLink || isAfter(currentTime, magicLink.expiresAt)) {
-    throw ServerError('Invalid link.')
+    throw ServerError('errors.auth.magicLink.invalid')
   }
 
   let user = await db.query.users.findFirst({
@@ -38,5 +38,5 @@ export default defineEventHandler(async (event) => {
     .set({ usedAt: currentTime })
     .where(eq(schema.magicLinks.id, magicLink.id))
 
-  return authenticateUser(event, user, redirect)
+  return authenticateUser(event, user, magicLink.redirectUrl || '/account')
 })
