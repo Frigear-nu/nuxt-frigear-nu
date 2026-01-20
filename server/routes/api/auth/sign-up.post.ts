@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     name,
     email,
     password: await hashPassword(password),
-    emailVerifiedAt: verifyEmail ? new Date() : null,
+    emailVerifiedAt: verifyEmail ? null : new Date(),
   }).returning()
 
   if (!createdUser) throw ServerError('errors.auth.signUp.failedCreate')
