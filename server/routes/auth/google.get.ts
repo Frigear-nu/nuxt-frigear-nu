@@ -1,5 +1,3 @@
-import { serverSupabaseServiceRole } from '#supabase/server'
-import { eq } from 'drizzle-orm'
 import { ServerError } from '@nitrotool/errors'
 
 export default defineOAuthGoogleEventHandler({
@@ -14,10 +12,11 @@ export default defineOAuthGoogleEventHandler({
     const email: string = user.email || ''
     let dbUser = await findUserByEmail(email)
 
+    if (import.meta.dev) console.log({ user })
     if (!dbUser) {
       [dbUser] = await db.insert(schema.users)
-      // todo: get full_name from google?
-        .values({ email, name: user?.full_name || email })
+      // todo: get full_name/avatar from google?
+        .values({ email, name: user?.full_name || email, emailVerifiedAt: new Date() })
         .returning()
     }
 
@@ -25,6 +24,6 @@ export default defineOAuthGoogleEventHandler({
     if (!dbUser) throw ServerError()
 
     // todo: centralize redirect storage.
-    return authenticateUser(event, dbUser, '/')
+    return authenticateUser(event, dbUser, await getDefaultRedirectForUser(event, dbUser))
   },
 })
