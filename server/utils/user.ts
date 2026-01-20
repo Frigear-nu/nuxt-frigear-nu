@@ -10,7 +10,7 @@ export const getDefaultRedirectForUser = async (
   const { verifyEmail } = useRuntimeConfig(event).auth
   const defaultRedirect = '/account'
   const continueLink = redirect && isInternalUrl(redirect)
-    ? redirect || defaultRedirect
+    ? redirect
     : defaultRedirect
 
   if (!verifyEmail) {
