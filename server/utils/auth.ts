@@ -21,6 +21,9 @@ export const mapUserToSession = async (user: Users) => {
     email: user.email,
     emailVerifiedAt: user.emailVerifiedAt,
     avatarUrl: user.avatarUrl,
+    // Supabase: these will at some point go away.
+    isMigrated: user.isMigrated,
+    sbId: user.supabaseId,
     // todo: maybe issue JWT here?
   })
 }
