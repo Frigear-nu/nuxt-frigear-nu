@@ -30,9 +30,6 @@ export default defineNuxtConfig({
   runtimeConfig: {
     jwtSecret: 'some-string-longer-than-32-chars-to-issue-jwt',
     stripeWebhookSecret: '',
-    resend: {
-      apiKey: '',
-    },
     mail: {
       from: '',
       to: '',
@@ -87,6 +84,9 @@ export default defineNuxtConfig({
       code: 'en',
       name: 'English',
     }],
+  },
+  resend: {
+    apiKey: process.env.NUXT_RESEND_API_KEY!,
   },
   stripe: {
     server: {
