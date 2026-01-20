@@ -31,7 +31,7 @@ export default defineNuxtConfig({
     },
     auth: {
       verifyEmail: true,
-      migrateSupabase: true,
+      migrateSupabase: false,
     },
   },
   routeRules: {
@@ -48,6 +48,11 @@ export default defineNuxtConfig({
     '/pricing': { redirect: { to: '/membership', statusCode: 301 } },
   },
   compatibilityDate: '2025-12-11',
+  nitro: {
+    experimental: {
+      tasks: true,
+    },
+  },
   hub: {
     db: {
       dialect: 'sqlite',
