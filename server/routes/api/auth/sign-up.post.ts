@@ -1,16 +1,17 @@
 import { signUpSchema } from '#shared/schema/auth'
 import { useValidatedBody } from 'h3-zod'
 import { EntityAlreadyExistsError, ServerError } from '@nitrotool/errors'
+import type { Users } from 'hub:db:schema'
 
 export default defineEventHandler(async (event) => {
   const { user } = await getUserSession(event)
   const { verifyEmail } = useRuntimeConfig(event).auth
 
   if (user) {
-    return sendRedirect(event, await getDefaultRedirectForUser(event, user))
+    return sendRedirect(event, await getDefaultRedirectForUser(event, user as Users))
   }
 
-  const { name, email, password, redirect } = await useValidatedBody(event, signUpSchema)
+  const { name, email, password } = await useValidatedBody(event, signUpSchema)
 
   const internalUser = await findUserByEmail(email)
 
@@ -26,9 +27,5 @@ export default defineEventHandler(async (event) => {
 
   if (!createdUser) throw ServerError('errors.auth.signUp.failedCreate')
 
-  return authenticateUser(
-    event,
-    createdUser,
-    await getDefaultRedirectForUser(event, createdUser, redirect),
-  )
+  return mapUserToSession(createdUser)
 })

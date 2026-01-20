@@ -29,12 +29,19 @@ export const useCustomAuth = () => {
   }
 
   const signInWithPassword = async (email: string, password: string) => {
+    await $fetch('/api/auth/sign-in', {
+      method: 'POST',
+      body: { email, password },
+    })
     await refreshSession()
-    throw new Error('Not yet implemented.')
+    return true
   }
-  const signUpWithPassword = async (email: string, password: string) => {
+  const signUpWithPassword = async (name: string, email: string, password: string) => {
+    await $fetch('/api/auth/sign-up', {
+      method: 'POST',
+      body: { name, email, password },
+    })
     await refreshSession()
-    throw new Error('Not yet implemented.')
   }
 
   const refresh = async () => {

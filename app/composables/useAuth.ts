@@ -49,12 +49,12 @@ export const useAuth = () => {
         throw new Error(`Auth mode ${authMode.value} not supported.`)
     }
   }
-  const signUpWithPassword = async (email: string, password: string) => {
+  const signUpWithPassword = async (email: string, password: string, meta?: { name?: string }) => {
     switch (authMode.value) {
       case 'supabase':
         return sbAuth.signUpWithPassword(email, password)
       case 'custom':
-        return customAuth.signUpWithPassword(email, password)
+        return customAuth.signUpWithPassword(meta?.name || email, email, password)
       default:
         throw new Error(`Auth mode ${authMode.value} not supported.`)
     }

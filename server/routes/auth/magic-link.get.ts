@@ -22,11 +22,14 @@ export default defineEventHandler(async (event) => {
     throw ServerError('errors.auth.magicLink.invalid')
   }
 
-  let user = await db.query.users.findFirst({
-    where: eq(schema.users.id, magicLink.userId),
-  })
+  let [user] = await db.update(schema.users)
+    .set({ lastLoginAt: currentTime })
+    .where(eq(schema.users.id, magicLink.userId))
+    .returning()
 
   if (!user) throw NotFoundError()
+
+  await createStripeCustomerFromMigration(user)
 
   // Let's set the email to verified since this comes via an email.
   if (!user.emailVerifiedAt) {

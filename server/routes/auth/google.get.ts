@@ -21,17 +21,6 @@ export default defineOAuthGoogleEventHandler({
         .returning()
     }
 
-    if (!dbUser.isMigrated) {
-      const serviceRole = serverSupabaseServiceRole(event)
-      const sbUser = await findSupabaseUserByEmail(serviceRole, email)
-
-      if (sbUser) {
-        await migrateSupabaseAccountById(serviceRole, dbUser.id, sbUser.id)
-        await db.update(schema.users).set({ isMigrated: true }).where(eq(schema.users.id, dbUser.id))
-        dbUser = await findUserByEmail(email)
-      }
-    }
-
     // todo: check if this might be triggered.
     if (!dbUser) throw ServerError()
 

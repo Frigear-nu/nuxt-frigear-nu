@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { signInWithPasswordSchema, type SignUpWithPasswordSchema } from '#shared/schema/auth'
+import {
+  type SignInWithPasswordSchema,
+  signInWithPasswordSchema,
+  type SignUpWithPasswordSchema,
+} from '#shared/schema/auth'
 import { signUpWithPasswordSchema } from '#shared/schema/auth'
 import type { AuthFormField, FormSubmitEvent } from '@nuxt/ui'
-import type { AuthProvider } from '~/types'
 
 const toast = useToast()
 const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
@@ -59,8 +62,8 @@ const signIn = async (email: string, password: string) => {
   return navigateTo('/account')
 }
 
-const signUp = async (email: string, password: string) => {
-  const createdUser = await signUpWithPassword(email, password).catch((error) => {
+const signUp = async (email: string, password: string, meta?: { name?: string }) => {
+  const createdUser = await signUpWithPassword(email, password, meta).catch((error) => {
     if (error) toast.add(formatToastError(error))
   })
 
@@ -68,6 +71,7 @@ const signUp = async (email: string, password: string) => {
     throw new Error('Could not create user.')
   }
 
+  // @ts-expect-error This is not typed
   if (!createdUser.emailConfirmedAt) {
     toast.add(formatToastSuccess('Check your mail for a confirmation email'))
     emailWasDispatched.value = true
@@ -77,10 +81,10 @@ const signUp = async (email: string, password: string) => {
   return navigateTo('/account')
 }
 
-async function onSubmit(payload: FormSubmitEvent<SignUpWithPasswordSchema>) {
+async function onSubmit(payload: FormSubmitEvent<SignInWithPasswordSchema | SignUpWithPasswordSchema>) {
   const email = payload.data.email
   const password = payload.data.password
-  if (mode.value === 'up') await signUp(email, password)
+  if (mode.value === 'up') await signUp(email, password, payload.data as { name?: string })
   else await signIn(email, password)
 }
 
