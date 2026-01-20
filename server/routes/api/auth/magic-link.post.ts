@@ -7,7 +7,7 @@ import { eq } from 'drizzle-orm'
 import { withQuery } from 'ufo'
 
 export default defineEventHandler(async (event) => {
-  const { mail: { from } } = useRuntimeConfig(event)
+  const { mail: { from, to: replyTo } } = useRuntimeConfig(event)
   const { email, redirect } = await useValidatedBody(event, magicLinkSchema)
 
   const resolvedUser = await db.query.users.findFirst({
@@ -44,7 +44,7 @@ export default defineEventHandler(async (event) => {
     from,
     subject: 'Magic Link',
     html: `<a href="${signInUrl}">Sign in by clicking here</a> or copy this URL into a browser to sign in: ${signInUrl}`,
-    replyTo: email,
+    replyTo,
   })
 
   return {
