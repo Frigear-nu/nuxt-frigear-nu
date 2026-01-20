@@ -4,12 +4,14 @@ import { EntityAlreadyExistsError, ServerError } from '@nitrotool/errors'
 import type { Users } from 'hub:db:schema'
 
 export default defineEventHandler(async (event) => {
+  const { signUp, verifyEmail } = useRuntimeConfig(event).auth
   const { user } = await getUserSession(event)
-  const { verifyEmail } = useRuntimeConfig(event).auth
 
   if (user) {
     return sendRedirect(event, await getDefaultRedirectForUser(event, user as Users))
   }
+
+  if (!signUp) throw createError({ statusCode: 400, message: 'Signup is disabled.' })
 
   const { name, email, password } = await useValidatedBody(event, signUpSchema)
 
