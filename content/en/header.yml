@@ -4,7 +4,7 @@ logo:
   dark: /logo-dark.png
   class: h-16 p-1
 navigation:
-  - label: Hjem
-    to: /
-  - label: Medlemskab
-    to: /pricing
+  - label: Home
+    to: /en
+  - label: Membership
+    to: /en/membership

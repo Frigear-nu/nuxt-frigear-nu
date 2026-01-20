@@ -4,12 +4,13 @@ export default defineNuxtConfig({
     '@nitrotool/jwt',
     '@nuxthub/core',
     '@nuxtjs/supabase',
-    '@nuxt/content',
     'nuxt-studio',
+    '@nuxt/content',
     '@nuxt/ui',
     'nuxt-auth-utils',
     '@unlok-co/nuxt-stripe',
     'nuxt-resend',
+    '@nuxtjs/i18n',
   ],
   css: ['~/assets/css/main.css'],
   site: {
@@ -48,6 +49,21 @@ export default defineNuxtConfig({
       dialect: 'sqlite',
       casing: 'snake_case',
     },
+  },
+  i18n: {
+    defaultLocale: 'da',
+    strategy: 'prefix_except_default',
+    detectBrowserLanguage: false, // otherwise we get issues with redirect.
+    experimental: {
+      localeDetector: 'localeDetector.ts',
+    },
+    locales: [{
+      code: 'da',
+      name: 'Dansk',
+    }, {
+      code: 'en',
+      name: 'English',
+    }],
   },
   stripe: {
     server: {

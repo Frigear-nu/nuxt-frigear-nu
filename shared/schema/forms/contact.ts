@@ -15,6 +15,7 @@ export const contactSubjectKeys = [
 
 export type ContactSubjectKey = (typeof contactSubjectKeys)[number]
 
+// todo: remove this and replace with the full translation path to be used in the sending of contact form.
 export const contactSubjectLabels: Record<ContactSubjectKey, string> = {
   volunteering: 'Frivillig',
   partnership: 'Samarbejde',
@@ -26,11 +27,6 @@ export const contactSubjectLabels: Record<ContactSubjectKey, string> = {
   other: 'Andet',
 } as const
 
-export const contactSubjectSelectItems = contactSubjectKeys.map(value => ({
-  value,
-  label: contactSubjectLabels[value],
-}))
-
 export const contactFormSchema = z
   .object({
     name: z.string('Navn er påkrævet.').min(1).max(30, { error: 'Navn er for langt.' }),
@@ -41,6 +37,7 @@ export const contactFormSchema = z
       .transform(v => v.replace(/[\s-]/g, ''))
       .refine(v => v === '' || /^\d{8}$/.test(v), { error: 'Telefon skal være 8 cifre.' })
       .optional(),
+    phonePrefix: z.string().optional(),
     subject: z.enum(contactSubjectKeys, { error: 'Vælg et emne.' }),
     subjectOther: z.string().trim().max(120, { error: 'For langt.' }).optional(),
     message: z.string('Besked er påkrævet.').min(1).max(5000, { error: 'Besked er for lang.' }),

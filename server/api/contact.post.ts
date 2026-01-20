@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     <h2>Ny besked fra kontaktformular</h2>
     <p><strong>Navn:</strong> ${escapeHtml(data.name)}</p>
     <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
-    <p><strong>Telefon:</strong> ${escapeHtml(data.phone ?? '')}</p>
+    ${data.phone ? `<p><strong>Telefon:</strong> ${escapeHtml(data?.phonePrefix || '')} ${escapeHtml(data.phone ?? '')}</p>` : ''}
     <p><strong>Emne:</strong> ${escapeHtml(safeSubject)}</p>
     <pre style="white-space:pre-wrap">${escapeHtml(data.message)}</pre>
   `.trim()

@@ -1,11 +1,10 @@
 <script setup lang='ts'>
-import type { FormSubmitEvent } from '@nuxt/ui'
+import type { FormSubmitEvent, FormErrorEvent } from '@nuxt/ui'
 import type { LocationQueryRaw } from 'vue-router'
 
 import {
   contactFormSchema,
   contactSubjectKeys,
-  contactSubjectSelectItems,
   type ContactFormSchema,
   type ContactSubjectKey,
 } from '#shared/schema/forms/contact'
@@ -14,11 +13,27 @@ const isSubmitting = ref(false)
 const toast = useToast()
 const route = useRoute()
 const router = useRouter()
+const { t } = useSiteI18n()
+
+type PhonePrefixItem = { label: string, value: string }
+const phonePrefixes = ref<PhonePrefixItem[]>([
+  { label: '+45', value: '+45' },
+  { label: '+46', value: '+46' },
+  { label: `+47`, value: '+47' },
+])
+
+const contactSubjectSelectItems = computed(() => {
+  return contactSubjectKeys.map(value => ({
+    value,
+    label: t(`contact.form.subject.items.${value}`),
+  }))
+})
 
 const DEFAULT_STATE: Partial<ContactFormSchema> = {
   name: undefined,
   email: undefined,
   phone: undefined,
+  phonePrefix: '+45',
   subject: undefined,
   subjectOther: undefined,
   message: undefined,
@@ -65,11 +80,10 @@ function isSubjectKey(v: unknown): v is ContactSubjectKey {
 
 watch(
   () => route.query.subject,
-  (raw) => {
-    const candidate = Array.isArray(raw) ? raw[0] : raw
-    if (!isSubjectKey(candidate)) return
+  (subject) => {
+    if (!isSubjectKey(subject)) return
 
-    state.subject = candidate
+    state.subject = subject
 
     const q: LocationQueryRaw = { ...route.query }
     delete q.subject
@@ -78,16 +92,51 @@ watch(
   { immediate: true },
 )
 
-function onError(event: unknown) {
-  let id: string | undefined
+// Help users with autofill to strip the Country Code.
+// todo: for the future we might want to implement a proper phone input component like here:
+//   https://github.com/roiLeo/nuxtUI-PhoneNumberInput/blob/main/app/components/PhoneNumberInput.vue
+watch(() => state.phone, (phone) => {
+  if (!phone) return
+  const selected = phonePrefixes.value.find((p) => {
+    // first, attempt to extract with +12
+    if (phone.startsWith('+') && phone.startsWith(p.label)) {
+      const inferredPlus = phone.substring(0, 3).trim()
+      if (inferredPlus === p.label) {
+        return true
+      }
+    }
+    // secondly, attempt to extract with 0012
+    else if (phone.startsWith('00') && phone.length >= 11) {
+      const inferredZero = phone.substring(0, 4).replace('00', '+')
+      if (p.label === inferredZero) {
+        return true
+      }
+    }
 
-  if (typeof event === 'object' && event !== null) {
-    const e = event as { error?: Array<{ id?: string }>, errors?: Array<{ id?: string }> }
-    id = e.error?.[0]?.id ?? e.errors?.[0]?.id
+    // lastly, attempt by the already selected item.
+    return p && p.value === state.phonePrefix && phone.startsWith(p.label)
+  })
+
+  if (!selected) return
+
+  // prefill countryCode if not the same as set.
+  if (selected.value !== state.phonePrefix) {
+    state.phonePrefix = selected.value
   }
 
-  if (!id) return
-  const el = document.getElementById(id)
+  if (!phone.startsWith(selected.label)) return
+
+  // [ +45 | 0045 ]-12345678 = 11-12 chars
+  if (phone.length <= 10) return
+
+  // we only try to change it if ALL cases pass so we do not annoy users.
+  state.phone = phone.replace(selected.label, '')
+})
+
+function onError(event: FormErrorEvent) {
+  const [error] = event.errors
+  if (!error || !error.id) return
+  const el = document.getElementById(error.id)
   el?.focus()
   el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
 }
@@ -95,7 +144,7 @@ function onError(event: unknown) {
 
 <template>
   <UPageCard
-    title="Kontakt"
+    :title="t('contact.title')"
     class="w-full max-w-lg"
   >
     <UForm
@@ -107,82 +156,85 @@ function onError(event: unknown) {
       @error="onError"
     >
       <UFormField
-        label="Dit seje navn"
+        :label="t('contact.form.name.label')"
         name="name"
         autocomplete="name"
       >
         <UInput
           v-model="state.name"
           class="w-full"
-          placeholder="Hej, hva hedder du? .. put her"
+          :placeholder="t('contact.form.name.placeholder')"
         />
       </UFormField>
 
       <UFormField
-        label="Din awesome E-mail"
+        :label="t('contact.form.email.label')"
         name="email"
       >
         <UInput
           v-model="state.email"
           class="w-full"
-          placeholder="volunteerHero@someDomain.lol"
+          :placeholder="t('contact.form.email.placeholder')"
           autocomplete="email"
         />
       </UFormField>
 
       <UFormField
-        label="Telefon"
+        :label="t('contact.form.phone.label')"
         name="phone"
       >
-        <div class="flex gap-2">
-          <div class="w-16 shrink-0 rounded-md border px-3 py-2 text-sm text-muted-foreground flex items-center justify-center">
-            +45
-          </div>
+        <UFieldGroup class="flex content-stretch">
+          <USelect
+            v-model="state.phonePrefix"
+            :items="phonePrefixes"
+            class="min-w-3/12"
+          />
           <UInput
             v-model="state.phone"
-            class="flex-1"
-            placeholder="12345678"
-            inputmode="numeric"
+            :placeholder="t('contact.form.phone.placeholder')"
             autocomplete="tel"
+            class="min-w-9/12"
           />
-        </div>
-        <div class="text-xs text-muted-foreground mt-1">
-          Telefon skal være 8 cifre (valgfrit).
-        </div>
+        </UFieldGroup>
+        <template #help>
+          <div class="text-xs text-muted-foreground mt-1">
+            {{ t('contact.form.phone.hint') }}
+          </div>
+        </template>
       </UFormField>
 
       <UFormField
-        label="Emne"
+        :label="t('contact.form.subject.label')"
         name="subject"
       >
         <USelect
           v-model="state.subject"
           class="w-full"
-          placeholder="Vælg emne"
+          :placeholder="t('contact.form.subject.placeholder')"
           :items="contactSubjectSelectItems"
         />
       </UFormField>
 
       <UFormField
         v-show="state.subject === 'other'"
-        label="Andet (uddyb)"
+        :label="t('contact.form.subjectOther.label')"
         name="subjectOther"
         class="w-full"
       >
         <UInput
           v-model="state.subjectOther"
           class="w-full"
-          placeholder="Hvad drejer det sig om?"
+          :placeholder="t('contact.form.subjectOther.placeholder')"
         />
       </UFormField>
 
       <UFormField
-        label="Besked"
+        :label="t('contact.form.message.label')"
         name="message"
       >
         <UTextarea
           v-model="state.message"
-          placeholder="Jeg vil snakke om et awesome Frigear projekt..."
+          :placeholder="t('contact.form.message.placeholder')"
           class="w-full"
         />
       </UFormField>
@@ -191,7 +243,7 @@ function onError(event: unknown) {
         class="justify-center flex"
         size="xl"
       >
-        Send besked
+        {{ t('contact.form.submit.label') }}
       </UButton>
     </UForm>
   </UPageCard>
