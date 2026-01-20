@@ -92,9 +92,6 @@ export default defineNuxtConfig({
       name: 'English',
     }],
   },
-  image: {
-    provider: 'ipx',
-  },
   resend: {
     apiKey: process.env.NUXT_RESEND_API_KEY!,
   },
