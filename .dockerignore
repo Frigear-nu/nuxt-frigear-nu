@@ -27,9 +27,6 @@ CLAUDE.md
 
 # Build outputs and cache
 .output
-# TODO: Might want this .data folder since we will be using
-#   SQLite w/Nuxt inside the container?
-#   Or might be a better solution to sync it using docker-compose.yml?
 .data
 .nuxt
 .nitro
