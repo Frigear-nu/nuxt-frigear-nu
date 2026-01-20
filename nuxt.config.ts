@@ -1,3 +1,7 @@
+import { createResolver } from '@nuxt/kit'
+
+const { resolve } = createResolver(import.meta.url)
+
 export default defineNuxtConfig({
   extends: ['simple-content-site'],
   modules: [
@@ -11,9 +15,12 @@ export default defineNuxtConfig({
     '@unlok-co/nuxt-stripe',
     'nuxt-resend',
     '@nuxtjs/i18n',
+    'nuxt-email-renderer',
+    resolve('./app/modules/email-templates-typing'),
   ],
   $production: {
     image: {
+      provider: 'cloudflare',
       cloudflare: {
         baseURL: process.env.CLOUDFLARE_IMAGE_BASE_URL,
       },

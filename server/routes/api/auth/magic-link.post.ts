@@ -39,12 +39,15 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  await sendEmail(event, {
+  await sendEmailTemplate(event, {
     to: email,
     from,
-    subject: 'Magic Link',
-    html: `<a href="${signInUrl}">Sign in by clicking here</a> or copy this URL into a browser to sign in: ${signInUrl}`,
     replyTo,
+    subject: 'Magic Link',
+    template: 'AuthMagicLinkEmail',
+    props: {
+      magicLink: signInUrl,
+    },
   })
 
   return {

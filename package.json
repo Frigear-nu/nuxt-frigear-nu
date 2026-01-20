@@ -32,15 +32,17 @@
     "h3-zod": "^0.5.3",
     "minimatch": "^10.1.1",
     "nuxt": "^4.2.2",
-    "simple-content-site": "^2.3.1",
-    "zod": "^4.3.5",
+    "nuxt-auth-utils": "0.5.27",
+    "nuxt-email-renderer": "2.1.2",
     "nuxt-studio": "^1.1.1",
-    "nuxt-auth-utils": "0.5.27"
+    "simple-content-site": "^2.3.1",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.12.1",
     "@nuxt/eslint-config": "^1.12.1",
     "@types/escape-html": "^1.0.4",
+    "@vue/compiler-sfc": "^3.5.27",
     "baseline-browser-mapping": "^2.9.15",
     "eslint": "^9.39.2",
     "nuxt-resend": "^0.0.2",
