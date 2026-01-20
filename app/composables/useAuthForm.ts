@@ -18,6 +18,7 @@ const useAuthForm = () => {
     {
       name: 'password',
       type: 'password',
+      autocomplete: 'password',
       label: t('form.label.password'),
       placeholder: t('form.placeholder.password'),
       required: true,
@@ -55,7 +56,7 @@ const useAuthForm = () => {
     return toValue(providers).map((provider) => {
       return {
         ...provider,
-        label: t(provider.label),
+        label: provider.label ? t(provider.label) : undefined,
         onClick: () => handler(provider.id),
       }
     })
