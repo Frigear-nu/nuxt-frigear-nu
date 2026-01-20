@@ -39,19 +39,19 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
 
   $emits('loading')
 
-  const magicLink = await sendMagicLink(email).catch((error) => {
-    if (error) {
-      $emits('error', error)
+  try {
+    const magicLink = await sendMagicLink(email)
+    if (import.meta.dev) console.log({ magicLink })
+
+    if (typeof magicLink === 'object' && magicLink?.local) {
+      return $emits('development', magicLink)
     }
-  })
 
-  if (import.meta.dev) console.log({ magicLink })
-
-  if (typeof magicLink === 'object' && magicLink?.local) {
-    return $emits('development', magicLink)
+    $emits('success', email)
   }
-
-  $emits('success', email)
+  catch (error: unknown) {
+    $emits('error', error as Error | AuthError | z.ZodError)
+  }
 }
 </script>
 
