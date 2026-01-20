@@ -7,14 +7,16 @@ import type { Users } from 'hub:db:schema'
 export default defineEventHandler(async (event) => {
   const { user } = await getUserSession(event)
   const { verifyEmail, migrateSupabase } = useRuntimeConfig(event).auth
-  const defaultRedirect = verifyEmail ? '/auth/verify-email' : '/account'
-  if (user) return sendRedirect(event, defaultRedirect)
+
+  if (user) {
+    return sendRedirect(event, await getDefaultRedirectForUser(event, user))
+  }
 
   const { name, email, password, redirect } = await useValidatedBody(event, signUpSchema)
 
   const internalUser = await findUserByEmail(email)
 
-  if (internalUser) throw EntityAlreadyExistsError('errors.exists')
+  if (internalUser) throw EntityAlreadyExistsError('errors.auth.signUp.failed')
 
   let createdUser: Users | null;
   // @ts-expect-error Drizzle has some bugs with types
@@ -57,6 +59,6 @@ export default defineEventHandler(async (event) => {
   return authenticateUser(
     event,
     createdUser,
-    verifyEmail ? defaultRedirect : redirect || defaultRedirect,
+    await getDefaultRedirectForUser(event, createdUser, redirect),
   )
 })
