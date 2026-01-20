@@ -1,12 +1,15 @@
 <script lang="ts" setup>
 import { Body, Head, Html, Tailwind } from '@vue-email/components'
+import { emailTailwindConfig } from '../config'
 </script>
 
 <template>
   <Html lang="en">
-    <Head />
+    <Head>
+      <slot name="head" />
+    </Head>
     <Body>
-      <Tailwind>
+      <Tailwind :config="emailTailwindConfig">
         <slot />
       </Tailwind>
     </Body>
