@@ -1,34 +1,28 @@
 import { contactFormSchema, contactSubjectLabels } from '#shared/schema/forms/contact'
-import escapeHtml from 'escape-html'
+import { useValidatedBody } from 'h3-zod'
+import ContactEmail from '#shared/emails/forms/ContactEmail.vue'
 
 export default defineEventHandler(async (event) => {
   const { mail: { to, from } } = useRuntimeConfig(event)
 
-  const data = await readValidatedBody(event, d => contactFormSchema.parse(d))
+  const data = await useValidatedBody(event, contactFormSchema)
 
-  const subjectLabel = contactSubjectLabels[data.subject]
+  const subjectLabel = contactSubjectLabels[data.subject as keyof typeof contactSubjectLabels]
 
-  const subjectLine
+  const subject
     = data.subject === 'other' && data.subjectOther?.trim()
-      ? `${subjectLabel}: ${data.subjectOther.trim()}`
+      ? `${subjectLabel}: ${data.subjectOther.trim().substring(0, 20)}`
       : subjectLabel
-  const safeSubject = subjectLine.replace(/[\r\n]+/g, ' ').trim()
 
-  const html = `
-    <h2>Ny besked fra kontaktformular</h2>
-    <p><strong>Navn:</strong> ${escapeHtml(data.name)}</p>
-    <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
-    ${data.phone ? `<p><strong>Telefon:</strong> ${escapeHtml(data?.phonePrefix || '')} ${escapeHtml(data.phone ?? '')}</p>` : ''}
-    <p><strong>Emne:</strong> ${escapeHtml(safeSubject)}</p>
-    <pre style="white-space:pre-wrap">${escapeHtml(data.message)}</pre>
-  `.trim()
-
-  await sendEmail(event, {
+  await sendEmailTemplate(event, {
     to,
     from,
-    subject: safeSubject,
-    html,
+    subject,
     replyTo: data.email,
+    component: ContactEmail,
+    props: {
+      form: data,
+    },
   })
 
   return { ok: true }
