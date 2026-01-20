@@ -60,6 +60,8 @@ export default defineNuxtConfig({
   nitro: {
     experimental: {
       tasks: true,
+      asyncContext: true,
+      wasm: true,
     },
   },
   hub: {
