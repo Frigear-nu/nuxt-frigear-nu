@@ -57,8 +57,6 @@ components.json
 graphql.config.ts
 
 # Development utilities
-# nitroping  # SDK needed for build
-
-# Include SDK for build (don't ignore)
-!sdk
-!sdk/**
+# Include nuxt content for build
+!content
+!content/**
