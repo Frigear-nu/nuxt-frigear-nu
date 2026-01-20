@@ -28,7 +28,7 @@ export const stripePrices = sqliteTable('stripe_prices', {
   metadata: text({ mode: 'json' }),
 })
 
-export type StripePrices = typeof stripePrices.$inferInsert
+export type StripePrices = typeof stripePrices.$inferSelect
 export type NewStripePrices = typeof stripePrices.$inferInsert
 
 export const stripeSubscriptions = sqliteTable('stripe_subscriptions', {
@@ -45,7 +45,7 @@ export const stripeSubscriptions = sqliteTable('stripe_subscriptions', {
   endedAt: integer('ended_at', { mode: 'timestamp' }),
 })
 
-export type StripeSubscriptions = typeof stripeSubscriptions.$inferInsert
+export type StripeSubscriptions = typeof stripeSubscriptions.$inferSelect
 export type NewStripeSubscriptions = typeof stripeSubscriptions.$inferInsert
 
 export const stripeCustomers = sqliteTable('stripe_customers', {
@@ -57,5 +57,5 @@ export const stripeCustomers = sqliteTable('stripe_customers', {
   }
 })
 
-export type StripeCustomers = typeof stripeCustomers.$inferInsert
+export type StripeCustomers = typeof stripeCustomers.$inferSelect
 export type NewStripeCustomers = typeof stripeCustomers.$inferInsert
