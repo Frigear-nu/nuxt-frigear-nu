@@ -1,4 +1,4 @@
-FROM guergeiro/pnpm:24-10
+FROM guergeiro/pnpm:24-10 AS base
 
 WORKDIR /app
 
