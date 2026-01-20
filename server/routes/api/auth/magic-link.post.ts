@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
 
   const signInUrl = withBaseUrl(withQuery('/auth/magic-link', { token }))
   if (import.meta.dev) {
-    logger.success(`Sign in with this URL: ${signInUrl}`)
+    console.log(`Sign in with this URL: ${signInUrl}`)
     return {
       message: 'Success',
       expiresAt,
