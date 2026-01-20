@@ -43,6 +43,7 @@ function onFileChange(e: Event) {
   }
 
   profile.avatar = URL.createObjectURL(input.files[0]!)
+  // FIXME: Add upload functionality to R2
 }
 
 function onFileClick() {
