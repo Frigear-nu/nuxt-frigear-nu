@@ -1,21 +1,13 @@
 <script setup lang="ts">
 import { Section, Container, Img } from '@vue-email/components'
-import { computed } from 'vue'
 
 interface Props {
   logoUrl?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  logoUrl: '/logo.png',
-})
-
-const { app: { baseURL } } = useRuntimeConfig()
-const logoWithBaseUrl = computed(() => {
-  if (baseURL && !props.logoUrl.startsWith('http')) {
-    return `${baseURL}${props.logoUrl}`
-  }
-  return props.logoUrl
+withDefaults(defineProps<Props>(), {
+  // this must be a hardcoded default since we cannot access runtimeconfig in the email render.
+  logoUrl: 'https://nuxt.frigear.nu/logo.png',
 })
 </script>
 
@@ -23,7 +15,7 @@ const logoWithBaseUrl = computed(() => {
   <Section class="bg-gray-100 py-5">
     <Container class="text-center">
       <Img
-        :src="logoWithBaseUrl"
+        :src="logoUrl"
         alt="Logo"
         width="150"
         class="mx-auto block"
