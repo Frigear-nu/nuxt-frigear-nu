@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Section, Container, Img } from '@vue-email/components'
 import { computed } from 'vue'
-import { useRuntimeConfig } from '@nuxt/kit'
 
 interface Props {
   logoUrl?: string
