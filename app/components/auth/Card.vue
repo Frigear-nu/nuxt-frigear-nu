@@ -1,15 +1,27 @@
 <script setup lang="ts">
-import * as z from 'zod'
-import type { FormSubmitEvent } from '@nuxt/ui'
+import {
+  type SignInWithPasswordSchema,
+  signInWithPasswordSchema,
+  type SignUpWithPasswordSchema,
+  signUpWithPasswordSchema,
+} from '#shared/schema/auth'
+import type { AuthFormField, FormSubmitEvent } from '@nuxt/ui'
 
 const toast = useToast()
 const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
-const supabase = useSupabaseClient()
 const authForm = useTemplateRef('authForm')
 const displayMagicLinkModal = ref(false)
 const displayForgotPasswordModal = ref(false)
 const emailWasDispatched = ref(false)
-const { fields, buildProviders } = useSiteAuth()
+const { fields: signInFields, signUpFields, buildProviders } = useAuthForm()
+const {
+  authMode,
+  signInWithPassword,
+  signInWithProvider,
+  signUpWithPassword,
+} = useAuth()
+
+const isDevelopment = computed(() => import.meta.dev ?? false)
 
 const emailField = computed<string | undefined>({
   get: () => authForm.value?.state?.email,
@@ -19,65 +31,60 @@ const emailField = computed<string | undefined>({
   },
 })
 
+const fields = computed<AuthFormField[]>((): AuthFormField[] => {
+  if (mode.value === 'in') {
+    return toValue(signInFields) as AuthFormField[]
+  }
+
+  return toValue(signUpFields)
+})
+
 const providers = buildProviders((provider) => {
   switch (provider) {
     case 'link':
       displayMagicLinkModal.value = true
       break
     case 'google':
-    // case 'github':
-      return supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: withBaseUrl('/auth/confirm'),
-        },
-      })
+      // case 'github':
+      return signInWithProvider(provider)
     default:
       toast.add(formatToastError(new Error(`Provider '${provider}', is not implemented.`)))
   }
 })
 
-// TODO: Translations
-const schema = z.object({
-  email: z.email('Ugyldig e-post.'),
-  password: z.string('Passord er påkrævet').min(8, 'Must be at least 8 characters'),
-})
-
-type Schema = z.output<typeof schema>
-
 const signIn = async (email: string, password: string) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
+  const signedInUser = await signInWithPassword(email, password).catch((error) => {
+    if (error) toast.add(formatToastError(error))
   })
-
-  if (error) toast.add(formatToastError(error))
-  if (!data.user) throw createError('Could not load user.')
+  if (!signedInUser) throw createError('Could not load user.')
 
   // todo: not sure if this redirect is correct.
   return navigateTo('/account')
 }
 
-const signUp = async (email: string, password: string) => {
-  const { error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      emailRedirectTo: withBaseUrl('/auth/confirm'),
-    },
+const signUp = async (email: string, password: string, meta?: { name?: string }) => {
+  const createdUser = await signUpWithPassword(email, password, meta).catch((error) => {
+    if (error) toast.add(formatToastError(error))
   })
 
-  if (error) toast.add(formatToastError(error))
-  else {
-    toast.add(formatToastSuccess('Sign up successful!'))
-    await signIn(email, password)
+  if (!createdUser) {
+    throw new Error('Could not create user.')
   }
+
+  // @ts-expect-error This is not typed
+  if (!createdUser.emailConfirmedAt) {
+    toast.add(formatToastSuccess('Check your mail for a confirmation email'))
+    emailWasDispatched.value = true
+    return
+  }
+
+  return navigateTo('/account')
 }
 
-async function onSubmit(payload: FormSubmitEvent<Schema>) {
+async function onSubmit(payload: FormSubmitEvent<SignInWithPasswordSchema | SignUpWithPasswordSchema>) {
   const email = payload.data.email
   const password = payload.data.password
-  if (mode.value === 'up') await signUp(email, password)
+  if (mode.value === 'up') await signUp(email, password, payload.data as { name?: string })
   else await signIn(email, password)
 }
 
@@ -91,6 +98,13 @@ function onMagicLinkDispatched(email: string) {
 function onMagicLinkError(err: Error) {
   toast.add(formatToastError(err))
   displayMagicLinkModal.value = false
+}
+
+function onMagicLinkDevelopment(magicLink: unknown) {
+  toast.add(formatToastSuccess('Check the terminal for Magic Link 👨‍💻'))
+  if (import.meta.dev) console.log({ magicLink })
+  displayMagicLinkModal.value = false
+  if (!emailWasDispatched.value) emailWasDispatched.value = true
 }
 
 function onPasswordResetDispatched(email: string) {
@@ -116,7 +130,7 @@ function onPasswordResetDispatched(email: string) {
     <UAuthForm
       v-else
       ref="authForm"
-      :schema="schema"
+      :schema="mode === 'up' ? signUpWithPasswordSchema : signInWithPasswordSchema"
       :title="mode === 'up' ? 'Sign Up' : 'Sign In'"
       :fields="fields"
       :providers="providers"
@@ -131,7 +145,15 @@ function onPasswordResetDispatched(email: string) {
           @click="mode = mode === 'up' ? 'in' : 'up'"
         >
           {{ mode === 'up' ? 'Sign in' : 'Sign up' }}
-        </ULink>.
+        </ULink>
+        .
+
+        <UBadge
+          v-if="isDevelopment"
+          color="error"
+        >
+          Auth: {{ authMode }}
+        </UBadge>
       </template>
       <template
         v-if="mode === 'in'"
@@ -151,6 +173,7 @@ function onPasswordResetDispatched(email: string) {
       v-model:mode="mode"
       @error="onMagicLinkError"
       @success="onMagicLinkDispatched"
+      @development="onMagicLinkDevelopment"
     />
     <AuthForgotPasswordModal
       v-model:open="displayForgotPasswordModal"

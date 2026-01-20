@@ -1,11 +1,13 @@
 export default defineNuxtConfig({
   extends: ['simple-content-site'],
   modules: [
+    '@nitrotool/jwt',
     '@nuxthub/core',
     '@nuxtjs/supabase',
     'nuxt-studio',
     '@nuxt/content',
     '@nuxt/ui',
+    'nuxt-auth-utils',
     '@unlok-co/nuxt-stripe',
     'nuxt-resend',
     '@nuxtjs/i18n',
@@ -26,6 +28,7 @@ export default defineNuxtConfig({
     preference: 'dark',
   },
   runtimeConfig: {
+    jwtSecret: 'some-string-longer-than-32-chars-to-issue-jwt',
     stripeWebhookSecret: '',
     resend: {
       apiKey: '',
@@ -34,21 +37,18 @@ export default defineNuxtConfig({
       from: '',
       to: '',
     },
+    auth: {
+      verifyEmail: true,
+      migrateSupabase: false,
+      signUp: false,
+    },
   },
   routeRules: {
-    '/sign-in': {
-      prerender: false,
-    },
-    '/account': {
-      prerender: false,
-    },
-    '/account/**': {
-      prerender: false,
-    },
-
+    '/sign-in': { prerender: false },
+    '/account': { prerender: false },
+    '/account/**': { prerender: false },
     // Static Redirects
     '/sign-up': { redirect: { to: '/sign-in?mode=up' } },
-
     // Temporary Redirects: should be removed in 2027 possibly.
     '/signin/password_signin': { redirect: { to: '/sign-in', statusCode: 301 } },
     '/signin/email_signin': { redirect: { to: '/sign-in?provider=link', statusCode: 301 } },
@@ -57,8 +57,16 @@ export default defineNuxtConfig({
     '/pricing': { redirect: { to: '/membership', statusCode: 301 } },
   },
   compatibilityDate: '2025-12-11',
+  nitro: {
+    experimental: {
+      tasks: true,
+    },
+  },
   hub: {
-    db: 'sqlite',
+    db: {
+      dialect: 'sqlite',
+      casing: 'snake_case',
+    },
   },
   i18n: {
     defaultLocale: 'da',
@@ -102,7 +110,10 @@ export default defineNuxtConfig({
       login: '/sign-in',
       callback: '/auth/confirm',
       // todo: naming?
-      include: ['/account(/*)?'],
+      include: [
+        /* '/account(/*)?', */
+        '/only/supabase',
+      ],
       saveRedirectToCookie: true,
     },
   },

@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "8e4d265f-7267-4517-8599-32a26c32acbb",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "bd754ce2-ff8a-4635-b7ea-692702aff5c1",
+  "prevId": "8e4d265f-7267-4517-8599-32a26c32acbb",
   "tables": {
     "magic_links": {
       "name": "magic_links",
@@ -26,6 +26,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "redirect_url": {
+          "name": "redirect_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "expires_at": {
@@ -700,6 +707,13 @@
         },
         "supabase_id": {
           "name": "supabase_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "supabase_provider": {
+          "name": "supabase_provider",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
