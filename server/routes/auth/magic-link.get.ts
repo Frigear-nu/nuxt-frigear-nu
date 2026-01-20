@@ -7,13 +7,16 @@ import { and, eq, gt, isNull } from 'drizzle-orm'
 export default defineEventHandler(async (event) => {
   const { token } = await useValidatedQuery(event, signInWithMagicLinksSchema)
   const currentTime = new Date()
-  const [magicLink] = await db.update(schema.magicLinks).set({
-    usedAt: currentTime,
-  }).where(and(
-    eq(schema.magicLinks.token, token),
-    isNull(schema.magicLinks.usedAt),
-    gt(schema.magicLinks.expiresAt, currentTime),
-  )).returning()
+  const [magicLink] = await db.update(schema.magicLinks)
+    .set({ usedAt: currentTime })
+    .where(
+      and(
+        isNull(schema.magicLinks.usedAt),
+        eq(schema.magicLinks.token, token),
+        gt(schema.magicLinks.expiresAt, currentTime),
+      ),
+    )
+    .returning()
 
   if (!magicLink || isAfter(currentTime, magicLink.expiresAt)) {
     throw ServerError('errors.auth.magicLink.invalid')
