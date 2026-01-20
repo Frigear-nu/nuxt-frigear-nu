@@ -10,12 +10,11 @@ const toast = useToast()
 // todo: implement file upload in future
 const fileRef = ref<HTMLInputElement>()
 
+// FIXME: Move to #shared/schema when this gets implemented server side.
 const profileSchema = z.object({
   name: z.string().min(2, 'Too short'),
-  email: z.string().email('Invalid email'),
-  username: z.string().min(2, 'Too short'),
+  email: z.email('Invalid email'),
   avatar: z.string().optional(),
-  bio: z.string().optional(),
 })
 
 type ProfileSchema = z.output<typeof profileSchema>
@@ -23,9 +22,7 @@ type ProfileSchema = z.output<typeof profileSchema>
 const profile = reactive<Partial<ProfileSchema>>({
   name: '',
   email: '',
-  username: '',
   avatar: undefined,
-  bio: undefined,
 })
 
 async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
@@ -46,6 +43,7 @@ function onFileChange(e: Event) {
   }
 
   profile.avatar = URL.createObjectURL(input.files[0]!)
+  // FIXME: Add upload functionality to R2
 }
 
 function onFileClick() {
