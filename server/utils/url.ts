@@ -1,7 +1,7 @@
 export const withBaseUrl = (path?: string) => {
-  const url = getRequestURL(useEvent())
-  url.pathname = path ?? ''
-  return url.toString()
+  const { protocol, hostname, port } = getRequestURL(useEvent())
+
+  return `${protocol}//${hostname}${port ? `:${port}` : ''}${path ?? ''}`
 }
 
 export const isInternalUrl = (url: string) => {
