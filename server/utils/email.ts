@@ -1,4 +1,3 @@
-import { Resend } from 'resend'
 import type { H3Event } from 'h3'
 
 type Email = {
@@ -20,9 +19,8 @@ export const sendEmail = async (event: H3Event, message: Email) => {
     throw createError({ statusCode: 500, message: 'Missing from or to address.' })
   }
 
-  const resend = new Resend(apiKey)
-
-  const { error } = await resend.emails.send({
+  const { emails } = useResend()
+  const { error } = await emails.send({
     from: message.from,
     to: [message.to],
     subject: message.subject,
