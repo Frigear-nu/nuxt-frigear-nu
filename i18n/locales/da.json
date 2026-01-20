@@ -1,6 +1,36 @@
 {
   "auth": {
-    "signIn": "Logg ind"
+    "signIn": "Logg ind",
+    "signUp": "Opret konto",
+    "signOut": "Logg ud",
+    "dashboard": "Konto"
+  },
+  "actions": {
+    "view": "Vis",
+    "backTo": "Tilbage til",
+    "save": "Lagre",
+    "select": "Vælg"
+  },
+  "account": {
+    "title": "Konto",
+    "settings": {
+      "title": "Indstillinger",
+      "name": {
+        "label": "Navn",
+        "description": "Dit fulde navn."
+      },
+      "email": {
+        "label": "E-mail",
+        "description": "Din awesome E-mail."
+      },
+      "avatar": {
+        "label": "Avatar",
+        "description": "JPG, GIF or PNG. 1MB Max."
+      }
+    },
+    "membership": {
+      "title": "Medlemskab"
+    }
   },
   "contact": {
     "title": "Kontakt",
