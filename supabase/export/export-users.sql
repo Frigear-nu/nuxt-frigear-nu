@@ -10,6 +10,7 @@ select
             i.identity_data ->> 'email',
             u.email
     ) as email,
+    -- This is added as password_hash to help in migrating away from SB
     c.stripe_customer_id as password_hash,
     coalesce(
             i.identity_data ->> 'avatar_url',
