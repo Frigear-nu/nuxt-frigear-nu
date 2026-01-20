@@ -39,10 +39,5 @@ export default defineEventHandler(async (event) => {
       .returning()
   }
 
-  // lastly, mark the link as used.
-  await db.update(schema.magicLinks)
-    .set({ usedAt: currentTime })
-    .where(eq(schema.magicLinks.id, magicLink.id))
-
   return authenticateUser(event, user, magicLink.redirectUrl || '/account')
 })
