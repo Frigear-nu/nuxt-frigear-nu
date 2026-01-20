@@ -52,6 +52,10 @@ export default defineNuxtConfig({
     '/signin/forgot_password': { redirect: { to: '/forgot-password', statusCode: 301 } },
     '/signin/signup': { redirect: { to: '/sign-in?mode=up', statusCode: 301 } },
     '/pricing': { redirect: { to: '/membership', statusCode: 301 } },
+
+    // API
+    '/api/_auth/**': { prerender: false },
+    '/api/auth/**': { prerender: false },
   },
   compatibilityDate: '2025-12-11',
   nitro: {
