@@ -1,4 +1,5 @@
 import type { serverSupabaseServiceRole } from '#supabase/server'
+import { eq } from 'drizzle-orm'
 
 export const migrateSupabaseAccountById = async (serviceRole: ReturnType<typeof serverSupabaseServiceRole>, internalId: number, supabaseId: string) => {
   // connect to sb postgres so we can query the public and the auth schema (for social auth matching)
@@ -19,10 +20,22 @@ export const migrateSupabaseAccountById = async (serviceRole: ReturnType<typeof 
 
   if (!sbStripeCustomer) throw new Error('Could not find stripe customer for supabase user.')
 
-  db.insert(schema.stripeCustomers).values({
+  const [stripeCustomer] = await db.insert(schema.stripeCustomers).values({
     userId: internalId,
     id: sbStripeCustomer.id,
-  })
+  }).returning()
+
+  if (!stripeCustomer) throw new Error(
+    `Could not create stripe customer for supabase user ${supabaseId}.`,
+  )
+
+  // there will be a task runner that will migrate the rest.
+  await db.update(schema.users)
+    .set({ supabaseId: supabaseId })
+    .where(eq(schema.users.id, internalId))
+    .execute()
+
+  return true
 }
 
 export const findSupabaseUserByEmail = async (serviceRole: ReturnType<typeof serverSupabaseServiceRole>, email: string) => {
