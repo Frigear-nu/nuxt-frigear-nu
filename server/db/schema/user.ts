@@ -10,6 +10,7 @@ export const users = sqliteTable('users', {
   // For migration from supabase (will be removed in the future)
   isMigrated: integer('is_migrated', { mode: 'boolean' }).notNull().default(false),
   supabaseId: text('supabase_id'),
+  supabaseProvider: text('supabase_provider'),
 
   //
   lastLoginAt: integer('last_login_at', { mode: 'timestamp' }),
