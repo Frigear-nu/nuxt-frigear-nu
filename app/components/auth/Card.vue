@@ -3,8 +3,8 @@ import {
   type SignInWithPasswordSchema,
   signInWithPasswordSchema,
   type SignUpWithPasswordSchema,
+  signUpWithPasswordSchema,
 } from '#shared/schema/auth'
-import { signUpWithPasswordSchema } from '#shared/schema/auth'
 import type { AuthFormField, FormSubmitEvent } from '@nuxt/ui'
 
 const toast = useToast()
