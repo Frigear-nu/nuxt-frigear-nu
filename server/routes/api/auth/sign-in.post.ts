@@ -13,6 +13,7 @@ export default defineEventHandler(async (event) => {
 
   const matchedUser = await findUserByEmail(email)
 
+  // FIXME: Add a toast for the errors here in the UI.
   if (!matchedUser) throw UnauthenticatedError('errors.auth.signIn.failed')
 
   if (!matchedUser.passwordHash) throw UnauthenticatedError('errors.auth.signIn.noPassword')
