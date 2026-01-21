@@ -77,6 +77,7 @@ async function onSubmit(payload: FormSubmitEvent<ForgotPasswordSchema>) {
         <UButton
           :label="$t('actions.cancel')"
           trailing-icon="i-lucide-x"
+          @click="displayModal = false"
         />
         <UButton
           v-if="form"
