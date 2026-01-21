@@ -1,6 +1,11 @@
 <script setup lang="ts">
 const { locale, locales, switchLocalePath } = useSiteI18n()
 
+const localeObj = computed(() => locales.find(l => l.code === locale.value) || {
+  name: locale.value,
+  code: locale.value,
+})
+
 function getEmojiFlag(locale: string): string {
   const languageToCountry: Record<string, string> = {
     ar: 'sa', // Arabic -> Saudi Arabia
@@ -51,6 +56,7 @@ function getEmojiFlag(locale: string): string {
       color="neutral"
       variant="ghost"
       class="size-8"
+      :aria-label="$t('locale.switch', localeObj)"
     >
       <template #trailing>
         <span class="text-lg">
