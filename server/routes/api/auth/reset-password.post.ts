@@ -19,20 +19,21 @@ export default defineEventHandler(async (event) => {
 
   if (!passwordReset) throw NotFoundError()
 
-  let user = await findUserById(passwordReset.userId)
+  const user = await findUserById(passwordReset.userId)
 
   if (!user) throw NotFoundError()
 
   // ensure the user is migrated
   await createStripeCustomerFromMigration(user)
 
-  await db.update(schema.users).set({
-    passwordHash: await hashPassword(password),
-  })
+  const [updatedUser] = await db.update(schema.users)
+    .set({
+      passwordHash: await hashPassword(password),
+    })
+    .where(eq(schema.users.id, passwordReset.userId))
+    .returning()
 
-  user = await findUserById(passwordReset.userId)
+  if (!updatedUser) throw ServerError()
 
-  if (!user) throw ServerError()
-
-  return authenticateUser(event, user)
+  return authenticateUser(event, updatedUser)
 })
