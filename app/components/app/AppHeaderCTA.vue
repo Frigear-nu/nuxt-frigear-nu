@@ -10,10 +10,10 @@ const { isLoggedIn } = useAuth()
   <UButton
     v-if="isLoggedIn"
     :to="localePath('/account')"
-    trailing-icon="i-lucide-layout-dashboard"
-  >
-    {{ $t('auth.dashboard') }}
-  </UButton>
+    icon="i-lucide-user"
+    variant="ghost"
+    color="neutral"
+  />
   <UButton
     v-else
     :label="$t('auth.signIn')"
