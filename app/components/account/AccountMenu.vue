@@ -36,6 +36,7 @@ const items = computed<ButtonProps[]>(() => ([
       variant="ghost"
       class="size-8"
       icon="i-lucide-user"
+      :aria-label="t('account.menu.label')"
     />
 
     <template #content>
