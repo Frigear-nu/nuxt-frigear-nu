@@ -48,43 +48,49 @@ function getEmojiFlag(locale: string): string {
 </script>
 
 <template>
-  <UPopover
-    :mode="$device.isMobile ? 'click' : 'hover'"
-    :content="{ align: 'end' }"
-  >
-    <UButton
-      color="neutral"
-      variant="ghost"
-      class="size-8"
-      :aria-label="$t('locale.switch', localeObj)"
+  <ClientOnly>
+    <UPopover
+      :mode="$device.isMobile ? 'click' : 'hover'"
+      :content="{ align: 'end' }"
     >
-      <template #trailing>
-        <span class="text-lg">
-          {{ getEmojiFlag(locale) }}
-        </span>
-      </template>
-    </UButton>
+      <UButton
+        color="neutral"
+        variant="ghost"
+        class="size-8"
+        :aria-label="$t('locale.switch', localeObj)"
+      >
+        <template #trailing>
+          <span class="text-lg">
+            {{ getEmojiFlag(locale) }}
+          </span>
+        </template>
+      </UButton>
 
-    <template #content>
-      <ul class="flex flex-col">
-        <li
-          v-for="localeItem in locales"
-          :key="localeItem.code"
-        >
-          <NuxtLink
-            class="flex justify-between py-1.5 px-2 gap-1 hover:bg-muted"
-            :to="switchLocalePath(localeItem.code) as string"
-            :aria-label="localeItem.name"
+      <template #content>
+        <ul class="flex flex-col">
+          <li
+            v-for="localeItem in locales"
+            :key="localeItem.code"
           >
-            <span class="text-sm">
-              {{ localeItem.name }}
-            </span>
-            <span class="size-5 text-center">
-              {{ getEmojiFlag(localeItem.code) }}
-            </span>
-          </NuxtLink>
-        </li>
-      </ul>
+            <NuxtLink
+              class="flex justify-between py-1.5 px-2 gap-1 hover:bg-muted"
+              :to="switchLocalePath(localeItem.code as never) as string"
+              :aria-label="localeItem.name"
+            >
+              <span class="text-sm">
+                {{ localeItem.name }}
+              </span>
+              <span class="size-5 text-center">
+                {{ getEmojiFlag(localeItem.code) }}
+              </span>
+            </NuxtLink>
+          </li>
+        </ul>
+      </template>
+    </UPopover>
+
+    <template #fallback>
+      <div class="h-8 w-8 animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-md" />
     </template>
-  </UPopover>
+  </ClientOnly>
 </template>

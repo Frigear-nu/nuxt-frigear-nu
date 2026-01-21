@@ -27,38 +27,44 @@ const items = computed<ButtonProps[]>(() => ([
 </script>
 
 <template>
-  <UPopover
-    :mode="$device.isMobile ? 'click' : 'hover'"
-    :content="{ align: 'end' }"
-  >
-    <UButton
-      color="neutral"
-      variant="ghost"
-      class="size-8"
-      icon="i-lucide-user"
-      :aria-label="t('account.menu.label')"
-    />
+  <ClientOnly>
+    <UPopover
+      :mode="$device.isMobile ? 'click' : 'hover'"
+      :content="{ align: 'end' }"
+    >
+      <UButton
+        color="neutral"
+        variant="ghost"
+        class="size-8"
+        icon="i-lucide-user"
+        :aria-label="t('account.menu.label')"
+      />
 
-    <template #content>
-      <ul class="flex flex-col">
-        <li
-          v-for="linkItem in items"
-          :key="linkItem.label"
-        >
-          <NuxtLink
-            class="flex justify-between py-1.5 px-2 gap-1 hover:bg-muted"
-            :aria-label="linkItem.label"
-            v-bind="linkItem as NuxtLinkProps"
+      <template #content>
+        <ul class="flex flex-col">
+          <li
+            v-for="linkItem in items"
+            :key="linkItem.label"
           >
-            <span class="text-sm">
-              {{ linkItem.label }}
-            </span>
-            <span class="size-5 text-center">
-              <UIcon :name="linkItem.icon || 'i-lucide-x'" />
-            </span>
-          </NuxtLink>
-        </li>
-      </ul>
+            <NuxtLink
+              class="flex justify-between py-1.5 px-2 gap-1 hover:bg-muted"
+              :aria-label="linkItem.label"
+              v-bind="linkItem as NuxtLinkProps"
+            >
+              <span class="text-sm">
+                {{ linkItem.label }}
+              </span>
+              <span class="size-5 text-center">
+                <UIcon :name="linkItem.icon || 'i-lucide-x'" />
+              </span>
+            </NuxtLink>
+          </li>
+        </ul>
+      </template>
+    </UPopover>
+
+    <template #fallback>
+      <div class="h-8 w-8 animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-md" />
     </template>
-  </UPopover>
+  </ClientOnly>
 </template>
