@@ -32,6 +32,7 @@ watch(emailValue, (em) => {
 async function onSubmit(payload: FormSubmitEvent<ForgotPasswordSchema>) {
   const email = payload.data.email
   try {
+    $emits('loading')
     const forgotPassword = await sendForgotPasswordEmail(email)
     if (import.meta.dev) console.log({ forgotPassword })
 
