@@ -111,7 +111,19 @@ function onPasswordResetDispatched(email: string) {
   emailField.value = email
   displayForgotPasswordModal.value = false
   emailWasDispatched.value = true
-  toast.add(formatToastSuccess('Mail away!', 'We\'ve sent you an email to reset your password.'))
+  toast.add(formatToastSuccess('Mail away!', 'If you have an account, we\'ll send you an e-mail.'))
+}
+
+function onPasswordResetDevelopment(pwReset: unknown) {
+  toast.add(formatToastSuccess('Check the terminal for Link 👨‍💻'))
+  if (import.meta.dev) console.log({ pwReset })
+  displayForgotPasswordModal.value = false
+  if (!emailWasDispatched.value) emailWasDispatched.value = true
+}
+
+function onPasswordResetError(err: Error) {
+  toast.add(formatToastError(err))
+  displayForgotPasswordModal.value = false
 }
 </script>
 
@@ -178,7 +190,9 @@ function onPasswordResetDispatched(email: string) {
     <AuthForgotPasswordModal
       v-model:open="displayForgotPasswordModal"
       v-model:email="emailField"
+      @error="onPasswordResetError"
       @success="onPasswordResetDispatched"
+      @development="onPasswordResetDevelopment"
     />
   </UPageCard>
 
