@@ -2,7 +2,7 @@
 import type { ZodError } from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import type { AuthError } from '@supabase/auth-js'
-import { sendMagicLinkSchema, type SendMagicLinkSchema } from '#shared/schema/auth'
+import { signInWithMagicLinkSchema, type SignInWithMagicLinkSchema } from '#shared/schema/auth'
 
 const $emits = defineEmits<{
   (e: 'loading'): void
@@ -17,7 +17,7 @@ const emailValue = defineModel<string | undefined>('email')
 const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
 const displayModal = defineModel<boolean>('open', { default: false })
 
-const state = reactive<Partial<SendMagicLinkSchema>>({
+const state = reactive<Partial<SignInWithMagicLinkSchema>>({
   email: undefined,
 })
 
@@ -25,7 +25,7 @@ watch(emailValue, (em) => {
   state.email = em
 })
 
-async function onSubmit(payload: FormSubmitEvent<SendMagicLinkSchema>) {
+async function onSubmit(payload: FormSubmitEvent<SignInWithMagicLinkSchema>) {
   const email = payload.data.email
   $emits('loading')
 
@@ -56,7 +56,7 @@ async function onSubmit(payload: FormSubmitEvent<SendMagicLinkSchema>) {
     <template #body>
       <UForm
         ref="form"
-        :schema="sendMagicLinkSchema"
+        :schema="signInWithMagicLinkSchema"
         :state="state"
         class="space-y-4"
         :loading-auto="true"

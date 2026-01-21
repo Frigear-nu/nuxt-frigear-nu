@@ -1,4 +1,4 @@
-import { sendMagicLinkSchema } from '#shared/schema/auth'
+import { signInWithMagicLinkSchema } from '#shared/schema/auth'
 import { useValidatedBody } from 'h3-zod'
 import { ClientError, NotFoundError } from '@nitrotool/errors'
 import { addMinutes } from 'date-fns'
@@ -9,7 +9,7 @@ import MagicLinkEmail from '#shared/emails/auth/MagicLinkEmail.vue'
 
 export default defineEventHandler(async (event) => {
   const { mail: { from, to: replyTo } } = useRuntimeConfig(event)
-  const { email, redirect } = await useValidatedBody(event, sendMagicLinkSchema)
+  const { email, redirect } = await useValidatedBody(event, signInWithMagicLinkSchema)
 
   const resolvedUser = await db.query.users.findFirst({
     where: eq(schema.users.email, email),
