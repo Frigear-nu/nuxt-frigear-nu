@@ -97,6 +97,7 @@ watch(
 //   https://github.com/roiLeo/nuxtUI-PhoneNumberInput/blob/main/app/components/PhoneNumberInput.vue
 watch(() => state.phone, (phone) => {
   if (!phone) return
+  // FIXME: This feature only works for scandinavian numbers!
   const selected = phonePrefixes.value.find((p) => {
     // first, attempt to extract with +12
     if (phone.startsWith('+') && phone.startsWith(p.label)) {
@@ -106,9 +107,9 @@ watch(() => state.phone, (phone) => {
       }
     }
     // secondly, attempt to extract with 0012
-    else if (phone.startsWith('00') && phone.length >= 11) {
-      const inferredZero = phone.substring(0, 4).replace('00', '+')
-      if (p.label === inferredZero) {
+    else if (phone.startsWith('00') && phone.length === 12) {
+      const plusInsteadOfZero = phone.substring(0, 4).replace('00', '+')
+      if (p.label === plusInsteadOfZero) {
         return true
       }
     }
@@ -119,18 +120,25 @@ watch(() => state.phone, (phone) => {
 
   if (!selected) return
 
-  // prefill countryCode if not the same as set.
+  // prefill countryCode if different from set.
   if (selected.value !== state.phonePrefix) {
     state.phonePrefix = selected.value
   }
 
-  if (!phone.startsWith(selected.label)) return
+  const isPlusPrefix = phone.startsWith(selected.label)
+  const isZeroPrefix = phone.startsWith('00')
+
+  if (!isPlusPrefix && !isZeroPrefix) return
 
   // [ +45 | 0045 ]-12345678 = 11-12 chars
   if (phone.length <= 10) return
 
-  // we only try to change it if ALL cases pass so we do not annoy users.
-  state.phone = phone.replace(selected.label, '')
+  if (isPlusPrefix) {
+    state.phone = phone.replace(selected.label, '')
+  }
+  else if (isZeroPrefix && phone.length === 12) {
+    state.phone = phone.substring(4)
+  }
 })
 
 function onError(event: FormErrorEvent) {

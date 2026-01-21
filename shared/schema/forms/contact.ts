@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { createEmailSchema, createNameSchema, createPhoneSchema } from '../shared'
 
 //* Subjects
 
@@ -29,25 +30,28 @@ export const contactSubjectLabels: Record<ContactSubjectKey, string> = {
 
 export const contactFormSchema = z
   .object({
-    name: z.string('Navn er påkrævet.').min(1).max(30, { error: 'Navn er for langt.' }),
-    email: z.email({ error: 'Skriv en gyldig e-mailadresse.' }),
-    phone: z
-      .string()
-      .trim()
-      .transform(v => v.replace(/[\s-]/g, ''))
-      .refine(v => v === '' || /^\d{8}$/.test(v), { error: 'Telefon skal være 8 cifre.' })
+    name: createNameSchema(),
+    email: createEmailSchema(),
+    phone: createPhoneSchema()
       .optional(),
     phonePrefix: z.string().optional(),
-    subject: z.enum(contactSubjectKeys, { error: 'Vælg et emne.' }),
-    subjectOther: z.string().trim().max(120, { error: 'For langt.' }).optional(),
-    message: z.string('Besked er påkrævet.').min(1).max(5000, { error: 'Besked er for lang.' }),
+    subject: z.enum(contactSubjectKeys),
+    subjectOther: z.string().trim().max(120).optional(),
+    message: z.string().min(1).max(5000),
   })
   .superRefine((data, ctx) => {
-    if (data.subject === 'other' && (!data.subjectOther || data.subjectOther.length === 0)) {
+    if (data.subject === 'other' && !data.subjectOther?.length) {
       ctx.addIssue({
-        code: 'custom',
+        code: z.ZodIssueCode.custom,
         path: ['subjectOther'],
-        message: 'Udfyld feltet når du vælger "Andet".',
+        params: {
+          i18n: {
+            key: 'zodI18n.errors.too_small.string.inclusive',
+            values: {
+              minimum: 1,
+            },
+          },
+        },
       })
     }
   })

@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     'nuxt-auth-utils',
     '@unlok-co/nuxt-stripe',
     'nuxt-resend',
+    'nuxt-zod-i18n',
     '@nuxtjs/i18n',
   ],
   $production: {
@@ -150,6 +151,12 @@ export default defineNuxtConfig({
         '/only/supabase',
       ],
       saveRedirectToCookie: true,
+    },
+  },
+  zodI18n: {
+    localeCodesMapping: {
+      'da-DK': 'da',
+      'en-GB': 'en',
     },
   },
 })

@@ -47,5 +47,16 @@
         "label": "Send message"
       }
     }
+  },
+  "zodI18n": {
+    "errors": {
+      "too_big": {
+        "phone": {
+          "exact": "Phone must be {maximum} characters long.",
+          "inclusive": "Phone must be at least {minimum} characters long.",
+          "not_inclusive": "Phone must be less than {maximum} characters long."
+        }
+      }
+    }
   }
 }

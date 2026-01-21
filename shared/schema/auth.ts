@@ -1,16 +1,9 @@
 import { z } from 'zod'
-
-export const signUpSchema = z.object({
-  name: z.string().optional().default(''),
-  email: z.email(),
-  password: z.string().min(6),
-  redirect: z.string().optional(),
-})
-
-export type SignUpSchema = z.infer<typeof signUpSchema>
+import { createEmailSchema, createNameSchema } from './shared'
 
 export const forgotPasswordSchema = z.object({
-  email: z.email(),
+  email: createEmailSchema(),
+  _token: z.string().optional(),
 })
 
 export type ForgotPasswordSchema = z.infer<typeof forgotPasswordSchema>
@@ -20,22 +13,34 @@ export const resetPasswordSchema = z.object({
   password: z.string().min(6),
   confirmPassword: z.string().min(6),
 }).refine(data => data.password === data.confirmPassword, {
-  message: 'errors.passwords.mismatch',
+  // FIXME: Make this a FN and add issue to ctx.
+  message: 'errors.password.mismatch',
   path: ['confirmPassword'],
+  params: {
+    i18n: {
+      // FIXME: Change path and add translations.
+      key: 'zodI18n.password.mismatch',
+    },
+  },
 })
 
 export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>
 
 export const signInWithPasswordSchema = z.object({
-  email: z.email(),
-  password: z.string().min(6),
+  email: createEmailSchema(),
+  password: z.string(),
   redirect: z.string().optional(),
+  _token: z.string().optional(),
 })
 
 export type SignInWithPasswordSchema = z.infer<typeof signInWithPasswordSchema>
 
 export const signUpWithPasswordSchema = signInWithPasswordSchema.extend({
-  name: z.string().min(2, 'errors.user.name.minLength'),
+  name: createNameSchema(),
+  email: createEmailSchema(),
+  password: z.string().min(6),
+  redirect: z.string().optional(),
+  _token: z.string().optional(),
 })
 
 export type SignUpWithPasswordSchema = z.infer<typeof signUpWithPasswordSchema>
@@ -47,9 +52,9 @@ export const signInWithMagicLinksSchema = z.object({
 
 export type SignInWithMagicLinksSchema = z.infer<typeof signInWithMagicLinksSchema>
 
-export const sendMagicLinkSchema = z.object({
-  email: z.email(),
+export const signInWithMagicLinkSchema = z.object({
+  email: createEmailSchema(),
   redirect: z.string().optional(),
 })
 
-export type SendMagicLinkSchema = z.infer<typeof sendMagicLinkSchema>
+export type SignInWithMagicLinkSchema = z.infer<typeof signInWithMagicLinkSchema>
