@@ -9,7 +9,7 @@ import type { ZodError } from 'zod'
 const $emits = defineEmits<{
   (e: 'loading'): void
   (e: 'success', email: string): void
-  (e: 'error', error: Error | AuthError | z.ZodError): void
+  (e: 'error', error: Error | AuthError | ZodError): void
   (e: 'development', magicLink: unknown): void
 }>()
 
