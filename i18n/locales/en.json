@@ -3,7 +3,62 @@
     "signIn": "Sign In",
     "signUp": "Sign Up",
     "signOut": "Sign Out",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "email": {
+      "label": "E-mail",
+      "placeholder": "volunteerHero{'@'}someDomain.lol"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "********"
+    },
+    "forgotPassword": {
+      "title": "Forgot password?",
+      "submit": "Set password"
+    },
+    "magicLink": {
+      "title": "Magic Link",
+      "submit": "Send link"
+    }
+  },
+  "actions": {
+    "view": "Show",
+    "backTo": "Back to",
+    "save": "Save",
+    "select": "Select"
+  },
+  "locale": {
+    "switch": "Choose language (now: {name})"
+  },
+  "account": {
+    "title": "Account",
+    "menu": {
+      "label": "@:auth.dashboard Menu"
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "Change your information.",
+      "name": {
+        "label": "Name",
+        "description": "Your full name."
+      },
+      "email": {
+        "label": "E-mail",
+        "description": "Your awesome E-mail."
+      },
+      "avatar": {
+        "label": "Avatar",
+        "description": "JPG, GIF or PNG. 1MB Max."
+      }
+    },
+    "membership": {
+      "title": "Membership",
+      "description": "Your membership type."
+    },
+    "security": {
+      "title": "Security",
+      "description": "Change password, Social login etc."
+    }
   },
   "contact": {
     "title": "Contact",
