@@ -7,18 +7,16 @@ export default defineEventHandler(async (event) => {
   // note: the schema handles confirmPassword
   const { token, password } = await useValidatedBody(event, resetPasswordSchema)
 
-  console.log({ token, password })
-  const [passwordReset] = await db.select()
-    .from(schema.passwordResets)
+  const [passwordReset] = await db.update(schema.passwordResets)
+    .set({ usedAt: new Date() })
     .where(
       and(
         isNull(schema.passwordResets.usedAt),
         gt(schema.passwordResets.expiresAt, new Date()),
         eq(schema.passwordResets.token, token),
       ),
-    )
+    ).returning()
 
-  console.log({ passwordReset })
   if (!passwordReset) throw NotFoundError()
 
   let user = await findUserById(passwordReset.userId)
