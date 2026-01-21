@@ -34,6 +34,7 @@
   "assets": {
     "directory": ".output/public"
   },
+  // https://developers.cloudflare.com/workers/configuration/compatibility-flags/#nodejs-compatibility-flag
   "compatibility_flags": [
     "nodejs_als",
     "nodejs_compat"
