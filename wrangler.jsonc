@@ -36,8 +36,7 @@
   },
   "compatibility_flags": [
     "nodejs_als",
-    "nodejs_compat",
-    "nodejs_compat_v2"
+    "nodejs_compat"
   ],
   "triggers": {
     "crons": [
