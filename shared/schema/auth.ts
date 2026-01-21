@@ -19,7 +19,10 @@ export const resetPasswordSchema = z.object({
   token: z.string(),
   password: z.string().min(6),
   confirmPassword: z.string().min(6),
-}).refine(data => data.password === data.confirmPassword, { message: 'errors.passwords.mismatch' })
+}).refine(data => data.password === data.confirmPassword, {
+  message: 'errors.passwords.mismatch',
+  path: ['confirmPassword'],
+})
 
 export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>
 
