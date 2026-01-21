@@ -17,10 +17,11 @@ orientation: horizontal
   :::typewriter-effect
   Non-profit
   Frivillig drevet
-  Forening og fond
+  Forening
+  Fond
   Projectorienteret
-  Skal du være med?
-  Bliv frivillig
+  Er du med?
+  Bliv frivillig nu
   :::
 
 #links
