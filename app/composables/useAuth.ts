@@ -60,6 +60,14 @@ export const useAuth = () => {
     }
   }
 
+  const sendForgotPasswordEmail = async (email: string) => {
+    return customAuth.sendForgotPasswordEmail(email)
+  }
+
+  const resetPassword = async (token: string, password: string, confirmPassword: string) => {
+    return customAuth.resetPassword(token, password, confirmPassword)
+  }
+
   const refresh = async () => {
     switch (authMode.value) {
       // case 'supabase':
@@ -94,6 +102,8 @@ export const useAuth = () => {
     signInWithProvider,
     signInWithPassword,
     signUpWithPassword,
+    sendForgotPasswordEmail,
+    resetPassword,
     refresh,
     signOut,
   }

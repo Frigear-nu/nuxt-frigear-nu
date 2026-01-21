@@ -43,6 +43,20 @@ export const useCustomAuth = () => {
     })
   }
 
+  const sendForgotPasswordEmail = async (email: string) => {
+    return $fetch('/api/auth/forgot-password', {
+      method: 'POST',
+      body: { email },
+    })
+  }
+
+  const resetPassword = async (token: string, password: string, confirmPassword: string) => {
+    return $fetch('/api/auth/reset-password', {
+      method: 'POST',
+      body: { token, password, confirmPassword },
+    })
+  }
+
   const refresh = async () => {
     await refreshSession()
   }
@@ -57,6 +71,8 @@ export const useCustomAuth = () => {
     signInWithProvider,
     signInWithPassword,
     signUpWithPassword,
+    sendForgotPasswordEmail,
+    resetPassword,
     custom: {
       refresh,
       signOut,

@@ -3,7 +3,23 @@
     "signIn": "Logg ind",
     "signUp": "Opret konto",
     "signOut": "Logg ud",
-    "dashboard": "Konto"
+    "dashboard": "Konto",
+    "email": {
+      "label": "E-mail",
+      "placeholder": "volunteerHero{'@'}someDomain.lol"
+    },
+    "password": {
+      "label": "Kodeord",
+      "placeholder": "********"
+    },
+    "forgotPassword": {
+      "title": "Glemt kodeord?",
+      "submit": "Gendan kodeord"
+    },
+    "magicLink": {
+      "title": "Magic Link",
+      "submit": "Send link"
+    }
   },
   "actions": {
     "view": "Vis",
