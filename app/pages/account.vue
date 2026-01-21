@@ -10,13 +10,22 @@ const basePath = 'account'
 
 const isAccountRoot = computed(() => route.path.endsWith(`/${basePath}`))
 
-const headerTitlePath = computed(() => {
+const headerTitle = computed(() => {
   const lastPath = route.path.split('/').pop()
   if (toValue(isAccountRoot) || !lastPath || lastPath === basePath) {
-    return `${basePath}.title`
+    return t(`${basePath}.title`)
   }
 
-  return `${basePath}.${lastPath}.title`
+  return t(`${basePath}.${lastPath}.title`)
+})
+
+const headerDescription = computed(() => {
+  const lastPath = route.path.split('/').pop()
+  if (toValue(isAccountRoot) || !lastPath || lastPath === basePath) {
+    return undefined
+  }
+
+  return t(`${basePath}.${lastPath}.description`)
 })
 
 const onSignOut = async () => {
@@ -30,12 +39,17 @@ const onSignOut = async () => {
   <div>
     <UContainer>
       <UPageHeader
-        :title="t(headerTitlePath)"
+        :title="headerTitle"
+        :description="headerDescription"
+        :ui="{
+          // this is to keep the header-link section aligned
+          wrapper: 'flex-row items-center justify-between gap-4',
+        }"
       >
         <template #links>
           <UButton
             icon="i-lucide-log-out"
-            class="mr-2"
+            class="mr-2 float-right"
             variant="subtle"
             @click="onSignOut"
           >
