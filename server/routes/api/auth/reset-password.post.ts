@@ -1,7 +1,7 @@
 import { useValidatedBody } from 'h3-zod'
 import { resetPasswordSchema } from '#shared/schema/auth'
 import { and, eq, gt, isNull } from 'drizzle-orm'
-import { ClientError, NotFoundError, ServerError } from '@nitrotool/errors'
+import { NotFoundError, ServerError } from '@nitrotool/errors'
 
 export default defineEventHandler(async (event) => {
   // note: the schema handles confirmPassword
