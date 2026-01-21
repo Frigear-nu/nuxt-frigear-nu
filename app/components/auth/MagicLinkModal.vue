@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import * as z from 'zod'
+import type { ZodError } from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import type { AuthError } from '@supabase/auth-js'
-
-const schema = z.object({
-  email: z.email('Ugyldig e-post.'),
-})
-
-type Schema = z.output<typeof schema>
+import { sendMagicLinkSchema, type SendMagicLinkSchema } from '#shared/schema/auth'
 
 const $emits = defineEmits<{
   (e: 'loading'): void
@@ -22,7 +17,7 @@ const emailValue = defineModel<string | undefined>('email')
 const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
 const displayModal = defineModel<boolean>('open', { default: false })
 
-const state = reactive<Partial<Schema>>({
+const state = reactive<Partial<SendMagicLinkSchema>>({
   email: undefined,
 })
 
@@ -30,13 +25,8 @@ watch(emailValue, (em) => {
   state.email = em
 })
 
-async function onSubmit(payload: FormSubmitEvent<Schema>) {
-  const { data: email, error } = z.safeParse(z.email(), payload.data.email)
-
-  if (error) {
-    return $emits('error', error)
-  }
-
+async function onSubmit(payload: FormSubmitEvent<SendMagicLinkSchema>) {
+  const email = payload.data.email
   $emits('loading')
 
   try {
@@ -50,9 +40,11 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
     $emits('success', email)
   }
   catch (error: unknown) {
-    $emits('error', error as Error | AuthError | z.ZodError)
+    $emits('error', error as Error | AuthError | ZodError)
   }
 }
+
+// FIXME: Need translations.
 </script>
 
 <template>
@@ -64,7 +56,7 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
     <template #body>
       <UForm
         ref="form"
-        :schema="schema"
+        :schema="sendMagicLinkSchema"
         :state="state"
         class="space-y-4"
         :loading-auto="true"
@@ -90,7 +82,7 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
         :loading="form.loading"
         @click="form.submit()"
       >
-        Submit
+        {{ $t('auth.magicLink.submit') }}
       </UButton>
     </template>
   </UModal>
