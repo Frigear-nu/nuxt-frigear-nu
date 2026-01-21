@@ -1,4 +1,4 @@
-import { signUpSchema } from '#shared/schema/auth'
+import { signUpWithPasswordSchema } from '#shared/schema/auth'
 import { useValidatedBody } from 'h3-zod'
 import { EntityAlreadyExistsError, ServerError } from '@nitrotool/errors'
 import type { Users } from 'hub:db:schema'
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
   if (!signUp) throw createError({ statusCode: 400, message: 'Signup is disabled.' })
 
-  const { name, email, password } = await useValidatedBody(event, signUpSchema)
+  const { name, email, password } = await useValidatedBody(event, signUpWithPasswordSchema)
 
   const internalUser = await findUserByEmail(email)
 
