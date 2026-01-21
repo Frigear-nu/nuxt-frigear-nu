@@ -15,6 +15,14 @@ export const forgotPasswordSchema = z.object({
 
 export type ForgotPasswordSchema = z.infer<typeof forgotPasswordSchema>
 
+export const resetPasswordSchema = z.object({
+  token: z.string(),
+  password: z.string().min(6),
+  confirmPassword: z.string().min(6),
+}).refine(data => data.password === data.confirmPassword, { message: 'errors.passwords.mismatch' })
+
+export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>
+
 export const signInWithPasswordSchema = z.object({
   email: z.email(),
   password: z.string().min(6),
@@ -36,9 +44,9 @@ export const signInWithMagicLinksSchema = z.object({
 
 export type SignInWithMagicLinksSchema = z.infer<typeof signInWithMagicLinksSchema>
 
-export const magicLinkSchema = z.object({
+export const sendMagicLinkSchema = z.object({
   email: z.email(),
   redirect: z.string().optional(),
 })
 
-export type MagicLinkSchema = z.infer<typeof magicLinkSchema>
+export type SendMagicLinkSchema = z.infer<typeof sendMagicLinkSchema>
