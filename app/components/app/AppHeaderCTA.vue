@@ -7,13 +7,7 @@ const { isLoggedIn } = useAuth()
 </script>
 
 <template>
-  <UButton
-    v-if="isLoggedIn"
-    :to="localePath('/account')"
-    icon="i-lucide-user"
-    variant="ghost"
-    color="neutral"
-  />
+  <AccountMenu v-if="isLoggedIn" />
   <UButton
     v-else
     :label="$t('auth.signIn')"

@@ -7,13 +7,14 @@ export default defineNuxtConfig({
     '@nuxthub/core',
     '@nuxtjs/supabase',
     'nuxt-studio',
-    '@nuxt/content',
     '@nuxt/ui',
+    '@nuxt/content',
     'nuxt-auth-utils',
     '@unlok-co/nuxt-stripe',
     'nuxt-resend',
     'nuxt-zod-i18n',
     '@nuxtjs/i18n',
+    '@nuxtjs/device',
   ],
   $production: {
     image: {

@@ -1,7 +1,9 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
-@source "../../../content/**/*.{md,yml,yaml}";
+@source "../../../content/**/*";
+
+
 
 /*@theme {*/
 /*    --font-display: "Inter", "sans-serif";*/

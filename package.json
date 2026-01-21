@@ -20,6 +20,7 @@
     "@nitrotool/errors": "^1.0.1",
     "@nitrotool/jwt": "^1.0.1",
     "@nuxthub/core": "^0.10.4",
+    "@nuxtjs/device": "4.0.0",
     "@nuxtjs/i18n": "^10.2.1",
     "@nuxtjs/supabase": "2.0.3",
     "@paralleldrive/cuid2": "^3.0.6",

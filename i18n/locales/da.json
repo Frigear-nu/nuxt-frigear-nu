@@ -5,7 +5,7 @@
     "signOut": "Logg ud",
     "dashboard": "Konto",
     "email": {
-      "label": "E-mail",
+      "label": "E-post",
       "placeholder": "volunteerHero{'@'}someDomain.lol"
     },
     "password": {
@@ -27,8 +27,14 @@
     "save": "Lagre",
     "select": "Vælg"
   },
+  "locale": {
+    "switch": "Vælg sprog (nu: {name})"
+  },
   "account": {
     "title": "Konto",
+    "menu": {
+      "label": "@:auth.dashboard Menu"
+    },
     "settings": {
       "title": "Indstillinger",
       "description": "Endre dine brugeroplysninger.",
@@ -37,12 +43,12 @@
         "description": "Dit fulde navn."
       },
       "email": {
-        "label": "E-mail",
-        "description": "Din awesome E-mail."
+        "label": "E-post",
+        "description": "Din awesome E-post."
       },
       "avatar": {
         "label": "Avatar",
-        "description": "JPG, GIF or PNG. 1MB Max."
+        "description": "JPG, GIF eller PNG. 1MB Max."
       }
     },
     "membership": {
@@ -62,8 +68,8 @@
         "placeholder": "Hej, hva hedder du? .. put her"
       },
       "email": {
-        "label": "Din awesome E-mail",
-        "placeholder": "volunteerHero{'@'}someDomain.lol"
+        "label": "Din awesome E-post",
+        "placeholder": "@:auth.email.placeholder"
       },
       "phone": {
         "label": "Telefon",

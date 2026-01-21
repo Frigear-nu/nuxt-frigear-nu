@@ -12,7 +12,7 @@ orientation: horizontal
 :nuxt-img{.rounded-full.p-4.dark:bg-neutral-800.bg-neutral-200.max-w-fit.md:max-w-full.mx-auto :height='384' :width='384' alt="Frigear logo" format="webp" height="384" quality="70" src="/logo-with-rf-bg.jpg" width="384"}
 
 #title
-[{{ $doc.title }}]{.bg-gradient-to-r,from-primary-600,to-purple-600,bg-clip-text,text-transparent} :br
+[{{ $doc.title }}]{.bg-gradient-to-r.from-primary-600.to-purple-600.bg-clip-text.text-transparent} :br
 
   :::typewriter-effect
   Non-profit

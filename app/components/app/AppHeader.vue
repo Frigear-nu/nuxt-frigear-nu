@@ -36,8 +36,9 @@ const { localePath, isEnabled, locales } = useSiteI18n()
         />
       </template>
 
-      <UContentSearchButton class="lg:hidden" />
+      <!--      <UContentSearchButton class="lg:hidden" /> -->
 
+      <AppHeaderCTA />
       <ClientOnly>
         <UColorModeButton />
 
@@ -45,7 +46,6 @@ const { localePath, isEnabled, locales } = useSiteI18n()
           <div class="h-8 w-8 animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-md" />
         </template>
       </ClientOnly>
-      <AppHeaderCTA />
     </template>
 
     <template #toggle="{ open, toggle }">

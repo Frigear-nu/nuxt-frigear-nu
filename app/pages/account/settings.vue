@@ -2,6 +2,7 @@
 import { useAuth, useSiteI18n } from '#imports'
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
+import { createEmailSchema } from '#shared/schema/shared'
 
 const { t } = useSiteI18n()
 const { currentUser } = useAuth()
@@ -13,7 +14,7 @@ const fileRef = ref<HTMLInputElement>()
 // FIXME: Move to #shared/schema when this gets implemented server side.
 const profileSchema = z.object({
   name: z.string().min(2, 'Too short'),
-  email: z.email('Invalid email'),
+  email: createEmailSchema(),
   avatar: z.string().optional(),
 })
 
