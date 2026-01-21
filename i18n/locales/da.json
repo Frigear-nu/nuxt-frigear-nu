@@ -31,6 +31,7 @@
     "title": "Konto",
     "settings": {
       "title": "Indstillinger",
+      "description": "Endre dine brugeroplysninger.",
       "name": {
         "label": "Navn",
         "description": "Dit fulde navn."
@@ -45,7 +46,12 @@
       }
     },
     "membership": {
-      "title": "Medlemskab"
+      "title": "Medlemskab",
+      "description": "Din medlemskabstype."
+    },
+    "security": {
+      "title": "Sikkerhed",
+      "description": "Endre kodeord, Social login etc."
     }
   },
   "contact": {
