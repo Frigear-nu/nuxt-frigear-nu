@@ -8,3 +8,5 @@ navigation:
     to: /
   - label: Medlemskab
     to: /membership
+  - label: Om Frigear
+    to: /info
