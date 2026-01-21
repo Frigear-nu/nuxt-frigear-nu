@@ -36,7 +36,7 @@ const { localePath, isEnabled, locales } = useSiteI18n()
         />
       </template>
 
-      <UContentSearchButton class="lg:hidden" />
+      <!--      <UContentSearchButton class="lg:hidden" /> -->
 
       <AppHeaderCTA />
       <ClientOnly>
