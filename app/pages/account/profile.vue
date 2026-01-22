@@ -55,7 +55,7 @@ function onFileClick() {
   fileRef.value?.click()
 }
 
-const onEmailAddressChange = (newAddress) => {
+const onEmailAddressChange = (newAddress: string) => {
   displayChangeEmailDialog.value = false
   toast.add(formatToastSuccess('Success', `Check ${newAddress} for a confirmation email.`))
 }
@@ -65,7 +65,7 @@ const onEmailAddressChangeDev = () => {
   toast.add(formatToastSuccess('Check terminal for link to change email.'))
 }
 
-const onEmailAddressChangeError = (err) => {
+const onEmailAddressChangeError = (err: unknown) => {
   displayChangeEmailDialog.value = false
   toast.add(formatToastError(err as Error))
 }
