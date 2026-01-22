@@ -83,7 +83,7 @@ export default defineNuxtConfig({
     },
     scheduledTasks: {
       // every 30 min
-      '* * * * *': [
+      '*/30 * * * *': [
         'auth:clear-expired-password-resets',
         'auth:clear-expired-magic-links',
       ],
