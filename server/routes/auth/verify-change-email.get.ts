@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   const { token } = await useValidatedQuery(event, verifyChangeEmailSchema)
 
   const { sub: userId, newMail } = await useValidatedJwt(token, z.object({
-    sub: z.string(),
+    sub: z.coerce.number().int().positive(),
     newMail: z.string().email(),
   }))
 
@@ -36,18 +36,24 @@ export default defineEventHandler(async (event) => {
   const revertToken = await encodeJwt({ sub: String(user.id), oldEmail: user.email }, 60 * 60)
   const revertUrl = withBaseUrl(withQuery('/auth/revert-email-change', { token: revertToken }))
 
-  // todo: send notification to original email?
-  await sendEmailTemplate(event, {
-    from,
-    to: user.email,
-    replyTo,
-    subject: 'Your email address has been changed',
-    component: EmailAddressChangedEmail,
-    props: {
-      accountSettingsUrl: withBaseUrl('/account'),
-      revertUrl,
-    },
-  })
+  if (import.meta.dev) {
+    console.log(
+      `Revert the change using this URL: ${revertUrl}`,
+    )
+  }
+  else {
+    await sendEmailTemplate(event, {
+      from,
+      to: user.email,
+      replyTo,
+      subject: 'Your email address has been changed',
+      component: EmailAddressChangedEmail,
+      props: {
+        accountSettingsUrl: withBaseUrl('/account'),
+        revertUrl,
+      },
+    })
+  }
 
   return authenticateUser(event, updatedUser, '/account')
 })
