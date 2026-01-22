@@ -4,6 +4,9 @@
 @source "../../../content/**/*";
 
 
+.fancy-text{
+    @apply bg-linear-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent
+}
 
 /*@theme {*/
 /*    --font-display: "Inter", "sans-serif";*/
