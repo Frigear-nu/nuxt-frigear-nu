@@ -26,7 +26,8 @@
     "view": "Show",
     "backTo": "Back to",
     "save": "Save",
-    "select": "Select"
+    "select": "Select",
+    "change": "Change"
   },
   "locale": {
     "switch": "Choose language (now: {name})"
@@ -45,11 +46,7 @@
       },
       "email": {
         "label": "E-mail",
-        "description": "Your awesome E-mail.",
-        "button": {
-          "change": "Change E-mail",
-          "save": "Save E-mail"
-        }
+        "description": "Your awesome E-mail."
       },
       "avatar": {
         "label": "Avatar",

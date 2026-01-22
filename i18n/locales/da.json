@@ -26,7 +26,8 @@
     "view": "Vis",
     "backTo": "Tilbage til",
     "save": "Lagre",
-    "select": "Vælg"
+    "select": "Vælg",
+    "change": "Skift"
   },
   "locale": {
     "switch": "Vælg sprog (nu: {name})"
@@ -45,11 +46,7 @@
       },
       "email": {
         "label": "E-post",
-        "description": "Din awesome E-post.",
-        "button": {
-          "change": "Endre E-post",
-          "save": "Gem E-post"
-        }
+        "description": "Din awesome E-post."
       },
       "avatar": {
         "label": "Avatar",
