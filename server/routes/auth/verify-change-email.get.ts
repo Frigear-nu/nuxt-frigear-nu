@@ -32,7 +32,8 @@ export default defineEventHandler(async (event) => {
 
   if (!updatedUser) throw ServerError('Could not update user.')
 
-  // Valid for 1h
+  // Valid for 1h so that even if someone changes password it can be reverted from the original email.
+  // This might not be desirable tbf
   const revertToken = await encodeJwt({ sub: String(user.id), oldEmail: user.email }, 60 * 60)
   const revertUrl = withBaseUrl(withQuery('/auth/revert-email-change', { token: revertToken }))
 
