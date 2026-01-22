@@ -9,7 +9,7 @@ seo:
 ---
 orientation: horizontal
 ---
-:nuxt-img{.rounded-full.p-4.dark:bg-neutral-800.bg-neutral-200.max-w-2/3.md:max-w-full.mx-auto :height='384' :width='384' alt="Frigear logo" format="webp" height="384" src="/logo-with-rf-bg.jpg" width="384"}
+:nuxt-img{.rounded-full.p-4.dark:bg-neutral-800.bg-neutral-200.max-w-2/3.md:max-w-full.mx-auto :height='114' :width='114' alt="Frigear logo" quality="70" src="/logo-with-rf-bg.jpg"}
 
 #title
 [{{ $doc.title }}]{.fancy-text} :br
