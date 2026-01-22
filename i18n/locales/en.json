@@ -4,6 +4,7 @@
     "signUp": "Sign Up",
     "signOut": "Sign Out",
     "dashboard": "Dashboard",
+    "signedInAs": "Signed in as",
     "email": {
       "label": "E-mail",
       "placeholder": "volunteerHero{'@'}someDomain.lol"

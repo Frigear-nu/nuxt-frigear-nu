@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useAuth, useSiteI18n } from '#imports'
-import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { createEmailSchema } from '#shared/schema/shared'
+import { updateUserProfileSchema, type UpdateUserProfileSchema } from '#shared/schema/user'
 
 const { t } = useSiteI18n()
 const { currentUser } = useAuth()
@@ -12,21 +11,21 @@ const toast = useToast()
 const fileRef = ref<HTMLInputElement>()
 
 // FIXME: Move to #shared/schema when this gets implemented server side.
-const profileSchema = z.object({
-  name: z.string().min(2, 'Too short'),
-  email: createEmailSchema(),
-  avatar: z.string().optional(),
-})
 
-type ProfileSchema = z.output<typeof profileSchema>
-
-const profile = reactive<Partial<ProfileSchema>>({
+const state = reactive<Partial<UpdateUserProfileSchema>>({
   name: '',
   email: '',
   avatar: undefined,
 })
 
-async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
+watch(currentUser, (newUser) => {
+  if (!newUser) return
+
+  state.name = newUser.name
+  state.email = newUser.email
+}, { immediate: true })
+
+async function onSubmit(event: FormSubmitEvent<UpdateUserProfileSchema>) {
   toast.add({
     title: 'Success',
     description: 'Your settings have been updated.',
@@ -43,7 +42,7 @@ function onFileChange(e: Event) {
     return
   }
 
-  profile.avatar = URL.createObjectURL(input.files[0]!)
+  state.avatar = URL.createObjectURL(input.files[0]!)
   // FIXME: Add upload functionality to R2
 }
 
@@ -55,8 +54,8 @@ function onFileClick() {
 <template>
   <UForm
     id="settings"
-    :schema="profileSchema"
-    :state="profile"
+    :schema="updateUserProfileSchema"
+    :state="state"
     @submit="onSubmit"
   >
     <UPageCard
@@ -71,7 +70,7 @@ function onFileClick() {
         class="flex max-sm:flex-col justify-between items-start gap-4"
       >
         <UInput
-          v-model="profile.name"
+          v-model="state.name"
           autocomplete="off"
         />
       </UFormField>
@@ -84,7 +83,7 @@ function onFileClick() {
         class="flex max-sm:flex-col justify-between items-start gap-4"
       >
         <UInput
-          v-model="profile.email"
+          v-model="state.email"
           type="email"
           autocomplete="off"
         />
@@ -100,7 +99,7 @@ function onFileClick() {
           <UAvatar
             v-if="currentUser && currentUser.avatarUrl"
             :src="currentUser.avatarUrl"
-            :alt="profile.name"
+            :alt="state.name"
             size="lg"
           />
           <UButton

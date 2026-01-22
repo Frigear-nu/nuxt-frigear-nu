@@ -4,6 +4,7 @@
     "signUp": "Opret konto",
     "signOut": "Logg ud",
     "dashboard": "Konto",
+    "signedInAs": "Logget ind som",
     "email": {
       "label": "E-post",
       "placeholder": "volunteerHero{'@'}someDomain.lol"
