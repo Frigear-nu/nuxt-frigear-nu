@@ -13,10 +13,10 @@ const cards = computed<PageCardProps[]>(() => ([
     variant: 'subtle',
   },
   {
-    title: t('account.settings.title'),
-    description: t('account.settings.description'),
+    title: t('account.profile.title'),
+    description: t('account.profile.description'),
     icon: 'i-lucide-user-round-pen',
-    to: localePath('/account/settings'),
+    to: localePath('/account/profile'),
     variant: 'subtle',
   },
   {

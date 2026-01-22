@@ -36,8 +36,8 @@
     "menu": {
       "label": "@:auth.dashboard Menu"
     },
-    "settings": {
-      "title": "Indstillinger",
+    "profile": {
+      "title": "Profil",
       "description": "Endre dine brugeroplysninger.",
       "name": {
         "label": "Navn",
@@ -45,7 +45,11 @@
       },
       "email": {
         "label": "E-post",
-        "description": "Din awesome E-post."
+        "description": "Din awesome E-post.",
+        "button": {
+          "change": "Endre E-post",
+          "save": "Gem E-post"
+        }
       },
       "avatar": {
         "label": "Avatar",
