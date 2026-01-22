@@ -11,6 +11,7 @@ const $emits = defineEmits<{
   (e: 'development', magicLink: unknown): void
 }>()
 
+const { changeEmailAddress } = useAccount()
 const form = useTemplateRef('form')
 const emailValue = defineModel<string | undefined>('email')
 const displayModal = defineModel<boolean>('open', { default: false })
@@ -28,7 +29,7 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserEmailSchema>) {
   $emits('loading')
 
   try {
-    const changeEmail = { local: false }
+    const changeEmail = await changeEmailAddress(payload.data)
     if (import.meta.dev) console.log({ magicLink: changeEmail })
 
     if (typeof changeEmail === 'object' && changeEmail?.local) {

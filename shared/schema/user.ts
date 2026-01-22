@@ -20,3 +20,9 @@ export const changeUserEmailSchema = z.object({
 })
 
 export type ChangeUserEmailSchema = z.output<typeof changeUserEmailSchema>
+
+export const verifyChangeEmailSchema = z.object({
+  token: z.string(),
+})
+
+export type VerifyChangeEmailSchema = z.output<typeof verifyChangeEmailSchema>

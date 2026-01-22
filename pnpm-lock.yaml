@@ -12,11 +12,11 @@ importers:
         specifier: ^0.17.0
         version: 0.17.0
       '@nitrotool/errors':
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.0.2
+        version: 1.0.2
       '@nitrotool/jwt':
-        specifier: ^1.0.1
-        version: 1.0.1(@azure/identity@4.13.0)(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0))(h3@1.15.5)(magicast@0.5.1)(rolldown@1.0.0-beta.57)
+        specifier: ^1.0.2
+        version: 1.0.2(@azure/identity@4.13.0)(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0))(h3@1.15.5)(magicast@0.5.1)(rolldown@1.0.0-beta.57)
       '@nuxthub/core':
         specifier: ^0.10.4
         version: 0.10.4(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.8.2)(magicast@0.5.1)(synckit@0.11.12)(typescript@5.9.3)(vue-tsc@3.2.2(typescript@5.9.3))
@@ -1618,11 +1618,11 @@ packages:
   '@neon-rs/load@0.0.4':
     resolution: {integrity: sha512-kTPhdZyTQxB+2wpiRcFWrDcejc4JI6tkPuS7UZCG4l6Zvc5kU/gGQ/ozvHTh1XR5tS+UlfAfGuPajjzQjCiHCw==}
 
-  '@nitrotool/errors@1.0.1':
-    resolution: {integrity: sha512-6YGP/w1ZVHTyJhRWkvDuZ5n/dxOZTPcuDHZpkZxZaRozDbSd6N8n8LUlmMZ6pKLiP3IhvdBtXRoB/8SeymjcVA==}
+  '@nitrotool/errors@1.0.2':
+    resolution: {integrity: sha512-uorPvY5ZaA5z7vnGrXbNBg54qvUYCffuY8Y0cpUUR5sEUn3Pa6MbSptWlI38gaBgQAeGYaimMgi0gckn95eixA==}
 
-  '@nitrotool/jwt@1.0.1':
-    resolution: {integrity: sha512-zi94eYz7WY+YelOFUV1C5GeHUWWvNYsaCrUiAop7btUDbxlg7MOqtMgFHTwF3vQBvyTF2IrNYq18BfriLMXRUg==}
+  '@nitrotool/jwt@1.0.2':
+    resolution: {integrity: sha512-S4QolT3TUfK6/GViaPXQVqNanSDZAyLdxLGtji5oG3hMroZYocEQIUTBJImH+2RRNU6XCzjgKiiQq9+9USQ+aw==}
     peerDependencies:
       h3: ^1.15.3
 
@@ -10216,13 +10216,13 @@ snapshots:
 
   '@neon-rs/load@0.0.4': {}
 
-  '@nitrotool/errors@1.0.1':
+  '@nitrotool/errors@1.0.2':
     dependencies:
       h3: 1.15.5
 
-  '@nitrotool/jwt@1.0.1(@azure/identity@4.13.0)(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0))(h3@1.15.5)(magicast@0.5.1)(rolldown@1.0.0-beta.57)':
+  '@nitrotool/jwt@1.0.2(@azure/identity@4.13.0)(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260115.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0))(h3@1.15.5)(magicast@0.5.1)(rolldown@1.0.0-beta.57)':
     dependencies:
-      '@nitrotool/errors': 1.0.1
+      '@nitrotool/errors': 1.0.2
       '@nuxt/kit': 4.2.2(magicast@0.5.1)
       '@nuxt/schema': 4.2.2
       '@tsndr/cloudflare-worker-jwt': 3.2.1
@@ -10725,7 +10725,7 @@ snapshots:
 
   '@nuxt/schema@4.2.2':
     dependencies:
-      '@vue/shared': 3.5.26
+      '@vue/shared': 3.5.27
       defu: 6.1.4
       pathe: 2.0.3
       pkg-types: 2.3.0
@@ -12912,7 +12912,7 @@ snapshots:
       '@babel/types': 7.28.5
       '@vue/babel-helper-vue-transform-on': 2.0.1
       '@vue/babel-plugin-resolve-type': 2.0.1(@babel/core@7.28.5)
-      '@vue/shared': 3.5.26
+      '@vue/shared': 3.5.27
     optionalDependencies:
       '@babel/core': 7.28.5
     transitivePeerDependencies:
