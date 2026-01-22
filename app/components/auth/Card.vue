@@ -140,7 +140,7 @@ function onPasswordResetError(err: Error) {
       v-else
       ref="authForm"
       :schema="mode === 'up' ? signUpWithPasswordSchema : signInWithPasswordSchema"
-      :title="mode === 'up' ? 'Sign Up' : 'Sign In'"
+      :title="mode === 'up' ? $t('auth.signUp') : $t('auth.signIn')"
       :fields="fields"
       :providers="providers"
       :separator="{ label: 'OR' }"
@@ -153,7 +153,7 @@ function onPasswordResetError(err: Error) {
           class="text-primary font-medium"
           @click="mode = mode === 'up' ? 'in' : 'up'"
         >
-          {{ mode === 'up' ? 'Sign in' : 'Sign up' }}
+          {{ mode === 'in' ? $t('auth.signUp') : $t('auth.signIn') }}
         </ULink>.
       </template>
       <template
@@ -199,7 +199,7 @@ function onPasswordResetError(err: Error) {
       variant="subtle"
       @click="mode = mode === 'up' ? 'in' : 'up'"
     >
-      {{ mode === 'in' ? 'Opret konto' : 'Log ind' }}
+      {{ mode === 'in' ? $t('auth.signUp') : $t('auth.signIn') }}
     </UButton>
   </div>
 </template>
