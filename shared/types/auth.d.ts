@@ -1,7 +1,9 @@
 import type { Users } from 'hub:db:schema'
 
 declare module '#auth-utils' {
-  type User = Pick<Users, 'id' | 'name' | 'email' | 'avatarUrl' | 'emailVerifiedAt'>
+  interface User extends Pick<Users, 'id' | 'name' | 'email' | 'avatarUrl' | 'emailVerifiedAt'> {
+    sbId?: string
+  }
   //
   // interface UserSession {
   //   // Add your own fields
