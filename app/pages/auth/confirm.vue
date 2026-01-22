@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// FIXME: After sb migration this file can be deleted.
 const { currentUser, refresh } = useAuth()
 
 watchEffect(async () => {

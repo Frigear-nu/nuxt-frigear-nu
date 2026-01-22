@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     image: {
       provider: 'cloudflare',
       quality: 80,
-      format: ['webp', 'avif', 'jpeg'],
+      format: ['webp', 'avif', 'jpeg', 'jpg', 'png', 'gif'],
       cloudflare: {
         baseURL: process.env.CLOUDFLARE_IMAGE_BASE_URL,
       },
@@ -103,8 +103,18 @@ export default defineNuxtConfig({
       name: 'English',
     }],
   },
+  image: {
+    presets: {
+      avatar: {
+        modifiers: {
+          format: 'webp',
+          height: 128,
+          width: 128,
+        },
+      },
+    },
+  },
   ogImage: {
-
     zeroRuntime: true,
     // @ts-expect-error Not sure why this is not typed: https://nuxtseo.com/docs/og-image/guides/emojis
     emojiStrategy: 'fetch',
@@ -146,7 +156,6 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: '/sign-in',
       callback: '/auth/confirm',
-      // todo: naming?
       include: [
         /* '/account(/*)?', */
         '/only/supabase',
