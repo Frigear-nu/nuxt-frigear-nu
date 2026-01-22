@@ -35,7 +35,8 @@
     "backTo": "Back to",
     "save": "Save",
     "select": "Select",
-    "change": "Change"
+    "change": "Change",
+    "cancel": "Cancel"
   },
   "locale": {
     "switch": "Choose language (now: {name})"

@@ -15,13 +15,10 @@ const displayForgotPasswordModal = ref(false)
 const emailWasDispatched = ref(false)
 const { fields: signInFields, signUpFields, buildProviders } = useAuthForm()
 const {
-  authMode,
   signInWithPassword,
   signInWithProvider,
   signUpWithPassword,
 } = useAuth()
-
-const isDevelopment = computed(() => import.meta.dev ?? false)
 
 const emailField = computed<string | undefined>({
   get: () => authForm.value?.state?.email,
@@ -194,7 +191,7 @@ function onPasswordResetError(err: Error) {
       variant="soft"
       to="/"
     >
-      Avbryt
+      {{ $t('actions.cancel') }}
     </UButton>
     <UButton
       v-if="!emailWasDispatched"

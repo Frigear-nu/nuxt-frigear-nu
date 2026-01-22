@@ -35,7 +35,8 @@
     "backTo": "Tilbage til",
     "save": "Lagre",
     "select": "Vælg",
-    "change": "Ændre"
+    "change": "Ændre",
+    "cancel": "Annuller"
   },
   "locale": {
     "switch": "Vælg sprog (nu: {name})"
