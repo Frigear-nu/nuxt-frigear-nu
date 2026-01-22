@@ -12,7 +12,7 @@ const useAuthForm = () => {
       type: 'email',
       autocomplete: 'email',
       label: t('auth.email.label'),
-      placeholder: t('auth.placeholder.email'),
+      placeholder: t('auth.email.placeholder'),
       required: true,
     },
     {

@@ -5,6 +5,10 @@
     "signOut": "Logg ud",
     "dashboard": "Konto",
     "signedInAs": "Logget ind som",
+    "name": {
+      "label": "Navn",
+      "placeholder": "Navn Navnesen"
+    },
     "email": {
       "label": "E-post",
       "placeholder": "volunteerHero{'@'}someDomain.lol"

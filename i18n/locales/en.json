@@ -5,6 +5,10 @@
     "signOut": "Sign Out",
     "dashboard": "Dashboard",
     "signedInAs": "Signed in as",
+    "name": {
+      "label": "Name",
+      "placeholder": "John Doe"
+    },
     "email": {
       "label": "E-mail",
       "placeholder": "volunteerHero{'@'}someDomain.lol"
@@ -75,7 +79,7 @@
       },
       "email": {
         "label": "Your awesome E-mail",
-        "placeholder": "volunteerHero{'@'}someDomain.lol"
+        "placeholder": "@:auth.email.placeholder"
       },
       "phone": {
         "label": "Phone",
