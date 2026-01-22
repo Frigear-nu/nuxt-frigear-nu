@@ -2,6 +2,11 @@
 // This is a kind of "layout" for pages inside /account
 import { useSiteI18n, useAuth } from '#imports'
 
+definePageMeta({
+  // this also applies to the /account/* routes due to the comment above.
+  middleware: ['auth'],
+})
+
 const { currentUser } = useAuth()
 const { t, localePath } = useSiteI18n()
 const route = useRoute()

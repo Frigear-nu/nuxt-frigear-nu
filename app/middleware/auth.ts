@@ -1,6 +1,7 @@
 import { useUserSession } from '#imports'
 
 export default defineNuxtRouteMiddleware((to) => {
+  console.log('auth.ts', { path: to.path })
   if (!to.path.startsWith('/account')) {
     return
   }

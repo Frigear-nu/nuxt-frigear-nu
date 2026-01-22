@@ -11,16 +11,16 @@ const useAuthForm = () => {
       name: 'email',
       type: 'email',
       autocomplete: 'email',
-      label: t('form.label.email'),
-      placeholder: t('form.placeholder.email'),
+      label: t('auth.email.label'),
+      placeholder: t('auth.placeholder.email'),
       required: true,
     },
     {
       name: 'password',
       type: 'password',
       autocomplete: 'password',
-      label: t('form.label.password'),
-      placeholder: t('form.placeholder.password'),
+      label: t('auth.password.label'),
+      placeholder: t('auth.password.placeholder'),
       required: true,
     },
   ] as AuthFormField[])
@@ -31,8 +31,8 @@ const useAuthForm = () => {
         name: 'name',
         type: 'text',
         autocomplete: 'name',
-        label: t('form.label.name'),
-        placeholder: t('form.placeholder.name'),
+        label: t('auth.name.label'),
+        placeholder: t('auth.name.placeholder'),
         required: true,
       },
       ...toValue(fields) as AuthFormField[],
@@ -42,12 +42,12 @@ const useAuthForm = () => {
   const providers = ref<Provider[]>([
     {
       id: 'google',
-      label: 'form.placeholder.google',
+      label: 'auth.provider.google',
       icon: 'i-simple-icons-google',
     },
     {
       id: 'link',
-      label: 'form.placeholder.magic-link',
+      label: 'auth.provider.link',
       icon: 'i-lucide-at-sign',
     },
   ])

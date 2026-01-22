@@ -20,6 +20,10 @@
     "magicLink": {
       "title": "Magic Link",
       "submit": "Send link"
+    },
+    "provider": {
+      "google": "Google",
+      "link": "Magic Link"
     }
   },
   "actions": {
