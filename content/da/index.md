@@ -1,33 +1,35 @@
 ---
 title: Frigear
+links: []
 seo:
   title: frigear.nu
-  description: ""
+  description: Frigear er en non-profit som er udviklet af frivillige.
 ---
 
 ::u-page-hero
 ---
 orientation: horizontal
 ---
-:nuxt-img{.rounded-full.p-4.dark:bg-neutral-800.bg-neutral-200.max-w-1/2.md:max-w-full.mx-auto :height='384' :width='384' alt="Frigear logo" format="webp" height="384" quality="70" src="/logo-with-rf-bg.jpg" width="384"}
+:nuxt-img{.rounded-full.p-4.dark:bg-neutral-800.bg-neutral-200.max-w-2/3.md:max-w-full.mx-auto :height='384' :width='384' alt="Frigear logo" format="webp" height="384" quality="70" src="/logo-with-rf-bg.jpg" width="384"}
 
 #title
-[{{ $doc.title }}]{.bg-gradient-to-r.from-primary-600.to-purple-600.bg-clip-text.text-transparent} :br
+[{{$doc.title}}]{.bg-gradient-to-r.from-primary-600.to-purple-600.bg-clip-text.text-transparent}
 
   :::typewriter-effect
   Non-profit
-  Frivillig drevet
-  Forening
+  Frivillig
   Fond
-  Projectorienteret
+  Forening
+  Projecter
   Er du med?
-  Bliv frivillig nu
+  Bliv frivillig nu!
   :::
 
 #links
   :::u-button
   ---
   color: primary
+  icon: i-carbon-email
   size: xl
   to: /#contact
   variant: subtle
@@ -35,7 +37,13 @@ orientation: horizontal
   Kontakt os
   :::
 
-  :::u-button{color="primary" size="xl" to="/membership"}
+  :::u-button
+  ---
+  color: primary
+  size: xl
+  to: /membership
+  trailing-icon: i-lucide-arrow-right
+  ---
   Bliv medlem
   :::
 ::
