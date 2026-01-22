@@ -26,7 +26,8 @@
     "view": "Vis",
     "backTo": "Tilbage til",
     "save": "Lagre",
-    "select": "Vælg"
+    "select": "Vælg",
+    "change": "Ændre"
   },
   "locale": {
     "switch": "Vælg sprog (nu: {name})"
@@ -36,9 +37,9 @@
     "menu": {
       "label": "@:auth.dashboard Menu"
     },
-    "settings": {
-      "title": "Indstillinger",
-      "description": "Endre dine brugeroplysninger.",
+    "profile": {
+      "title": "Profil",
+      "description": "Ændre dine brugeroplysninger.",
       "name": {
         "label": "Navn",
         "description": "Dit fulde navn."
@@ -58,7 +59,7 @@
     },
     "security": {
       "title": "Sikkerhed",
-      "description": "Endre kodeord, Social login etc."
+      "description": "Ændre kodeord, Social login etc."
     }
   },
   "contact": {

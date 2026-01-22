@@ -2,7 +2,7 @@
 import type { ZodError } from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import type { AuthError } from '@supabase/auth-js'
-import { signInWithMagicLinkSchema, type SignInWithMagicLinkSchema } from '#shared/schema/auth'
+import { changeUserEmailSchema, type ChangeUserEmailSchema } from '#shared/schema/user'
 
 const $emits = defineEmits<{
   (e: 'loading'): void
@@ -11,13 +11,11 @@ const $emits = defineEmits<{
   (e: 'development', magicLink: unknown): void
 }>()
 
-const { sendMagicLink } = useAuth()
 const form = useTemplateRef('form')
 const emailValue = defineModel<string | undefined>('email')
-const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
 const displayModal = defineModel<boolean>('open', { default: false })
 
-const state = reactive<Partial<SignInWithMagicLinkSchema>>({
+const state = reactive<Partial<ChangeUserEmailSchema>>({
   email: undefined,
 })
 
@@ -25,16 +23,16 @@ watch(emailValue, (em) => {
   state.email = em
 })
 
-async function onSubmit(payload: FormSubmitEvent<SignInWithMagicLinkSchema>) {
+async function onSubmit(payload: FormSubmitEvent<ChangeUserEmailSchema>) {
   const email = payload.data.email
   $emits('loading')
 
   try {
-    const magicLink = await sendMagicLink(email)
-    if (import.meta.dev) console.log({ magicLink })
+    const changeEmail = { local: false }
+    if (import.meta.dev) console.log({ magicLink: changeEmail })
 
-    if (typeof magicLink === 'object' && magicLink?.local) {
-      return $emits('development', magicLink)
+    if (typeof changeEmail === 'object' && changeEmail?.local) {
+      return $emits('development', changeEmail)
     }
 
     $emits('success', email)
@@ -50,20 +48,19 @@ async function onSubmit(payload: FormSubmitEvent<SignInWithMagicLinkSchema>) {
 <template>
   <UModal
     v-model:open="displayModal"
-    :title="mode === 'in' ? 'Sign in with Magic Link' : 'Sign up with Magic Link'"
-    description="Fyll ut skjemaet så sender vi deg en magic link, så slipper du streve med passord."
+    title="Change E-mail address"
   >
     <template #body>
       <UForm
         ref="form"
-        :schema="signInWithMagicLinkSchema"
+        :schema="changeUserEmailSchema"
         :state="state"
         class="space-y-4"
         :loading-auto="true"
         @submit="onSubmit"
       >
         <UFormField
-          label="E-post"
+          label="New E-mail"
           name="email"
         >
           <UInput

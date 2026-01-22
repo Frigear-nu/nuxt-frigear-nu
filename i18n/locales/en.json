@@ -26,7 +26,8 @@
     "view": "Show",
     "backTo": "Back to",
     "save": "Save",
-    "select": "Select"
+    "select": "Select",
+    "change": "Change"
   },
   "locale": {
     "switch": "Choose language (now: {name})"
@@ -36,8 +37,8 @@
     "menu": {
       "label": "@:auth.dashboard Menu"
     },
-    "settings": {
-      "title": "Settings",
+    "profile": {
+      "title": "Profile",
       "description": "Change your information.",
       "name": {
         "label": "Name",

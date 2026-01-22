@@ -1,20 +1,22 @@
 <script setup lang="ts">
-import { useAuth, useSiteI18n } from '#imports'
+import { useAuth, useSiteI18n, useAccount } from '#imports'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import { updateUserProfileSchema, type UpdateUserProfileSchema } from '#shared/schema/user'
 
 const { t } = useSiteI18n()
 const { currentUser } = useAuth()
+const { updateProfileDetails } = useAccount()
 const toast = useToast()
+const form = useTemplateRef('form')
 
+const isSubmitting = ref(false)
+const avatarEnabled = ref(false)
+const displayChangeEmailDialog = ref(false)
 // todo: implement file upload in future
 const fileRef = ref<HTMLInputElement>()
 
-// FIXME: Move to #shared/schema when this gets implemented server side.
-
 const state = reactive<Partial<UpdateUserProfileSchema>>({
   name: '',
-  email: '',
   avatar: undefined,
 })
 
@@ -22,17 +24,20 @@ watch(currentUser, (newUser) => {
   if (!newUser) return
 
   state.name = newUser.name
-  state.email = newUser.email
 }, { immediate: true })
 
 async function onSubmit(event: FormSubmitEvent<UpdateUserProfileSchema>) {
-  toast.add({
-    title: 'Success',
-    description: 'Your settings have been updated.',
-    icon: 'i-lucide-check',
-    color: 'success',
-  })
-  console.log(event.data)
+  isSubmitting.value = true
+  try {
+    await updateProfileDetails(event.data)
+    toast.add(formatToastSuccess('Success!', 'Your details have been updated.'))
+  }
+  catch (err: unknown) {
+    toast.add(formatToastError(err as Error))
+  }
+  finally {
+    isSubmitting.value = false
+  }
 }
 
 function onFileChange(e: Event) {
@@ -53,19 +58,21 @@ function onFileClick() {
 
 <template>
   <UForm
-    id="settings"
+    id="profile"
+    ref="form"
     :schema="updateUserProfileSchema"
     :state="state"
+    :loading-auto="true"
     @submit="onSubmit"
   >
     <UPageCard
       variant="subtle"
-      :title="t('account.settings.title')"
+      :title="t('account.profile.title')"
     >
       <UFormField
         name="name"
-        :label="t('account.settings.name.label')"
-        :description="t('account.settings.name.description')"
+        :label="t('account.profile.name.label')"
+        :description="t('account.profile.name.description')"
         required
         class="flex max-sm:flex-col justify-between items-start gap-4"
       >
@@ -76,23 +83,31 @@ function onFileClick() {
       </UFormField>
       <USeparator />
       <UFormField
+        v-if="currentUser"
         name="email"
-        :label="t('account.settings.email.label')"
-        :description="t('account.settings.email.description')"
-        required
+        :label="t('account.profile.email.label')"
+        :description="t('account.profile.email.description')"
         class="flex max-sm:flex-col justify-between items-start gap-4"
       >
-        <UInput
-          v-model="state.email"
-          type="email"
-          autocomplete="off"
-        />
+        <UFieldGroup>
+          <UInput
+            :model-value="currentUser.email"
+            readonly
+            disabled
+          />
+          <UButton
+            trailing-icon="i-lucide-pencil"
+            variant="subtle"
+            @click="displayChangeEmailDialog = true"
+          />
+        </UFieldGroup>
       </UFormField>
-      <USeparator />
+      <USeparator v-show="avatarEnabled" />
       <UFormField
+        v-show="avatarEnabled"
         name="avatar"
-        :label="t('account.settings.avatar.label')"
-        :description="t('account.settings.avatar.description')"
+        :label="t('account.profile.avatar.label')"
+        :description="t('account.profile.avatar.description')"
         class="flex max-sm:flex-col justify-between sm:items-center gap-4"
       >
         <div class="flex flex-wrap items-center gap-3">
@@ -124,12 +139,17 @@ function onFileClick() {
       class="mt-4"
     >
       <UButton
-        form="settings"
+        v-if="form"
+        form="profile"
         :label="t('actions.save')"
         color="neutral"
+        size="xl"
         type="submit"
         class="w-fit lg:ms-auto"
+        :loading="form.loading"
+        icon="i-lucide-save"
       />
     </UPageCard>
+    <AccountChangeEmailModal v-model:open="displayChangeEmailDialog" />
   </UForm>
 </template>

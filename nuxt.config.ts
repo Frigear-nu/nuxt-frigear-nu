@@ -81,6 +81,13 @@ export default defineNuxtConfig({
       // @ts-expect-error This fails due to not having types
       plugins: [vue()],
     },
+    scheduledTasks: {
+      // every 30 min
+      '*/30 * * * *': [
+        'auth:clear-expired-password-resets',
+        'auth:clear-expired-magic-links',
+      ],
+    },
   },
   hub: {
     db: {
@@ -121,14 +128,6 @@ export default defineNuxtConfig({
   },
   resend: {
     apiKey: process.env.NUXT_RESEND_API_KEY!,
-  },
-  // FIXME: Check if cloudflare.deployConfig: true might solve the duplication in wrangler.jsonc
-  scheduledTasks: {
-    // every 30 min
-    '*/30 * * * *': [
-      'auth:clear-expired-password-resets',
-      'auth:clear-expired-magic-links',
-    ],
   },
   stripe: {
     server: {
