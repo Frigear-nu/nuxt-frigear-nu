@@ -15,13 +15,10 @@ const displayForgotPasswordModal = ref(false)
 const emailWasDispatched = ref(false)
 const { fields: signInFields, signUpFields, buildProviders } = useAuthForm()
 const {
-  authMode,
   signInWithPassword,
   signInWithProvider,
   signUpWithPassword,
 } = useAuth()
-
-const isDevelopment = computed(() => import.meta.dev ?? false)
 
 const emailField = computed<string | undefined>({
   get: () => authForm.value?.state?.email,
@@ -134,20 +131,20 @@ function onPasswordResetError(err: Error) {
       class="flex flex-col items-center justify-center gap-4 p-4 text-center"
     >
       <div class="text-xl font-bold">
-        E-mail sent!
+        {{ $t('auth.email.sent.title') }}
       </div>
-      <p>Please check your inbox, you might want to check your SPAM folder.</p>
-      <p>You may close this window.</p>
+      <p>{{ $t('auth.email.sent.description') }}</p>
+      <p>{{ $t('auth.email.sent.note') }}</p>
     </div>
     <UAuthForm
       v-else
       ref="authForm"
       :schema="mode === 'up' ? signUpWithPasswordSchema : signInWithPasswordSchema"
-      :title="mode === 'up' ? 'Sign Up' : 'Sign In'"
+      :title="mode === 'up' ? $t('auth.signUp') : $t('auth.signIn')"
       :fields="fields"
       :providers="providers"
-      :separator="{ label: 'OR' }"
-      :submit="mode === 'up' ? { label: 'Sign Up' } : { label: 'Sign In' }"
+      :separator="{ label: $t('common.or'), class: 'capitalize' }"
+      :submit="mode === 'up' ? { label: $t('auth.signUp') } : { label: $t('auth.signIn') }"
       @submit="onSubmit"
     >
       <template #description>
@@ -156,7 +153,7 @@ function onPasswordResetError(err: Error) {
           class="text-primary font-medium"
           @click="mode = mode === 'up' ? 'in' : 'up'"
         >
-          {{ mode === 'up' ? 'Sign in' : 'Sign up' }}
+          {{ mode === 'in' ? $t('auth.signUp') : $t('auth.signIn') }}
         </ULink>.
       </template>
       <template
@@ -167,7 +164,8 @@ function onPasswordResetError(err: Error) {
           class="text-primary font-medium"
           tabindex="-1"
           @click="displayForgotPasswordModal = true"
-        >Forgot password?
+        >
+          {{ $t('auth.forgotPassword.title') }}
         </ULink>
       </template>
     </UAuthForm>
@@ -194,7 +192,7 @@ function onPasswordResetError(err: Error) {
       variant="soft"
       to="/"
     >
-      Avbryt
+      {{ $t('actions.cancel') }}
     </UButton>
     <UButton
       v-if="!emailWasDispatched"
@@ -202,7 +200,7 @@ function onPasswordResetError(err: Error) {
       variant="subtle"
       @click="mode = mode === 'up' ? 'in' : 'up'"
     >
-      {{ mode === 'in' ? 'Opret konto' : 'Log ind' }}
+      {{ mode === 'in' ? $t('auth.signUp') : $t('auth.signIn') }}
     </UButton>
   </div>
 </template>
