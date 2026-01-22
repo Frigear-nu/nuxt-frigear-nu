@@ -9,13 +9,14 @@ export default defineEventHandler(async (event) => {
   }))
 
   const { sub: userId, oldEmail } = await useValidatedJwt(token, z.object({
-    sub: z.string(),
+    sub: z.coerce.number().int().positive(),
     oldEmail: z.string().email(),
   }))
 
   const [revertedUser] = await db.update(schema.users)
     .set({ email: oldEmail })
-    .where(eq(schema.users.id, Number(userId)))
+    .where(eq(schema.users.id, userId))
+    .returning()
     .returning()
 
   if (!revertedUser) throw ClientError()
