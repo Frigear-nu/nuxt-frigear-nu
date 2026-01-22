@@ -157,15 +157,7 @@ function onPasswordResetError(err: Error) {
           @click="mode = mode === 'up' ? 'in' : 'up'"
         >
           {{ mode === 'up' ? 'Sign in' : 'Sign up' }}
-        </ULink>
-        .
-
-        <UBadge
-          v-if="isDevelopment"
-          color="error"
-        >
-          Auth: {{ authMode }}
-        </UBadge>
+        </ULink>.
       </template>
       <template
         v-if="mode === 'in'"
