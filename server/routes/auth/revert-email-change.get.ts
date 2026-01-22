@@ -4,6 +4,7 @@ import { ClientError } from '@nitrotool/errors'
 import { useValidatedQuery } from 'h3-zod'
 
 export default defineEventHandler(async (event) => {
+  const { user } = await getUserSession(event)
   const { token } = await useValidatedQuery(event, z.object({
     token: z.string(),
   }))
@@ -17,9 +18,10 @@ export default defineEventHandler(async (event) => {
     .set({ email: oldEmail })
     .where(eq(schema.users.id, userId))
     .returning()
-    .returning()
 
   if (!revertedUser) throw ClientError()
 
-  return sendRedirect(event, '/sign-in')
+  await clearUserSession(event)
+
+  return sendRedirect(event, user ? '/account' : '/sign-in')
 })
