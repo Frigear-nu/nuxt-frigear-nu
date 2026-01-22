@@ -47,7 +47,6 @@ export default defineNuxtConfig({
     },
     auth: {
       verifyEmail: true,
-      migrateSupabase: false,
       signUp: false,
     },
   },
