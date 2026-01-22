@@ -53,5 +53,5 @@ const cards = computed<PageCardProps[]>(() => ([
         </div>
       </template>
     </UPageCard>
-  </upagegrid>
+  </UPageGrid>
 </template>
