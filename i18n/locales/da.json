@@ -1,4 +1,7 @@
 {
+  "common": {
+    "or": "Eller"
+  },
   "auth": {
     "signIn": "Logg ind",
     "signUp": "Opret konto",
@@ -11,7 +14,12 @@
     },
     "email": {
       "label": "E-post",
-      "placeholder": "volunteerHero{'@'}someDomain.lol"
+      "placeholder": "volunteerHero{'@'}someDomain.lol",
+      "sent": {
+        "title": "E-post sendt!",
+        "description": "Vi har sendt dig en e-post. Kontroller din inbox eller spam.",
+        "note": "Du kan lukke denne vindue."
+      }
     },
     "password": {
       "label": "Kodeord",

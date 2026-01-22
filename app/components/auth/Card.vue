@@ -131,10 +131,10 @@ function onPasswordResetError(err: Error) {
       class="flex flex-col items-center justify-center gap-4 p-4 text-center"
     >
       <div class="text-xl font-bold">
-        E-mail sent!
+        {{ $t('auth.email.sent.title') }}
       </div>
-      <p>Please check your inbox, you might want to check your SPAM folder.</p>
-      <p>You may close this window.</p>
+      <p>{{ $t('auth.email.sent.description') }}</p>
+      <p>{{ $t('auth.email.sent.note') }}</p>
     </div>
     <UAuthForm
       v-else
@@ -143,7 +143,7 @@ function onPasswordResetError(err: Error) {
       :title="mode === 'up' ? $t('auth.signUp') : $t('auth.signIn')"
       :fields="fields"
       :providers="providers"
-      :separator="{ label: 'OR' }"
+      :separator="{ label: $t('common.or'), class: 'capitalize' }"
       :submit="mode === 'up' ? { label: $t('auth.signUp') } : { label: $t('auth.signIn') }"
       @submit="onSubmit"
     >
@@ -164,7 +164,8 @@ function onPasswordResetError(err: Error) {
           class="text-primary font-medium"
           tabindex="-1"
           @click="displayForgotPasswordModal = true"
-        >Forgot password?
+        >
+          {{ $t('auth.forgotPassword.title') }}
         </ULink>
       </template>
     </UAuthForm>

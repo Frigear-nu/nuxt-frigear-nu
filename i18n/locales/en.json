@@ -1,4 +1,7 @@
 {
+  "common": {
+    "or": "Or"
+  },
   "auth": {
     "signIn": "Sign In",
     "signUp": "Sign Up",
@@ -11,7 +14,12 @@
     },
     "email": {
       "label": "E-mail",
-      "placeholder": "volunteerHero{'@'}someDomain.lol"
+      "placeholder": "volunteerHero{'@'}someDomain.lol",
+      "sent": {
+        "title": "E-mail sent!",
+        "description": "We have sent you an e-mail. Check your inbox or spam.",
+        "note": "You may close this window."
+      }
     },
     "password": {
       "label": "Password",
