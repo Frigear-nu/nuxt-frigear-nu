@@ -27,7 +27,7 @@
     "backTo": "Tilbage til",
     "save": "Lagre",
     "select": "Vælg",
-    "change": "Skift"
+    "change": "Ændre"
   },
   "locale": {
     "switch": "Vælg sprog (nu: {name})"
@@ -39,7 +39,7 @@
     },
     "profile": {
       "title": "Profil",
-      "description": "Endre dine brugeroplysninger.",
+      "description": "Ændre dine brugeroplysninger.",
       "name": {
         "label": "Navn",
         "description": "Dit fulde navn."
@@ -59,7 +59,7 @@
     },
     "security": {
       "title": "Sikkerhed",
-      "description": "Endre kodeord, Social login etc."
+      "description": "Ændre kodeord, Social login etc."
     }
   },
   "contact": {
