@@ -144,7 +144,7 @@ function onPasswordResetError(err: Error) {
       :fields="fields"
       :providers="providers"
       :separator="{ label: 'OR' }"
-      :submit="mode === 'up' ? { label: 'Sign Up' } : { label: 'Sign In' }"
+      :submit="mode === 'up' ? { label: $t('auth.signUp') } : { label: $t('auth.signIn') }"
       @submit="onSubmit"
     >
       <template #description>
