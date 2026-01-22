@@ -89,22 +89,18 @@ function onFileClick() {
         :description="t('account.profile.email.description')"
         class="flex max-sm:flex-col justify-between items-start gap-4"
       >
-        <div class="flex flex-col gap-2">
+        <UFieldGroup>
           <UInput
             :model-value="currentUser.email"
             readonly
             disabled
           />
           <UButton
-            trailing-icon="i-lucide-arrow-right"
+            trailing-icon="i-lucide-pencil"
             variant="subtle"
-            class="flex justify-between"
-            size="xs"
             @click="displayChangeEmailDialog = true"
-          >
-            {{ $t('account.profile.email.button.change') }}
-          </UButton>
-        </div>
+          />
+        </UFieldGroup>
       </UFormField>
       <USeparator v-show="avatarEnabled" />
       <UFormField
