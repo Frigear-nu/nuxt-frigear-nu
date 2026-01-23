@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
   const { user } = await getUserSession(event)
 
   if (!user) {
-    return 'You must visit this url from the same browser you requested it.'
+    return 'You must visit this url while being signed in as the requesting user.'
   }
 
   const { token } = await useValidatedQuery(event, verifyChangeEmailSchema)
@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
       component: EmailAddressChangedEmail,
       props: {
         accountSettingsUrl: withBaseUrl('/account'),
-        revertUrl,
+        // revertUrl, //TBA if we will enable this.
       },
     })
   }
