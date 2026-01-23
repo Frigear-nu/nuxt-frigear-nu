@@ -49,7 +49,7 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserEmailSchema>) {
 <template>
   <UModal
     v-model:open="displayModal"
-    title="Change E-mail address"
+    :title="$t('account.profile.email.change.title')"
   >
     <template #body>
       <UForm
@@ -61,7 +61,7 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserEmailSchema>) {
         @submit="onSubmit"
       >
         <UFormField
-          label="New E-mail"
+          :label="$t('account.profile.email.change.label')"
           name="email"
         >
           <UInput
