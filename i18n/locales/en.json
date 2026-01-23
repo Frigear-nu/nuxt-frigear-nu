@@ -63,7 +63,11 @@
       },
       "email": {
         "label": "E-mail",
-        "description": "Your awesome E-mail."
+        "description": "Your awesome E-mail.",
+        "change": {
+          "title": "Ændre E-post",
+          "label": "Ny e-post"
+        }
       },
       "avatar": {
         "label": "Avatar",
