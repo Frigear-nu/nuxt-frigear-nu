@@ -7,11 +7,16 @@ const { isLoggedIn } = useAuth()
 </script>
 
 <template>
-  <AccountMenu v-if="isLoggedIn" />
-  <UButton
-    v-else
-    :label="$t('auth.signIn')"
-    :to="localePath('/sign-in')"
-    trailing-icon="i-lucide-lock"
-  />
+  <ClientOnly>
+    <AccountMenu v-if="isLoggedIn" />
+    <UButton
+      v-else
+      :label="$t('auth.signIn')"
+      :to="localePath('/sign-in')"
+      trailing-icon="i-lucide-lock"
+    />
+    <template #fallback>
+      <div :class="[isLoggedIn ? 'w-8' : 'w-16', 'h-8 animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-md']" />
+    </template>
+  </ClientOnly>
 </template>
