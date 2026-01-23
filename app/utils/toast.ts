@@ -1,12 +1,13 @@
 import type { Toast } from '#ui/composables/useToast'
+import type { IFetchError } from 'ofetch'
 
-export function formatToastError(error: Error | never, overrides: Partial<Toast> = {}): Partial<Toast> {
+export function formatToastError(error: Error | IFetchError, overrides: Partial<Toast> = {}): Partial<Toast> {
   return {
     title: 'Error',
     icon: 'i-lucide-alert-circle',
     color: 'error',
     ...overrides,
-    description: error?.message || overrides?.description || 'An unknown error occurred.',
+    description: overrides?.description || error.message || 'An unknown error occurred.',
   }
 }
 

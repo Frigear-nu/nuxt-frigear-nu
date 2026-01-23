@@ -1,4 +1,4 @@
-import type { ChangeUserEmailSchema, UpdateUserProfileSchema } from '#shared/schema/user'
+import type { ChangeUserEmailSchema, ChangeUserPasswordSchema, UpdateUserProfileSchema } from '#shared/schema/user'
 
 export const useAccount = () => {
   const { refresh } = useAuth()
@@ -20,8 +20,20 @@ export const useAccount = () => {
     })
   }
 
+  const changePassword = async (body: ChangeUserPasswordSchema) => {
+    const result = await $fetch('/api/account/change-password', {
+      method: 'POST',
+      body,
+    })
+
+    await refresh()
+
+    return result
+  }
+
   return {
     updateProfileDetails,
     changeEmailAddress,
+    changePassword,
   }
 }

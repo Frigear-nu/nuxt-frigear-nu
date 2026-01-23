@@ -26,3 +26,21 @@ export const verifyChangeEmailSchema = z.object({
 })
 
 export type VerifyChangeEmailSchema = z.output<typeof verifyChangeEmailSchema>
+
+export const changeUserPasswordSchema = z.object({
+  currentPassword: z.string(),
+  newPassword: z.string().min(6),
+  confirmNewPassword: z.string().min(6),
+}).refine(data => data.newPassword === data.confirmNewPassword, {
+  // FIXME: Make this a FN and add issue to ctx.
+  message: 'errors.password.mismatch',
+  path: ['confirmNewPassword'],
+  params: {
+    i18n: {
+      // FIXME: Change path and add translations.
+      key: 'zodI18n.password.mismatch',
+    },
+  },
+})
+
+export type ChangeUserPasswordSchema = z.infer<typeof changeUserPasswordSchema>
