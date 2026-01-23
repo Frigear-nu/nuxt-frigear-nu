@@ -68,6 +68,7 @@ async function onSubmit(payload: FormSubmitEvent<ForgotPasswordSchema>) {
           <UInput
             v-model="state.email"
             :placeholder="$t('auth.email.placeholder')"
+            autocomplete="email"
           />
         </UFormField>
       </UForm>

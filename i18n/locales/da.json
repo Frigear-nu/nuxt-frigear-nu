@@ -80,7 +80,11 @@
     },
     "security": {
       "title": "Sikkerhed",
-      "description": "Ændre kodeord, Social login etc."
+      "description": "Ændre kodeord, Social login etc.",
+      "password": {
+        "title": "Kodeord",
+        "description": "Ændre dit kodeord."
+      }
     }
   },
   "contact": {
