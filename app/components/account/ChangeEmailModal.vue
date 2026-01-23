@@ -11,6 +11,7 @@ const $emits = defineEmits<{
   (e: 'development', magicLink: unknown): void
 }>()
 
+const { changeEmailAddress } = useAccount()
 const form = useTemplateRef('form')
 const emailValue = defineModel<string | undefined>('email')
 const displayModal = defineModel<boolean>('open', { default: false })
@@ -28,7 +29,7 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserEmailSchema>) {
   $emits('loading')
 
   try {
-    const changeEmail = { local: false }
+    const changeEmail = await changeEmailAddress(payload.data)
     if (import.meta.dev) console.log({ magicLink: changeEmail })
 
     if (typeof changeEmail === 'object' && changeEmail?.local) {
@@ -48,7 +49,7 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserEmailSchema>) {
 <template>
   <UModal
     v-model:open="displayModal"
-    title="Change E-mail address"
+    :title="$t('account.profile.email.change.title')"
   >
     <template #body>
       <UForm
@@ -60,7 +61,7 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserEmailSchema>) {
         @submit="onSubmit"
       >
         <UFormField
-          label="New E-mail"
+          :label="$t('account.profile.email.change.label')"
           name="email"
         >
           <UInput

@@ -1,4 +1,4 @@
-import type { UpdateUserProfileSchema } from '#shared/schema/user'
+import type { ChangeUserEmailSchema, UpdateUserProfileSchema } from '#shared/schema/user'
 
 export const useAccount = () => {
   const { refresh } = useAuth()
@@ -13,7 +13,15 @@ export const useAccount = () => {
     return response
   }
 
+  const changeEmailAddress = async (body: ChangeUserEmailSchema) => {
+    return $fetch('/api/account/change-email', {
+      method: 'POST',
+      body,
+    })
+  }
+
   return {
     updateProfileDetails,
+    changeEmailAddress,
   }
 }

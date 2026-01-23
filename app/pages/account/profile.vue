@@ -54,6 +54,21 @@ function onFileChange(e: Event) {
 function onFileClick() {
   fileRef.value?.click()
 }
+
+const onEmailAddressChange = (newAddress: string) => {
+  displayChangeEmailDialog.value = false
+  toast.add(formatToastSuccess('Success', `Check ${newAddress} for a confirmation email.`))
+}
+
+const onEmailAddressChangeDev = () => {
+  displayChangeEmailDialog.value = false
+  toast.add(formatToastSuccess('Check terminal for link to change email.'))
+}
+
+const onEmailAddressChangeError = (err: unknown) => {
+  displayChangeEmailDialog.value = false
+  toast.add(formatToastError(err as Error))
+}
 </script>
 
 <template>
@@ -150,6 +165,11 @@ function onFileClick() {
         icon="i-lucide-save"
       />
     </UPageCard>
-    <AccountChangeEmailModal v-model:open="displayChangeEmailDialog" />
+    <AccountChangeEmailModal
+      v-model:open="displayChangeEmailDialog"
+      @success="onEmailAddressChange"
+      @development="onEmailAddressChangeDev"
+      @error="onEmailAddressChangeError"
+    />
   </UForm>
 </template>
