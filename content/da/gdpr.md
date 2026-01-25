@@ -21,23 +21,34 @@ Information om GDPR.
 
 ::div{.flex.flex-col.gap-4}
   :::u-page-card
+  ---
+  icon: mdi-shield-lock-outline
+  ---
   #title
   Privatlivspolitik
+
   #description
   Frigear tager dit privatliv alvorligt. Denne politik forklarer, hvordan vi håndterer dine personoplysninger.
   :::
 
   :::u-page-card
+  ---
+  icon: lucide-hat-glasses
+  ---
   #title
   1\. Hvem er vi?
+
   #description
-  Vi er Foreningen Frigear, en dansk non-profit organisation dedikeret til at fremme frivilligt engagement i vores samfund indenfor kultur.
-  Vores kontaktinformationer er tilgængelige på forsiden af vores web-applikation.
+  Nonprofit organisationen Frigear, CVR-nr. 40330391
   :::
 
   :::u-page-card
+  ---
+  icon: lucide-file-user
+  ---
   #title
   2\. Hvilke data indsamler vi?
+
   #description
   Vi indsamler følgende oplysninger:
 
@@ -49,8 +60,12 @@ Information om GDPR.
   :::
 
   :::u-page-card
+  ---
+  icon: lucide-shield-question
+  ---
   #title
   3\. Hvordan bruger vi dine data?
+
   #description
   Vi bruger dine oplysninger til følgende formål:
 
@@ -64,38 +79,56 @@ Information om GDPR.
   :::
 
   :::u-page-card
+  ---
+  icon: lucide-share-2
+  ---
   #title
   4\. Deling af dine oplysninger
+
   #description
   Vi deler ikke dine oplysninger med tredjeparter uden dit samtykke, medmindre det er lovpligtigt eller nødvendigt for regnskabsføring, eller eksternt samarbejde.
   :::
 
   :::u-page-card
+  ---
+  icon: lucide-database
+  ---
   #title
   5\. Opbevaring og sletning af data
+
   #description
   Vi opbevarer dine oplysninger, så længe det er nødvendigt for ovenstående formål.
   Når du ikke længere er medlem, slettes dine oplysninger efter 12 måneder, medmindre vi er forpligtet til at gemme dem længere.
   :::
 
   :::u-page-card
+  ---
+  icon: lucide-scale
+  target: _blank
+  to: /#contact
+  ---
   #title
   6\. Dine rettigheder
+
   #description
   Du har ret til at:
-  
+
   - Anmode om indsigt i dine data
   - Få rettet eller slettet dine oplysninger
   - Begrænse behandlingen af dine data
   - Trække dit samtykke tilbage
   - Klage til Datatilsynet
-  
+
   Kontakt os via kontaktformularen på forsiden for at udøve dine rettigheder.
   :::
 
   :::u-page-card
+  ---
+  icon: mdi-cookie-outline
+  ---
   #title
   7\. Cookies og sociale medier
+
   #description
   Vi benytter cookies til:
 
@@ -103,19 +136,29 @@ Information om GDPR.
   - At analysere trafik og brug af siden
   - At integrere sociale medieplatforme
 
-  *Vær opmærksom på, at Facebook, Instagram og andre sociale medier kan indsamle data om dig, når du besøger vores side, i henhold til deres egne privatlivspolitikker.
+  Vær opmærksom på, at Facebook, Instagram og andre sociale medier kan indsamle data om dig, når du besøger vores side, i henhold til deres egne privatlivspolitikker.
   :::
 
   :::u-page-card
+  ---
+  icon: lucide-send
+  target: _blank
+  to: /#contact
+  ---
   #title
   8\. Kontakt os
+
   #description
   Hvis du har spørgsmål, kan vi kontaktes gennem formen på forsiden.
   :::
 
   :::u-page-card
+  ---
+  icon: lucide-gavel
+  ---
   #title
   9\. Juridisk grundlag
+
   #description
   Behandlingen af dine personoplysninger sker på baggrund af:
 
@@ -125,16 +168,23 @@ Information om GDPR.
   :::
 
   :::u-page-card
+  ---
+  icon: lucide-pencil-line
+  ---
   #title
   10\. Ændringer i privatlivspolitikken
+
   #description
   Vi forbeholder os retten til at opdatere denne privatlivspolitik løbende. Væsentlige ændringer vil blive meddelt via vores hjemmeside.
-
   :::
 
   :::u-page-card
+  ---
+  icon: lucide-calendar-sync
+  ---
   #title
-  Sidst opdateret
+  Senest opdateret
+
   #description
   Januar 2026
   :::
