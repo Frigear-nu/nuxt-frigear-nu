@@ -1,9 +1,6 @@
 ---
 title: GDPR
 description: Information om GDPR.
-seo:
-  title: GDPR
-  description: Information om GDPR.
 ---
 
 ::u-page-header
@@ -102,7 +99,6 @@ Information om GDPR.
   Når du ikke længere er medlem, slettes dine oplysninger efter 12 måneder, medmindre vi er forpligtet til at gemme dem længere.
   :::
 
-  <!-- tooltip: Gå til kontaktformularen -->
   :::u-page-card
   ---
   icon: i-lucide-scale
@@ -139,7 +135,6 @@ Information om GDPR.
   Vær opmærksom på, at Facebook, Instagram og andre sociale medier kan indsamle data om dig, når du besøger vores side, i henhold til deres egne privatlivspolitikker.
   :::
 
-  <!-- tooltip: Gå til kontaktformularen -->
   :::u-page-card
   ---
   icon: i-lucide-send
