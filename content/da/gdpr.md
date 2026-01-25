@@ -106,7 +106,6 @@ Information om GDPR.
   :::u-page-card
   ---
   icon: i-lucide-scale
-  to: /#contact
   ---
   #title
   6\. Dine rettigheder
@@ -120,7 +119,7 @@ Information om GDPR.
   - Trække dit samtykke tilbage
   - Klage til Datatilsynet
 
-  Kontakt os via kontaktformularen på forsiden for at udøve dine rettigheder.
+  [Kontakt os via kontaktformularen på forsiden for at udøve dine rettigheder.](/#contact){.underline}
   :::
 
   :::u-page-card
@@ -144,13 +143,12 @@ Information om GDPR.
   :::u-page-card
   ---
   icon: i-lucide-send
-  to: /#contact
   ---
   #title
   8\. Kontakt os
 
   #description
-  Hvis du har spørgsmål, kan vi kontaktes gennem formen på forsiden.
+  Hvis du har spørgsmål, kan vi kontaktes gennem formen på [forsiden](/#contact){.underline}.
   :::
 
   :::u-page-card
