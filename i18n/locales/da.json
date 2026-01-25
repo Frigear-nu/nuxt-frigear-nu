@@ -3,9 +3,9 @@
     "or": "Eller"
   },
   "auth": {
-    "signIn": "Logg ind",
+    "signIn": "Log ind",
     "signUp": "Opret konto",
-    "signOut": "Logg ud",
+    "signOut": "Log ud",
     "dashboard": "Konto",
     "signedInAs": "Logget ind som",
     "name": {
@@ -13,12 +13,12 @@
       "placeholder": "Navn Navnesen"
     },
     "email": {
-      "label": "E-post",
+      "label": "E-mail",
       "placeholder": "volunteerHero{'@'}someDomain.lol",
       "sent": {
-        "title": "E-post sendt!",
-        "description": "Vi har sendt dig en e-post. Kontroller din inbox eller spam.",
-        "note": "Du kan lukke denne vindue."
+        "title": "E-mail sendt!",
+        "description": "Vi har sendt dig en e-mail. Tjek lige din inbox eller spam.",
+        "note": "Du ka' bare lukke det her vindue."
       }
     },
     "password": {
@@ -44,7 +44,7 @@
     "save": "Lagre",
     "select": "Vælg",
     "change": "Ændre",
-    "cancel": "Annuller"
+    "cancel": "Annullér"
   },
   "locale": {
     "switch": "Vælg sprog (nu: {name})"
@@ -62,11 +62,11 @@
         "description": "Dit fulde navn."
       },
       "email": {
-        "label": "E-post",
-        "description": "Din awesome E-post.",
+        "label": "E-mail",
+        "description": "Din awesome e-mail.",
         "change": {
-          "title": "Ændre E-post",
-          "label": "Ny e-post"
+          "title": "Ændre e-mail",
+          "label": "Ny e-mail"
         }
       },
       "avatar": {
@@ -76,7 +76,7 @@
     },
     "membership": {
       "title": "Medlemskab",
-      "description": "Din medlemskabstype."
+      "description": "Dit medlemskab."
     },
     "security": {
       "title": "Sikkerhed",
@@ -95,7 +95,7 @@
         "placeholder": "Hej, hva hedder du? .. put her"
       },
       "email": {
-        "label": "Din awesome E-post",
+        "label": "Din awesome e-mail",
         "placeholder": "@:auth.email.placeholder"
       },
       "phone": {
@@ -126,7 +126,7 @@
         "placeholder": "Jeg vil snakke om et awesome Frigear projekt..."
       },
       "submit": {
-        "label": "Send besked"
+        "label": "Fyr beskeden afsted"
       }
     }
   },
