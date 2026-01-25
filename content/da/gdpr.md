@@ -22,7 +22,7 @@ Information om GDPR.
 ::div{.flex.flex-col.gap-4}
   :::u-page-card
   ---
-  icon: mdi-shield-lock-outline
+  icon: lucide-shield-lock
   ---
   #title
   Privatlivspolitik
@@ -39,7 +39,7 @@ Information om GDPR.
   1\. Hvem er vi?
 
   #description
-  Nonprofit organisationen Frigear, CVR-nr. 40330391
+  Nonprofit organisationen Frigear, CVR-nr. 44353261
   :::
 
   :::u-page-card
