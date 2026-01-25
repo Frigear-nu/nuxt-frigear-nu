@@ -22,7 +22,7 @@ Information om GDPR.
 ::div{.flex.flex-col.gap-4}
   :::u-page-card
   ---
-  icon: lucide-shield-lock
+  icon: lucide-shield-check
   ---
   #title
   Privatlivspolitik
