@@ -106,7 +106,6 @@ Information om GDPR.
   ---
   icon: i-lucide-scale
   to: /#contact
-  target: _self
   ---
   #title
   6\. Dine rettigheder
@@ -125,7 +124,7 @@ Information om GDPR.
 
   :::u-page-card
   ---
-  icon: mdi-cookie-outline
+  icon: i-lucide-cookie
   ---
   #title
   7\. Cookies og sociale medier
@@ -145,7 +144,6 @@ Information om GDPR.
   ---
   icon: i-lucide-send
   to: /#contact
-  target: _self
   ---
   #title
   8\. Kontakt os
