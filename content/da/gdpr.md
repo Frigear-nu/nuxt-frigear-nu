@@ -1,8 +1,9 @@
 ---
 title: GDPR
+description: Information om GDPR.
 seo:
-  description: Information om GDPR.
   title: GDPR
+  description: Information om GDPR.
 ---
 
 ::u-page-header
