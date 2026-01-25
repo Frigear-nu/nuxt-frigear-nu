@@ -22,7 +22,7 @@ Information om GDPR.
 ::div{.flex.flex-col.gap-4}
   :::u-page-card
   ---
-  icon: lucide-shield-check
+  icon: i-lucide-shield-check
   ---
   #title
   Privatlivspolitik
@@ -33,7 +33,7 @@ Information om GDPR.
 
   :::u-page-card
   ---
-  icon: lucide-hat-glasses
+  icon: i-lucide-hat-glasses
   ---
   #title
   1\. Hvem er vi?
@@ -44,7 +44,7 @@ Information om GDPR.
 
   :::u-page-card
   ---
-  icon: lucide-file-user
+  icon: i-lucide-file-user
   ---
   #title
   2\. Hvilke data indsamler vi?
@@ -56,12 +56,12 @@ Information om GDPR.
   - Adresse
   - Email
   - Telefonnummer
-  - Betalingsoplysninger '(ved kontingentbetaling eller køb af varer, billetter osv.)'
+  - Betalingsoplysninger (ved kontingentbetaling eller køb af varer, billetter osv.)
   :::
 
   :::u-page-card
   ---
-  icon: lucide-shield-question
+  icon: i-lucide-shield-question
   ---
   #title
   3\. Hvordan bruger vi dine data?
@@ -80,7 +80,7 @@ Information om GDPR.
 
   :::u-page-card
   ---
-  icon: lucide-share-2
+  icon: i-lucide-share-2
   ---
   #title
   4\. Deling af dine oplysninger
@@ -91,7 +91,7 @@ Information om GDPR.
 
   :::u-page-card
   ---
-  icon: lucide-database
+  icon: i-lucide-database
   ---
   #title
   5\. Opbevaring og sletning af data
@@ -102,10 +102,11 @@ Information om GDPR.
   :::
 
   :::u-page-card
+  <!-- tooltip: Gå til kontaktformularen -->
   ---
-  icon: lucide-scale
-  target: _blank
+  icon: i-lucide-scale
   to: /#contact
+  target: _self
   ---
   #title
   6\. Dine rettigheder
@@ -140,10 +141,11 @@ Information om GDPR.
   :::
 
   :::u-page-card
+  <!-- tooltip: Gå til kontaktformularen -->
   ---
-  icon: lucide-send
-  target: _blank
+  icon: i-lucide-send
   to: /#contact
+  target: _self
   ---
   #title
   8\. Kontakt os
@@ -154,7 +156,7 @@ Information om GDPR.
 
   :::u-page-card
   ---
-  icon: lucide-gavel
+  icon: i-lucide-gavel
   ---
   #title
   9\. Juridisk grundlag
@@ -169,7 +171,7 @@ Information om GDPR.
 
   :::u-page-card
   ---
-  icon: lucide-pencil-line
+  icon: i-lucide-pencil-line
   ---
   #title
   10\. Ændringer i privatlivspolitikken
@@ -180,7 +182,7 @@ Information om GDPR.
 
   :::u-page-card
   ---
-  icon: lucide-calendar-sync
+  icon: i-lucide-calendar-sync
   ---
   #title
   Senest opdateret
