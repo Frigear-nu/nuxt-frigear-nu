@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { PageCollections } from '@nuxt/content'
+import type { Locale } from 'vue-i18n'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
 
 const { seo } = useAppConfig()
@@ -33,11 +34,11 @@ useSeoMeta({
 
 if (isEnabled.value) {
   const route = useRoute()
-  const defaultLocale = useRuntimeConfig().public.i18n.defaultLocale!
+  const defaultLocale = useRuntimeConfig().public.i18n.defaultLocale! as Locale
   onMounted(() => {
     const currentLocale = route.path.split('/')[1]
     if (!locales.some(locale => locale.code === currentLocale)) {
-      return navigateTo(switchLocalePath(defaultLocale as 'en' | 'da') as string)
+      return navigateTo(switchLocalePath(defaultLocale) as string)
     }
   })
 }
