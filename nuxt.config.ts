@@ -49,6 +49,16 @@ export default defineNuxtConfig({
       verifyEmail: true,
       signUp: false,
     },
+    contact: {
+      volunteering: '',
+      partnership: '',
+      support: '',
+      payment: '',
+      governance: '',
+      finance: '',
+      complaint: '',
+      other: '',
+    },
   },
   routeRules: {
     '/sign-in': { prerender: false },
