@@ -54,7 +54,7 @@ export const stripePricesRelations = relations(stripe.stripePrices, ({ one, many
 
 export const stripeSubscriptionsRelations = relations(stripe.stripeSubscriptions, ({ one }) => ({
   customer: one(stripe.stripeCustomers, {
-    fields: [stripe.stripeSubscriptions.userId],
+    fields: [stripe.stripeSubscriptions.customerId],
     references: [stripe.stripeCustomers.id],
   }),
   price: one(stripe.stripePrices, {
