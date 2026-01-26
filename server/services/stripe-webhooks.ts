@@ -42,10 +42,10 @@ export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.E
   return { statusCode: 200 }
 }
 
-const transformStripeProduct = (
-  e: Stripe.ProductCreatedEvent | Stripe.ProductUpdatedEvent,
+export const transformStripeProduct = (
+  data: Stripe.ProductCreatedEvent['data'] | Stripe.ProductUpdatedEvent['data'],
 ): NewStripeProducts => {
-  const p = e.data.object
+  const p = data.object
 
   return {
     id: p.id,
@@ -63,7 +63,7 @@ const transformStripeProduct = (
 export const upsertStripeProduct = async (
   stripeEvent: Stripe.ProductCreatedEvent | Stripe.ProductUpdatedEvent,
 ) => {
-  const { id, ...remaining } = transformStripeProduct(stripeEvent)
+  const { id, ...remaining } = transformStripeProduct(stripeEvent.data)
 
   return db
     .insert(schema.stripeProducts)
@@ -80,8 +80,10 @@ export const deleteStripeProduct = async (stripeEvent: Stripe.ProductDeletedEven
   await db.delete(schema.stripeProducts).where(eq(schema.stripeProducts.id, productId))
 }
 
-export const transformStripePrice = (e: Stripe.PriceCreatedEvent | Stripe.PriceUpdatedEvent): NewStripePrices => {
-  const p = e.data.object
+export const transformStripePrice = (
+  data: Stripe.PriceCreatedEvent['data'] | Stripe.PriceUpdatedEvent['data'],
+): NewStripePrices => {
+  const p = data.object
   const r = p.recurring
 
   // FIXME: What if the product does not exist yet?
@@ -101,7 +103,7 @@ export const transformStripePrice = (e: Stripe.PriceCreatedEvent | Stripe.PriceU
 }
 
 export const upsertStripePrice = async (stripeEvent: Stripe.PriceCreatedEvent | Stripe.PriceUpdatedEvent) => {
-  const { id, ...remaining } = transformStripePrice(stripeEvent)
+  const { id, ...remaining } = transformStripePrice(stripeEvent.data)
 
   // TODO: Ensure that the product exist?
   return db
