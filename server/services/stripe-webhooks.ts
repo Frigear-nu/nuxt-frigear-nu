@@ -2,7 +2,7 @@ import type { NewStripePrices, NewStripeProducts, NewStripeSubscriptions } from 
 import { eq } from 'drizzle-orm'
 import type Stripe from 'stripe'
 import type { H3Event } from 'h3'
-import { addDays, addMonths, fromUnixTime } from 'date-fns'
+import { fromUnixTime } from 'date-fns'
 
 export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.Event) => {
   switch (stripeEvent.type) {
