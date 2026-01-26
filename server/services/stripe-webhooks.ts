@@ -105,11 +105,24 @@ export const transformStripePrice = (p: Stripe.Price): NewStripePrices => {
 }
 
 export const upsertStripePrice = async (stripe: Stripe, price: Stripe.Price) => {
-  if (price.product && typeof price.product === 'object') {
-    if (price.product.deleted) {
-      throw new Error('Cannot upsert price for deleted product.')
+  // this might be redundant since we do not rely on the FK for the objects.
+  // FIXME: Remove if not required.
+  if (price.product) {
+    if (typeof price.product === 'object') {
+      if (price.product.deleted) {
+        throw new Error('Cannot upsert price for deleted product.')
+      }
+      await upsertStripeProduct(price.product)
     }
-    await upsertStripeProduct(price.product)
+    else {
+      const { data: products } = await stripe.products.list({
+        ids: [price.product],
+      })
+
+      if (products && products[0]) {
+        await upsertStripeProduct(products[0])
+      }
+    }
   }
 
   //
