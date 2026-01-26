@@ -2,7 +2,7 @@ import type { NewStripePrices, NewStripeProducts, NewStripeSubscriptions } from 
 import { eq } from 'drizzle-orm'
 import type Stripe from 'stripe'
 import type { H3Event } from 'h3'
-import { addDays, addMonths } from 'date-fns'
+import { addDays, addMonths, fromUnixTime } from 'date-fns'
 
 export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.Event) => {
   switch (stripeEvent.type) {
@@ -179,7 +179,7 @@ export const transformStripeSubscription = (
     throw new Error('Subscription has no price attached.')
   }
 
-  const currentPeriodStart = new Date(sub.start_date)
+  const currentPeriodStart = fromUnixTime(sub.start_date)
   let currentPeriodEnd: Date = addDays(currentPeriodStart, 1)
 
   if (price.recurring) {
@@ -206,8 +206,8 @@ export const transformStripeSubscription = (
     priceId: price.id,
     quantity: item.quantity ?? 1,
     cancelAtPeriodEnd: sub.cancel_at_period_end,
-    created: new Date(sub.created),
-    currentPeriodStart: new Date(sub.start_date),
+    created: fromUnixTime(sub.created),
+    currentPeriodStart: fromUnixTime(sub.start_date),
     currentPeriodEnd,
   }
 }
