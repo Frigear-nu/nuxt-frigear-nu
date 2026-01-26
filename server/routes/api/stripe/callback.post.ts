@@ -36,6 +36,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, message: 'Invalid stripe event.' })
   }
 
-  console.log('Stripe webhook received:', stripeEvent.type)
+  if (import.meta.dev) console.log('Stripe webhook received:', stripeEvent.type)
+
   return consumeStripeWebhook(event, stripeEvent)
 })
