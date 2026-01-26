@@ -179,23 +179,6 @@ export const transformStripeSubscription = (
     throw new Error('Subscription has no price attached.')
   }
 
-  const currentPeriodStart = fromUnixTime(sub.start_date)
-  let currentPeriodEnd: Date = addDays(currentPeriodStart, 1)
-
-  if (price.recurring) {
-    switch (price.recurring.interval) {
-      case 'week':
-        currentPeriodEnd = addDays(currentPeriodStart, 7)
-        break
-      case 'month':
-        currentPeriodEnd = addMonths(currentPeriodStart, 1)
-        break
-      case 'year':
-        currentPeriodEnd = addMonths(currentPeriodStart, 12)
-        break
-    }
-  }
-
   return {
     id: sub.id,
     customerId: typeof sub.customer === 'string'
@@ -207,8 +190,8 @@ export const transformStripeSubscription = (
     quantity: item.quantity ?? 1,
     cancelAtPeriodEnd: sub.cancel_at_period_end,
     created: fromUnixTime(sub.created),
-    currentPeriodStart: fromUnixTime(sub.start_date),
-    currentPeriodEnd,
+    currentPeriodStart: fromUnixTime(item.current_period_start),
+    currentPeriodEnd: fromUnixTime(item.current_period_end),
   }
 }
 
