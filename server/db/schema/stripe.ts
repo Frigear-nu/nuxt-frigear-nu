@@ -16,7 +16,9 @@ export type NewStripeProducts = typeof stripeProducts.$inferInsert
 
 export const stripePrices = sqliteTable('stripe_prices', {
   id: text().primaryKey(),
-  productId: text('product_id').notNull().references(() => stripeProducts.id),
+  productId: text('product_id').notNull().references(() => stripeProducts.id, {
+    onDelete: 'cascade',
+  }),
   active: integer({ mode: 'boolean' }).notNull(),
   description: text(),
   unitAmount: integer('unit_amount').notNull(),
@@ -33,10 +35,14 @@ export type NewStripePrices = typeof stripePrices.$inferInsert
 
 export const stripeSubscriptions = sqliteTable('stripe_subscriptions', {
   id: text().primaryKey(),
-  customerId: text('customer_id').notNull().references(() => stripeCustomers.id),
+  customerId: text('customer_id').notNull().references(() => stripeCustomers.id, {
+    onDelete: 'cascade',
+  }),
   status: text().notNull(),
   metadata: text({ mode: 'json' }).notNull(),
-  priceId: text('price_id').notNull().references(() => stripePrices.id),
+  priceId: text('price_id').notNull().references(() => stripePrices.id, {
+    onDelete: 'cascade',
+  }),
   quantity: integer().notNull().default(1),
   cancelAtPeriodEnd: integer('cancel_at_period_end', { mode: 'boolean' }).notNull(),
   created: integer({ mode: 'timestamp' }).notNull(),
@@ -50,7 +56,9 @@ export type NewStripeSubscriptions = typeof stripeSubscriptions.$inferInsert
 
 export const stripeCustomers = sqliteTable('stripe_customers', {
   id: text().primaryKey(),
-  userId: integer().references(() => users.id),
+  userId: integer().references(() => users.id, {
+    onDelete: 'cascade',
+  }),
 }, (t) => {
   return {
     unique: uniqueIndex('unique_idx').on(t.id, t.userId),

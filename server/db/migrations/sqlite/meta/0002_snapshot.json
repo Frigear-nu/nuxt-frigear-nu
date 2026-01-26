@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "4aa226be-82f2-4d6e-b2c8-297c371de384",
+  "id": "7c93496b-0a5e-4a41-b162-774779285f82",
   "prevId": "bd754ce2-ff8a-4635-b7ea-692702aff5c1",
   "tables": {
     "magic_links": {
@@ -376,7 +376,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -477,7 +477,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -638,7 +638,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "stripe_subscriptions_price_id_stripe_prices_id_fk": {
@@ -651,7 +651,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
