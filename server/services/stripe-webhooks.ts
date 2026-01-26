@@ -157,7 +157,7 @@ export const deleteStripeCustomer = async (stripeEvent: Stripe.CustomerDeletedEv
     .where(eq(schema.stripeCustomers.id, stripeEvent.data.object.id))
 }
 
-export const transformStripeSusbcription = (
+export const transformStripeSubscription = (
   stripeEvent: Stripe.CustomerSubscriptionCreatedEvent | Stripe.CustomerSubscriptionUpdatedEvent | Stripe.CustomerSubscriptionPausedEvent | Stripe.CustomerSubscriptionResumedEvent,
 ): NewStripeSubscriptions => {
   const sub = stripeEvent.data.object
@@ -210,7 +210,7 @@ export const transformStripeSusbcription = (
 export const upsertStripeCustomerSubscription = async (
   stripeEvent: Stripe.CustomerSubscriptionCreatedEvent | Stripe.CustomerSubscriptionUpdatedEvent | Stripe.CustomerSubscriptionPausedEvent | Stripe.CustomerSubscriptionResumedEvent,
 ) => {
-  const { id, ...remaining } = transformStripeSusbcription(stripeEvent)
+  const { id, ...remaining } = transformStripeSubscription(stripeEvent)
 
   await db
     .insert(schema.stripeSubscriptions)
