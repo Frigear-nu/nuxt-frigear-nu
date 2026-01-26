@@ -20,7 +20,6 @@ export default defineTask({
     }
 
     // 2. Fetch all prices
-
     for await (const price of stripe.prices.list({
       active: true,
     })) {
