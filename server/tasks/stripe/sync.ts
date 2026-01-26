@@ -5,11 +5,9 @@ export default defineTask({
   async run() {
     const stripe = useServerStripe(useEvent())
     // 1. fetch all products
-    const { data: products } = await stripe.products.list({
+    for await (const product of stripe.products.list({
       active: true,
-    })
-
-    for (const product of products) {
+    })) {
       // todo: reuse code from #server/services/stripe-webhooks
       const { id, ...remaining } = transformStripeProduct({ object: product })
       await db
@@ -22,11 +20,10 @@ export default defineTask({
     }
 
     // 2. Fetch all prices
-    const { data: prices } = await stripe.prices.list({
-      active: true,
-    })
 
-    for (const price of prices) {
+    for await (const price of stripe.prices.list({
+      active: true,
+    })) {
       const { id, ...remaining } = transformStripePrice({ object: price })
 
       await db
