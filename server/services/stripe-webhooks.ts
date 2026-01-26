@@ -3,34 +3,37 @@ import { eq } from 'drizzle-orm'
 import type Stripe from 'stripe'
 import type { H3Event } from 'h3'
 import { fromUnixTime } from 'date-fns'
+import { useServerStripe } from '#stripe/server'
 
 export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.Event) => {
+  const stripe = useServerStripe(event)
+
   switch (stripeEvent.type) {
     case 'product.created':
     case 'product.updated':
-      await upsertStripeProduct(stripeEvent)
+      await upsertStripeProduct(stripeEvent.data.object)
       break
     case 'product.deleted':
-      await deleteStripeProduct(stripeEvent)
+      await deleteStripeProduct(stripeEvent.data.object)
       break
     case 'price.created':
     case 'price.updated':
-      await upsertStripePrice(stripeEvent)
+      await upsertStripePrice(stripeEvent.data.object)
       break
     case 'price.deleted':
-      await deleteStripePrice(stripeEvent)
+      await deleteStripePrice(stripeEvent.data.object)
       break
     case 'customer.created':
     case 'customer.updated':
-      await upsertStripeCustomer(stripeEvent)
+      await upsertStripeCustomer(stripeEvent.data.object)
       break
     case 'customer.deleted':
-      await deleteStripeCustomer(stripeEvent)
+      await deleteStripeCustomer(stripeEvent.data.object)
       break
     case 'customer.subscription.created':
     case 'customer.subscription.updated':
     case 'customer.subscription.paused':
-      await upsertStripeCustomerSubscription(stripeEvent)
+      await upsertStripeCustomerSubscription(stripeEvent.data.object)
       break
     case 'customer.subscription.deleted':
       // FIXME: Might want to silently drop this
@@ -43,11 +46,7 @@ export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.E
   return { status: 200 }
 }
 
-export const transformStripeProduct = (
-  data: Stripe.ProductCreatedEvent['data'] | Stripe.ProductUpdatedEvent['data'],
-): NewStripeProducts => {
-  const p = data.object
-
+export const transformStripeProduct = (p: Stripe.Product): NewStripeProducts => {
   return {
     id: p.id,
     active: p.active,
@@ -62,9 +61,9 @@ export const transformStripeProduct = (
 }
 
 export const upsertStripeProduct = async (
-  stripeEvent: Stripe.ProductCreatedEvent | Stripe.ProductUpdatedEvent,
+  stripeProduct: Stripe.Product,
 ) => {
-  const { id, ...remaining } = transformStripeProduct(stripeEvent.data)
+  const { id, ...remaining } = transformStripeProduct(stripeProduct)
 
   return db
     .insert(schema.stripeProducts)
@@ -76,15 +75,13 @@ export const upsertStripeProduct = async (
     .returning()
 }
 
-export const deleteStripeProduct = async (stripeEvent: Stripe.ProductDeletedEvent) => {
-  const productId = stripeEvent.data.object.id
-  await db.delete(schema.stripeProducts).where(eq(schema.stripeProducts.id, productId))
+export const deleteStripeProduct = async (product: Stripe.Product) => {
+  await db
+    .delete(schema.stripeProducts)
+    .where(eq(schema.stripeProducts.id, product.id))
 }
 
-export const transformStripePrice = (
-  data: Stripe.PriceCreatedEvent['data'] | Stripe.PriceUpdatedEvent['data'],
-): NewStripePrices => {
-  const p = data.object
+export const transformStripePrice = (p: Stripe.Price): NewStripePrices => {
   const r = p.recurring
 
   if (p.type === 'one_time') {
@@ -107,8 +104,16 @@ export const transformStripePrice = (
   }
 }
 
-export const upsertStripePrice = async (stripeEvent: Stripe.PriceCreatedEvent | Stripe.PriceUpdatedEvent) => {
-  const { id, ...remaining } = transformStripePrice(stripeEvent.data)
+export const upsertStripePrice = async (stripe: Stripe, price: Stripe.Price) => {
+  if (price.product && typeof price.product === 'object') {
+    if (price.product.deleted) {
+      throw new Error('Cannot upsert price for deleted product.')
+    }
+    await upsertStripeProduct(price.product)
+  }
+
+  //
+  const { id, ...remaining } = transformStripePrice(price)
 
   // TODO: Ensure that the product exist?
   return db
@@ -121,15 +126,13 @@ export const upsertStripePrice = async (stripeEvent: Stripe.PriceCreatedEvent | 
     .returning()
 }
 
-export const deleteStripePrice = async (stripeEvent: Stripe.PriceDeletedEvent) => {
-  const priceId = stripeEvent.data.object.id
-
-  await db.delete(schema.stripePrices).where(eq(schema.stripePrices.id, priceId))
+export const deleteStripePrice = async (price: Stripe.Price) => {
+  await db
+    .delete(schema.stripePrices)
+    .where(eq(schema.stripePrices.id, price.id))
 }
 
-export const upsertStripeCustomer = async (e: Stripe.CustomerCreatedEvent | Stripe.CustomerUpdatedEvent) => {
-  const c = e.data.object
-
+export const upsertStripeCustomer = async (c: Stripe.Customer) => {
   if (!c.email) return
 
   const matchedUser = await findUserByEmail(c.email)
@@ -148,19 +151,18 @@ export const upsertStripeCustomer = async (e: Stripe.CustomerCreatedEvent | Stri
     })
 }
 
-export const deleteStripeCustomer = async (stripeEvent: Stripe.CustomerDeletedEvent) => {
+export const deleteStripeCustomer = async (customer: Stripe.Customer) => {
   // FIXME: What behavior are we expecting here?
 
   // For now the behavior is to simply unlink the user-stripe customer
   await db
     .delete(schema.stripeCustomers)
-    .where(eq(schema.stripeCustomers.id, stripeEvent.data.object.id))
+    .where(eq(schema.stripeCustomers.id, customer.id))
 }
 
 export const transformStripeSubscription = (
-  stripeEvent: Stripe.CustomerSubscriptionCreatedEvent | Stripe.CustomerSubscriptionUpdatedEvent | Stripe.CustomerSubscriptionPausedEvent | Stripe.CustomerSubscriptionResumedEvent,
+  sub: Stripe.Subscription,
 ): NewStripeSubscriptions => {
-  const sub = stripeEvent.data.object
   const items = sub.items?.data || []
 
   if (items.length !== 1) {
@@ -196,9 +198,9 @@ export const transformStripeSubscription = (
 }
 
 export const upsertStripeCustomerSubscription = async (
-  stripeEvent: Stripe.CustomerSubscriptionCreatedEvent | Stripe.CustomerSubscriptionUpdatedEvent | Stripe.CustomerSubscriptionPausedEvent | Stripe.CustomerSubscriptionResumedEvent,
+  subscription: Stripe.Subscription,
 ) => {
-  const { id, ...remaining } = transformStripeSubscription(stripeEvent)
+  const { id, ...remaining } = transformStripeSubscription(subscription)
 
   await db
     .insert(schema.stripeSubscriptions)
