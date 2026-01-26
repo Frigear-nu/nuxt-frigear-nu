@@ -34,13 +34,13 @@ export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.E
       break
     case 'customer.subscription.deleted':
       // FIXME: Might want to silently drop this
-      throw createError({ statusCode: 400, message: 'Event not handled yet.' })
+      throw createError({ status: 200, message: 'Event not handled yet.' })
 
     default:
-      return { statusCode: 200 }
+      return { status: 200 }
   }
 
-  return { statusCode: 200 }
+  return { status: 200 }
 }
 
 export const transformStripeProduct = (
