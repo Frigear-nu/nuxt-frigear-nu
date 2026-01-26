@@ -1,4 +1,5 @@
 import { useServerStripe } from '#stripe/server'
+import { consumeStripeWebhook } from '#server/services/stripe-webhooks'
 
 export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig(event)
@@ -35,24 +36,6 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, message: 'Invalid stripe event.' })
   }
 
-  switch (stripeEvent.type) {
-    // Todo: Handle the events listed
-    case 'product.created':
-    case 'product.updated':
-    case 'product.deleted':
-    case 'price.created':
-    case 'price.updated':
-    case 'price.deleted':
-    case 'customer.created':
-    case 'customer.updated':
-    case 'customer.deleted':
-    case 'customer.subscription.created':
-    case 'customer.subscription.updated':
-    case 'customer.subscription.paused':
-    case 'customer.subscription.deleted':
-      throw createError({ statusCode: 400, message: 'Event not handled yet.' })
-
-    default:
-      return { statusCode: 200 }
-  }
+  console.log('Stripe webhook received:', stripeEvent.type)
+  return consumeStripeWebhook(event, stripeEvent)
 })
