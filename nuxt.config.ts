@@ -87,7 +87,6 @@ export default defineNuxtConfig({
       external: ['node:async_hooks'],
     },
     rollupConfig: {
-      // @ts-expect-error This fails due to not having types
       plugins: [vue()],
     },
     scheduledTasks: {
@@ -95,6 +94,10 @@ export default defineNuxtConfig({
       '*/30 * * * *': [
         'auth:clear-expired-password-resets',
         'auth:clear-expired-magic-links',
+      ],
+      // at minute 0 every 2 hours
+      '0 */2 * * *': [
+        'stripe:sync',
       ],
     },
   },
