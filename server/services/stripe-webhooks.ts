@@ -204,7 +204,7 @@ export const transformStripeSubscription = (
     status: sub.status,
     metadata: sub.metadata,
     priceId: price.id,
-    quantity: item.quantity,
+    quantity: item.quantity ?? 1,
     cancelAtPeriodEnd: sub.cancel_at_period_end,
     created: new Date(sub.created),
     currentPeriodStart: new Date(sub.start_date),
