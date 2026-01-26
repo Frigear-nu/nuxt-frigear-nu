@@ -162,10 +162,15 @@ export const transformStripeSubscription = (
 ): NewStripeSubscriptions => {
   const sub = stripeEvent.data.object
   const items = sub.items?.data || []
+
+  if (items.length !== 1) {
+    throw new Error('Subscription has too many/few items attached, expected 1.')
+  }
+
   const [item] = items
 
-  if (!item && items.length !== 0) {
-    throw new Error('Subscription has too many items attached, expected 1.')
+  if (!item) {
+    throw new Error('Could not find first subscription item.')
   }
 
   const price = item?.price
