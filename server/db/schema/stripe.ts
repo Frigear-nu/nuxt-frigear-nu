@@ -7,7 +7,7 @@ export const stripeProducts = sqliteTable('stripe_products', {
   name: text().notNull(),
   description: text(),
   image: text(),
-  metadata: text(),
+  metadata: text({ mode: 'json' }),
   taxCodeId: text('tax_code_id'),
 })
 
@@ -33,9 +33,9 @@ export type NewStripePrices = typeof stripePrices.$inferInsert
 
 export const stripeSubscriptions = sqliteTable('stripe_subscriptions', {
   id: text().primaryKey(),
-  userId: text('user_id').notNull().references(() => stripeCustomers.id),
+  customerId: text('customer_id').notNull().references(() => stripeCustomers.id),
   status: text().notNull(),
-  metadata: text().notNull(),
+  metadata: text({ mode: 'json' }).notNull(),
   priceId: text('price_id').notNull().references(() => stripePrices.id),
   quantity: integer().notNull().default(1),
   cancelAtPeriodEnd: integer('cancel_at_period_end', { mode: 'boolean' }).notNull(),
