@@ -15,7 +15,8 @@ export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.E
       break
     case 'price.created':
     case 'price.updated':
-      return upsertStripePrice(stripeEvent)
+      await upsertStripePrice(stripeEvent)
+      break
     case 'price.deleted':
       await deleteStripePrice(stripeEvent)
       break
