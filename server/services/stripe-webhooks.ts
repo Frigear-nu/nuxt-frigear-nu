@@ -87,6 +87,10 @@ export const transformStripePrice = (
   const p = data.object
   const r = p.recurring
 
+  if (p.type === 'one_time') {
+    throw new Error('Only recurring prices are supported.')
+  }
+
   // FIXME: What if the product does not exist yet?
   return {
     id: p.id,
