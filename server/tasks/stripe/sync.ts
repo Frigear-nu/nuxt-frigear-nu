@@ -1,4 +1,5 @@
 import {
+  upsertStripeCustomerSubscription,
   upsertStripePrice,
   upsertStripeProduct,
 } from '#server/services/stripe-webhooks'
@@ -8,11 +9,12 @@ export default defineTask({
   async run() {
     const stripe = useTaskStripe()
 
+    // FIXME: this could probably be separate tasks to isolate any failures.
+
     // 1. fetch all products
     for await (const product of stripe.products.list({
       active: true,
     })) {
-      // todo: reuse code from #server/services/stripe-webhooks
       await upsertStripeProduct(product)
     }
 
@@ -23,11 +25,12 @@ export default defineTask({
       await upsertStripePrice(stripe, price)
     }
 
-    // FIXME: Add subscription sync
-    // // 3. Fetch all subscriptions that are active
-    // const { data: subscriptions } = await stripe.subscriptions.list({
-    //   status: 'active',
-    // })
+    // 3. Fetch all subscriptions
+    for await (const subscription of stripe.subscriptions.list({
+      status: 'active',
+    })) {
+      await upsertStripeCustomerSubscription(subscription)
+    }
 
     return { result: true }
   },
