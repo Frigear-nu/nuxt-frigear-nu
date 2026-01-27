@@ -23,6 +23,11 @@ export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.E
     case 'price.deleted':
       await deleteStripePrice(stripeEvent.data.object)
       break
+    // case 'plan.created':
+    // case 'plan.updated':
+    // case 'plan.deleted':
+    //   console.log(stripeEvent.data.object)
+    //   throw new Error('Plan events are not supported yet.')
     case 'customer.created':
     case 'customer.updated':
       await upsertStripeCustomer(stripeEvent.data.object)
@@ -95,6 +100,7 @@ export const transformStripePrice = (p: Stripe.Price): NewStripePrices => {
     productId: typeof p.product === 'string' ? p.product : p.product.id,
     unitAmount: p.unit_amount ?? 0, // FIXME: Might want to allow null in this col
     currency: p.currency,
+    description: p.nickname,
     type: p.type,
     // FIXME: This might be empty?
     interval: r ? r.interval : 'week',
@@ -148,9 +154,20 @@ export const deleteStripePrice = async (price: Stripe.Price) => {
 export const upsertStripeCustomer = async (c: Stripe.Customer) => {
   if (!c.email) return
 
-  const matchedUser = await findUserByEmail(c.email)
+  let matchedUser = await findUserByEmail(c.email)
 
-  if (!matchedUser) return
+  if (!matchedUser) {
+    const [createdUser] = await db
+      .insert(schema.users)
+      .values({ email: c.email, name: c.name ?? c.email })
+      .returning()
+
+    if (!createdUser) {
+      throw new Error('Could not create user for Stripe customer.')
+    }
+
+    matchedUser = createdUser
+  }
 
   await db
     .insert(schema.stripeCustomers)
@@ -167,7 +184,7 @@ export const upsertStripeCustomer = async (c: Stripe.Customer) => {
 export const deleteStripeCustomer = async (customer: Stripe.Customer) => {
   // FIXME: What behavior are we expecting here?
 
-  // For now the behavior is to simply unlink the user-stripe customer
+  // For now the behavior is to simply unlink the user-stripe customer, but we might want to also delete the user?
   await db
     .delete(schema.stripeCustomers)
     .where(eq(schema.stripeCustomers.id, customer.id))
