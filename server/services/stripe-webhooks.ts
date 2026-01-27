@@ -23,6 +23,7 @@ export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.E
     case 'price.deleted':
       await deleteStripePrice(stripeEvent.data.object)
       break
+    // FIXME: Are plans required now that prices are more detailed?
     // case 'plan.created':
     // case 'plan.updated':
     // case 'plan.deleted':
@@ -89,6 +90,7 @@ export const deleteStripeProduct = async (product: Stripe.Product) => {
 export const transformStripePrice = (p: Stripe.Price): NewStripePrices => {
   const r = p.recurring
 
+  // FIXME: In V1 this should probably be reworked
   if (p.type === 'one_time') {
     throw new Error('Only recurring prices are supported.')
   }
@@ -98,11 +100,11 @@ export const transformStripePrice = (p: Stripe.Price): NewStripePrices => {
     id: p.id,
     active: p.active,
     productId: typeof p.product === 'string' ? p.product : p.product.id,
-    unitAmount: p.unit_amount ?? 0, // FIXME: Might want to allow null in this col
+    unitAmount: p.unit_amount ?? 0, // FIXME: Might want to allow null in this col or drop prices w/o a price?
     currency: p.currency,
     description: p.nickname,
     type: p.type,
-    // FIXME: This might be empty?
+    // FIXME: This could be NULL if it is a one-time price.
     interval: r ? r.interval : 'week',
     intervalCount: r ? r.interval_count : 0,
     trialPeriodDays: r ? r.trial_period_days ?? 0 : 0,
@@ -112,6 +114,7 @@ export const transformStripePrice = (p: Stripe.Price): NewStripePrices => {
 
 export const upsertStripePrice = async (stripe: Stripe, price: Stripe.Price) => {
   // this might be redundant since we do not rely on the FK for the objects.
+  // and there is no guarantee that any certain webhook will arrive in order e.g price -> product / product -> price
   // FIXME: Remove if not required.
   if (price.product) {
     if (typeof price.product === 'object') {
