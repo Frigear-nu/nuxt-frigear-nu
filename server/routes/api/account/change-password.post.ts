@@ -7,6 +7,7 @@ import PasswordWasChangedEmail from '#shared/emails/auth/PasswordWasChangedEmail
 export default defineEventHandler(async (event) => {
   const { mail: { from, to: replyTo } } = useRuntimeConfig(event)
   const { user } = await requireUserSession(event)
+  const $t = await useTranslation(event)
 
   const {
     currentPassword,
@@ -14,9 +15,7 @@ export default defineEventHandler(async (event) => {
     // confirmNewPassword, // the schema validates this.
   } = await useValidatedBody(event, changeUserPasswordSchema)
 
-  const dbUser = await db.query.users.findFirst({
-    where: eq(schema.users.id, user.id),
-  })
+  const dbUser = await findUserById(user.id)
 
   if (!dbUser) {
     throw NotFoundError()
@@ -47,7 +46,7 @@ export default defineEventHandler(async (event) => {
     from,
     replyTo,
     to: dbUser.email,
-    subject: 'Your password was changed.',
+    subject: $t('emails.auth.passwordWasChanged.subject', 'Your password was changed'),
     component: PasswordWasChangedEmail,
     props: {
       accountSettingsUrl: withBaseUrl('/account'),

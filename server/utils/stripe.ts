@@ -1,5 +1,13 @@
 import type { Users } from 'hub:db:schema'
 import { eq } from 'drizzle-orm'
+import Stripe from 'stripe'
+
+// This is only required due to the stripe module requiring access to the event context.
+export const useTaskStripe = () => {
+  const { stripe: { key: stripeKey } } = useRuntimeConfig()
+
+  return new Stripe(stripeKey)
+}
 
 export const createStripeCustomerFromMigration = async (user: Users) => {
   if (user.isMigrated) return
@@ -18,25 +26,3 @@ export const createStripeCustomerFromMigration = async (user: Users) => {
     passwordHash: null,
   }).where(eq(schema.users.id, user.id))
 }
-
-// export const syncStripeSubscriptionsForCustomer = async (event: H3Event, customerId: string) => {
-// const stripe = useServerStripe(event)
-// const { data: subscriptions } = await stripe.subscriptions.list({
-//   customer: customerId,
-// })
-
-// // @ts-expect-error There is some typing issue with drizzle for now
-// db.insert(schema.stripeSubscriptions).values(subscriptions.map((s) => {
-//   return <NewStripeCustomers>{
-//     id: s.id as unknown as string,
-//     userId: customerId as number | string,
-//     status: s.status as string,
-//     metadata: s.metadata as Record<string, string>,
-//     quantity: 1,
-//     cancelAtPeriodEnd: s.cancel_at_period_end,
-//     created: new Date(s.created),
-//     currentPeriodStart: new Date(s.start_date),
-//     endedAt: s.ended_at ? new Date(s.ended_at) : null,
-//   }
-// }))
-// }
