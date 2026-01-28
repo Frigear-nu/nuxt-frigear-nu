@@ -130,7 +130,10 @@ Information about GDPR.
     #body
       :::::site-contact-form
       ---
-      :slim: true 
+      :slim: true
+      initial:
+        subject: other
+        subjectOther: GDPR rights
       ---
       :::::
     ::::
