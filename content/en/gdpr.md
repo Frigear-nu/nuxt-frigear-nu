@@ -119,21 +119,17 @@ Information about GDPR.
     ---
     title: Contact us
     ---
-    #default
-      :::::u-button
-      ---
-      icon: i-lucide-cookie
-      ---
+      :::::u-button{icon="i-lucide-cookie"}
       Click here to contact us about exercising your rights
       :::::
-      
+
     #body
       :::::site-contact-form
       ---
-      :slim: true
       initial:
         subject: other
         subjectOther: GDPR rights
+      mode: slim 
       ---
       :::::
     ::::

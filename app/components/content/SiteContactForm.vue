@@ -10,10 +10,10 @@ import {
 } from '#shared/schema/forms/contact'
 
 const props = withDefaults(defineProps<{
-  slim?: boolean
+  mode?: 'slim'
   initial?: ContactFormSchema
 }>(), {
-  slim: false,
+  mode: undefined,
 })
 
 const isSubmitting = ref(false)
@@ -165,10 +165,10 @@ function onError(event: FormErrorEvent) {
 <template>
   <UPageCard
     class="w-full max-w-lg"
-    :variant="slim ? 'naked' : undefined"
+    :variant="mode === 'slim' ? 'naked' : undefined"
   >
     <template
-      v-if="!slim"
+      v-if="!mode"
       #title
     >
       {{ $t('contact.title') }}
