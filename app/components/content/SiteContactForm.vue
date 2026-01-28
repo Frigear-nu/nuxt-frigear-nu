@@ -11,6 +11,7 @@ import {
 
 const props = withDefaults(defineProps<{
   slim?: boolean
+  initial?: ContactFormSchema
 }>(), {
   slim: false,
 })
@@ -46,6 +47,11 @@ const DEFAULT_STATE: Partial<ContactFormSchema> = {
 }
 
 const state = reactive<typeof DEFAULT_STATE>({ ...DEFAULT_STATE })
+
+watch(() => props.initial, (initial) => {
+  if (!initial) return
+  Object.assign(state, initial)
+})
 
 async function onSubmit(event: FormSubmitEvent<ContactFormSchema>) {
   isSubmitting.value = true
