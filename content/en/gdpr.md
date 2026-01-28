@@ -116,6 +116,9 @@ Information about GDPR.
   - Complain to the Danish Data Protection Agency
 
     ::::u-modal
+    ---
+    title: Contact us
+    ---
     #default
       :::::u-button
       ---
@@ -124,7 +127,7 @@ Information about GDPR.
       Click here to contact us about exercising your rights
       :::::
       
-    #content
+    #body
       :::::site-contact-form
       :::::
     ::::
