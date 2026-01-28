@@ -39,7 +39,7 @@
     "nuxt-auth-utils": "0.5.27",
     "nuxt-studio": "^1.1.1",
     "nuxt-zod-i18n": "1.12.1",
-    "simple-content-site": "^2.3.1",
+    "simple-content-site": "^3.0.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {
