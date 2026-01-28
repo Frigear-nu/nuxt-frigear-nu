@@ -9,6 +9,12 @@ import {
   type ContactSubjectKey,
 } from '#shared/schema/forms/contact'
 
+const props = withDefaults(defineProps<{
+  slim?: boolean
+}>(), {
+  slim: false,
+})
+
 const isSubmitting = ref(false)
 const toast = useToast()
 const route = useRoute()
@@ -152,9 +158,15 @@ function onError(event: FormErrorEvent) {
 
 <template>
   <UPageCard
-    :title="t('contact.title')"
     class="w-full max-w-lg"
+    :variant="slim ? 'naked' : undefined"
   >
+    <template
+      v-if="!slim"
+      #title
+    >
+      {{ $t('contact.title') }}
+    </template>
     <UForm
       :schema="contactFormSchema"
       :state="state"

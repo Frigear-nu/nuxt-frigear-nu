@@ -129,6 +129,9 @@ Information about GDPR.
       
     #body
       :::::site-contact-form
+      ---
+      :slim: true 
+      ---
       :::::
     ::::
   :::
