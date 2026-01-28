@@ -115,19 +115,19 @@ Information about GDPR.
   - Withdraw your consent
   - Complain to the Danish Data Protection Agency
 
-::u-modal
-#default
-  :::u-button
-  ---
-  icon: i-lucide-cookie
-  ---
-  #label
-  Click here to contact us about exercising your rights
-  :::
-
-#content
-  :::site-contact-form
-::
+    ::::u-modal
+    #default
+      :::::u-button
+      ---
+      icon: i-lucide-cookie
+      ---
+      Click here to contact us about exercising your rights
+      :::::
+      
+    #content
+      :::::site-contact-form
+      :::::
+    ::::
   :::
 
   :::u-page-card
