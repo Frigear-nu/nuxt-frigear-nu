@@ -14,4 +14,4 @@ Lovgivnings relevante ting som privatlivs politik og betingelser.
 
 - [Terms of service](/legal/terms)
 - [Privacy policy](/legal/gdpr)
-- [Data security](/en/legal/security)
+- [Data security](/legal/security)
