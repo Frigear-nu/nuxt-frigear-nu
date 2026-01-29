@@ -211,22 +211,9 @@ Betingelserne gælder for køb via frigear.nu og omfatter medlemskab, merchandis
   #description
   Klage indgives via kontaktformularen, så vi først kan forsøge at løse sagen hurtigt.
 
-  ::::u-modal
-  ---
-  title: Kom i kontakt
-  ---
+  ::::contact-form-modal{title="Kom i kontakt"}
     :::::u-button{icon="i-lucide-mail"}
     Kontakt os her
-    :::::
-
-  #body
-    :::::site-contact-form
-    ---
-    initial:
-      subject: complaint
-      subjectOther: Handelsbetingelser
-    mode: slim
-    ---
     :::::
   ::::
   :::
