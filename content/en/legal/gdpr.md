@@ -84,7 +84,7 @@ Information about GDPR.
   4\. Sharing your information
 
   #description
-  We do not share your information with third parties without your consent, unless required by law or necessary for bookkeeping, or external collaboration.
+  We do not share your information with third parties without your consent, unless required by law, necessary for bookkeeping, or required for external organisations collaboration you've already agreed to with them.
   :::
 
   :::u-page-card
