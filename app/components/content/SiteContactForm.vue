@@ -69,7 +69,7 @@ async function onSubmit(event: FormSubmitEvent<ContactFormSchema>) {
       color: 'success',
     })
 
-    Object.assign(state, DEFAULT_STATE)
+    Object.assign(state, DEFAULT_STATE, props.initial)
     $emits('success')
   }
   catch (err: unknown) {
