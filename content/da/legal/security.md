@@ -5,7 +5,7 @@ description: Information om datasikkerhed.
 
 ::u-page-header
 ---
-orientation: horizontal
+class: mt-4 mb-6
 ---
 #headline
 SIKKERHED
@@ -17,7 +17,7 @@ SIKKERHED
 Information om datasikkerhed.
 ::
 
-::div{.flex.flex-col.gap-4}
+::div{.flex.flex-col.gap-4.mt-4}
   :::u-page-card
   ---
   icon: i-lucide-shield-check

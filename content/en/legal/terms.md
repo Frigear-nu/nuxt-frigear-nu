@@ -5,7 +5,7 @@ description: Terms & Conditions for Frigear (membership, merchandise, tickets an
 
 ::u-page-header
 ---
-orientation: horizontal
+class: mt-4 mb-6
 ---
 #headline
 LEGAL
@@ -17,7 +17,7 @@ Terms & Conditions
 These terms apply to purchases via frigear.nu and cover memberships, merchandise, tickets, and donations.
 ::
 
-::div{.flex.flex-col.gap-4}
+::div{.flex.flex-col.gap-4.mt-4}
   :::u-page-card
   ---
   icon: i-lucide-scroll-text

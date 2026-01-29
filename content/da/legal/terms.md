@@ -5,7 +5,7 @@ description: Handelsbetingelser for Frigear (medlemskab, merchandise, billetter 
 
 ::u-page-header
 ---
-orientation: horizontal
+class: mt-4 mb-6
 ---
 #headline
 LEGAL
@@ -17,7 +17,7 @@ Handelsbetingelser
 Betingelserne gælder for køb via frigear.nu og omfatter medlemskab, merchandise, billetter og donationer.
 ::
 
-::div{.flex.flex-col.gap-4}
+::div{.flex.flex-col.gap-4.mt-4}
   :::u-page-card
   ---
   icon: i-lucide-scroll-text
