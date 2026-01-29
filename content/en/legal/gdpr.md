@@ -129,7 +129,7 @@ Information about GDPR.
       initial:
         subject: other
         subjectOther: GDPR rights
-      mode: slim 
+      mode: slim
       ---
       :::::
     ::::
