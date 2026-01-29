@@ -18,6 +18,7 @@ right:
     to: /en/legal/security
   - icon: i-simple-icons-github
     target: _BLANK
+    rel: "noopener noreferrer"
     to: https://github.com/frigear-nu/nuxt-frigear-nu
 sections: []
 socials: []
