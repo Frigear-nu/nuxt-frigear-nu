@@ -11,7 +11,7 @@ withDefaults(defineProps<{
   title: undefined,
 })
 
-const isOpen = defineModel('open', { default: false })
+const isOpen = defineModel<boolean>('open', { default: false })
 </script>
 
 <template>
