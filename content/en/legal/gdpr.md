@@ -115,22 +115,15 @@ Information about GDPR.
   - Withdraw your consent
   - Complain to the Danish Data Protection Agency
 
-    ::::u-modal
+  
+    ::::contact-form-modal{title="Get in touch"}
     ---
-    title: Contact us
+    initial:
+      subject: other
+      subjectOther: GDPR rights
     ---
       :::::u-button{icon="i-lucide-mail"}
       Click here to contact us about exercising your rights
-      :::::
-
-    #body
-      :::::site-contact-form
-      ---
-      initial:
-        subject: other
-        subjectOther: GDPR rights
-      mode: slim
-      ---
       :::::
     ::::
   :::
@@ -161,20 +154,10 @@ Information about GDPR.
 
   #description
   If you have any questions, you can contact us here:
-  
-    ::::u-modal
-    ---
-    title: Contact us
-    ---
+
+    ::::contact-form-modal{title="Get in touch"}
       :::::u-button{icon="i-lucide-mail"}
       Click here to get in touch about anything
-      :::::
-
-    #body
-      :::::site-contact-form
-      ---
-      mode: slim 
-      ---
       :::::
     ::::
   :::

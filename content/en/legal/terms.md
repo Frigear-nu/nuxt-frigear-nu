@@ -210,22 +210,9 @@ These terms apply to purchases via frigear.nu and cover memberships, merchandise
   #description
   If you want to complain, please start via the contact form so we can try to resolve the issue quickly.
 
-  ::::u-modal
-  ---
-  title: Get in touch
-  ---
+  ::::contact-form-modal{title="Get in touch"}
     :::::u-button{icon="i-lucide-mail"}
     Contact us here
-    :::::
-
-  #body
-    :::::site-contact-form
-    ---
-    initial:
-      subject: complaint
-      subjectOther: Terms & Conditions
-    mode: slim
-    ---
     :::::
   ::::
   :::
