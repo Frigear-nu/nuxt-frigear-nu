@@ -3,19 +3,19 @@ left:
 right:
   - label: INFO
     variant: link
-    to: /info
+    to: /en/info
   - label: SUPPORT
     variant: link
-    to: /#contact
+    to: /en#contact
   - label: GDPR
     variant: link
-    to: /legal/gdpr
-  - label: BETINGELSER
+    to: /en/legal/gdpr
+  - label: TERMS
     variant: link
-    to: /legal/terms
-  - label: SIKKERHED
+    to: /en/legal/terms
+  - label: SECURITY
     variant: link
-    to: /legal/security
+    to: /en/legal/security
   - icon: i-simple-icons-github
     target: _BLANK
     rel: "noopener noreferrer"

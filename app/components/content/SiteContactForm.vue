@@ -9,6 +9,13 @@ import {
   type ContactSubjectKey,
 } from '#shared/schema/forms/contact'
 
+const props = withDefaults(defineProps<{
+  mode?: 'slim'
+  initial?: ContactFormSchema
+}>(), {
+  mode: undefined,
+})
+
 const isSubmitting = ref(false)
 const toast = useToast()
 const route = useRoute()
@@ -40,6 +47,11 @@ const DEFAULT_STATE: Partial<ContactFormSchema> = {
 }
 
 const state = reactive<typeof DEFAULT_STATE>({ ...DEFAULT_STATE })
+
+watch(() => props.initial, (initial) => {
+  if (!initial) return
+  Object.assign(state, initial)
+}, { immediate: true })
 
 async function onSubmit(event: FormSubmitEvent<ContactFormSchema>) {
   isSubmitting.value = true
@@ -152,9 +164,15 @@ function onError(event: FormErrorEvent) {
 
 <template>
   <UPageCard
-    :title="t('contact.title')"
     class="w-full max-w-lg"
+    :variant="mode === 'slim' ? 'naked' : undefined"
   >
+    <template
+      v-if="!mode"
+      #title
+    >
+      {{ $t('contact.title') }}
+    </template>
     <UForm
       :schema="contactFormSchema"
       :state="state"

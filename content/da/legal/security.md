@@ -1,6 +1,6 @@
 ---
-title: GDPR
-description: Information om GDPR.
+title: SIKKERHED
+description: Information om datasikkerhed.
 ---
 
 ::u-page-header
@@ -8,13 +8,13 @@ description: Information om GDPR.
 orientation: horizontal
 ---
 #headline
-LEGAL
+SIKKERHED
 
 #title
-GDPR
+SIKKERHED
 
 #description
-Information om GDPR.
+Information om datasikkerhed.
 ::
 
 ::div{.flex.flex-col.gap-4}
