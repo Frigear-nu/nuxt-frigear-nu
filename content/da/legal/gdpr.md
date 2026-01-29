@@ -5,7 +5,7 @@ description: Information om GDPR.
 
 ::u-page-header
 ---
-orientation: horizontal
+class: mt-4 mb-6
 ---
 #headline
 LEGAL
@@ -17,7 +17,7 @@ GDPR
 Information om GDPR.
 ::
 
-::div{.flex.flex-col.gap-4}
+::div{.flex.flex-col.gap-4.mt-4}
   :::u-page-card
   ---
   icon: i-lucide-shield-check
