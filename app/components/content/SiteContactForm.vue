@@ -51,7 +51,7 @@ const state = reactive<typeof DEFAULT_STATE>({ ...DEFAULT_STATE })
 watch(() => props.initial, (initial) => {
   if (!initial) return
   Object.assign(state, initial)
-})
+}, { immediate: true })
 
 async function onSubmit(event: FormSubmitEvent<ContactFormSchema>) {
   isSubmitting.value = true
