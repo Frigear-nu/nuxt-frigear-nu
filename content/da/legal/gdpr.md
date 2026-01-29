@@ -84,7 +84,7 @@ Information om GDPR.
   4\. Deling af dine oplysninger
 
   #description
-  Vi deler ikke dine oplysninger med tredjeparter uden dit samtykke, medmindre det er lovpligtigt eller nødvendigt for regnskabsføring, eller eksternt samarbejde.
+  Vi deler ikke dine oplysninger med tredjeparter uden dit samtykke, medmindre det er lovpligtigt, nødvendigt for regnskabsføring, eller i tilfælde af eksternt organisationssamarbejde du har invilget i.
   :::
 
   :::u-page-card
