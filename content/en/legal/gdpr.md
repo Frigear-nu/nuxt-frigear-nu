@@ -119,7 +119,7 @@ Information about GDPR.
     ---
     title: Contact us
     ---
-      :::::u-button{icon="i-lucide-cookie"}
+      :::::u-button{icon="i-lucide-mail"}
       Click here to contact us about exercising your rights
       :::::
 
@@ -160,7 +160,23 @@ Information about GDPR.
   8\. Contact us
 
   #description
-  If you have questions, you can contact us through the form on the [front page](/#contact){.underline}.
+  If you have any questions, you can contact us here:
+  
+    ::::u-modal
+    ---
+    title: Contact us
+    ---
+      :::::u-button{icon="i-lucide-mail"}
+      Click here to get in touch about anything
+      :::::
+
+    #body
+      :::::site-contact-form
+      ---
+      mode: slim 
+      ---
+      :::::
+    ::::
   :::
 
   :::u-page-card

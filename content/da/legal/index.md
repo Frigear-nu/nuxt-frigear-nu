@@ -7,10 +7,11 @@ title: Legal root file
 Legal
 
 #description
-Legal stuff.
+Lovgivnings relevante ting som privatlivs politik og betingelser.
 ::
 
 ## Links
 
 - [Terms of service](/legal/terms)
-- [Privacy policy](/legal/privacy) 🚧
+- [Privacy policy](/legal/gdpr)
+- [Data security](/en/legal/security)
