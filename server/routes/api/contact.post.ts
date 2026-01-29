@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
       ? `${subjectLabel}: ${data.subjectOther.trim().substring(0, 20)}`
       : subjectLabel
 
-  const to = (contact[data.subject as keyof typeof contact] || defaultTo) as string
+  const to = (contact[data.subject as string] || defaultTo) as string
 
   await sendEmailTemplate(event, {
     to,
