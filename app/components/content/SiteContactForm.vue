@@ -9,6 +9,10 @@ import {
   type ContactSubjectKey,
 } from '#shared/schema/forms/contact'
 
+const $emits = defineEmits<{
+  (e: 'success'): void
+}>()
+
 const props = withDefaults(defineProps<{
   mode?: 'slim'
   initial?: ContactFormSchema
@@ -66,6 +70,7 @@ async function onSubmit(event: FormSubmitEvent<ContactFormSchema>) {
     })
 
     Object.assign(state, DEFAULT_STATE)
+    $emits('success')
   }
   catch (err: unknown) {
     let description = 'Ukendt fejl. Prøv lige igen senere.'
