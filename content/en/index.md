@@ -76,6 +76,16 @@ orientation: horizontal
       variant: subtle
       ---
       :::::
+
+      :::::u-button
+      ---
+      icon: i-simple-icons-tiktok
+      size: xl
+      target: _blank
+      to: https://www.tiktok.com/@frigear.nu
+      variant: subtle
+      ---
+      :::::
     ::::
   :::
 
