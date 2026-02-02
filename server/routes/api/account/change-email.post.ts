@@ -5,11 +5,11 @@ import { withQuery } from 'ufo'
 
 export default defineEventHandler(async (event) => {
   const { mail: { from, to: replyTo } } = useRuntimeConfig(event)
-  const { user } = await requireUserSession(event)
+  const userId = await requireUserId(event)
   const { email } = await useValidatedBody(event, changeUserEmailSchema)
 
   // For email changes we sign a JWT for the link valid for 30 min
-  const token = await encodeJwt({ sub: String(user.id), newMail: email }, 60 * 30)
+  const token = await encodeJwt({ sub: String(userId), newMail: email }, 60 * 30)
   const url = withBaseUrl(withQuery('/auth/verify-change-email', { token }))
 
   if (import.meta.dev) {

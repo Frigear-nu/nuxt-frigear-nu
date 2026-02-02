@@ -25,7 +25,8 @@ export default defineEventHandler(async (event) => {
     throw UnauthorizedError('The change token is personal and cannot be used on behalf of other users.')
   }
 
-  const [updatedUser] = await db.update(schema.users)
+  const [updatedUser] = await db
+    .update(schema.users)
     .set({ email: newMail })
     .where(eq(schema.users.id, user.id))
     .returning()

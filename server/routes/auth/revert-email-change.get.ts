@@ -22,7 +22,8 @@ export default defineEventHandler(async (event) => {
     }))
   }
 
-  const [revertedUser] = await db.update(schema.users)
+  const [revertedUser] = await db
+    .update(schema.users)
     .set({ email: oldEmail })
     .where(eq(schema.users.id, userId))
     .returning()
