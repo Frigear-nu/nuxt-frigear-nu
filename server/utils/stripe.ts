@@ -1,4 +1,5 @@
-import type { Users } from 'hub:db:schema'
+import { db, schema } from '@nuxthub/db'
+import type { Users } from '@nuxthub/db/schema'
 import { eq } from 'drizzle-orm'
 import Stripe from 'stripe'
 
@@ -12,17 +13,31 @@ export const useTaskStripe = () => {
 export const createStripeCustomerFromMigration = async (user: Users) => {
   if (user.isMigrated) return
 
+  // ensures we only attempt to migrate users with a stripe customer id in the pw field
   if (!user.passwordHash || !user.passwordHash.startsWith('cus_')) {
     return
   }
 
   // create the stripe customer
-  await db.insert(schema.stripeCustomers).values({
-    userId: user.id,
-    id: user.passwordHash,
-  })
+  await db
+    .insert(schema.stripeCustomers)
+    .values({
+      userId: user.id,
+      id: user.passwordHash,
+    })
 
-  await db.update(schema.users).set({
-    passwordHash: null,
-  }).where(eq(schema.users.id, user.id))
+  await db
+    .update(schema.users)
+    .set({ passwordHash: null })
+    .where(eq(schema.users.id, user.id))
+}
+
+export const findStripeCustomerByEmail = async (email: string) => {
+  const { data: customer } = await useTaskStripe()
+    .customers
+    .list({ email, limit: 1 })
+
+  if (!customer || !customer.length) return undefined
+
+  return customer[0] as Stripe.Customer
 }
