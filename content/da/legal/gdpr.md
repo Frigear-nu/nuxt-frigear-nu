@@ -5,7 +5,7 @@ description: Information om GDPR.
 
 ::u-page-header
 ---
-orientation: horizontal
+class: mt-4 mb-6
 ---
 #headline
 LEGAL
@@ -17,7 +17,7 @@ GDPR
 Information om GDPR.
 ::
 
-::div{.flex.flex-col.gap-4}
+::div{.flex.flex-col.gap-4.mt-4}
   :::u-page-card
   ---
   icon: i-lucide-shield-check
@@ -84,7 +84,7 @@ Information om GDPR.
   4\. Deling af dine oplysninger
 
   #description
-  Vi deler ikke dine oplysninger med tredjeparter uden dit samtykke, medmindre det er lovpligtigt eller nødvendigt for regnskabsføring, eller eksternt samarbejde.
+  Vi deler ikke dine oplysninger med tredjeparter uden dit samtykke, medmindre det er lovpligtigt, nødvendigt for regnskabsføring, eller i tilfælde af eksternt organisationssamarbejde du har invilget i.
   :::
 
   :::u-page-card
@@ -115,7 +115,16 @@ Information om GDPR.
   - Trække dit samtykke tilbage
   - Klage til Datatilsynet
 
-  [Kontakt os via kontaktformularen på forsiden for at udøve dine rettigheder.](/#contact){.underline}
+    ::::contact-form-modal{title="Kom i kontakt"}
+    ---
+    initial:
+      subject: other
+      subjectOther: GDPR rettigheder
+    ---
+      :::::u-button{icon="i-lucide-mail"}
+      Kontakt os her for at udøve dine rettigheder
+      :::::
+    ::::
   :::
 
   :::u-page-card
@@ -143,7 +152,12 @@ Information om GDPR.
   8\. Kontakt os
 
   #description
-  Hvis du har spørgsmål, kan vi kontaktes gennem formen på [forsiden](/#contact){.underline}.
+  Hvis du har nogen spørgsmål, kan vi kontaktes her:
+    ::::contact-form-modal{title="Kom i kontakt"}
+      :::::u-button{icon="i-lucide-mail"}
+      Klik her for at komme i kontakt om alt
+      :::::
+    ::::
   :::
 
   :::u-page-card
