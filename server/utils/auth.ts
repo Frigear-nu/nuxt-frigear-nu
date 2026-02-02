@@ -13,7 +13,7 @@ export const authenticateUser = async (event: H3Event, user: Users, redirect?: s
   })
 
   if (!redirect) {
-    return sendNoContent(event)
+    return { ok: true }
   }
 
   return sendRedirect(event, redirect || '/')

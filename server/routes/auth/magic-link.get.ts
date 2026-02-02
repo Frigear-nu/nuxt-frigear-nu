@@ -8,8 +8,9 @@ export default defineEventHandler(async (event) => {
   const { token } = await useValidatedQuery(event, signInWithMagicLinksSchema)
   const currentTime = new Date()
   const [magicLink] = await db
-    .update(schema.magicLinks)
-    .set({ usedAt: currentTime })
+    .select()
+    .from(schema.magicLinks)
+    // .set({ usedAt: currentTime })
     .where(
       and(
         isNull(schema.magicLinks.usedAt),
@@ -17,7 +18,7 @@ export default defineEventHandler(async (event) => {
         gt(schema.magicLinks.expiresAt, currentTime),
       ),
     )
-    .returning()
+    // .returning()
 
   if (!magicLink || isAfter(currentTime, magicLink.expiresAt)) {
     throw ServerError('errors.auth.magicLink.invalid')
