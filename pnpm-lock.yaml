@@ -69,8 +69,8 @@ importers:
         specifier: ^4.3.0
         version: 4.3.0(@azure/identity@4.13.0)(@libsql/client@0.17.0)(@parcel/watcher@2.5.1)(@types/node@24.10.8)(@vue/compiler-sfc@3.5.27)(better-sqlite3@12.6.0)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0))(eslint@9.39.2(jiti@2.6.1))(ioredis@5.9.2)(lightningcss@1.30.2)(magicast@0.5.1)(optionator@0.9.4)(rolldown@1.0.0-beta.57)(rollup@4.55.2)(terser@5.44.1)(tsx@4.21.0)(typescript@5.9.3)(vite@7.3.1(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vue-tsc@3.2.2(typescript@5.9.3))(yaml@2.8.2)
       nuxt-auth-utils:
-        specifier: 0.5.27
-        version: 0.5.27(magicast@0.5.1)
+        specifier: 0.5.28
+        version: 0.5.28(magicast@0.5.1)
       nuxt-studio:
         specifier: ^1.1.1
         version: 1.1.1(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.9.2)(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3))
@@ -2494,6 +2494,9 @@ packages:
 
   '@poppinss/exception@1.2.2':
     resolution: {integrity: sha512-m7bpKCD4QMlFCjA/nKTs23fuvoVFoA83brRKmObCUNmi/9tVu8Ve3w4YQAnJu4q3Tjf5fr685HYIC/IA2zHRSg==}
+
+  '@poppinss/exception@1.2.3':
+    resolution: {integrity: sha512-dCED+QRChTVatE9ibtoaxc+WkdzOSjYTKi/+uacHWIsfodVfpsueo3+DKpgU5Px8qXjgmXkSvhXvSCz3fnP9lw==}
 
   '@poppinss/object-builder@1.1.0':
     resolution: {integrity: sha512-FOrOq52l7u8goR5yncX14+k+Ewi5djnrt1JwXeS/FvnwAPOiveFhiczCDuvXdssAwamtrV2hp5Rw9v+n2T7hQg==}
@@ -6546,8 +6549,8 @@ packages:
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
 
-  nuxt-auth-utils@0.5.27:
-    resolution: {integrity: sha512-nXV/479IaP+g8z3+OqTgv7SNcNqPn0zyhD1t8tBxtskt+LFX1nKCZ6ZbpBGLL2wFdobh+gvzNHQjIIzqigr5Bw==}
+  nuxt-auth-utils@0.5.28:
+    resolution: {integrity: sha512-qWwJurmNTt1/Srxs9NqNAUz32mjIVBOFNr/vzoienMSp2qOktjxr5F9Ce0azb01w+KRz1hVfxA0/wtgCVsjZ0A==}
     peerDependencies:
       '@atproto/api': ^0.13.15
       '@atproto/oauth-client-node': ^0.2.0
@@ -11367,6 +11370,8 @@ snapshots:
 
   '@poppinss/exception@1.2.2': {}
 
+  '@poppinss/exception@1.2.3': {}
+
   '@poppinss/object-builder@1.1.0': {}
 
   '@poppinss/string@1.7.1':
@@ -11378,7 +11383,7 @@ snapshots:
 
   '@poppinss/utils@6.10.1':
     dependencies:
-      '@poppinss/exception': 1.2.2
+      '@poppinss/exception': 1.2.3
       '@poppinss/object-builder': 1.1.0
       '@poppinss/string': 1.7.1
       flattie: 1.1.1
@@ -15843,7 +15848,7 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  nuxt-auth-utils@0.5.27(magicast@0.5.1):
+  nuxt-auth-utils@0.5.28(magicast@0.5.1):
     dependencies:
       '@adonisjs/hash': 9.1.1
       '@nuxt/kit': 4.3.0(magicast@0.5.1)
