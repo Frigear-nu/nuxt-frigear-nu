@@ -1,42 +1,43 @@
-import type { Users } from 'hub:db:schema'
+import { db, schema } from '@nuxthub/db'
+import type { Users } from '@nuxthub/db/schema'
 import { eq } from 'drizzle-orm'
+import Stripe from 'stripe'
+
+// This is only required due to the stripe module requiring access to the event context.
+export const useTaskStripe = () => {
+  const { stripe: { key: stripeKey } } = useRuntimeConfig()
+
+  return new Stripe(stripeKey)
+}
 
 export const createStripeCustomerFromMigration = async (user: Users) => {
   if (user.isMigrated) return
 
+  // ensures we only attempt to migrate users with a stripe customer id in the pw field
   if (!user.passwordHash || !user.passwordHash.startsWith('cus_')) {
     return
   }
 
   // create the stripe customer
-  await db.insert(schema.stripeCustomers).values({
-    userId: user.id,
-    id: user.passwordHash,
-  })
+  await db
+    .insert(schema.stripeCustomers)
+    .values({
+      userId: user.id,
+      id: user.passwordHash,
+    })
 
-  await db.update(schema.users).set({
-    passwordHash: null,
-  }).where(eq(schema.users.id, user.id))
+  await db
+    .update(schema.users)
+    .set({ passwordHash: null })
+    .where(eq(schema.users.id, user.id))
 }
 
-// export const syncStripeSubscriptionsForCustomer = async (event: H3Event, customerId: string) => {
-// const stripe = useServerStripe(event)
-// const { data: subscriptions } = await stripe.subscriptions.list({
-//   customer: customerId,
-// })
+export const findStripeCustomerByEmail = async (email: string) => {
+  const { data: customer } = await useTaskStripe()
+    .customers
+    .list({ email, limit: 1 })
 
-// // @ts-expect-error There is some typing issue with drizzle for now
-// db.insert(schema.stripeSubscriptions).values(subscriptions.map((s) => {
-//   return <NewStripeCustomers>{
-//     id: s.id as unknown as string,
-//     userId: customerId as number | string,
-//     status: s.status as string,
-//     metadata: s.metadata as Record<string, string>,
-//     quantity: 1,
-//     cancelAtPeriodEnd: s.cancel_at_period_end,
-//     created: new Date(s.created),
-//     currentPeriodStart: new Date(s.start_date),
-//     endedAt: s.ended_at ? new Date(s.ended_at) : null,
-//   }
-// }))
-// }
+  if (!customer || !customer.length) return undefined
+
+  return customer[0] as Stripe.Customer
+}
