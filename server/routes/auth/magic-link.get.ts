@@ -7,8 +7,9 @@ import { and, eq, gt, isNull } from 'drizzle-orm'
 export default defineEventHandler(async (event) => {
   const { token } = await useValidatedQuery(event, signInWithMagicLinksSchema)
   const currentTime = new Date()
-  const [magicLink] = await db.select().from(schema.magicLinks)
-    // .set({ usedAt: currentTime })
+  const [magicLink] = await db
+    .update(schema.magicLinks)
+    .set({ usedAt: currentTime })
     .where(
       and(
         isNull(schema.magicLinks.usedAt),
@@ -16,13 +17,14 @@ export default defineEventHandler(async (event) => {
         gt(schema.magicLinks.expiresAt, currentTime),
       ),
     )
-    // .returning()
+    .returning()
 
   if (!magicLink || isAfter(currentTime, magicLink.expiresAt)) {
     throw ServerError('errors.auth.magicLink.invalid')
   }
 
-  let [user] = await db.update(schema.users)
+  let [user] = await db
+    .update(schema.users)
     .set({ lastLoginAt: currentTime })
     .where(eq(schema.users.id, magicLink.userId))
     .returning()
@@ -33,14 +35,16 @@ export default defineEventHandler(async (event) => {
 
   // Let's set the email to verified since this comes via an email.
   if (!user.emailVerifiedAt) {
-    [user] = await db.update(schema.users)
+    [user] = await db
+      .update(schema.users)
       .set({ emailVerifiedAt: currentTime })
       .where(eq(schema.users.id, user.id))
       .returning()
   }
 
   // lastly, mark the link as used.
-  await db.update(schema.magicLinks)
+  await db
+    .update(schema.magicLinks)
     .set({ usedAt: currentTime })
     .where(eq(schema.magicLinks.id, magicLink.id))
 

@@ -6,7 +6,7 @@ import PasswordWasChangedEmail from '#shared/emails/auth/PasswordWasChangedEmail
 
 export default defineEventHandler(async (event) => {
   const { mail: { from, to: replyTo } } = useRuntimeConfig(event)
-  const { user } = await requireUserSession(event)
+  const userId = await requireUserId(event)
   const $t = await useTranslation(event)
 
   const {
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     // confirmNewPassword, // the schema validates this.
   } = await useValidatedBody(event, changeUserPasswordSchema)
 
-  const dbUser = await findUserById(user.id)
+  const dbUser = await findUserById(userId)
 
   if (!dbUser) {
     throw NotFoundError()

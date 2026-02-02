@@ -1,7 +1,10 @@
-import type { Users } from 'hub:db:schema'
+import type { Users } from '@nuxthub/db/schema'
+import type { ExtendableJwtPayload } from '@nitrotool/jwt/core'
+
+type SessionUser = Pick<Users, 'id' | 'name' | 'email' | 'avatarUrl' | 'emailVerifiedAt'>
 
 declare module '#auth-utils' {
-  interface User extends Pick<Users, 'id' | 'name' | 'email' | 'avatarUrl' | 'emailVerifiedAt'> {
+  interface User extends SessionUser {
     sbId?: string
   }
   //
@@ -11,6 +14,13 @@ declare module '#auth-utils' {
   // interface SecureSessionData {
   //   // Add your own fields
   // }
+}
+//
+declare module 'h3' {
+  interface H3EventContext {
+    $user?: SessionUser
+    $jwt?: ExtendableJwtPayload
+  }
 }
 
 export {}

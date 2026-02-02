@@ -12,11 +12,11 @@ importers:
         specifier: ^0.17.0
         version: 0.17.0
       '@nitrotool/errors':
-        specifier: ^1.0.2
-        version: 1.0.2
+        specifier: ^1.0.4
+        version: 1.0.4
       '@nitrotool/jwt':
-        specifier: ^1.0.2
-        version: 1.0.2(@azure/identity@4.13.0)(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0))(h3@1.15.5)(magicast@0.5.1)(rolldown@1.0.0-beta.57)
+        specifier: ^1.0.4
+        version: 1.0.4(@azure/identity@4.13.0)(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0))(h3@1.15.5)(magicast@0.5.1)(rolldown@1.0.0-beta.57)
       '@nuxthub/core':
         specifier: ^0.10.6
         version: 0.10.6(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0)))(ioredis@5.9.2)(magicast@0.5.1)(synckit@0.11.12)(typescript@5.9.3)(vue-tsc@3.2.2(typescript@5.9.3))
@@ -1619,11 +1619,11 @@ packages:
   '@neon-rs/load@0.0.4':
     resolution: {integrity: sha512-kTPhdZyTQxB+2wpiRcFWrDcejc4JI6tkPuS7UZCG4l6Zvc5kU/gGQ/ozvHTh1XR5tS+UlfAfGuPajjzQjCiHCw==}
 
-  '@nitrotool/errors@1.0.2':
-    resolution: {integrity: sha512-uorPvY5ZaA5z7vnGrXbNBg54qvUYCffuY8Y0cpUUR5sEUn3Pa6MbSptWlI38gaBgQAeGYaimMgi0gckn95eixA==}
+  '@nitrotool/errors@1.0.4':
+    resolution: {integrity: sha512-i+qGyUIf9rbVyR+JiR3wMKQZHzLuWjQ+BZErNfP2s//D6vFpeclBM3QxZRnTMdcsIw3OBYUk8/566P9G3twNJg==}
 
-  '@nitrotool/jwt@1.0.2':
-    resolution: {integrity: sha512-S4QolT3TUfK6/GViaPXQVqNanSDZAyLdxLGtji5oG3hMroZYocEQIUTBJImH+2RRNU6XCzjgKiiQq9+9USQ+aw==}
+  '@nitrotool/jwt@1.0.4':
+    resolution: {integrity: sha512-1dmWwxrc83rpgqIAUWsnaUdAwtwDzw+LYDd8n8Ef6te5chLkWPmMOTVcjq/mhNZV4V6HTQAK2/diZuC1qNBWJg==}
     peerDependencies:
       h3: ^1.15.3
 
@@ -10002,13 +10002,13 @@ snapshots:
 
   '@neon-rs/load@0.0.4': {}
 
-  '@nitrotool/errors@1.0.2':
+  '@nitrotool/errors@1.0.4':
     dependencies:
       h3: 1.15.5
 
-  '@nitrotool/jwt@1.0.2(@azure/identity@4.13.0)(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0))(h3@1.15.5)(magicast@0.5.1)(rolldown@1.0.0-beta.57)':
+  '@nitrotool/jwt@1.0.4(@azure/identity@4.13.0)(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.0))(h3@1.15.5)(magicast@0.5.1)(rolldown@1.0.0-beta.57)':
     dependencies:
-      '@nitrotool/errors': 1.0.2
+      '@nitrotool/errors': 1.0.4
       '@nuxt/kit': 4.3.0(magicast@0.5.1)
       '@nuxt/schema': 4.3.0
       '@tsndr/cloudflare-worker-jwt': 3.2.1

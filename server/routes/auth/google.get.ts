@@ -14,9 +14,14 @@ export default defineOAuthGoogleEventHandler({
 
     if (import.meta.dev) console.log({ user })
     if (!dbUser) {
-      [dbUser] = await db.insert(schema.users)
+      [dbUser] = await db
+        .insert(schema.users)
       // todo: get full_name/avatar from google?
-        .values({ email, name: user?.full_name || email, emailVerifiedAt: new Date() })
+        .values({
+          email,
+          name: user?.full_name || email,
+          emailVerifiedAt: new Date(),
+        })
         .returning()
     }
 
