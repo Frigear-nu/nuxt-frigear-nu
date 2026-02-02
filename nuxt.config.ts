@@ -17,6 +17,14 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
   ],
   $production: {
+    nitro: {
+      scheduledTasks: {
+        // at minute 0 every 2 hours
+        '0 */2 * * *': [
+          'stripe:sync',
+        ],
+      },
+    },
     image: {
       provider: 'cloudflare',
       quality: 80,
@@ -94,10 +102,6 @@ export default defineNuxtConfig({
       '*/30 * * * *': [
         'auth:clear-expired-password-resets',
         'auth:clear-expired-magic-links',
-      ],
-      // at minute 0 every 2 hours
-      '0 */2 * * *': [
-        'stripe:sync',
       ],
     },
   },
