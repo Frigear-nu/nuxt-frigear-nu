@@ -36,7 +36,7 @@
     "h3-zod": "^0.5.3",
     "minimatch": "^10.1.1",
     "nuxt": "^4.3.0",
-    "nuxt-auth-utils": "0.5.27",
+    "nuxt-auth-utils": "0.5.28",
     "nuxt-studio": "^1.1.1",
     "nuxt-zod-i18n": "1.12.1",
     "simple-content-site": "^3.0.0",
