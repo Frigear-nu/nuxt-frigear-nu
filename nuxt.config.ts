@@ -69,11 +69,20 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
+    // Pre-rendered routes
+    '/': { prerender: true },
+    '/info': { prerender: true },
+    '/en': { prerender: true },
+    '/en/**': { prerender: true },
+
+    //
     '/sign-in': { prerender: false },
     '/account': { prerender: false },
     '/account/**': { prerender: false },
+
     // Static Redirects
     '/sign-up': { redirect: { to: '/sign-in?mode=up' } },
+
     // Temporary Redirects: should be removed in 2027 possibly.
     '/signin/password_signin': { redirect: { to: '/sign-in', statusCode: 301 } },
     '/signin/email_signin': { redirect: { to: '/sign-in?provider=link', statusCode: 301 } },
