@@ -29,6 +29,7 @@ export default defineEventHandler(async (event) => {
     )
   }
   catch (err: unknown) {
+    console.error('Error:', err)
     throw createError({ status: 400, message: 'Invalid signature.', cause: err })
   }
 
