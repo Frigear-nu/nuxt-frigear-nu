@@ -172,6 +172,8 @@ export const upsertStripeCustomer = async (c: Stripe.Customer) => {
     matchedUser = createdUser
   }
 
+  if (!matchedUser) return
+
   await db
     .insert(schema.stripeCustomers)
     .values({
