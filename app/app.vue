@@ -18,15 +18,15 @@ useHead({
   ],
   link: [
     // 1) Modern browsers: SVG favicon
-    { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+    // { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
     // 2) PNG fallback (96x96)
-    { rel: 'icon', type: 'image/png', sizes: '96x96', href: '/favicon-96x96.png' },
+    // { rel: 'icon', type: 'image/png', sizes: '96x96', href: '/favicon-96x96.png' },
     // 3) Legacy / "make it work everywhere" fallback (Holds both 32x32 & 64x64)
     { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     // 4) iOS home screen icon
-    { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+    // { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
     // 5) PWA manifest
-    { rel: 'manifest', href: '/manifest.webmanifest' },
+    // { rel: 'manifest', href: '/manifest.webmanifest' },
   ],
   htmlAttrs: {
     lang,
