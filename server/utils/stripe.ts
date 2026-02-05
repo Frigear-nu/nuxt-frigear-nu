@@ -75,9 +75,3 @@ export const findStripeCustomerByEmail = async (email: string) => {
 
   return customer[0] as Stripe.Customer
 }
-
-export const customerHasStripeSubscription = async (customerId: Stripe.Customer['id']) => {
-  const stripe = useTaskStripe()
-
-  const customerSubscriptions = await stripe.subscriptions.list({ customer: customerId })
-}

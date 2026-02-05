@@ -7,8 +7,8 @@ import { useMemberships } from '~/store/queries/membership'
 import { useStripeBillingPortalUrl, useSubscribeUser } from '~/store/mutations/user'
 
 const toast = useToast()
-const { t, locale } = useSiteI18n()
-const { data: cartItems, hasAnyItems: hasAnyCartItems, clearCart, addToCart } = useShoppingCart()
+const { t } = useSiteI18n()
+const { data: cartItems, hasAnyItems: hasAnyCartItems, clearCart } = useShoppingCart()
 const { data: currentMemberships, refetch: refetchMembership } = useUserMemberships()
 const { data: availableMemberships } = useMemberships()
 const { mutateAsync: subscribeUser } = useSubscribeUser()
