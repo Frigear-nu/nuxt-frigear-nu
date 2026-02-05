@@ -49,6 +49,13 @@
   "locale": {
     "switch": "Choose language (now: {name})"
   },
+  "payment": {
+    "interval": {
+      "month": "Month",
+      "quarter": "Quarter",
+      "year": "Year"
+    }
+  },
   "account": {
     "title": "Account",
     "menu": {

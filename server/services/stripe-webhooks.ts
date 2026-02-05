@@ -42,9 +42,13 @@ export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.E
       await upsertStripeCustomerSubscription(stripeEvent.data.object)
       break
     case 'customer.subscription.deleted':
-      // FIXME: Might want to silently drop this
-      throw createError({ status: 200, message: 'Event not handled yet.' })
-
+      await deleteStripeCustomerSubscription(stripeEvent.data.object)
+      break
+    case 'payment_method.attached':
+      // FIXME: We should probably handle this somehow.
+      console.log('FIXME!')
+      console.log(stripeEvent.data.object)
+      break
     default:
       return { status: 200 }
   }
@@ -58,7 +62,7 @@ export const transformStripeProduct = (p: Stripe.Product): NewStripeProducts => 
     active: p.active,
     name: p.name,
     description: p.description,
-    image: p.images?.[0] ?? null,
+    images: p.images || [],
     metadata: p.metadata,
     taxCodeId: typeof p.tax_code === 'string'
       ? p.tax_code
@@ -69,6 +73,7 @@ export const transformStripeProduct = (p: Stripe.Product): NewStripeProducts => 
 export const upsertStripeProduct = async (
   stripeProduct: Stripe.Product,
 ) => {
+  console.log('Upserting product', stripeProduct)
   const { id, ...remaining } = transformStripeProduct(stripeProduct)
 
   return db
@@ -108,11 +113,13 @@ export const transformStripePrice = (p: Stripe.Price): NewStripePrices => {
     interval: r ? r.interval : 'week',
     intervalCount: r ? r.interval_count : 0,
     trialPeriodDays: r ? r.trial_period_days ?? 0 : 0,
+    lookupKey: p.lookup_key,
     metadata: p.metadata,
   }
 }
 
 export const upsertStripePrice = async (stripe: Stripe, price: Stripe.Price) => {
+  console.log('Upserting price', price)
   // this might be redundant since we do not rely on the FK for the objects.
   // and there is no guarantee that any certain webhook will arrive in order e.g price -> product / product -> price
   // FIXME: Remove if not required.
@@ -200,8 +207,8 @@ export const transformStripeSubscription = (
 ): NewStripeSubscriptions => {
   const items = sub.items?.data || []
 
-  if (items.length !== 1) {
-    throw new Error('Subscription has too many/few items attached, expected 1.')
+  if (items.length === 0) {
+    throw new Error('Subscription has zero items!')
   }
 
   const [item] = items
@@ -225,6 +232,12 @@ export const transformStripeSubscription = (
     metadata: sub.metadata,
     priceId: price.id,
     quantity: item.quantity ?? 1,
+    items: items.map(({ id, current_period_start, current_period_end, price: { id: priceId } }) => ({
+      id,
+      priceId,
+      current_period_start,
+      current_period_end,
+    })),
     cancelAtPeriodEnd: sub.cancel_at_period_end,
     created: fromUnixTime(sub.created),
     currentPeriodStart: fromUnixTime(item.current_period_start),
@@ -244,4 +257,28 @@ export const upsertStripeCustomerSubscription = async (
       target: schema.stripeSubscriptions.id,
       set: remaining,
     })
+}
+
+export const deleteStripeCustomerSubscription = async (subscription: Stripe.Subscription) => {
+  await db
+    .delete(schema.stripeSubscriptions)
+    .where(eq(schema.stripeSubscriptions.id, subscription.id))
+}
+
+export const transformStripePaymentMethod = (pm: Stripe.PaymentMethod) => {
+  const customerId = typeof pm.customer === 'string' ? pm.customer : pm.customer?.id ?? null
+  if (!customerId) {
+    // FIXME: This should probably return something or not at all or maybe in the upsert method?
+    throw new Error('PaymentMethod has no customer attached.')
+  }
+
+  return {
+    id: pm.id,
+    customerId,
+    type: pm.type,
+    last4: pm.card?.last4,
+    brand: pm.card?.brand,
+    mobilePay: pm.mobilepay,
+    createdAt: pm.created,
+  }
 }

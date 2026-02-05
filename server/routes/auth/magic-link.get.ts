@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
 
   if (!user) throw NotFoundError()
 
-  await createStripeCustomerFromMigration(user)
+  await ensureStripeCustomer(user)
 
   // Let's set the email to verified since this comes via an email.
   if (!user.emailVerifiedAt) {

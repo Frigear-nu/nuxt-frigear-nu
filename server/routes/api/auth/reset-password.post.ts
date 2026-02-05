@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
   if (!user) throw NotFoundError()
 
   // ensure the user is migrated
-  await createStripeCustomerFromMigration(user)
+  await ensureStripeCustomer(user)
 
   const [updatedUser] = await db.update(schema.users)
     .set({

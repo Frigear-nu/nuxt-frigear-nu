@@ -49,6 +49,17 @@
   "locale": {
     "switch": "Vælg sprog (nu: {name})"
   },
+  "payment": {
+    "interval": {
+      "month": "Månedlig",
+      "quarter": "Kvartal",
+      "year": "Årlig"
+    },
+    "membership": {
+      "subscribe": "Bliv medlem",
+      "feeIncluded":"*Betalingsgebyr er indeholdt i beløb"
+    }
+  },
   "account": {
     "title": "Konto",
     "menu": {

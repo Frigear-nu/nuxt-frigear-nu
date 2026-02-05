@@ -19,15 +19,18 @@ export default defineEventHandler(async (event) => {
 
   if (internalUser) throw EntityAlreadyExistsError('errors.auth.signUp.failed')
 
-  // @ts-expect-error Drizzle has some bugs with types
-  const [createdUser] = await db.insert(schema.users).values({
-    name,
-    email,
-    password: await hashPassword(password),
-    emailVerifiedAt: verifyEmail ? null : new Date(),
-  }).returning()
+  const [createdUser] = await db
+    .insert(schema.users)
+    .values({
+      name,
+      email,
+      password: await hashPassword(password),
+      emailVerifiedAt: verifyEmail ? null : new Date(),
+    }).returning()
 
   if (!createdUser) throw ServerError('errors.auth.signUp.failedCreate')
+
+  // TODO: Send welcome email
 
   return mapUserToSession(createdUser)
 })

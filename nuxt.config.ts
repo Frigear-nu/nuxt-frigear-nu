@@ -15,6 +15,8 @@ export default defineNuxtConfig({
     'nuxt-zod-i18n',
     '@nuxtjs/i18n',
     '@nuxtjs/device',
+    '@pinia/nuxt',
+    '@pinia/colada-nuxt',
   ],
   $production: {
     nitro: {
@@ -157,6 +159,7 @@ export default defineNuxtConfig({
     },
   },
   studio: {
+    dev: false,
     repository: {
       provider: 'github',
       owner: 'Frigear-nu',

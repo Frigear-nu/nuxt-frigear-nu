@@ -5,8 +5,10 @@ import { useAuth, useSiteI18n } from '#imports'
 
 const { t, localePath } = useSiteI18n()
 const { signOut } = useAuth()
+const { clearCart } = useShoppingCart()
 
 const onSignOut = async () => {
+  clearCart()
   await signOut()
   await navigateTo(localePath('/'))
 }
