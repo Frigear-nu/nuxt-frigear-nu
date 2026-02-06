@@ -1,6 +1,7 @@
 import { eq } from 'drizzle-orm'
 import { useValidatedBody } from 'h3-zod'
 import { z } from 'zod'
+import { ServerError } from '@nitrotool/errors'
 
 // TODO: This will eventually be used to create a session with stripe to store the payment method.
 export default defineEventHandler(async (event) => {
@@ -13,6 +14,8 @@ export default defineEventHandler(async (event) => {
   const [stripeCustomer] = await db.query.stripeCustomers.findMany({
     where: () => eq(schema.stripeCustomers.userId, userId),
   })
+
+  if (!stripeCustomer) throw ServerError('Could not find stripe customer')
 
   let redirectPath = '/account/membership'
   if (locale && isSupportedLocale(event, locale) && !isDefaultLocale(event, locale)) {
