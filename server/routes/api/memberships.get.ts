@@ -54,4 +54,4 @@ export default defineCachedEventHandler(async () => {
   })
     .flatMap(({ prices }) => prices)
     .sort((a, b) => a.price < b.price ? -1 : 1)
-}, { staleMaxAge: 60 * 60 * 10 }) // 10 min
+}, { staleMaxAge: 60 * 10 }) // 10 min
