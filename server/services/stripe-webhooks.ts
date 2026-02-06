@@ -283,6 +283,6 @@ export const transformStripePaymentMethod = (pm: Stripe.PaymentMethod) => {
     last4: pm.card?.last4,
     brand: pm.card?.brand,
     mobilePay: pm.mobilepay,
-    createdAt: pm.created,
+    createdAt: fromUnixTime(pm.created),
   }
 }
