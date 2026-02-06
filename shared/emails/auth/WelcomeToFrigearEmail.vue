@@ -64,7 +64,7 @@ withDefaults(defineProps<{
 
         <Text class="mb-4 text-gray-700">
           If you didn’t request this email, you can safely ignore it. No action is required - the account will be
-          deleted in acccordance with our GDPR policy.
+          deleted in accordance with our GDPR policy.
         </Text>
 
         <Hr class="border-t border-gray-200 my-4" />
