@@ -62,6 +62,7 @@ orientation: horizontal
     ::::div{.my-2.flex.gap-2}
       :::::u-button
       ---
+      title: Frigear Instagram
       icon: i-simple-icons-instagram
       size: xl
       target: _blank
@@ -72,6 +73,7 @@ orientation: horizontal
 
       :::::u-button
       ---
+      title: Frigear Facebook
       icon: i-simple-icons-facebook
       size: xl
       target: _blank
@@ -82,6 +84,7 @@ orientation: horizontal
 
       :::::u-button
       ---
+      title: Frigear LinkedIn
       icon: i-simple-icons-linkedin
       size: xl
       target: _blank
@@ -92,10 +95,22 @@ orientation: horizontal
       
       :::::u-button
       ---
+      title: Frigear TikTok
       icon: i-simple-icons-tiktok
       size: xl
       target: _blank
       to: https://www.tiktok.com/@frigear.nu
+      variant: subtle
+      ---
+      :::::
+      
+      :::::u-button
+      ---
+      title: Frigear YouTube
+      icon: i-simple-icons-youtube
+      size: xl
+      target: _blank
+      to: https://www.youtube.com/@frigear
       variant: subtle
       ---
       :::::
