@@ -195,7 +195,7 @@ const navigateToStripeDashboard = async () => {
       />
     </div>
     <UPageHeader
-      v-if="activeSubscriptionWillBeCancelled || !activeSubscription"
+      v-if="activeSubscriptionWillBeCancelled"
       title="Resubscribe with ease"
     />
     <MembershipTypes
