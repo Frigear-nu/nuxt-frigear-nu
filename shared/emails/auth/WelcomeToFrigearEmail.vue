@@ -22,7 +22,7 @@ withDefaults(defineProps<{
 <template>
   <EmailWrapper>
     <Preview>
-      Welcome to frigear!
+      Welcome to Frigear!
     </Preview>
 
     <Container class="max-w-lg mx-auto p-4">
