@@ -2,6 +2,9 @@
   "common": {
     "or": "Or"
   },
+  "dateTime":{
+    "format": "MMM d, yyyy, h:mm aaa"
+  },
   "auth": {
     "signIn": "Sign In",
     "signUp": "Sign Up",
@@ -72,8 +75,8 @@
         "label": "E-mail",
         "description": "Your awesome E-mail.",
         "change": {
-          "title": "Ændre E-post",
-          "label": "Ny e-post"
+          "title": "Change e-mail",
+          "label": "New e-post"
         }
       },
       "avatar": {
@@ -83,7 +86,22 @@
     },
     "membership": {
       "title": "Membership",
-      "description": "Your membership type."
+      "description": "Your membership type.",
+      "active": "ACTIVE",
+      "cancelling": "Subscription is ending",
+      "cancelsAt": "Ending at {date}",
+      "currentPlan": "Current plan",
+      "renewsAutomaticallyAt": "Renews automatically on {date}",
+      "cancel": "Cancel membership",
+      "changePaymentMethod": "Change payment method",
+      "update": {
+        "title": "Update subscription",
+        "description": "Change your subscription plan."
+      },
+      "subscribe": {
+        "title": "Get a membership",
+        "description": "Subscribe to a membership to get started!"
+      }
     },
     "security": {
       "title": "Security",

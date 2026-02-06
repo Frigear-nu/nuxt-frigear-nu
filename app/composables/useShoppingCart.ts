@@ -41,7 +41,7 @@ const _useShoppingCart = () => {
   }
 
   return {
-    data,
+    data: readonly(data),
     clearCart,
     hasAnyItems,
     addToCart,

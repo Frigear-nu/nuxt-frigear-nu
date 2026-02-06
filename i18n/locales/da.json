@@ -87,7 +87,22 @@
     },
     "membership": {
       "title": "Medlemskab",
-      "description": "Dit medlemskab."
+      "description": "Dit medlemskab.",
+      "active": "AKTIV",
+      "cancelling": "AVSLUTTES...",
+      "currentPlan": "Nuværende plan:",
+      "cancelsAt": "Avsluttes {date}",
+      "renewsAutomaticallyAt": "Fornyes automagisk den {date}",
+      "cancel": "Annuler medlemskab",
+      "changePaymentMethod": "Ændre betalingsmetode",
+      "update": {
+        "title": "Ændre medlemskab",
+        "description": "Ændre din medlemskabsplan."
+      },
+      "subscribe": {
+        "title": "Bliv medlem",
+        "description": "Bliv medlem for at komme i gang!"
+      }
     },
     "security": {
       "title": "Sikkerhed",

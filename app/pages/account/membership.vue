@@ -5,10 +5,11 @@ import { useUserMemberships } from '~/store/queries/user'
 import type { CartItem } from '#shared/types/shopping-cart'
 import { useMemberships } from '~/store/queries/membership'
 import { useStripeBillingPortalUrl, useSubscribeUser } from '~/store/mutations/user'
+import { format } from 'date-fns'
 
 const toast = useToast()
-const { t } = useSiteI18n()
-const { data: cartItems, hasAnyItems: hasAnyCartItems, clearCart } = useShoppingCart()
+const { t, locale } = useSiteI18n()
+const { data: cartItems, hasAnyItems: hasAnyCartItems, removeFromCart, clearCart } = useShoppingCart()
 const { data: currentMemberships, refetch: refetchMembership } = useUserMemberships()
 const { data: availableMemberships } = useMemberships()
 const { mutateAsync: subscribeUser } = useSubscribeUser()
@@ -24,6 +25,12 @@ const activeSubscription = computed(() => {
   return currentMemberships.value[0]
 })
 
+const activeSubscriptionWillBeCancelled = computed(() => {
+  if (!activeSubscription.value) return false
+  if (activeSubscription.value.cancelAtPeriodEnd) return true
+  return activeSubscription.value.cancelAt
+})
+
 watch([hasAnyCartItems, cartItems], () => {
   if (!hasAnyCartItems.value || activeSubscription.value) return
 
@@ -32,7 +39,8 @@ watch([hasAnyCartItems, cartItems], () => {
 }, { immediate: true })
 
 const onSelectMembership = (price: PublicPrice) => {
-  clearCart()
+  // FUTURE: Might wanna try to do some upselling here in case of "abandoned" cart?
+  removeFromCart(price.id)
   cartSubscribeItem.value = price as unknown as CartItem
   displaySubscribeModal.value = true
 }
@@ -43,14 +51,14 @@ const membershipToSubscribe = computed(() => {
 })
 
 const subscribeDialogTitle = computed(() => {
-  if (!activeSubscription.value) return 'payment.membership.subscribe.title'
-  return 'payment.membership.update.title'
+  if (!activeSubscription.value) return 'account.membership.subscribe.title'
+  return 'account.membership.update.title'
 })
 
 const subscribeDialogDescription = computed(() => {
   const translationKey = activeSubscription.value
-    ? 'payment.membership.update.description'
-    : 'payment.membership.subscribe.description'
+    ? 'account.membership.update.description'
+    : 'account.membership.subscribe.description'
   const translated = t(translationKey)
 
   if (translated !== translationKey) return translated
@@ -62,13 +70,20 @@ const onConfirmSubscription = async () => {
   isLoading.value = true
   if (!cartSubscribeItem.value) {
     toast.add(formatToastError(new Error('No item in cart.')))
+    isLoading.value = false
     return
   }
   const checkoutSession = await subscribeUser(cartSubscribeItem.value?.id)
 
   isLoading.value = false
 
-  if (checkoutSession.updated) {
+  if (!checkoutSession) {
+    const err = new Error('No checkout session returned.')
+    toast.add(formatToastError(err))
+    throw err
+  }
+
+  if ('updated' in checkoutSession) {
     toast.add(formatToastSuccess('Subscription updated.'))
     clearCart()
     displaySubscribeModal.value = false
@@ -102,30 +117,70 @@ const navigateToStripeDashboard = async () => {
       v-if="activeSubscription && activeSubscription.price"
       :title="t('account.membership.title')"
     >
-      You are on the {{ activeSubscription?.price?.interval }} plan.
-      <div v-if="activeSubscription.cancelAtPeriodEnd">
-        Subscription will cancel automatically on {{ activeSubscription.currentPeriodEnd }}
-      </div>
-      <div v-else>
-        The subscription will renew automatically on {{ activeSubscription.currentPeriodEnd }}.
-      </div>
-      <div class="flex flex-row gap-4">
-        <UButton
-          v-if="!activeSubscription.cancelAtPeriodEnd"
-          color="error"
-          icon="i-lucide-x"
-          :loading="isLoading"
-          @click="navigateToStripeDashboard"
+      <div class="flex flex-col gap-4">
+        <!-- plan -->
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <span class="text-sm text-muted">
+              {{ $t('account.membership.currentPlan') }}
+            </span>
+            <span class="text-lg font-semibold capitalize">
+              {{ activeSubscription.price?.metadata?.['title_' + locale] || activeSubscription.price?.metadata?.title || activeSubscription.price.title }}
+            </span>
+          </div>
+
+          <UBadge
+            :color="activeSubscriptionWillBeCancelled ? 'warning' : 'success'"
+            variant="soft"
+            :icon="activeSubscriptionWillBeCancelled ? 'i-lucide-battery-warning' : 'i-lucide-shield-check'"
+          >
+            {{ activeSubscriptionWillBeCancelled
+              ? $t('account.membership.cancelling')
+              : $t('account.membership.active')
+            }}
+          </UBadge>
+        </div>
+
+        <!-- status -->
+        <div
+          v-if="activeSubscription.currentPeriodEnd"
+          class="rounded-md bg-muted/50 px-4 py-3 text-sm"
         >
-          Cancel subscription
-        </UButton>
-        <UButton
-          icon="i-lucide-credit-card"
-          :loading="isLoading"
-          @click="navigateToStripeDashboard"
-        >
-          Change payment method
-        </UButton>
+          <template v-if="activeSubscriptionWillBeCancelled">
+            {{ $t('account.membership.cancelsAt', {
+              date: format(activeSubscription.currentPeriodEnd, 'yyyy-MM-dd HH:mm:ss'),
+            }) }}
+          </template>
+
+          <template v-else>
+            {{ $t('account.membership.renewsAutomaticallyAt', {
+              date: format(activeSubscription.currentPeriodEnd, 'yyyy-MM-dd HH:mm:ss'),
+            }) }}
+          </template>
+        </div>
+
+        <!-- actions -->
+        <div class="flex flex-wrap gap-3 pt-2">
+          <UButton
+            v-if="!activeSubscriptionWillBeCancelled"
+            color="error"
+            variant="soft"
+            icon="i-lucide-x"
+            :loading="isLoading"
+            @click="navigateToStripeDashboard"
+          >
+            {{ $t('account.membership.cancel') }}
+          </UButton>
+
+          <UButton
+            icon="i-lucide-credit-card"
+            variant="outline"
+            :loading="isLoading"
+            @click="navigateToStripeDashboard"
+          >
+            {{ $t('account.membership.changePaymentMethod') }}
+          </UButton>
+        </div>
       </div>
     </UPageCard>
     <div
@@ -138,19 +193,10 @@ const navigateToStripeDashboard = async () => {
         class="mt-0"
         :ui="{ title: 'fancy-text' }"
       />
-      <UAlert
-        v-if="false && !activeSubscription"
-        title="You do not have a subscription - yet!"
-        description="Subscribe to get your Frigear benefits ;)"
-        color="neutral"
-        icon="i-lucide-info"
-        class="mb-8"
-        :ui="{ title: 'text-lg font-bold', icon: 'size-10' }"
-      />
     </div>
     <UPageHeader
-      v-if="activeSubscription && activeSubscription.price"
-      title="Available subscriptions"
+      v-if="activeSubscriptionWillBeCancelled || !activeSubscription"
+      title="Resubscribe with ease"
     />
     <MembershipTypes
       :mode="$device.isDesktopOrTablet ? 'list' : 'tabs'"
@@ -163,6 +209,7 @@ const navigateToStripeDashboard = async () => {
         <UButton
           :disabled="activeSubscription && activeSubscription.priceId === item.id"
           block
+          :variant="activeSubscription && activeSubscription.priceId === item.id ? 'subtle' : undefined"
           @click="onSelectMembership(item as PublicPrice)"
         >
           {{ activeSubscription && activeSubscription.priceId === item.id ? 'Current' : 'Switch' }}

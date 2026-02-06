@@ -1,4 +1,5 @@
 import { USER_KEYS } from '~/store/queryKeys'
+import { useQuery } from '@pinia/colada'
 
 export const useUserMemberships = () => {
   const { $api } = useNuxtApp()

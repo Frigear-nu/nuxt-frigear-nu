@@ -9,4 +9,6 @@ CREATE TABLE `stripe_payment_methods` (
 --> statement-breakpoint
 ALTER TABLE `stripe_prices` ADD `lookup_key` text;--> statement-breakpoint
 ALTER TABLE `stripe_prices` ADD `images` text;--> statement-breakpoint
-ALTER TABLE `stripe_subscriptions` ADD `items` text;
+ALTER TABLE `stripe_subscriptions` ADD `items` text;--> statement-breakpoint
+ALTER TABLE `stripe_subscriptions` ADD `cancel_at` integer;--> statement-breakpoint
+ALTER TABLE `stripe_subscriptions` ADD `cancellation_details` text;

@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "07676e27-88d6-497d-8362-928ad37079be",
+  "id": "fc72ac9e-791f-4599-ba8c-3f0c88c79543",
   "prevId": "8fda9593-e1fd-46f7-83dd-a189bd3ba09d",
   "tables": {
     "magic_links": {
@@ -675,6 +675,20 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "cancel_at": {
+          "name": "cancel_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "cancellation_details": {
+          "name": "cancellation_details",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "created": {

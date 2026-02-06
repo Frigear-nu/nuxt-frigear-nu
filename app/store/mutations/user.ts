@@ -18,11 +18,15 @@ export const useSubscribeUser = () => {
 
 export const useStripeBillingPortalUrl = () => {
   const { $api } = useNuxtApp()
+  const { locale } = useSiteI18n()
 
   return useMutation({
     key: () => USER_KEYS.paymentMethods,
     mutation: () => $api('/api/account/payment-method', {
       method: 'POST',
+      body: {
+        locale: locale.value,
+      },
     }),
   })
 }

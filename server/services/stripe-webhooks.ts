@@ -238,10 +238,12 @@ export const transformStripeSubscription = (
       current_period_start,
       current_period_end,
     })),
-    cancelAtPeriodEnd: sub.cancel_at_period_end,
     created: fromUnixTime(sub.created),
     currentPeriodStart: fromUnixTime(item.current_period_start),
     currentPeriodEnd: fromUnixTime(item.current_period_end),
+    cancelAtPeriodEnd: sub.cancel_at_period_end,
+    cancelAt: sub.cancel_at ? fromUnixTime(sub.cancel_at) : null,
+    cancellationDetails: sub.cancellation_details || null,
   }
 }
 
@@ -249,6 +251,8 @@ export const upsertStripeCustomerSubscription = async (
   subscription: Stripe.Subscription,
 ) => {
   const { id, ...remaining } = transformStripeSubscription(subscription)
+
+  console.log('Upserting subscription', subscription)
 
   await db
     .insert(schema.stripeSubscriptions)

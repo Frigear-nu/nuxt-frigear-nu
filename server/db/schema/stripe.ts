@@ -1,6 +1,7 @@
 import { sqliteTable, text, integer, uniqueIndex } from 'drizzle-orm/sqlite-core'
 import { users } from './user'
 import { relations } from 'drizzle-orm'
+import type Stripe from 'stripe'
 
 export const stripeProducts = sqliteTable('stripe_products', {
   id: text().primaryKey(),
@@ -62,6 +63,8 @@ export const stripeSubscriptions = sqliteTable('stripe_subscriptions', {
   items: text('items', { mode: 'json' }),
   quantity: integer().notNull().default(1),
   cancelAtPeriodEnd: integer('cancel_at_period_end', { mode: 'boolean' }).notNull(),
+  cancelAt: integer('cancel_at', { mode: 'timestamp' }),
+  cancellationDetails: text('cancellation_details', { mode: 'json' }).$type<Stripe.Subscription.CancellationDetails>(),
   created: integer({ mode: 'timestamp' }).notNull(),
   currentPeriodStart: integer('current_period_start', { mode: 'timestamp' }).notNull(),
   currentPeriodEnd: integer('current_period_end', { mode: 'timestamp' }).notNull(),
