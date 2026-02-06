@@ -76,7 +76,7 @@
         "description": "Your awesome E-mail.",
         "change": {
           "title": "Change e-mail",
-          "label": "New e-post"
+          "label": "New e-mail"
         }
       },
       "avatar": {
