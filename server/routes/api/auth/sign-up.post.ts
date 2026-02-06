@@ -4,7 +4,7 @@ import { addHours } from 'date-fns'
 import { signUpWithPasswordSchema } from '#shared/schema/auth'
 import { useValidatedBody } from 'h3-zod'
 import { ClientError, EntityAlreadyExistsError, ServerError } from '@nitrotool/errors'
-import type { Users } from 'hub:db:schema'
+import type { Users } from '@nuxthub/db/schema'
 import WelcomeToFrigearEmail from '#shared/emails/auth/WelcomeToFrigearEmail.vue'
 
 export default defineEventHandler(async (event) => {
