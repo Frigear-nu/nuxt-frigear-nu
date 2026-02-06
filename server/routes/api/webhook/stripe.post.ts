@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
   let stripeEvent
   const stripe = useServerStripe(event)
   try {
-    stripeEvent = stripe.webhooks.constructEvent(
+    stripeEvent = await stripe.webhooks.constructEventAsync(
       rawBody,
       signature,
       webhookSecret,
