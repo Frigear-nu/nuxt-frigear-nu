@@ -1,4 +1,5 @@
 import { USER_KEYS } from '~/store/queryKeys'
+import { useMutation } from '@pinia/colada'
 
 export const useSubscribeUser = () => {
   const { $api } = useNuxtApp()
