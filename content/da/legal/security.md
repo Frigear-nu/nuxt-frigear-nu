@@ -1,6 +1,6 @@
 ---
-title: SIKKERHED
-description: Information om datasikkerhed.
+title: Sikkerhed
+description: Hvordan Frigear beskytter data om medlemmer, frivillige og samarbejdspartnere.
 ---
 
 ::u-page-header
@@ -8,83 +8,73 @@ description: Information om datasikkerhed.
 class: mt-4 mb-6
 ---
 #headline
-SIKKERHED
+DATABESKYTTELSE & IT-SIKKERHED
 
 #title
-SIKKERHED
+Sikkerhedsstandarder
 
 #description
-Information om datasikkerhed.
+Vores grundlæggende sikkerhedsstandarder og de kontroller vi bruger til at beskytte data om medlemmer, frivillige og samarbejdspartnere.
 ::
 
 ::div{.flex.flex-col.gap-4.mt-4}
   :::u-page-card
   ---
-  icon: i-lucide-shield-check
+  icon: i-lucide-shield
   ---
   #title
-  Privatlivspolitik
+  Sikkerhedspolitik (overblik)
 
   #description
-  Frigear tager dit privatliv alvorligt. Denne politik forklarer, hvordan vi håndterer dine personoplysninger.
+  Frigear beskytter person- og organisationsdata med et risikobaseret sikkerhedsprogram, der følger principperne i **ISO/IEC 27001** (fortrolighed, integritet, tilgængelighed) og er i overensstemmelse med EU’s krav til databeskyttelse.
+
+  Denne side beskriver vores **grundlæggende kontroller**. Nogle projekter og samarbejder kan anvende strengere krav afhængigt af risiko og juridiske forpligtelser.
   :::
 
   :::u-page-card
   ---
-  icon: i-lucide-hat-glasses
+  icon: i-lucide-users
   ---
   #title
-  1\. Hvem er vi?
+  1\. Hvem er ansvarlig?
 
   #description
-  Nonprofit organisationen Frigear, CVR-nr. 44353261
+  Den almennyttige forening Frigear, CVR-nr. 44353261, er ansvarlig for at sikre passende tekniske og organisatoriske sikkerhedsforanstaltninger.
+
+  Adgang til systemer og data gives kun til frivillige/admins, regnskab og juridiske repræsentanter, som har behov for det for at udføre deres rolle, og adgangen gennemgås løbende.
   :::
 
   :::u-page-card
   ---
-  icon: i-lucide-file-user
+  icon: i-lucide-key-round
   ---
   #title
-  2\. Hvilke data indsamler vi?
+  2\. Adgangskontrol & godkendelse
 
   #description
-  Vi indsamler følgende oplysninger:
+  Vi reducerer risikoen for uautoriseret adgang ved at bruge:
 
-  - Navn
-  - Adresse
-  - Email
-  - Telefonnummer
-  - Betalingsoplysninger (ved kontingentbetaling eller køb af varer, billetter osv.)
+  - Rollebaseret adgang (mindst mulige rettigheder)
+  - Unikke brugerkonti (ingen delte logins til følsomme systemer)
+  - Multi-faktor godkendelse (MFA) hvor det er muligt
+  - Stærke adgangskodekrav og sikker opbevaring af adgangskoder
+  - Løbende gennemgang af adgang og afmelding ved rolle- eller ansvarsændringer
   :::
 
   :::u-page-card
   ---
-  icon: i-lucide-shield-question
+  icon: i-lucide-lock
   ---
   #title
-  3\. Hvordan bruger vi dine data?
+  3\. Kryptering & sikker kommunikation
 
   #description
-  Vi bruger dine oplysninger til følgende formål:
+  Vi beskytter data under overførsel og – hvor det understøttes – i hvile:
 
-  - Til medlemsadministration
-  - Til nyhedsbreve (hvis du har givet samtykke)
-  - Til planlægning af og invitationer til events
-  - Til opkrævning af kontingent
-  - Til overholdelse af juridiske forpligtelser
-  - Til benyttelse af tredjeparts tjenesteudbydere (f.eks. betalingsgateways)
-  - Til samarbejde med partnere om arrangementer og projekter
-  :::
-
-  :::u-page-card
-  ---
-  icon: i-lucide-share-2
-  ---
-  #title
-  4\. Deling af dine oplysninger
-
-  #description
-  Vi deler ikke dine oplysninger med tredjeparter uden dit samtykke, medmindre det er lovpligtigt eller nødvendigt for regnskabsføring, eller eksternt samarbejde.
+  - HTTPS/TLS til webtrafik og API’er
+  - Krypterede forbindelser mellem tjenester (hvor det understøttes)
+  - Sikker håndtering af hemmeligheder (API-nøgler, tokens) og miljøvariabler
+  - Princip: send aldrig følsomme data i klartekst i usikre kanaler
   :::
 
   :::u-page-card
@@ -92,84 +82,252 @@ Information om datasikkerhed.
   icon: i-lucide-database
   ---
   #title
-  5\. Opbevaring og sletning af data
+  4\. Dataminimering & opbevaring
 
   #description
-  Vi opbevarer dine oplysninger, så længe det er nødvendigt for ovenstående formål.
-  Når du ikke længere er medlem, slettes dine oplysninger efter 12 måneder, medmindre vi er forpligtet til at gemme dem længere.
+  Sikkerhed starter med at indsamle mindre:
+
+  - Vi indsamler kun data, der er nødvendige for medlemsadministration, frivilligarbejde, arrangementer og aftalte samarbejder
+  - Vi begrænser adgang til følsomme data (fx betalingsrelaterede oplysninger) og adskiller dem hvor det er muligt
+  - Vi sletter eller anonymiserer data, når de ikke længere er nødvendige, i tråd med vores privatlivspolitik og juridiske forpligtelser
   :::
 
   :::u-page-card
   ---
-  icon: i-lucide-scale
+  icon: i-lucide-server
   ---
   #title
-  6\. Dine rettigheder
+  5\. Hosting, leverandører & samarbejder
 
   #description
-  Du har ret til at:
+  Vi bruger anerkendte leverandører og baserer os på deres uafhængigt reviderede sikkerheds- og complianceprogrammer, proportionalt med risiko.
 
-  - Anmode om indsigt i dine data
-  - Få rettet eller slettet dine oplysninger
-  - Begrænse behandlingen af dine data
-  - Trække dit samtykke tilbage
-  - Klage til Datatilsynet
+  **Kerneleverandører**
+  - **Cloudflare** (sikkerhed/performance edge-tjenester): offentliggør compliance-ressourcer, der dækker **SOC 2 Type II** samt deres tilgang til **ISO 27001 / ISO 27701** og **PCI DSS**:
+    - https://www.cloudflare.com/trust-hub/
+    - https://www.cloudflare.com/trust-hub/compliance-resources/
 
-  [Kontakt os via kontaktformularen på forsiden for at udøve dine rettigheder.](/#contact){.underline}
+  - **Google** (Google Workspace): angiver uafhængige certificeringer som **ISO/IEC 27001** og privatlivsrelaterede cloud-standarder som **ISO/IEC 27018 / ISO/IEC 27701** (tilgængelighed varierer efter produkt og omfang):
+    - https://workspace.google.com/learn-more/security/security-whitepaper/page-5/
+    - https://business.safety.google/compliance/
+
+  - **Microsoft** (Microsoft 365): offentliggør compliance-tilbud og revisionsrapporter (herunder **ISO 27001** og relaterede rammeværk) via Microsofts compliance-dokumentation og Service Trust Portal:
+    - https://learn.microsoft.com/en-us/compliance/regulatory/offering-home
+    - https://servicetrust.microsoft.com/
+
+  **Betalinger (vi opbevarer ikke kortnumre)**
+  - **Stripe**: angiver **SOC 1** og **SOC 2 Type II** audits samt **PCI Service Provider Level 1**:
+    - https://docs.stripe.com/security
+    - https://stripe.com/guides/pci-compliance
+
+  - **MobilePay** (Vipps MobilePay): angiver **PCI DSS**-kompatible betalingstjenester og at de håndterer **PSD2/SCA**-krav:
+    - https://developer.vippsmobilepay.com/docs/plugins-ext/checkout-magento/
+    - https://developer.vippsmobilepay.com/docs/knowledge-base/merchant-info/
   :::
 
   :::u-page-card
   ---
-  icon: i-lucide-cookie
+  icon: i-lucide-activity
   ---
   #title
-  7\. Cookies og sociale medier
+  6\. Overvågning, logging & hændelseshåndtering
 
   #description
-  Vi benytter cookies til:
+  Vi arbejder for at opdage problemer tidligt og reagere hurtigt:
 
-  - At forbedre brugeroplevelsen på vores web-applikation
-  - At analysere trafik og brug af siden
-  - At integrere sociale medieplatforme
-
-  Vær opmærksom på, at Facebook, Instagram og andre sociale medier kan indsamle data om dig, når du besøger vores side, i henhold til deres egne privatlivspolitikker.
+  - Audit-logs hvor det er tilgængeligt (admin-handlinger, adgangshændelser)
+  - Alarmer ved mistænkelig aktivitet (hvor det understøttes)
+  - Proces for sikkerhedshændelser: afgræns → vurder påvirkning → udbedr → dokumentér → forbedr kontroller
+  - Vi underretter relevante parter, når det kræves af lovgivning eller kontraktlige forpligtelser
   :::
+
+  :::u-page-card
+  ---
+  icon: i-lucide-refresh-cw
+  ---
+  #title
+  7\. Backups & gendannelse
+
+  #description
+  Tilgængelighed er også vigtigt:
+
+  - Backups af kritiske data hvor platformen understøtter det
+  - Gendannelsesprocedurer testes når det er muligt
+  - Vi designer systemer til at reducere single points of failure, proportionalt med projektets størrelse og risiko
+  :::
+
+  :::u-page-card
+  ---
+  icon: i-lucide-bug
+  ---
+  #title
+  8\. Indrapportering af sårbarheder (ansvarlig offentliggørelse)
+
+  #description
+  Hvis du mener, du har fundet en sikkerhedsfejl, så rapportér den venligst privat. Offentliggør den ikke offentligt, før vi har haft mulighed for at undersøge den.
+
+  ::::contact-form-modal{title="Rapportér en sikkerhedsfejl"}
+  ---
+  initial:
+    subject: other
+    subjectOther: Sikkerhedsfejl / ansvarlig offentliggørelse
+  ---
+    :::::u-button{icon="i-lucide-mail"}
+    Rapportér en sikkerhedsfejl
+    :::::
+  ::::
+  :::
+
+  :::u-page-card
+  ---
+  icon: i-lucide-award
+  ---
+  #title
+  9\. Standarder vi refererer til
+
+  #description
+  Sikkerhedsstandarder/attestationer vedrørende håndtering af persondata og betalinger:
+
+  - **GDPR — Forordning (EU) 2016/679** (databeskyttelse):
+    https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng
+
+  - **ISO/IEC 27001** (baseline for informationssikkerhedsledelse):
+    https://www.iso.org/standard/27001
+
+  - **SOC 2** (uafhængig assurance-rapport for serviceorganisationer, Trust Services Criteria):
+    https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2
+
+  - **PCI DSS** (sikkerhedsstandard for betalingskortdata):
+    https://www.pcisecuritystandards.org/standards/pci-dss/
+
+  - **PSD2 — Direktiv (EU) 2015/2366** (betalingstjenester, herunder SCA):
+    https://eur-lex.europa.eu/eli/dir/2015/2366/oj/eng
+  :::
+
+::div{.grid.grid-cols-1.sm:grid-cols-2.md:grid-cols-3.lg:grid-cols-4.xl:grid-cols-5.gap-4.mt-6.center.justify-center}
+
+:::u-page-card
+---
+icon: i-lucide-badge-check
+class: text-center
+---
+#title
+SOC 2 (AICPA)
+
+#description
+:::div{.h-full.w-full.bg-neutral-100.dark:bg-neutral-800.rounded-full.items-center.justify-center.mt-4.mb-4.p-2.flex}
+  ::::img{src="/images/compliance/badges/aicpa-soc.svg" alt="SOC 2 (AICPA)" loading="lazy" class="h-full.w-full.object-contain"}
+  ::::
+:::
+
+:::div{.mt-2.text-sm}
+  Uafhængig assurance-rapport (leverandørattestationer).  
+  [Officiel SOC 2-oversigt](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2){target="_blank" rel="noopener noreferrer"}
+:::
+:::
+
+:::u-page-card
+---
+icon: i-lucide-shield-check
+class: text-center
+---
+#title
+GDPR (EU 2016/679)
+
+#description
+:::div{.h-full.w-full.bg-neutral-100.dark:bg-neutral-800.rounded-full.items-center.justify-center.mt-4.mb-4.p-2.flex}
+  ::::img{src="/images/compliance/badges/gdpr.svg" alt="GDPR (EU 2016/679)" loading="lazy" class="h-full.w-full.object-contain"}
+  ::::
+:::
+
+:::div{.mt-2.text-sm}
+  EU’s databeskyttelsesforordning.  
+  [Officiel lovtekst](https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng){target="_blank" rel="noopener noreferrer"}
+:::
+:::
+
+:::u-page-card
+---
+icon: i-lucide-lock
+class: text-center
+---
+#title
+ISO/IEC 27001
+
+#description
+:::div{.h-full.w-full.bg-neutral-100.dark:bg-neutral-800.rounded-full.items-center.justify-center.mt-4.mb-4.p-2.flex}
+  ::::img{src="/images/compliance/badges/iso-27001.svg" alt="ISO/IEC 27001" loading="lazy" class="h-full.w-full.object-contain"}
+  ::::
+:::
+
+:::div{.mt-2.text-sm}
+  Baseline ISMS-reference anvendt på tværs af mange leverandører.  
+  [Officiel ISO-side](https://www.iso.org/standard/27001){target="_blank" rel="noopener noreferrer"}
+:::
+:::
+
+:::u-page-card
+---
+icon: i-lucide-credit-card
+class: text-center
+---
+#title
+PCI DSS (betalinger)
+
+#description
+:::div{.h-full.w-full.bg-neutral-100.dark:bg-neutral-800.rounded-full.items-center.justify-center.mt-4.mb-4.p-2.flex}
+  ::::img{src="/images/compliance/badges/pci-dss.svg" alt="PCI DSS" loading="lazy" class="h-full.w-full.object-contain"}
+  ::::
+:::
+
+:::div{.mt-2.text-sm}
+  Sikkerhedsstandard for betalingskort (håndteres af vores betalingsudbydere).  
+  [Officiel PCI DSS-side](https://www.pcisecuritystandards.org/standards/pci-dss/){target="_blank" rel="noopener noreferrer"}
+:::
+:::
+
+:::u-page-card
+---
+icon: i-lucide-landmark
+class: text-center
+---
+#title
+PSD2 (EU-betalinger)
+
+#description
+:::div{.h-full.w-full.bg-neutral-100.dark:bg-neutral-800.rounded-full.items-center.justify-center.mt-4.mb-4.p-2.flex}
+  ::::img{src="/images/compliance/badges/psd2.svg" alt="PSD2" loading="lazy" class="h-full.w-full.object-contain"}
+  ::::
+:::
+
+:::div{.mt-2.text-sm}
+  EU-regler for betalingstjenester (inkl. stærk kundeautentifikation).  
+  [Officiel lovtekst](https://eur-lex.europa.eu/eli/dir/2015/2366/oj/eng){target="_blank" rel="noopener noreferrer"}
+:::
+:::
+
+::
 
   :::u-page-card
   ---
   icon: i-lucide-send
   ---
   #title
-  8\. Kontakt os
+  Kontakt os
 
   #description
-  Hvis du har spørgsmål, kan vi kontaktes gennem formen på [forsiden](/#contact){.underline}.
-  :::
+  Spørgsmål om sikkerhedskontroller, datahåndtering i samarbejder eller risikovurderinger:
 
-  :::u-page-card
+  ::::contact-form-modal{title="Kontakt os"}
   ---
-  icon: i-lucide-gavel
+  initial:
+    subject: other
+    subjectOther: Sikkerhedsspørgsmål
   ---
-  #title
-  9\. Juridisk grundlag
-
-  #description
-  Behandlingen af dine personoplysninger sker på baggrund af:
-
-  - Dit samtykke (GDPR artikel 6, stk. 1, litra a)
-  - Nødvendighed for at opfylde en kontrakt (GDPR artikel 6, stk. 1, litra b)
-  - Juridiske forpligtelser (GDPR artikel 6, stk. 1, litra c)
-  :::
-
-  :::u-page-card
-  ---
-  icon: i-lucide-pencil-line
-  ---
-  #title
-  10\. Ændringer i privatlivspolitikken
-
-  #description
-  Vi forbeholder os retten til at opdatere denne privatlivspolitik løbende. Væsentlige ændringer vil blive meddelt via vores hjemmeside.
+    :::::u-button{icon="i-lucide-mail"}
+    Kontakt os om sikkerhed
+    :::::
+  ::::
   :::
 
   :::u-page-card
@@ -177,9 +335,9 @@ Information om datasikkerhed.
   icon: i-lucide-calendar-sync
   ---
   #title
-  Senest opdateret
+  Sidst opdateret
 
   #description
-  Januar 2026
+  Februar 2026
   :::
 ::
