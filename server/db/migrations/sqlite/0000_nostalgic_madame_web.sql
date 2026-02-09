@@ -2,6 +2,7 @@ CREATE TABLE `magic_links` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`user_id` integer NOT NULL,
 	`token` text NOT NULL,
+	`redirect_url` text,
 	`expires_at` integer NOT NULL,
 	`used_at` integer,
 	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE cascade
@@ -51,13 +52,22 @@ CREATE TABLE `sessions` (
 CREATE TABLE `stripe_customers` (
 	`id` text PRIMARY KEY NOT NULL,
 	`user_id` integer,
-	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `unique_idx` ON `stripe_customers` (`id`,`user_id`);--> statement-breakpoint
+CREATE TABLE `stripe_payment_methods` (
+	`id` text PRIMARY KEY NOT NULL,
+	`customer_id` text,
+	`type` text NOT NULL,
+	`metadata` text NOT NULL,
+	`card` text,
+	FOREIGN KEY (`customer_id`) REFERENCES `stripe_customers`(`id`) ON UPDATE no action ON DELETE cascade
+);
+--> statement-breakpoint
 CREATE TABLE `stripe_prices` (
 	`id` text PRIMARY KEY NOT NULL,
-	`product_id` text NOT NULL,
+	`product_id` text,
 	`active` integer NOT NULL,
 	`description` text,
 	`unit_amount` integer NOT NULL,
@@ -66,8 +76,10 @@ CREATE TABLE `stripe_prices` (
 	`interval` text NOT NULL,
 	`interval_count` integer NOT NULL,
 	`trial_period_days` integer NOT NULL,
+	`lookup_key` text,
+	`images` text,
 	`metadata` text,
-	FOREIGN KEY (`product_id`) REFERENCES `stripe_products`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`product_id`) REFERENCES `stripe_products`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `stripe_products` (
@@ -82,18 +94,21 @@ CREATE TABLE `stripe_products` (
 --> statement-breakpoint
 CREATE TABLE `stripe_subscriptions` (
 	`id` text PRIMARY KEY NOT NULL,
-	`user_id` text NOT NULL,
+	`customer_id` text,
 	`status` text NOT NULL,
 	`metadata` text NOT NULL,
-	`price_id` text NOT NULL,
+	`price_id` text,
+	`items` text,
 	`quantity` integer DEFAULT 1 NOT NULL,
 	`cancel_at_period_end` integer NOT NULL,
+	`cancel_at` integer,
+	`cancellation_details` text,
 	`created` integer NOT NULL,
 	`current_period_start` integer NOT NULL,
 	`current_period_end` integer NOT NULL,
 	`ended_at` integer,
-	FOREIGN KEY (`user_id`) REFERENCES `stripe_customers`(`id`) ON UPDATE no action ON DELETE no action,
-	FOREIGN KEY (`price_id`) REFERENCES `stripe_prices`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`customer_id`) REFERENCES `stripe_customers`(`id`) ON UPDATE no action ON DELETE cascade,
+	FOREIGN KEY (`price_id`) REFERENCES `stripe_prices`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `users` (
@@ -104,6 +119,7 @@ CREATE TABLE `users` (
 	`avatar_url` text,
 	`is_migrated` integer DEFAULT false NOT NULL,
 	`supabase_id` text,
+	`supabase_provider` text,
 	`last_login_at` integer,
 	`email_verified_at` integer,
 	`created_at` integer

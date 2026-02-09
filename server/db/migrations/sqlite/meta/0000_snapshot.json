@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "8e4d265f-7267-4517-8599-32a26c32acbb",
+  "id": "6662681c-3246-4fa3-bb1a-2d90ce1540e4",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "magic_links": {
@@ -26,6 +26,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "redirect_url": {
+          "name": "redirect_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "expires_at": {
@@ -369,7 +376,66 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "stripe_payment_methods": {
+      "name": "stripe_payment_methods",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "customer_id": {
+          "name": "customer_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "card": {
+          "name": "card",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "stripe_payment_methods_customer_id_stripe_customers_id_fk": {
+          "name": "stripe_payment_methods_customer_id_stripe_customers_id_fk",
+          "tableFrom": "stripe_payment_methods",
+          "tableTo": "stripe_customers",
+          "columnsFrom": [
+            "customer_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -391,7 +457,7 @@
           "name": "product_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "active": {
@@ -450,6 +516,20 @@
           "notNull": true,
           "autoincrement": false
         },
+        "lookup_key": {
+          "name": "lookup_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "images": {
+          "name": "images",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "metadata": {
           "name": "metadata",
           "type": "text",
@@ -470,7 +550,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -547,11 +627,11 @@
           "notNull": true,
           "autoincrement": false
         },
-        "user_id": {
-          "name": "user_id",
+        "customer_id": {
+          "name": "customer_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "status": {
@@ -572,7 +652,14 @@
           "name": "price_id",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "items": {
+          "name": "items",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "quantity": {
@@ -588,6 +675,20 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "cancel_at": {
+          "name": "cancel_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "cancellation_details": {
+          "name": "cancellation_details",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "created": {
@@ -621,17 +722,17 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "stripe_subscriptions_user_id_stripe_customers_id_fk": {
-          "name": "stripe_subscriptions_user_id_stripe_customers_id_fk",
+        "stripe_subscriptions_customer_id_stripe_customers_id_fk": {
+          "name": "stripe_subscriptions_customer_id_stripe_customers_id_fk",
           "tableFrom": "stripe_subscriptions",
           "tableTo": "stripe_customers",
           "columnsFrom": [
-            "user_id"
+            "customer_id"
           ],
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "stripe_subscriptions_price_id_stripe_prices_id_fk": {
@@ -644,7 +745,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -700,6 +801,13 @@
         },
         "supabase_id": {
           "name": "supabase_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "supabase_provider": {
+          "name": "supabase_provider",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
