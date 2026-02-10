@@ -9,47 +9,67 @@ seo:
 #title
 {{ $doc.title }}
 
+#headline
+Info om foreningen, vores mission, vision og værdier.
+
 #links
   :::u-button
   ---
   color: primary
   size: xl
-  to: /
-  trailingIcon: i-lucide-arrow-right
+  to: /projects
+  icon: i-lucide-music
   variant: subtle
   ---
   Se vores projekter
   :::
+  :::u-button
+  ---
+  color: secondary
+  size: xl
+  to: /teams
+  trailingIcon: i-lucide-users
+  variant: subtle
+  ---
+  Mød vores teams
+  :::
 ::
+:nuxt-img{:height='400' :width='1200' alt="Frigears frivillige på Roskilde Festival" src="/images/volunteers/fgr/info-hero-desktop-1200x400.png"}
 
 ::u-page-section
 #title
-Foreningen Frigear
+Hvad er Frigear?
 
 #description
-Foreningen Frigear støtter, afvikler og faciliterer non-profit, frivillige projekter i Danmark. Vi bygger fællesskab omkring kunst, kultur og frivillighed – med fokus på genbrug, vedvarende energiteknologier, samarbejde og professionel udførelse. 
+Frigear er en frivillig-drevet nonprofit forening, der **afholder kulturelle projekter** (og hjælper andre igang med deres).
+Vi bygger fællesskaber omkring **kunst, kultur og frivillighed** — gerne med **genbrug, vedvarende energiteknologi, grønne produkter** og professionelt, inkluderende samarbejde.
 
-Frigear er ydermere en lege, -og læringsplatform med mulighed for at dygtiggøre sig indenfor en bred vifte af områder, for alle som er drevet af engagement, nysgerrighed og lysten til at skabe åbne og bæredygtige projektløsninger – sammen.
+Frigear er også en **lege- og læringsplatform**: et sted, hvor du kan prøve ting af, blive dygtigere og skabe noget sammen med andre.
+Vi er for alle, der er **drevet af engagement, nysgerrighed** og lysten til at **skabe åbne og bæredygtige projektløsninger** — **sammen**.
+
+**Kom som du er** — med hænder, hjerne, idéer, nysgerrighed… eller bare lysten til at være med og skabe noget awesome.
 
 #features
 :::u-page-card
 ---
 icon: i-lucide-hand-helping
+class: object-cover object-top w-full h-full shadow-2xl ring ring-default
 ---
 
 #title
 Frivilligt fællesskab
 
 #description
-Frigear er udelukkende **drevet af frivillige** med forskellige baggrunde inden for håndværk, teknologi, design, foreningsarbejde og organisering. Fælles for os alle, er ønsket om at bidrage med vores tid og kompetencer til noget, der gavner andre. 
+Frigear er drevet af frivillige — vi er en blandet flok med baggrunde i håndværk, teknologi, design, foreningsliv og alt det imellem.
+Fælles for os er lysten til at bruge vores tid og kompetencer på noget, der **skaber kulturel og social værdi**.
 
-Vi tror på, at frivilligt arbejde kan være både **meningsfuldt og sjovt**, og at det kan skabe stærke bånd mellem mennesker, der deler passionen for at gøre en forskel. Vi er altid åbne for nye frivillige, der ønsker at være en del af vores fællesskab og bidrage til vores projekter så hvis du har en ide/ideer til et projekt, eller bare gerne vil høre mere, så fang os her.
+Vi tror på, at frivillighed både kan være **meningsfuldt og sjovt**. Og ja — det plejer at ende med stærke venskaber og gode historier.
+Har du en idé, eller er du bare nysgerrig? Så skriv til os:
 
 ::::contact-form-modal{title="Kontakt os"}
 ---
-initial:
-  subject: other
-  subjectOther: Frivillig
+initial: Frivillig
+subject: frivillig
 ---
 :::::u-button{icon="i-lucide-mail"}
 Kontakt os om at blive frivillig
@@ -65,24 +85,12 @@ icon: i-lucide-target
 Vores mission
 
 #description
-Frigear skaber, faciliterer og bidrager til projekter, der fremmer innovation og kreativitet i samfundet ved at understøtte **frivillig-inklusion**, **medindflydelse og samarbejde** omkring projekter funderet i **bæredygtighed, genbrug og vedvarende energiteknologier**. 
+**Vi gør det lettere at lave gode, frivillig-projekter — sammen.**
 
-Vi skaber et rum, hvor mennesker kan mødes, dele ideer og arbejde sammen om at realisere projekter, der har en **positiv indvirkning på samfundet**. Dette understreger vi ved at støtte og fremme frivillig-projekter. Vi bidrager til at skabe en mere innovativ og kreativ verden, hvor alle har mulighed for at deltage og gøre en forskel.
-:::
-
-:::u-page-card
----
-icon: i-lucide-badge-check
----
-#title
-Om inklusion
-
-#description
-Frigear er et åbent og **inkluderende fællesskab** hvor alle støtter op om foreningen, hinanden og vores forskelligheder. Vi diskriminerer ikke på baggrund af etnicitet, hudfarve, køn, seksualitet, alder, religion eller politisk ståsted. Vi er her for frivillighed og sammenhold. 
-
-Vi har en **nultolerancepolitik overfor diskrimination**, og vi arbejder aktivt for at skabe et trygt og inkluderende miljø for alle vores medlemmer og frivillige. Vi tror på, at mangfoldighed beriger vores fællesskab og styrker vores evne til at skabe innovative og kreative projekter, der kan gøre en positiv forskel i verden.
-
-**I Frigear er alle velkomne!.**
+Det betyder blandt andet, at vi:
+- skaber rammer for **inklusion, medindflydelse og samarbejde**
+- støtter projekter med fokus på **bæredygtighed og genbrug**
+- giver plads til både **idéer, læring og handling**
 :::
 
 :::u-page-card
@@ -93,7 +101,25 @@ icon: i-lucide-telescope
 Vores vision
 
 #description
-Vi stræber efter at være en **katalysator for frivillighed** og udvikling inden for teknologiske, venskabelige, sociale, kunstneriske og kreative fællesskaber. Vi ønsker at skabe et rum, hvor mennesker kan mødes, dele ideer og arbejde sammen om at realisere projekter, der har en positiv indvirkning på samfundet. 
+Vi vil være en katalysator for frivillighed og udvikling i **kreative, kulturelle, og sociale fællesskaber**.
+
+**Drømmen?** Flere steder hvor man kan mødes, bygge, dyrke interesser, lære, og dele viden — steder hvor det føles naturligt at **udfolde sine ideer og færdigheder** uden at være begrænset i et overflod af regler og forventninger før ideerne har fået en chance.
+:::
+
+:::u-page-card
+---
+icon: i-lucide-badge-check
+---
+#title
+Om inklusion
+
+#description
+Frigear er et åbent og inkluderende fællesskab. Vi diskriminerer ikke på baggrund af etnicitet, hudfarve, køn, seksualitet, alder, religion eller politisk ståsted.
+Vi er her for **frivillighed og sammenhold**.
+
+Vi har nultolerance over for diskrimination og arbejder aktivt for et trygt miljø for alle.
+
+**I Frigear er alle velkomne.**
 :::
 
 :::u-page-card
@@ -104,8 +130,34 @@ icon: i-lucide-sprout
 Bæredygtigt engagement
 
 #description
-Frivilligt arbejde skal være bæredygtigt. Vi prioriterer **realistiske ambitioner**, respekt for tid og plads til balance mellem frivillighed og hverdagsliv. 
+Frivillighed skal kunne holde i længden. 
+Hos os er der plads til hverdagsliv, pauser og perioder med mindre energi — det er helt normalt, og det skal være i orden at sige fra.
 
-Vi opfordrer alle vores frivillige til at tage ansvar for deres eget engagement og finde en balance, der fungerer for dem, så de kan fortsætte med at bidrage til vores fællesskab på en måde, der er meningsfuld og bæredygtig for dem.
+Vi går efter **realistiske ambitioner**, tydelige rammer og en kultur, hvor man bidrager på en måde, der giver mening, og hvor vi melder ud hvis en opgave er for tung eller vi har brug for hjælp.
+Kort sagt: **frivillighed sammen, på egne præmisser**.
+:::
+
+:::u-page-card
+---
+icon: i-lucide-heart-handshake
+---
+#title
+Foreningssamarbejde og partnerskaber
+
+#description
+Vi er altid åbne for samarbejde med foreninger, organisationer og virksomheder, der deler vores værdier.
+Når vi arbejder sammen på tværs, kan vi skabe mere — og lære mere.
+
+Har du en idé til et **samarbejde, en partnercase eller et projekt**, der passer godt ind? Så ræk ud:
+
+::::contact-form-modal{title="Kontakt os"}
+---
+initial:
+subject: Samarbejde
+---
+:::::u-button{icon="i-lucide-mail"}
+Kontakt os om samarbejde
+:::::
+::::
 :::
 ::
