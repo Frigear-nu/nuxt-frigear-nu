@@ -32,7 +32,10 @@ Info om foreningen, vores mission, vision og værdier.
   Mød vores teams
   :::
 ::
-:nuxt-img{:height='400' :width='1200' alt="Frigears frivillige på Roskilde Festival" src="/images/volunteers/fgr/info-hero-desktop-1200x400.png"}
+
+![Frigears frivillige på Roskilde Festival](/images/volunteers/fgr/info-hero-desktop-1200x400.png){.hidden.md:block :heigth='400' :width='1200'}
+
+![Frigears frivillige på Roskilde Festival](/images/volunteers/fgr/info-hero-mobile-640x400.png){.block.md:hidden :height='400' :width='640'}
 
 ::u-page-section
 #title
