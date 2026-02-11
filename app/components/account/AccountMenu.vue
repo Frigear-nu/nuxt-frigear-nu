@@ -3,6 +3,7 @@ import type { ButtonProps } from '@nuxt/ui'
 import type { NuxtLinkProps } from '#app'
 import { useAuth, useSiteI18n } from '#imports'
 
+const route = useRoute()
 const { t, localePath } = useSiteI18n()
 const { signOut } = useAuth()
 const { clearCart } = useShoppingCart()
@@ -10,6 +11,12 @@ const { clearCart } = useShoppingCart()
 const onSignOut = async () => {
   clearCart()
   await signOut()
+
+  if (!route.path.startsWith('/account')) {
+    // FIXME: This should probably be handled in a better way.
+    document.location.reload()
+    return
+  }
   await navigateTo(localePath('/'))
 }
 
