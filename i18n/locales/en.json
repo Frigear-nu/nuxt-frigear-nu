@@ -123,11 +123,19 @@
       },
       "message": {
         "label": "Message",
-        "placeholder": "I want to talk about an awesome Frigear project..."
+        "placeholder": "I want to talk about an awesome Frigear project...",
+        "placeholders": {
+          "complaint": "I have a complaint about...",
+          "other": "What's on your mind?"
+        }
       },
       "submit": {
         "label": "Send message"
       }
+    },
+    "modal": {
+      "title": "Get in touch",
+      "button": "Contact us"
     }
   },
   "zodI18n": {
