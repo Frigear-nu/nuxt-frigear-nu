@@ -1,8 +1,6 @@
 ---
 title: Om Frigear
-seo:
-  title: Om Frigear - frigear.nu
-  description: Lær mere om Frigear, en frivillig drevet non-profit forening, og hvordan du kan blive en del af vores projekter.
+description: Lær mere om Frigear, en frivillig drevet non-profit forening, og hvordan du kan blive en del af vores projekter.
 ---
 
 ::u-page-hero

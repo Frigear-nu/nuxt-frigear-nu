@@ -1,8 +1,6 @@
 ---
 title: About Frigear
-seo:
-  title: About Frigear - frigear.nu
-  description: Learn more about Frigear, a volunteer-driven non-profit association, and how you can become part of our projects.
+description: Learn more about Frigear, a volunteer-driven non-profit association, and how you can become part of our projects.
 ---
 
 ::u-page-hero
