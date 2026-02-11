@@ -22,7 +22,7 @@ export const formatToastSuccess = (title: string, description?: string, addition
 }
 
 export const formatToast = (title: string, description?: string | Toast, toast?: Toast): Partial<Toast> => {
-  let additional: Partial<Toast> = {}
+  let additional: Partial<Toast>
 
   // meaning there will not be a toast item
   if (typeof description !== 'string') additional = description || {}
