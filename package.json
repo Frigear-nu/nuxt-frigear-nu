@@ -10,6 +10,7 @@
     "clean": "rm -rf pnpm-lock.yaml node_modules .nuxt ",
     "prepare": "nuxt prepare",
     "cf:deploy": "npx wrangler --cwd .output/ deploy",
+    "db": "npx nuxt db",
     "db:generate": "npx nuxt db generate",
     "db:migrate": "npx nuxt db migrate",
     "db:drop-all": "npx nuxt db drop-all",
