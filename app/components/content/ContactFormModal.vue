@@ -26,9 +26,10 @@ const buttonProps = computed<ButtonProps>(() => {
   }
 
   return {
+    // defaults in case the button is partially overridden
     label: props.label || t('contact.modal.button'),
     icon: 'i-lucide-mail',
-    ...props.button || {},
+    ...props.button,
   }
 })
 </script>
