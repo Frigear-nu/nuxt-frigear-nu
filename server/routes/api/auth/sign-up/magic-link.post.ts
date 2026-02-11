@@ -4,7 +4,6 @@ import { useValidatedBody } from 'h3-zod'
 import { db, schema } from '@nuxthub/db'
 import type { Users } from '@nuxthub/db/schema'
 import WelcomeToFrigearEmail from '#shared/emails/auth/WelcomeToFrigearEmail.vue'
-import { z } from 'zod'
 import { signUpWithMagicLinkSchema } from '#shared/schema/auth'
 import { ClientError, ServerError } from '@nitrotool/errors'
 
@@ -23,7 +22,7 @@ export default defineEventHandler(async (event) => {
 
   const existingUser = await findUserByEmail(email)
 
-  if (existingUser) throw ClientError('errors.auth.signUp.failed')
+  if (existingUser || !signUp) throw ClientError('errors.auth.signUp.failed')
 
   const [createdUser] = await db
     .insert(schema.users)
