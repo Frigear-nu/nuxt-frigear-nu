@@ -1,4 +1,5 @@
 import type { AuthProvider } from '~/types'
+import type { SignUpWithMagicLinkSchema } from '#shared/schema/auth'
 
 export const useAuth = () => {
   // const nuxtApp = useNuxtApp()
@@ -17,7 +18,7 @@ export const useAuth = () => {
     return !!currentUser.value
   })
 
-  const sendMagicLink = async (email: string) => {
+  const signInWithMagicLink = async (email: string) => {
     switch (authMode.value) {
       // case 'supabase':
       //   return sbAuth.sendMagicLink(email)
@@ -26,6 +27,10 @@ export const useAuth = () => {
       default:
         throw new Error(`Auth mode ${authMode.value} not supported.`)
     }
+  }
+
+  const signUpWithMagicLink = async (body: SignUpWithMagicLinkSchema) => {
+    return customAuth.signUpWithMagicLink(body)
   }
 
   const signInWithProvider = async (provider: AuthProvider) => {
@@ -98,7 +103,8 @@ export const useAuth = () => {
     authMode,
     currentUser,
     isLoggedIn,
-    sendMagicLink,
+    signInWithMagicLink,
+    signUpWithMagicLink,
     signInWithProvider,
     signInWithPassword,
     signUpWithPassword,
