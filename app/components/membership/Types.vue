@@ -9,7 +9,6 @@ const props = defineProps<{
   mode: 'list' | 'tabs'
   orientation?: 'horizontal' | 'vertical'
   button?: ButtonProps | string
-  membershipId?: string
 }>()
 
 const $emits = defineEmits<{
