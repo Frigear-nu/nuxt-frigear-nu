@@ -115,15 +115,13 @@ Information om GDPR.
   - Trække dit samtykke tilbage
   - Klage til Datatilsynet
 
-    ::::contact-form-modal{title="Kom i kontakt"}
+    ::::contact-form-modal
     ---
+    label: Kontakt os her for at udøve dine rettigheder
     initial:
       subject: other
       subjectOther: GDPR rettigheder
     ---
-      :::::u-button{icon="i-lucide-mail"}
-      Kontakt os her for at udøve dine rettigheder
-      :::::
     ::::
   :::
 
@@ -153,10 +151,7 @@ Information om GDPR.
 
   #description
   Hvis du har nogen spørgsmål, kan vi kontaktes her:
-    ::::contact-form-modal{title="Kom i kontakt"}
-      :::::u-button{icon="i-lucide-mail"}
-      Klik her for at komme i kontakt om alt
-      :::::
+    ::::contact-form-modal{label="Klik her for at komme i kontakt om alt"}
     ::::
   :::
 
