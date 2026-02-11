@@ -149,11 +149,19 @@
       },
       "message": {
         "label": "Besked",
-        "placeholder": "Jeg vil snakke om et awesome Frigear projekt..."
+        "placeholder": "Jeg vil snakke om et awesome Frigear projekt...",
+        "placeholders": {
+          "complaint": "Jeg har en klage om ...",
+          "other": "Hva tænker du på?"
+        }
       },
       "submit": {
         "label": "Fyr beskeden afsted"
       }
+    },
+    "modal": {
+      "title": "Kom i kontakt",
+      "button": "Kontakt os"
     }
   },
   "zodI18n": {

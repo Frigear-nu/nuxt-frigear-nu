@@ -166,15 +166,13 @@ Vores grundlæggende sikkerhedsstandarder og de kontroller vi bruger til at besk
   #description
   Hvis du mener, du har fundet en sikkerhedsfejl, så rapportér den venligst privat. Offentliggør den ikke offentligt, før vi har haft mulighed for at undersøge den.
 
-  ::::contact-form-modal{title="Rapportér en sikkerhedsfejl"}
+  ::::contact-form-modal
   ---
+  label: Rapportér en sikkerhedsfejl
   initial:
     subject: other
     subjectOther: Sikkerhedsfejl / ansvarlig offentliggørelse
   ---
-    :::::u-button{icon="i-lucide-mail"}
-    Rapportér en sikkerhedsfejl
-    :::::
   ::::
   :::
 
@@ -318,15 +316,13 @@ PSD2 (EU-betalinger)
   #description
   Spørgsmål om sikkerhedskontroller, datahåndtering i samarbejder eller risikovurderinger:
 
-  ::::contact-form-modal{title="Kontakt os"}
+  ::::contact-form-modal
   ---
+  label: Kontakt os om sikkerhed
   initial:
     subject: other
     subjectOther: Sikkerhedsspørgsmål
   ---
-    :::::u-button{icon="i-lucide-mail"}
-    Kontakt os om sikkerhed
-    :::::
   ::::
   :::
 

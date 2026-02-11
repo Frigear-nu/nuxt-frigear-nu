@@ -166,15 +166,13 @@ Our baseline security standards and the controls we use to keep member, -volunte
   #description
   If you believe you’ve found a security issue, please report it privately. Do not disclose publicly before we’ve had a chance to investigate.
 
-  ::::contact-form-modal{title="Report a security issue"}
+  ::::contact-form-modal
   ---
+  label: Report a security issue
   initial:
     subject: other
     subjectOther: Security issue / vulnerability disclosure
   ---
-    :::::u-button{icon="i-lucide-mail"}
-    Report a security issue
-    :::::
   ::::
   :::
 
@@ -318,15 +316,13 @@ PSD2 (EU payments)
   #description
   For questions about security controls, data handling in partnerships, or risk assessments:
 
-  ::::contact-form-modal{title="Get in touch"}
+  ::::contact-form-modal
   ---
+  label: Contact us about security
   initial:
     subject: other
     subjectOther: Security question
   ---
-    :::::u-button{icon="i-lucide-mail"}
-    Contact us about security
-    :::::
   ::::
   :::
 
