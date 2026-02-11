@@ -3,7 +3,7 @@ import type { ButtonProps, PageCardProps } from '@nuxt/ui'
 import { useSiteI18n, useToast } from '#imports'
 
 const { t } = useSiteI18n()
-const { formatError } = useFormattedToast()
+const { formatError, formatSuccess } = useFormattedToast()
 const toast = useToast()
 
 const displayChangePasswordDialog = ref(false)
@@ -26,7 +26,7 @@ const cards = computed<(PageCardProps & { button?: ButtonProps })[]>(() => ([
 
 const onPasswordChanged = () => {
   displayChangePasswordDialog.value = false
-  toast.add(formatToastSuccess('Password changed!'))
+  toast.add(formatSuccess('Password changed!'))
 }
 
 const onPasswordChangeError = (err: unknown) => {

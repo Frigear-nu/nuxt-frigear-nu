@@ -45,12 +45,12 @@ export const signUpWithPasswordSchema = signInWithPasswordSchema.extend({
 
 export type SignUpWithPasswordSchema = z.infer<typeof signUpWithPasswordSchema>
 
-export const signInWithMagicLinksSchema = z.object({
+export const signInWithMagicLinkTokenSchema = z.object({
   token: z.string(),
   redirect: z.string().optional(),
 })
 
-export type SignInWithMagicLinksSchema = z.infer<typeof signInWithMagicLinksSchema>
+export type SignInWithMagicLinkTokenSchema = z.infer<typeof signInWithMagicLinkTokenSchema>
 
 export const signInWithMagicLinkSchema = z.object({
   email: createEmailSchema(),
@@ -58,3 +58,11 @@ export const signInWithMagicLinkSchema = z.object({
 })
 
 export type SignInWithMagicLinkSchema = z.infer<typeof signInWithMagicLinkSchema>
+
+export const signUpWithMagicLinkSchema = signInWithMagicLinkSchema.extend({
+  name: createNameSchema(),
+  email: createEmailSchema(),
+  redirect: z.string().optional(),
+})
+
+export type SignUpWithMagicLinkSchema = z.infer<typeof signUpWithMagicLinkSchema>

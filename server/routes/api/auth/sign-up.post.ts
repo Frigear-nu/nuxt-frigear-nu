@@ -3,7 +3,7 @@ import { withQuery } from 'ufo'
 import { addHours } from 'date-fns'
 import { signUpWithPasswordSchema } from '#shared/schema/auth'
 import { useValidatedBody } from 'h3-zod'
-import { ClientError, EntityAlreadyExistsError, ServerError } from '@nitrotool/errors'
+import { ClientError, ServerError } from '@nitrotool/errors'
 import type { Users } from '@nuxthub/db/schema'
 import WelcomeToFrigearEmail from '#shared/emails/auth/WelcomeToFrigearEmail.vue'
 
@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
 
   const existingUser = await findUserByEmail(email)
 
-  if (existingUser) throw EntityAlreadyExistsError('errors.auth.signUp.failed')
+  if (existingUser) throw ClientError('errors.auth.signUp.failed')
 
   const [createdUser] = await db
     .insert(schema.users)

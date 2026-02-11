@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     throw UnauthenticatedError('errors.auth.signIn.failed')
   }
 
-  await createStripeCustomerFromMigration(matchedUser)
+  await ensureStripeCustomer(matchedUser)
 
   //
   return authenticateUser(

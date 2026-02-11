@@ -15,6 +15,8 @@ export default defineNuxtConfig({
     'nuxt-zod-i18n',
     '@nuxtjs/i18n',
     '@nuxtjs/device',
+    '@pinia/nuxt',
+    '@pinia/colada-nuxt',
   ],
   $production: {
     nitro: {

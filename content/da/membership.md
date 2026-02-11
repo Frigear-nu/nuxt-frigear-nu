@@ -3,31 +3,6 @@ title: Medlemskab
 description: Frigear medlemskab
 links: []
 mode: tabs
-subscriptions:
-  - id: annual
-    title: Frigear 🐼 årlig
-    description: ★ Frigear årligt medlemskab ★ for frivillige og andet frit folk!
-    billingCycle: Årlig
-    price: 104 kr
-    terms: "*Betalingsgebyr er indeholdt i beløb"
-    button:
-      label: BLIV MEDLEM
-  - id: _stripe_id2
-    title: Frigear ☠️ kvartal
-    description: ☮ Frigear kvartals medlemskab ☮ for frivillige og andre awesome peeps!
-    billingCycle: Kvartal
-    price: 31 kr
-    terms: "*Betalingsgebyr er indeholdt i beløb"
-    button:
-      label: BLIV MEDLEM
-  - id: _stripe_id3
-    title: Frigear 🍵 månedlig
-    description: 🎵 Frigear månedligt medlemskab 🎵 for frivillige og sammenlignelige hyggedyr!
-    billingCycle: Måned
-    price: 12 kr
-    terms: "*Betalingsgebyr er indeholdt i beløb"
-    button:
-      label: BLIV MEDLEM
 ---
 
 ::u-page-header
@@ -36,10 +11,9 @@ Medlemskab
 ::
 
 ::u-container{.mt-8.max-w-md}
-  :::pricing-plans
+  :::membership-pricing
   ---
   :mode: meta.mode
-  :subscriptions: meta.subscriptions
   orientation: horizontal
   ---
   :::
