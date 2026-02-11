@@ -40,6 +40,26 @@ const contactSubjectSelectItems = computed(() => {
   }))
 })
 
+const defaultMessagePlaceholderKey = 'contact.form.message.placeholder'
+
+const messagePlaceholder = computed(() => {
+  if (!state.subject) {
+    return t(defaultMessagePlaceholderKey)
+  }
+
+  //
+  const key = `contact.form.message.placeholders.${state.subject}`
+  const translated = t(key)
+
+  // if we get a string back like "contact.form.message.placeholders.ABC"
+  // we return the default instead
+  if (translated === key) {
+    return t(defaultMessagePlaceholderKey)
+  }
+
+  return translated
+})
+
 const DEFAULT_STATE: Partial<ContactFormSchema> = {
   name: undefined,
   email: undefined,
@@ -265,7 +285,7 @@ function onError(event: FormErrorEvent) {
       >
         <UTextarea
           v-model="state.message"
-          :placeholder="t('contact.form.message.placeholder')"
+          :placeholder="messagePlaceholder"
           class="w-full"
         />
       </UFormField>
