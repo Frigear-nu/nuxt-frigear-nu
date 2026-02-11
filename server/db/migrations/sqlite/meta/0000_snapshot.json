@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "6662681c-3246-4fa3-bb1a-2d90ce1540e4",
+  "id": "dfb7d983-d325-45cb-9848-aa2fb559f4dd",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "magic_links": {
@@ -21,8 +21,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "token": {
-          "name": "token",
+        "code": {
+          "name": "code",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -51,10 +51,10 @@
         }
       },
       "indexes": {
-        "magic_links_token_unique": {
-          "name": "magic_links_token_unique",
+        "magic_links_code_unique": {
+          "name": "magic_links_code_unique",
           "columns": [
-            "token"
+            "code"
           ],
           "isUnique": true
         }
@@ -242,8 +242,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "token": {
-          "name": "token",
+        "code": {
+          "name": "code",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -265,10 +265,10 @@
         }
       },
       "indexes": {
-        "password_resets_token_unique": {
-          "name": "password_resets_token_unique",
+        "password_resets_code_unique": {
+          "name": "password_resets_code_unique",
           "columns": [
-            "token"
+            "code"
           ],
           "isUnique": true
         }

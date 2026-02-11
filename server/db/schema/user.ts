@@ -44,7 +44,7 @@ export type NewSessions = typeof sessions.$inferInsert
 export const magicLinks = sqliteTable('magic_links', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-  token: text().notNull().unique(),
+  token: text('code').notNull().unique(),
   redirectUrl: text('redirect_url'),
   expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
   usedAt: integer('used_at', { mode: 'timestamp' }),
@@ -63,7 +63,7 @@ export const magicLinksRelations = relations(magicLinks, ({ one }) => ({
 export const passwordResets = sqliteTable('password_resets', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-  token: text().notNull().unique(),
+  token: text('code').notNull().unique(),
   expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
   usedAt: integer('used_at', { mode: 'timestamp' }),
 })
