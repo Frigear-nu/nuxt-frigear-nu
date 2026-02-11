@@ -66,14 +66,12 @@ Fælles for os er lysten til at bruge vores tid og kompetencer på noget, der **
 Vi tror på, at frivillighed både kan være **meningsfuldt og sjovt**. Og ja — det plejer at ende med stærke venskaber og gode historier.
 Har du en idé, eller er du bare nysgerrig? Så skriv til os:
 
-::::contact-form-modal{title="Kontakt os"}
+::::contact-form-modal
 ---
-initial: Frivillig
-subject: frivillig
+label: Kontakt os om at blive frivillig
+initial: 
+  subject: volunteering
 ---
-:::::u-button{icon="i-lucide-mail"}
-Kontakt os om at blive frivillig
-:::::
 ::::
 :::
 
@@ -150,14 +148,12 @@ Når vi arbejder sammen på tværs, kan vi skabe mere — og lære mere.
 
 Har du en idé til et **samarbejde, en partnercase eller et projekt**, der passer godt ind? Så ræk ud:
 
-::::contact-form-modal{title="Kontakt os"}
+::::contact-form-modal
 ---
+label: Kontakt os om samarbejde
 initial:
-subject: Samarbejde
+  subject: partnership
 ---
-:::::u-button{icon="i-lucide-mail"}
-Kontakt os om samarbejde
-:::::
 ::::
 :::
 ::

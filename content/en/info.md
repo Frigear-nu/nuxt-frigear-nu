@@ -66,14 +66,12 @@ What we share is the desire to use our time and skills on something that **creat
 We believe volunteering can be both **meaningful and fun**. And yes — it often ends up in strong friendships and great stories.
 Do you have an idea, or are you just curious? Then write to us:
 
-::::contact-form-modal{title="Contact us"}
+::::contact-form-modal
 ---
+label: Contact us about volunteering
 initial:
-subject: volunteer
+  subject: volunteering
 ---
-:::::u-button{icon="i-lucide-mail"}
-Contact us about volunteering
-:::::
 ::::
 :::
 
@@ -152,12 +150,10 @@ Got an idea for a **collaboration, a partner case, or a project** that’s a goo
 
 ::::contact-form-modal{title="Contact us"}
 ---
+label: Contact us about collaboration
 initial:
-subject: Collaboration
+  subject: partnership
 ---
-:::::u-button{icon="i-lucide-mail"}
-Contact us about collaboration
-:::::
 ::::
 :::
 ::
