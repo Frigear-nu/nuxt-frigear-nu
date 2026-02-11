@@ -1,4 +1,7 @@
 <script setup lang="ts">
+const { clearCart } = useShoppingCart()
+
+onMounted(() => clearCart())
 </script>
 
 <template>

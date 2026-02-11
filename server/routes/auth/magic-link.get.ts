@@ -1,11 +1,11 @@
-import { signInWithMagicLinksSchema } from '#shared/schema/auth'
+import { signInWithMagicLinkTokenSchema } from '#shared/schema/auth'
 import { useValidatedQuery } from 'h3-zod'
 import { isAfter } from 'date-fns'
 import { NotFoundError, ServerError } from '@nitrotool/errors'
 import { and, eq, gt, isNull } from 'drizzle-orm'
 
 export default defineEventHandler(async (event) => {
-  const { token } = await useValidatedQuery(event, signInWithMagicLinksSchema)
+  const { token } = await useValidatedQuery(event, signInWithMagicLinkTokenSchema)
   const currentTime = new Date()
   const [magicLink] = await db
     .select()

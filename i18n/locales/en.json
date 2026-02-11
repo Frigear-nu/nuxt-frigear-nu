@@ -34,7 +34,17 @@
     },
     "magicLink": {
       "title": "Magic Link",
-      "submit": "Send link"
+      "submit": "Send link",
+      "modal": {
+        "in": {
+          "title": "Sign In with Magic Link",
+          "description": "You can sign in with your e-mail, we'll send you a link."
+        },
+        "up": {
+          "title": "Sign up with Magic Link",
+          "description": "Your account will have no password, you can sign in with your e-mail."
+        }
+      }
     },
     "provider": {
       "google": "Google",

@@ -31,7 +31,17 @@
     },
     "magicLink": {
       "title": "Magic Link",
-      "submit": "Send link"
+      "submit": "Send link",
+      "modal": {
+        "in": {
+          "title": "Log ind med Magic Link",
+          "description": "Du kan log ind med din e-mail, så fyrer vi et link."
+        },
+        "up": {
+          "title": "Opret konto med Magic Link",
+          "description": "Din konto vil ik' ha no kodeord, du kan trygt log ind med din e-mail."
+        }
+      }
     },
     "provider": {
       "google": "Google",
