@@ -116,15 +116,13 @@ Information about GDPR.
   - Complain to the Danish Data Protection Agency
 
   
-    ::::contact-form-modal{title="Get in touch"}
+    ::::contact-form-modal
     ---
+    label: Click here to contact us about exercising your rights
     initial:
       subject: other
       subjectOther: GDPR rights
     ---
-      :::::u-button{icon="i-lucide-mail"}
-      Click here to contact us about exercising your rights
-      :::::
     ::::
   :::
 
@@ -155,10 +153,7 @@ Information about GDPR.
   #description
   If you have any questions, you can contact us here:
 
-    ::::contact-form-modal{title="Get in touch"}
-      :::::u-button{icon="i-lucide-mail"}
-      Click here to get in touch about anything
-      :::::
+    ::::contact-form-modal{label="Click here to get in touch about anything"}
     ::::
   :::
 
