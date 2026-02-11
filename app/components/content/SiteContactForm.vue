@@ -51,13 +51,9 @@ const messagePlaceholder = computed(() => {
   const key = `contact.form.message.placeholders.${state.subject}`
   const translated = t(key)
 
-  // if we get a string back like "contact.form.message.placeholders.ABC"
-  // we return the default instead
-  if (translated === key) {
-    return t(defaultMessagePlaceholderKey)
-  }
-
-  return translated
+  return translated !== key
+    ? translated
+    : t(defaultMessagePlaceholderKey)
 })
 
 const DEFAULT_STATE: Partial<ContactFormSchema> = {
