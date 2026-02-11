@@ -2,16 +2,35 @@
 import type { ButtonProps } from '@nuxt/ui'
 import type { ContactFormSchema } from '#shared/schema/forms/contact'
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   button?: ButtonProps
   title?: string
+  label?: string
   initial?: ContactFormSchema
 }>(), {
   button: undefined,
-  title: undefined,
+  title: 'contact.modal.title',
+  label: undefined,
 })
 
 const isOpen = defineModel<boolean>('open', { default: false })
+
+const { t } = useSiteI18n()
+
+const buttonProps = computed<ButtonProps>(() => {
+  if (!props.button) {
+    return {
+      icon: 'i-lucide-mail',
+      label: props.label || t('contact.modal.button'),
+    }
+  }
+
+  return {
+    label: props.label || t('contact.modal.button'),
+    icon: 'i-lucide-mail',
+    ...props.button || {},
+  }
+})
 </script>
 
 <template>
@@ -19,9 +38,14 @@ const isOpen = defineModel<boolean>('open', { default: false })
     v-model:open="isOpen"
     :title="$t(title)"
   >
-    <slot v-bind="{ button, isOpen }">
-      <UButton v-bind="button">
-        <slot name="label" />
+    <slot v-bind="{ button: buttonProps, isOpen }">
+      <UButton
+        v-bind="buttonProps"
+      >
+        <slot
+          v-if="$slots.label"
+          name="label"
+        />
       </UButton>
     </slot>
     <template #body>
