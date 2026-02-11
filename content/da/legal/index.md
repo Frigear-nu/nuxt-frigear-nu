@@ -1,5 +1,5 @@
 ---
-title: Legal root file
+title: Legal
 ---
 
 ::u-page-header
