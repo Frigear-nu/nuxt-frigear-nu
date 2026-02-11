@@ -47,7 +47,7 @@ const messagePlaceholder = computed(() => {
     return t(defaultMessagePlaceholderKey)
   }
 
-  //
+  // attempt getting the custom placeholder for a subject
   const key = `contact.form.message.placeholders.${state.subject}`
   const translated = t(key)
 
