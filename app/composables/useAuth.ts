@@ -69,8 +69,8 @@ export const useAuth = () => {
     return customAuth.sendForgotPasswordEmail(email)
   }
 
-  const resetPassword = async (token: string, password: string, confirmPassword: string) => {
-    return customAuth.resetPassword(token, password, confirmPassword)
+  const resetPassword = async (code: string, password: string, confirmPassword: string) => {
+    return customAuth.resetPassword(code, password, confirmPassword)
   }
 
   const refresh = async () => {

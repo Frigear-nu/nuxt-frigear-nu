@@ -1,5 +1,3 @@
-import { withQuery } from 'ufo'
-import { addHours } from 'date-fns'
 import { useValidatedBody } from 'h3-zod'
 import { db, schema } from '@nuxthub/db'
 import type { Users } from '@nuxthub/db/schema'
@@ -35,23 +33,11 @@ export default defineEventHandler(async (event) => {
 
   if (!createdUser) throw ServerError('errors.auth.signUp.failedCreate')
 
-  // FIXME: #163
-  const token = createSafeId()
-  const expiresAt = addHours(new Date(), 12)
+  const { url: signUpUrl } = await createMagicLinkForUser({
+    userId: createdUser.id,
+    redirectUrl: redirect && isInternalUrl(redirect) ? redirect : undefined,
+  })
 
-  const [createdMagicLink] = await db
-    .insert(schema.magicLinks)
-    .values({
-      token,
-      expiresAt: expiresAt,
-      userId: createdUser.id,
-      redirectUrl: redirect && isInternalUrl(redirect) ? redirect : undefined,
-    })
-    .returning()
-
-  if (!createdMagicLink) throw ServerError('Could not create magic link.')
-
-  const signUpUrl = withBaseUrl(withQuery('/auth/magic-link', { token }))
   if (import.meta.dev) {
     console.log(`Verify email with this URL: ${signUpUrl}`)
     return {

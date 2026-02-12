@@ -1,4 +1,4 @@
-import type { NewStripePrices, NewStripeProducts, NewStripeSubscriptions } from 'hub:db:schema'
+import type { NewStripePrices, NewStripeProducts, NewStripeSubscriptions } from '@nuxthub/db/schema'
 import { eq } from 'drizzle-orm'
 import type Stripe from 'stripe'
 import type { H3Event } from 'h3'

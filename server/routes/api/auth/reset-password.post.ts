@@ -5,17 +5,19 @@ import { NotFoundError, ServerError } from '@nitrotool/errors'
 
 export default defineEventHandler(async (event) => {
   // note: the schema handles confirmPassword
-  const { token, password } = await useValidatedBody(event, resetPasswordSchema)
+  const { code, password } = await useValidatedBody(event, resetPasswordSchema)
 
-  const [passwordReset] = await db.update(schema.passwordResets)
+  const [passwordReset] = await db
+    .update(schema.passwordResets)
     .set({ usedAt: new Date() })
     .where(
-      and(
+      () => and(
         isNull(schema.passwordResets.usedAt),
         gt(schema.passwordResets.expiresAt, new Date()),
-        eq(schema.passwordResets.token, token),
+        eq(schema.passwordResets.code, code),
       ),
-    ).returning()
+    )
+    .returning()
 
   if (!passwordReset) throw NotFoundError()
 

@@ -4,7 +4,7 @@ import { type ResetPasswordSchema, resetPasswordSchema } from '#shared/schema/au
 import type { FormSubmitEvent } from '@nuxt/ui'
 import { useAuth, useToast, useSiteI18n } from '#imports'
 
-const searchParams = useUrlSearchParams<{ token?: string }>('history')
+const searchParams = useUrlSearchParams<{ code?: string }>('history')
 onMounted(() => {
   if (!searchParams.token) {
     throw createError({
@@ -19,19 +19,19 @@ const { localePath } = useSiteI18n()
 const form = useTemplateRef('form')
 const toast = useToast()
 const state = reactive<Partial<ResetPasswordSchema>>({
-  token: undefined,
+  code: undefined,
   password: undefined,
   confirmPassword: undefined,
 })
 
 watchEffect(() => {
-  if (searchParams.token) state.token = searchParams.token
+  if (searchParams.code) state.code = searchParams.code
 })
 
 async function onSubmit(payload: FormSubmitEvent<ResetPasswordSchema>) {
-  const { token, password, confirmPassword } = payload.data
+  const { code, password, confirmPassword } = payload.data
   try {
-    await resetPassword(token, password, confirmPassword)
+    await resetPassword(code, password, confirmPassword)
     await refresh()
     toast.add(formatToastSuccess('Password has been set.'))
     await navigateTo(localePath('/account'))

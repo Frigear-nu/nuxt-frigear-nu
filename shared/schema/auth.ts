@@ -9,7 +9,7 @@ export const forgotPasswordSchema = z.object({
 export type ForgotPasswordSchema = z.infer<typeof forgotPasswordSchema>
 
 export const resetPasswordSchema = z.object({
-  token: z.string(),
+  code: z.string(),
   password: z.string().min(6),
   confirmPassword: z.string().min(6),
 }).refine(data => data.password === data.confirmPassword, {
@@ -46,7 +46,7 @@ export const signUpWithPasswordSchema = signInWithPasswordSchema.extend({
 export type SignUpWithPasswordSchema = z.infer<typeof signUpWithPasswordSchema>
 
 export const signInWithMagicLinkTokenSchema = z.object({
-  token: z.string(),
+  code: z.string(),
   redirect: z.string().optional(),
 })
 
