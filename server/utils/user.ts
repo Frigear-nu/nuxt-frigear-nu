@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
-import type { Users } from 'hub:db:schema'
+import type { Users } from '@nuxthub/db/schema'
+import { db, schema } from '@nuxthub/db'
 import { eq } from 'drizzle-orm'
 
 export const getDefaultRedirectForUser = async (
@@ -19,12 +20,10 @@ export const getDefaultRedirectForUser = async (
   return user?.emailVerifiedAt ? continueLink : '/auth/verify-email'
 }
 
-export const findUserByEmail = (email: Users['email']): Promise<Users | null> => {
-  // @ts-expect-error There is some typing issue with drizzle for now
-  return db.query.users.findFirst({ where: eq(schema.users.email, email) })
+export const findUserByEmail = (email: Users['email']): Promise<Users | undefined> => {
+  return db.query.users.findFirst({ where: () => eq(schema.users.email, email) })
 }
 
-export const findUserById = (id: Users['id']): Promise<Users | null> => {
-  // @ts-expect-error There is some typing issue with drizzle for now
-  return db.query.users.findFirst({ where: eq(schema.users.id, id) })
+export const findUserById = (id: Users['id']): Promise<Users | undefined> => {
+  return db.query.users.findFirst({ where: () => eq(schema.users.id, id) })
 }
