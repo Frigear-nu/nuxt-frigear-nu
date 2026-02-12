@@ -24,7 +24,7 @@ export default defineOAuthGoogleEventHandler({
         .returning()
     }
 
-    if (!dbUser) throw ServerError('Could find user.')
+    if (!dbUser) throw ServerError('Could not find user.')
 
     // // FIXME: Should probably not let this be rewritten now that google will allow recycling accounts?
     // // Create or update the oauth relationship:
