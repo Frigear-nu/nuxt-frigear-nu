@@ -285,7 +285,7 @@ Hvad hvis jeg vil klage over noget?
 #description
 > Klager kan sendes til bestyrelsen via knappen herunder og/eller kræves taget op på kommende generalforsamling af medlemmer.
 
-::::contact-form-modal{title="Kontakt os"}
+::::contact-form-modal
 ---
 label: Kontakt bestyrelsen for at klage
 initial:
@@ -360,11 +360,12 @@ Kontakt Frigear om tvivlsspørgsmål eller sparring på projektidéer
 
 #description
 Brug kontaktformularen herunder hvis du har enkeltspørgssmål til ansøgningsprocessen, eller hvis du har en idé til et projekt, som du gerne vil have sparring på, inden du sender en ansøgning:
-::::contact-form-modal{title="Kontakt os"}
+::::contact-form-modal
 ---
 label: Kontakt os om projektstøtte spørgsmål
 initial:
-  subject: Projektstøtte
+  subject: Other
+  subjectOther: Projektstøtte spørgsmål
 ---
 ::::
 :::
