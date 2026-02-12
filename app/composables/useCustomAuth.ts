@@ -30,7 +30,7 @@ export const useCustomAuth = () => {
   const signInWithProvider = async (provider: AuthProvider) => {
     switch (provider) {
       case 'google':
-        return openInPopup('/auth/google')
+        return openInPopup(`/auth/${provider}`)
 
       default:
         throw new Error(`Provider ${provider} not supported by this driver.`)
