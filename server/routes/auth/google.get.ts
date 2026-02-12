@@ -10,15 +10,14 @@ export default defineOAuthGoogleEventHandler({
     const email: string = user.email || ''
     let dbUser = await findUserByEmail(email)
 
-    if (import.meta.dev) console.log({ googleUser: user, dbUser })
     if (!dbUser) {
       [dbUser] = await db
         .insert(schema.users)
-        // todo: get full_name/avatar from google?
         .values({
           email,
-          name: user?.full_name || email, // ??
-          avatarUrl: user?.picture || user?.avatar_url,
+          name: user?.name || email,
+          avatarUrl: user?.picture,
+          // user.email_verified could be false - TBA
           emailVerifiedAt: new Date(),
         })
         .returning()
