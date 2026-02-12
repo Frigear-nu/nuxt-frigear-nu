@@ -1,6 +1,4 @@
 import { db, schema } from '@nuxthub/db'
-import { withQuery } from 'ufo'
-import { addHours } from 'date-fns'
 import { signUpWithPasswordSchema } from '#shared/schema/auth'
 import { useValidatedBody } from 'h3-zod'
 import { ClientError, ServerError } from '@nitrotool/errors'
