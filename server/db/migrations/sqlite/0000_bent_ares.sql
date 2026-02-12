@@ -14,22 +14,12 @@ CREATE TABLE `oauth_apps` (
 	`user_id` integer NOT NULL,
 	`provider` text NOT NULL,
 	`provider_account_id` text NOT NULL,
-	`access_token` text NOT NULL,
+	`access_token` text,
 	`refresh_token` text,
 	`expires_at` integer,
 	`created_at` integer,
 	`updated_at` integer,
 	FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE cascade
-);
---> statement-breakpoint
-CREATE TABLE `passkeys` (
-	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`user_id` integer NOT NULL,
-	`credential_id` text NOT NULL,
-	`public_key` text NOT NULL,
-	`sign_count` integer DEFAULT 0,
-	`created_at` integer NOT NULL,
-	`last_used_at` integer
 );
 --> statement-breakpoint
 CREATE TABLE `password_resets` (

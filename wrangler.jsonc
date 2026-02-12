@@ -12,8 +12,7 @@
   },
   "d1_databases": [
     {
-      "database_id": "03188510-ac62-4ffb-80dd-0d9912aa3d55",
-      //      "database_id": "38a09939-7e77-49ac-858b-d43fafc7762b",
+      "database_id": "d82135a0-bf5a-4ce3-8d9d-ca7d5fa26f49",
       "binding": "DB",
       "migrations_table": "_hub_migrations",
       "database_name": "nuxt-frigear-nu",
@@ -45,5 +44,25 @@
       "*/30 * * * *",
       "0 */2 * * *"
     ]
+  },
+  "env": {
+    "staging": {
+      "preview_urls": false,
+      "routes": [
+        {
+          "custom_domain": true,
+          "pattern": "frigear-nu.frigear.dev"
+        }
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_id": "b3cccc87-9633-4e70-933a-e3666d4f19b7",
+          "database_name": "frigear-nu-staging",
+          "migrations_table": "_hub_migrations",
+          "migrations_dir": ".output/server/db/migrations/sqlite"
+        }
+      ]
+    }
   }
 }

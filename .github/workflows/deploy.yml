@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - staging
 
 jobs:
   deploy:
@@ -44,31 +45,44 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: install pnpm
+      - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10.19.0
 
-      - name: use node.js
+      - name: Use node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24.6
           cache: pnpm
 
-      - name: install dependencies
+      - name: Install dependencies
         run: pnpm install
 
-      - name: lint
+      - name: Lint
         run: pnpm lint
 
-      - name: build
+      - name: Build production
+        if: github.ref_name == 'main'
         run: pnpm build
 
-      - name: migrate db
+      - name: Migrate production db
         if: github.ref_name == 'main'
         run: npx wrangler d1 migrations apply nuxt-frigear-nu --remote
 #        run: pnpm db:migrate
 
-      - name: deploy to production
+      - name: Deploy to production
         if: github.ref_name == 'main'
         run: pnpm cf:deploy
+
+      - name: Build staging
+        if: github.ref_name == 'staging'
+        run: pnpm build --envName staging
+
+      - name: Migrate staging db
+        if: github.ref_name == 'staging'
+        run: npx wrangler d1 migrations apply frigear-nu-staging --remote
+
+      - name: Deploy to staging
+        if: github.ref_name == 'staging'
+        run: pnpm cf:deploy --env staging
