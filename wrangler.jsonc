@@ -45,5 +45,25 @@
       "*/30 * * * *",
       "0 */2 * * *"
     ]
+  },
+  "env": {
+    "staging": {
+      "preview_urls": false,
+      "routes": [
+        {
+          "custom_domain": true,
+          "pattern": "frigear-nu.frigear.dev"
+        }
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_id": "b3cccc87-9633-4e70-933a-e3666d4f19b7",
+          "database_name": "frigear-nu-staging",
+          "migrations_table": "_hub_migrations",
+          "migrations_dir": ".output/server/db/migrations/sqlite"
+        }
+      ]
+    }
   }
 }

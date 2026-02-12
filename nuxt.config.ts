@@ -26,12 +26,34 @@ export default defineNuxtConfig({
         ],
       },
     },
+    hub: {
+      db: {
+        dialect: 'sqlite',
+        connection: { databaseId: process.env.D1_DATABASE_ID },
+      },
+    },
     image: {
       provider: 'cloudflare',
       quality: 80,
       format: ['webp', 'avif', 'jpeg', 'jpg', 'png', 'gif'],
       cloudflare: {
         baseURL: process.env.CLOUDFLARE_IMAGE_BASE_URL,
+      },
+    },
+  },
+  $staging: {
+    nitro: {
+      scheduledTasks: {
+        // at minute 0 every 2 hours
+        '0 */2 * * *': [
+          'stripe:sync',
+        ],
+      },
+    },
+    hub: {
+      db: {
+        dialect: 'sqlite',
+        connection: { databaseId: process.env.D1_DATABASE_ID },
       },
     },
   },

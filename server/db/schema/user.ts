@@ -29,7 +29,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   magicLinks: many(magicLinks),
   passwordResets: many(passwordResets),
   oauthApps: many(oauthApps),
-  passkeys: many(passkeys),
+  // passkeys: many(passkeys),
 }))
 
 export const sessions = sqliteTable('sessions', {
@@ -83,7 +83,7 @@ export const oauthApps = sqliteTable('oauth_apps', {
   userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   provider: text().notNull(),
   providerAccountId: text('provider_account_id').notNull(),
-  accessToken: text('access_token').notNull(),
+  accessToken: text('access_token'),
   refreshToken: text('refresh_token'),
   expiresAt: integer('expires_at', { mode: 'timestamp' }),
   createdAt: integer('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
@@ -99,23 +99,23 @@ export const oauthAppsRelations = relations(oauthApps, ({ one }) => ({
     references: [users.id],
   }),
 }))
-
-export const passkeys = sqliteTable('passkeys', {
-  id: integer('id').primaryKey({ autoIncrement: true }),
-  userId: integer('user_id').notNull(),
-  credentialId: text('credential_id').notNull(), // base64url encoded
-  publicKey: text('public_key').notNull(),
-  signCount: integer('sign_count').default(0),
-  createdAt: integer('created_at').notNull(),
-  lastUsedAt: integer('last_used_at'),
-})
-
-export type Passkeys = typeof passkeys.$inferSelect
-export type NewPasskeys = typeof passkeys.$inferInsert
-
-export const passkeysRelations = relations(passkeys, ({ one }) => ({
-  user: one(users, {
-    fields: [passkeys.userId],
-    references: [users.id],
-  }),
-}))
+//
+// export const passkeys = sqliteTable('passkeys', {
+//   id: integer('id').primaryKey({ autoIncrement: true }),
+//   userId: integer('user_id').notNull(),
+//   credentialId: text('credential_id').notNull(), // base64url encoded
+//   publicKey: text('public_key').notNull(),
+//   signCount: integer('sign_count').default(0),
+//   createdAt: integer('created_at').notNull(),
+//   lastUsedAt: integer('last_used_at'),
+// })
+//
+// export type Passkeys = typeof passkeys.$inferSelect
+// export type NewPasskeys = typeof passkeys.$inferInsert
+//
+// export const passkeysRelations = relations(passkeys, ({ one }) => ({
+//   user: one(users, {
+//     fields: [passkeys.userId],
+//     references: [users.id],
+//   }),
+// }))
