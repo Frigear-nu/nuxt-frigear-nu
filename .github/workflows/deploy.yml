@@ -39,7 +39,7 @@ jobs:
 
       # OAuth
       NUXT_OAUTH_GOOGLE_CLIENT_ID: ${{ secrets.SUPABASE_GOOGLE_CLIENT_ID }}
-      NUXT_OAUTH_GOOGLE_SECRET: ${{ secrets.SUPABASE_GOOGLE_SECRET }}
+      NUXT_OAUTH_GOOGLE_CLIENT_SECRET: ${{ secrets.SUPABASE_GOOGLE_SECRET }}
 
     steps:
       - uses: actions/checkout@v4

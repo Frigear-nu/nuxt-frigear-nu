@@ -7,28 +7,25 @@ export default defineOAuthGoogleEventHandler({
     },
   },
   async onSuccess(event, { user }) {
-    // TODO: Check if signed in with google before - and matching email.
-    //  - if not create user and provider details.
     const email: string = user.email || ''
     let dbUser = await findUserByEmail(email)
 
-    if (import.meta.dev) console.log({ user })
+    if (import.meta.dev) console.log({ googleUser: user, dbUser })
     if (!dbUser) {
       [dbUser] = await db
         .insert(schema.users)
-      // todo: get full_name/avatar from google?
+        // todo: get full_name/avatar from google?
         .values({
           email,
-          name: user?.full_name || email,
+          name: user?.full_name || email, // ??
+          avatarUrl: user?.picture || user?.avatar_url,
           emailVerifiedAt: new Date(),
         })
         .returning()
     }
 
-    // todo: check if this might be triggered.
-    if (!dbUser) throw ServerError()
+    if (!dbUser) throw ServerError('Could find user.')
 
-    // todo: centralize redirect storage.
     return authenticateUser(event, dbUser, await getDefaultRedirectForUser(event, dbUser))
   },
 })

@@ -2,7 +2,7 @@ import type { AuthProvider } from '~/types'
 import type { SignUpWithMagicLinkSchema } from '#shared/schema/auth'
 
 export const useCustomAuth = () => {
-  const { session, fetch: refreshSession, clear: clearSession } = useUserSession()
+  const { session, fetch: refreshSession, clear: clearSession, openInPopup } = useUserSession()
 
   const currentUser = computed(() => session.value?.user)
 
@@ -30,7 +30,7 @@ export const useCustomAuth = () => {
   const signInWithProvider = async (provider: AuthProvider) => {
     switch (provider) {
       case 'google':
-        return navigateTo(`/auth/${provider}`)
+        return openInPopup('/auth/google')
 
       default:
         throw new Error(`Provider ${provider} not supported by this driver.`)
