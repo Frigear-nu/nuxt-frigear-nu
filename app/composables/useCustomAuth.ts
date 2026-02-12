@@ -1,7 +1,8 @@
 import type { AuthProvider } from '~/types'
+import type { SignUpWithMagicLinkSchema } from '#shared/schema/auth'
 
 export const useCustomAuth = () => {
-  const { session, fetch: refreshSession, clear: clearSession } = useUserSession()
+  const { session, fetch: refreshSession, clear: clearSession, openInPopup } = useUserSession()
 
   const currentUser = computed(() => session.value?.user)
 
@@ -12,16 +13,24 @@ export const useCustomAuth = () => {
     })
     if (!result) throw new Error('Could not send magic link.')
 
-    if (result.local) {
-      return result
-    }
-    return true
+    return result
+  }
+
+  const signUpWithMagicLink = async (body: SignUpWithMagicLinkSchema) => {
+    const result = await $fetch(`/api/auth/sign-up/magic-link`, {
+      method: 'POST',
+      body,
+    })
+
+    if (!result) throw new Error('Could not sign up with magic link.')
+
+    return result
   }
 
   const signInWithProvider = async (provider: AuthProvider) => {
     switch (provider) {
       case 'google':
-        return navigateTo(`/auth/${provider}`)
+        return openInPopup(`/auth/${provider}`)
 
       default:
         throw new Error(`Provider ${provider} not supported by this driver.`)
@@ -50,10 +59,10 @@ export const useCustomAuth = () => {
     })
   }
 
-  const resetPassword = async (token: string, password: string, confirmPassword: string) => {
+  const resetPassword = async (code: string, password: string, confirmPassword: string) => {
     return $fetch('/api/auth/reset-password', {
       method: 'POST',
-      body: { token, password, confirmPassword },
+      body: { code, password, confirmPassword },
     })
   }
 
@@ -68,6 +77,7 @@ export const useCustomAuth = () => {
   return {
     currentUser,
     sendMagicLink,
+    signUpWithMagicLink,
     signInWithProvider,
     signInWithPassword,
     signUpWithPassword,

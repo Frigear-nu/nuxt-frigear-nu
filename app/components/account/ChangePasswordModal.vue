@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import type { ZodError } from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import type { AuthError } from '@supabase/auth-js'
 import { changeUserPasswordSchema, type ChangeUserPasswordSchema } from '#shared/schema/user'
 
 const $emits = defineEmits<{
   (e: 'loading' | 'success'): void
-  (e: 'error', error: Error | AuthError | ZodError): void
+  (e: 'error', error: Error | ZodError): void
 }>()
 
 const { changePassword } = useAccount()
@@ -27,7 +26,7 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserPasswordSchema>) {
     $emits('success')
   }
   catch (error: unknown) {
-    $emits('error', error as Error | AuthError | ZodError)
+    $emits('error', error as Error | ZodError)
   }
   finally {
     if (form.value) form.value.clear()
@@ -95,8 +94,8 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserPasswordSchema>) {
         v-if="form"
         id="change-password"
         type="submit"
-        :loading="form.loading"
-        @click="form.submit()"
+        :loading="form?.loading"
+        @click="form?.submit()"
       >
         Change
       </UButton>

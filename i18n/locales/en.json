@@ -2,6 +2,9 @@
   "common": {
     "or": "Or"
   },
+  "dateTime":{
+    "format": "MMM d, yyyy, h:mm aaa"
+  },
   "auth": {
     "signIn": "Sign In",
     "signUp": "Sign Up",
@@ -31,7 +34,17 @@
     },
     "magicLink": {
       "title": "Magic Link",
-      "submit": "Send link"
+      "submit": "Send link",
+      "modal": {
+        "in": {
+          "title": "Sign In with Magic Link",
+          "description": "You can sign in with your e-mail, we'll send you a link."
+        },
+        "up": {
+          "title": "Sign up with Magic Link",
+          "description": "Your account will have no password, you can sign in with your e-mail."
+        }
+      }
     },
     "provider": {
       "google": "Google",
@@ -49,6 +62,13 @@
   "locale": {
     "switch": "Choose language (now: {name})"
   },
+  "payment": {
+    "interval": {
+      "month": "Month",
+      "quarter": "Quarter",
+      "year": "Year"
+    }
+  },
   "account": {
     "title": "Account",
     "menu": {
@@ -65,8 +85,8 @@
         "label": "E-mail",
         "description": "Your awesome E-mail.",
         "change": {
-          "title": "Ændre E-post",
-          "label": "Ny e-post"
+          "title": "Change e-mail",
+          "label": "New e-mail"
         }
       },
       "avatar": {
@@ -76,7 +96,22 @@
     },
     "membership": {
       "title": "Membership",
-      "description": "Your membership type."
+      "description": "Your membership type.",
+      "active": "ACTIVE",
+      "cancelling": "Subscription is ending",
+      "cancelsAt": "Ending at {date}",
+      "currentPlan": "Current plan",
+      "renewsAutomaticallyAt": "Renews automatically on {date}",
+      "cancel": "Cancel membership",
+      "changePaymentMethod": "Change payment method",
+      "update": {
+        "title": "Update subscription",
+        "description": "Change your subscription plan."
+      },
+      "subscribe": {
+        "title": "Get a membership",
+        "description": "Subscribe to a membership to get started!"
+      }
     },
     "security": {
       "title": "Security",

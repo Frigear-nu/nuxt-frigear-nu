@@ -10,12 +10,21 @@ export const useFormattedToast = () => {
     if (error && error.data && error.data.message) {
     // @ts-expect-error This cannot be typed somehow.
       const msg = String(error.data.message)
-      overrides.description = msg.includes('.') ? t(msg) : msg
+      overrides.description = msg.includes('.') && !msg.endsWith('.') ? t(msg) : msg
     }
     return formatToastError(error as never, overrides)
   }
 
+  function formatSuccess(title: string, description?: string, additional?: Toast): Partial<Toast> {
+    return formatToastSuccess(
+      title.includes('.') && !title.endsWith('.') ? t(title) : title,
+      description?.includes('.') && !description?.endsWith('.') ? t(description) : description,
+      additional,
+    )
+  }
+
   return {
     formatError,
+    formatSuccess,
   }
 }

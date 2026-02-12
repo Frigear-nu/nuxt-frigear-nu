@@ -1,8 +1,11 @@
 import { createId } from '@paralleldrive/cuid2'
-import type { Users } from 'hub:db:schema'
+import type { Users, MagicLinks } from '@nuxthub/db/schema'
 import type { H3Event } from 'h3'
 import type { ExtendableJwtPayload } from '@nitrotool/jwt/core'
-import { UnauthenticatedError } from '@nitrotool/errors'
+import { ServerError, UnauthenticatedError } from '@nitrotool/errors'
+import { addMinutes } from 'date-fns'
+import { withQuery } from 'ufo'
+import { db, schema } from '@nuxthub/db'
 
 export const createSafeId = () => createId()
 
@@ -13,7 +16,7 @@ export const authenticateUser = async (event: H3Event, user: Users, redirect?: s
   })
 
   if (!redirect) {
-    return { ok: true }
+    return sendNoContent(event)
   }
 
   return sendRedirect(event, redirect || '/')
@@ -66,10 +69,32 @@ export const requireUser = async (event: H3Event) => {
       throw new TypeError('Invalid JWT subject.')
     }
     const user = await findUserById(Number(event.context.$jwt.sub))
-    if (!user) throw UnauthenticatedError('User required')
-    return mapUserToSession(user)
+    if (user) return mapUserToSession(user)
   }
 
   //
   throw UnauthenticatedError('User required')
+}
+
+export const createMagicLinkForUser = async ({ userId, expiresAt, redirectUrl, code}: {
+  userId: MagicLinks['userId']
+  redirectUrl?: MagicLinks['redirectUrl']
+  expiresAt?: MagicLinks['expiresAt']
+  code?: MagicLinks['code']
+}) => {
+  code ||= createSafeId()
+  expiresAt ||= addMinutes(new Date(), 120)
+  const [createdMagicLink] = await db.insert(schema.magicLinks).values({
+    code,
+    expiresAt,
+    userId,
+    redirectUrl,
+  }).returning()
+
+  if (!createdMagicLink) throw ServerError('Could not create magic link.')
+
+  return {
+    url: withBaseUrl(withQuery('/auth/magic-link', { code })),
+    magicLink: createdMagicLink,
+  }
 }

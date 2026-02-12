@@ -7,13 +7,17 @@ import {
   Button,
   Preview,
   Hr,
+  Link,
 } from '@vue-email/components'
 import EmailHeader from '../components/EmailHeader.vue'
 import EmailWrapper from '#shared/emails/components/EmailWrapper.vue'
 
 withDefaults(defineProps<{
+  name?: string
   verifyUrl?: string
+  magicLinkUrl?: string
   requireEmailVerification?: boolean
+  gdprUrl?: string
 }>(), {
   requireEmailVerification: false,
 })
@@ -22,7 +26,7 @@ withDefaults(defineProps<{
 <template>
   <EmailWrapper>
     <Preview>
-      Welcome to Frigear!
+      {{ name ? `Welcome to Frigear, ${name}!` : 'Welcome to Frigear!' }}
     </Preview>
 
     <Container class="max-w-lg mx-auto p-4">
@@ -33,7 +37,7 @@ withDefaults(defineProps<{
           level="2"
           class="text-xl font-bold mb-4"
         >
-          Welcome to Frigear!
+          {{ name ? `Welcome to Frigear, ${name}!` : 'Welcome to Frigear!' }}
         </Heading>
 
         <Hr class="border-t border-gray-200 my-4" />
@@ -60,11 +64,33 @@ withDefaults(defineProps<{
           </Text>
         </template>
 
+        <template v-if="requireEmailVerification && magicLinkUrl">
+          <Text class="mb-4 text-gray-700">
+            Since you signed up with magic link, you will have to sign in with one too :)
+          </Text>
+
+          <Button
+            :href="magicLinkUrl"
+            class="bg-blue-600 text-white font-semibold py-2 px-4 rounded mb-4 inline-block"
+          >
+            Sign in
+          </Button>
+
+          <Text class="break-words text-sm text-gray-500 mb-4">
+            Or copy this link to your browser: {{ magicLinkUrl }}
+          </Text>
+        </template>
+
         <Hr class="border-t border-gray-200 my-4" />
 
         <Text class="mb-4 text-gray-700">
           If you didn’t request this email, you can safely ignore it. No action is required - the account will be
-          deleted in accordance with our GDPR policy.
+          deleted in accordance with our <component
+            :is="gdprUrl ? Link : 'span'"
+            :href="gdprUrl"
+          >
+            GDPR policy
+          </component>.
         </Text>
 
         <Hr class="border-t border-gray-200 my-4" />

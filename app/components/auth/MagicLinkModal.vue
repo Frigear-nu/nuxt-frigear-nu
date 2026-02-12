@@ -1,75 +1,122 @@
 <script setup lang="ts">
 import type { ZodError } from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import type { AuthError } from '@supabase/auth-js'
-import { signInWithMagicLinkSchema, type SignInWithMagicLinkSchema } from '#shared/schema/auth'
+import {
+  signInWithMagicLinkSchema,
+  signUpWithMagicLinkSchema,
+  type SignInWithMagicLinkSchema,
+  type SignUpWithMagicLinkSchema,
+} from '#shared/schema/auth'
 
 const $emits = defineEmits<{
   (e: 'loading'): void
   (e: 'success', email: string): void
-  (e: 'error', error: Error | AuthError | ZodError): void
+  (e: 'error', error: Error | ZodError): void
   (e: 'development', magicLink: unknown): void
 }>()
 
-const { sendMagicLink } = useAuth()
+const { signInWithMagicLink, signUpWithMagicLink } = useAuth()
 const form = useTemplateRef('form')
 const emailValue = defineModel<string | undefined>('email')
 const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
 const displayModal = defineModel<boolean>('open', { default: false })
 
-const state = reactive<Partial<SignInWithMagicLinkSchema>>({
+const schema = signUpWithMagicLinkSchema.or(signInWithMagicLinkSchema)
+const state = reactive<Partial<SignUpWithMagicLinkSchema | SignInWithMagicLinkSchema>>({
+  name: undefined,
   email: undefined,
+})
+
+const nameField = computed({
+  get: () => state.name,
+  set: (name: string) => state.name = name.trim(),
 })
 
 watch(emailValue, (em) => {
   state.email = em
 })
 
-async function onSubmit(payload: FormSubmitEvent<SignInWithMagicLinkSchema>) {
+const handleMagicLink = (email: string, magicLink: { local?: boolean } | unknown) => {
+  if (import.meta.dev) console.log({ magicLink })
+  if (magicLink && typeof magicLink === 'object' && 'local' in magicLink && magicLink?.local) {
+    return $emits('development', magicLink)
+  }
+
+  $emits('success', email)
+}
+
+async function onSignIn(payload: FormSubmitEvent<SignInWithMagicLinkSchema>) {
   const email = payload.data.email
   $emits('loading')
 
-  try {
-    const magicLink = await sendMagicLink(email)
-    if (import.meta.dev) console.log({ magicLink })
-
-    if (typeof magicLink === 'object' && magicLink?.local) {
-      return $emits('development', magicLink)
-    }
-
-    $emits('success', email)
-  }
-  catch (error: unknown) {
-    $emits('error', error as Error | AuthError | ZodError)
-  }
+  const magicLink = await signInWithMagicLink(email)
+  handleMagicLink(email, magicLink)
 }
 
-// FIXME: Need translations.
+async function onSignUp(payload: FormSubmitEvent<SignUpWithMagicLinkSchema>) {
+  const { name, email } = payload.data
+  $emits('loading')
+  const magicLink = await signUpWithMagicLink({ name, email })
+  handleMagicLink(email, magicLink)
+}
+
+// Typed onSubmit using conditional types
+async function onSubmit<
+  M extends 'in' | 'up' = typeof mode.value,
+  T = M extends 'in' ? SignInWithMagicLinkSchema : SignUpWithMagicLinkSchema,
+>(
+  payload: FormSubmitEvent<T>,
+) {
+  console.log({ data: payload.data })
+  try {
+    if (mode.value === 'in') {
+      return onSignIn(payload as FormSubmitEvent<SignInWithMagicLinkSchema>)
+    }
+    return onSignUp(payload as FormSubmitEvent<SignUpWithMagicLinkSchema>)
+  }
+  catch (error: unknown) {
+    $emits('error', error as Error | ZodError)
+  }
+}
 </script>
 
 <template>
   <UModal
     v-model:open="displayModal"
-    :title="mode === 'in' ? 'Sign in with Magic Link' : 'Sign up with Magic Link'"
-    description="Fyll ut skjemaet så sender vi deg en magic link, så slipper du streve med passord."
+    :title="$t(mode === 'in' ? 'auth.magicLink.modal.in.title' : 'auth.magicLink.modal.up.title')"
+    :description="$t(mode === 'in' ? 'auth.magicLink.modal.in.description' : 'auth.magicLink.modal.up.description')"
   >
     <template #body>
       <UForm
         ref="form"
-        :schema="signInWithMagicLinkSchema"
+        :schema="schema"
         :state="state"
         class="space-y-4"
         :loading-auto="true"
         @submit="onSubmit"
       >
         <UFormField
-          label="E-post"
+          v-if="state && mode && mode === 'up'"
+          :label="$t('auth.name.label')"
+        >
+          <UInput
+            v-model="nameField"
+            type="text"
+            autocomplete="name"
+            :placeholder="$t('auth.name.placeholder')"
+            class="w-full"
+          />
+        </UFormField>
+        <UFormField
+          :label="$t('auth.email.label')"
           name="email"
         >
           <UInput
             v-model="state.email"
             type="email"
             autocomplete="email"
+            :placeholder="$t('auth.email.placeholder')"
+            class="w-full"
           />
         </UFormField>
       </UForm>
@@ -78,10 +125,10 @@ async function onSubmit(payload: FormSubmitEvent<SignInWithMagicLinkSchema>) {
       <UButton
         v-if="form"
         type="submit"
-        :loading="form.loading"
-        @click="form.submit()"
+        :loading="form?.loading"
+        @click="form?.submit()"
       >
-        {{ $t('auth.magicLink.submit') }}
+        {{ $t(mode === 'in' ? 'auth.magicLink.submit' : 'auth.signUp') }}
       </UButton>
     </template>
   </UModal>

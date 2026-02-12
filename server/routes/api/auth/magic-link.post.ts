@@ -1,41 +1,44 @@
 import { signInWithMagicLinkSchema } from '#shared/schema/auth'
 import { useValidatedBody } from 'h3-zod'
 import { ClientError, NotFoundError } from '@nitrotool/errors'
-import { addMinutes } from 'date-fns'
-import { db } from 'hub:db'
+import { db, schema } from '@nuxthub/db'
 import { eq } from 'drizzle-orm'
-import { withQuery } from 'ufo'
 import MagicLinkEmail from '#shared/emails/auth/MagicLinkEmail.vue'
 
 export default defineEventHandler(async (event) => {
-  const { mail: { from, to: replyTo } } = useRuntimeConfig(event)
+  const { mail: { from, to: replyTo }, auth: { signUp } } = useRuntimeConfig(event)
   const { email, redirect } = await useValidatedBody(event, signInWithMagicLinkSchema)
 
-  const resolvedUser = await db.query.users.findFirst({
-    where: eq(schema.users.email, email),
+  let resolvedUser = await db.query.users.findFirst({
+    where: () => eq(schema.users.email, email),
   })
 
-  if (!resolvedUser) throw NotFoundError()
+  if (!resolvedUser) {
+    if (!signUp) throw NotFoundError()
+
+    const [createdUser] = await db
+      .insert(schema.users)
+      .values({
+        name: email,
+        email,
+      })
+      .returning()
+
+    if (!createdUser) throw ClientError('Could not create user. Please try again later.')
+
+    resolvedUser = createdUser
+  }
 
   // todo: rate-limit this.
-
-  const token = createSafeId()
-  const expiresAt = addMinutes(new Date(), 120)
-  const [createdMagicLink] = await db.insert(schema.magicLinks).values({
-    token,
-    expiresAt: expiresAt,
+  const { url: signInUrl } = await createMagicLinkForUser({
     userId: resolvedUser.id,
-    redirectUrl: redirect,
-  }).returning()
+    redirectUrl: redirect && isInternalUrl(redirect) ? redirect : undefined,
+  })
 
-  if (!createdMagicLink) throw ClientError('Could not create magic link.')
-
-  const signInUrl = withBaseUrl(withQuery('/auth/magic-link', { token }))
   if (import.meta.dev) {
     console.log(`Sign in with this URL: ${signInUrl}`)
     return {
       message: 'Success',
-      expiresAt,
       local: true,
     }
   }
@@ -53,7 +56,6 @@ export default defineEventHandler(async (event) => {
 
   return {
     message: 'Success',
-    expiresAt,
     redirect,
   }
 })

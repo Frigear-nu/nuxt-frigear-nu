@@ -5,7 +5,6 @@ export default defineNuxtConfig({
   modules: [
     '@nitrotool/jwt',
     '@nuxthub/core',
-    '@nuxtjs/supabase',
     'nuxt-studio',
     '@nuxt/ui',
     '@nuxt/content',
@@ -15,6 +14,8 @@ export default defineNuxtConfig({
     'nuxt-zod-i18n',
     '@nuxtjs/i18n',
     '@nuxtjs/device',
+    '@pinia/nuxt',
+    '@pinia/colada-nuxt',
   ],
   $production: {
     nitro: {
@@ -166,18 +167,6 @@ export default defineNuxtConfig({
     },
   },
 
-  supabase: {
-    useSsrCookies: true,
-    redirectOptions: {
-      login: '/sign-in',
-      callback: '/auth/confirm',
-      include: [
-        /* '/account(/*)?', */
-        '/only/supabase',
-      ],
-      saveRedirectToCookie: true,
-    },
-  },
   zodI18n: {
     localeCodesMapping: {
       'da-DK': 'da',

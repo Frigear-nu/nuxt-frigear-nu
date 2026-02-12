@@ -1,9 +1,7 @@
 import { db, schema } from '@nuxthub/db'
-import { withQuery } from 'ufo'
-import { addHours } from 'date-fns'
 import { signUpWithPasswordSchema } from '#shared/schema/auth'
 import { useValidatedBody } from 'h3-zod'
-import { ClientError, EntityAlreadyExistsError, ServerError } from '@nitrotool/errors'
+import { ClientError, ServerError } from '@nitrotool/errors'
 import type { Users } from '@nuxthub/db/schema'
 import WelcomeToFrigearEmail from '#shared/emails/auth/WelcomeToFrigearEmail.vue'
 
@@ -20,11 +18,11 @@ export default defineEventHandler(async (event) => {
 
   if (!signUp) throw createError({ statusCode: 400, message: 'Signup is disabled.' })
 
-  const { name, email, password } = await useValidatedBody(event, signUpWithPasswordSchema)
+  const { name, email, password, redirect } = await useValidatedBody(event, signUpWithPasswordSchema)
 
   const existingUser = await findUserByEmail(email)
 
-  if (existingUser) throw EntityAlreadyExistsError('errors.auth.signUp.failed')
+  if (existingUser) throw ClientError('errors.auth.signUp.failed')
 
   const [createdUser] = await db
     .insert(schema.users)
@@ -42,20 +40,12 @@ export default defineEventHandler(async (event) => {
 
   if (verifyEmail) {
     // This will mark the email address as verified if it was not from before.
-    const token = createSafeId()
-    const expiresAt = addHours(new Date(), 12)
-    const [createdMagicLink] = await db
-      .insert(schema.magicLinks)
-      .values({
-        token,
-        expiresAt: expiresAt,
-        userId: createdUser.id,
-      })
-      .returning()
+    const { url } = await createMagicLinkForUser({
+      userId: createdUser.id,
+      redirectUrl: redirect && isInternalUrl(redirect) ? redirect : undefined,
+    })
 
-    if (!createdMagicLink) throw ClientError('Could not create magic link.')
-
-    verifyUrl = withBaseUrl(withQuery('/auth/magic-link', { token }))
+    verifyUrl = url
   }
 
   if (import.meta.dev) {

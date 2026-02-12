@@ -1,11 +1,11 @@
 import type { AuthProvider } from '~/types'
+import type { SignUpWithMagicLinkSchema } from '#shared/schema/auth'
 
 export const useAuth = () => {
   // const nuxtApp = useNuxtApp()
-  // const sbAuth = useSupabaseAuth()
   const customAuth = useCustomAuth()
 
-  const authMode = computed<'custom' | 'supabase'>(() => {
+  const authMode = computed<'custom'>(() => {
     return 'custom'
   })
 
@@ -17,10 +17,8 @@ export const useAuth = () => {
     return !!currentUser.value
   })
 
-  const sendMagicLink = async (email: string) => {
+  const signInWithMagicLink = async (email: string) => {
     switch (authMode.value) {
-      // case 'supabase':
-      //   return sbAuth.sendMagicLink(email)
       case 'custom':
         return customAuth.sendMagicLink(email)
       default:
@@ -28,10 +26,12 @@ export const useAuth = () => {
     }
   }
 
+  const signUpWithMagicLink = async (body: SignUpWithMagicLinkSchema) => {
+    return customAuth.signUpWithMagicLink(body)
+  }
+
   const signInWithProvider = async (provider: AuthProvider) => {
     switch (authMode.value) {
-      // case 'supabase':
-      //   return sbAuth.signInWithProvider(provider)
       case 'custom':
         return customAuth.signInWithProvider(provider)
       default:
@@ -41,8 +41,6 @@ export const useAuth = () => {
 
   const signInWithPassword = async (email: string, password: string) => {
     switch (authMode.value) {
-      // case 'supabase':
-      //   return sbAuth.signInWithPassword(email, password)
       case 'custom':
         return customAuth.signInWithPassword(email, password)
       default:
@@ -51,8 +49,6 @@ export const useAuth = () => {
   }
   const signUpWithPassword = async (email: string, password: string, meta?: { name?: string }) => {
     switch (authMode.value) {
-      // case 'supabase':
-      // return sbAuth.signUpWithPassword(email, password)
       case 'custom':
         return customAuth.signUpWithPassword(meta?.name || email, email, password)
       default:
@@ -64,15 +60,12 @@ export const useAuth = () => {
     return customAuth.sendForgotPasswordEmail(email)
   }
 
-  const resetPassword = async (token: string, password: string, confirmPassword: string) => {
-    return customAuth.resetPassword(token, password, confirmPassword)
+  const resetPassword = async (code: string, password: string, confirmPassword: string) => {
+    return customAuth.resetPassword(code, password, confirmPassword)
   }
 
   const refresh = async () => {
     switch (authMode.value) {
-      // case 'supabase':
-      //   await sbAuth.supabase.auth.refreshSession()
-      //   break
       case 'custom':
         await customAuth.custom.refresh()
         break
@@ -83,9 +76,6 @@ export const useAuth = () => {
 
   const signOut = async () => {
     switch (authMode.value) {
-      // case 'supabase':
-      //   await sbAuth.supabase.auth.signOut()
-      //   break
       case 'custom':
         await customAuth.custom.signOut()
         break
@@ -98,7 +88,8 @@ export const useAuth = () => {
     authMode,
     currentUser,
     isLoggedIn,
-    sendMagicLink,
+    signInWithMagicLink,
+    signUpWithMagicLink,
     signInWithProvider,
     signInWithPassword,
     signUpWithPassword,

@@ -1,11 +1,11 @@
-import { signInWithMagicLinksSchema } from '#shared/schema/auth'
+import { signInWithMagicLinkTokenSchema } from '#shared/schema/auth'
 import { useValidatedQuery } from 'h3-zod'
 import { isAfter } from 'date-fns'
 import { NotFoundError, ServerError } from '@nitrotool/errors'
 import { and, eq, gt, isNull } from 'drizzle-orm'
 
 export default defineEventHandler(async (event) => {
-  const { token } = await useValidatedQuery(event, signInWithMagicLinksSchema)
+  const { code } = await useValidatedQuery(event, signInWithMagicLinkTokenSchema)
   const currentTime = new Date()
   const [magicLink] = await db
     .select()
@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
     .where(
       and(
         isNull(schema.magicLinks.usedAt),
-        eq(schema.magicLinks.token, token),
+        eq(schema.magicLinks.code, code),
         gt(schema.magicLinks.expiresAt, currentTime),
       ),
     )
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
 
   if (!user) throw NotFoundError()
 
-  await createStripeCustomerFromMigration(user)
+  await ensureStripeCustomer(user)
 
   // Let's set the email to verified since this comes via an email.
   if (!user.emailVerifiedAt) {
