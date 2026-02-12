@@ -55,11 +55,17 @@ Good to know
 Foreningen Frigear uddeler årligt en pulje fra forudgående regnskabsårs overskud til awesome, frivilligdrevne projekter i Danmark.
 Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på generalforsamlingen (afholdes i 1. kvartal).
 
+::collapsible
+---
+size: lg
+---
+
 Modtagere af **Frigear støttemidler** bliver endeligt afgjort og meldt ud inden **1. juni**. Afgørelsen baseres på indsendte ansøgninger, som skal være bestyrelsen i hænde **senest 10 dage før generalforsamlingen**.
 Dato for generalforsamlingen offentliggøres (jf. vedtægter) **senest 3 uger før afholdelse**.
 **Husk:** Frigear er udelukkende drevet af frivillige, som bruger deress fritid på at læse jeres ansøgninger igennem — så hjælp os med at hjælpe jer 💜
 
 > **NB:** Frigear puljen går ikke til støtte af enkeltpersoner, institutioner eller foreninger, hvor overskuddet går til enkeltpersoner eller offentlige institutioner eller virkssomheder (her tales ikke om fx husleje eller leje af udstyr i forbindelse med projektet), projekter med lønnede medarbejdere (her tales ikke om fx aflønning af ekstern lyd-tekniker, fragtmand eller lign.), støtte til underskudsdækning, projekter/vedtægter/idégrundlag der går imod Frigears mission, vision, værdier eller vedtægter, eller projekter med politisk eller religiøs agenda.
+::
 
 #features
 :::u-page-card
@@ -260,7 +266,7 @@ Er det en fordel at være medlem af Frigear?
 - ❌ **Nej** — alle ansøgninger behandles lige.  
 - ✅ **Ja** — medlemskab giver en stemme på generalforsamlingen.
 
-  :::u-button
+  ::::u-button
   ---
   color: primary
   size: lg
@@ -268,10 +274,11 @@ Er det en fordel at være medlem af Frigear?
   icon: i-lucide-user-plus
   trailingIcon: i-lucide-square-arrow-out-up-right
   variant: subtle
-  width: full
+  class: mt-full
   ---
   Hop hen og bliv medlem
-  :::
+  ::::
+:::
 
 :::u-page-card
 ---
@@ -289,7 +296,7 @@ Hvad hvis jeg vil klage over noget?
 ---
 label: Kontakt bestyrelsen for at klage
 initial:
-  subject: Klage
+  subject: klage
 ---
 ::::
 :::
@@ -311,7 +318,7 @@ Vi er stolte over vores **frivilliges indsats** er med til at støtte jer, og hj
 
 **PR materiale** og **brandkit** kan fanges her:
 
-  :::u-button
+  ::::u-button
   ---
   color: secondary
   size: lg
@@ -321,15 +328,15 @@ Vi er stolte over vores **frivilliges indsats** er med til at støtte jer, og hj
   variant: subtle
   ---
   Promo materiale og brandkit
-  :::
+  ::::
 :::
 
-:nuxt-img{:height='220' :width='800' alt="Frigear logo / brandkit (indsæt jeres logo her)" src="/images/branding/frigear-logo-kit-800x220.png"}
+:nuxt-img{:height='220' :width='800' alt="Frigear logo / brandkit (indsæt jeres logo her)" src="logo.png"}
 
 :::u-page-card
 ---
 icon: i-lucide-clipboard-check
-class: object-cover object-top w-full h-full shadow-2xl ring ring-default
+class: object-cover object-top w-full h-full shadow-2xl ring ring-default line-clamp-5
 ---
 
 #title
@@ -364,7 +371,7 @@ Brug kontaktformularen herunder hvis du har enkeltspørgssmål til ansøgningspr
 ---
 label: Kontakt os om projektstøtte spørgsmål
 initial:
-  subject: Other
+  subject: other
   subjectOther: Projektstøtte spørgsmål
 ---
 ::::
