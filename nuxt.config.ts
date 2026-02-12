@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     '@pinia/nuxt',
     '@pinia/colada-nuxt',
+    '@norbiros/nuxt-auto-form',
   ],
   $production: {
     nitro: {
