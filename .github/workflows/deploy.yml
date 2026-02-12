@@ -62,7 +62,8 @@ jobs:
       - name: Lint
         run: pnpm lint
 
-      - name: Build
+      - name: Build production
+        if: github.ref_name == 'main'
         run: pnpm build
 
       - name: Migrate production db
@@ -73,6 +74,10 @@ jobs:
       - name: Deploy to production
         if: github.ref_name == 'main'
         run: pnpm cf:deploy
+
+      - name: Build staging
+        if: github.ref_name == 'staging'
+        run: pnpm build --envName staging
 
       - name: Migrate staging db
         if: github.ref_name == 'staging'
