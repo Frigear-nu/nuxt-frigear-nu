@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import type { ZodError } from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import type { AuthError } from '@supabase/auth-js'
 import {
   signInWithMagicLinkSchema,
-  type SignInWithMagicLinkSchema, signUpWithMagicLinkSchema,
+  signUpWithMagicLinkSchema,
+  type SignInWithMagicLinkSchema,
   type SignUpWithMagicLinkSchema,
 } from '#shared/schema/auth'
-import type { z } from 'zod/v4'
 
 const $emits = defineEmits<{
   (e: 'loading'): void
   (e: 'success', email: string): void
-  (e: 'error', error: Error | AuthError | ZodError): void
+  (e: 'error', error: Error | ZodError): void
   (e: 'development', magicLink: unknown): void
 }>()
 
@@ -23,7 +22,7 @@ const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
 const displayModal = defineModel<boolean>('open', { default: false })
 
 const schema = signUpWithMagicLinkSchema.or(signInWithMagicLinkSchema)
-const state = reactive <Partial<z.infer<typeof schema>>>({
+const state = reactive<Partial<SignUpWithMagicLinkSchema | SignInWithMagicLinkSchema>>({
   name: undefined,
   email: undefined,
 })
@@ -76,7 +75,7 @@ async function onSubmit<
     return onSignUp(payload as FormSubmitEvent<SignUpWithMagicLinkSchema>)
   }
   catch (error: unknown) {
-    $emits('error', error as Error | AuthError | ZodError)
+    $emits('error', error as Error | ZodError)
   }
 }
 </script>

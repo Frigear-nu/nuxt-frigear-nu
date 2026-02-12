@@ -7,5 +7,4 @@ ignoredBuiltDependencies:
 
 onlyBuiltDependencies:
   - sharp
-  - supabase
 #  - better-sqlite3

@@ -23,7 +23,7 @@ UI [nuxt-content/studio](https://github.com/nuxt-content/studio).
 
 ### Prerequisites
 
-- Docker (also running when you require supabase)
+- Docker (optional: for stripe webhook forwarding)
 - pnpm & npm
 
 ### 1. Clone repository
@@ -38,8 +38,7 @@ git clone https://github.com/Frigear-nu/nuxt-frigear-nu.git
 cp .env.example .env
 ```
 
-> **You must _fill out all_ the required variables in the new .env file**, most of the values will be output when you run
-`pnpx supabase start` later on.
+> **You must _fill out all_ the required variables in the new .env file**
 
 ### 3. Install dependencies
 
@@ -47,13 +46,7 @@ cp .env.example .env
 pnpm install
 ```
 
-### 4. Start supabase
-
-```bash
-pnpx supabase start
-```
-
-### 5. Start dev server
+### 4. Start dev server
 
 ```bash
 pnpm dev

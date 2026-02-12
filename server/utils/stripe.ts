@@ -17,7 +17,7 @@ export const ensureStripeCustomer = async (user: Users) => {
   // ensures we only attempt to migrate users with a stripe customer id in the pw field
   const stripe = useTaskStripe()
 
-  // This is some magic to associate imported users from supabase.
+  // This is some magic to associate imported users from SB
   if (user.passwordHash && user.passwordHash.startsWith('cus_')) {
     const stripeCustomer = await stripe.customers.retrieve(user.passwordHash)
 

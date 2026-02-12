@@ -3,13 +3,12 @@ import { useAuth } from '#imports'
 import type { ForgotPasswordSchema } from '#shared/schema/auth'
 import { forgotPasswordSchema } from '#shared/schema/auth'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import type { AuthError } from '@supabase/auth-js'
 import type { ZodError } from 'zod'
 
 const $emits = defineEmits<{
   (e: 'loading'): void
   (e: 'success', email: string): void
-  (e: 'error', error: Error | AuthError | ZodError): void
+  (e: 'error', error: Error | ZodError): void
   (e: 'development', magicLink: unknown): void
 }>()
 
@@ -43,7 +42,7 @@ async function onSubmit(payload: FormSubmitEvent<ForgotPasswordSchema>) {
     $emits('success', email)
   }
   catch (error: unknown) {
-    $emits('error', error as Error | AuthError | ZodError)
+    $emits('error', error as Error | ZodError)
   }
 }
 </script>
@@ -59,6 +58,7 @@ async function onSubmit(payload: FormSubmitEvent<ForgotPasswordSchema>) {
         :schema="forgotPasswordSchema"
         :state="state"
         class="space-y-4"
+        :loading-auto="true"
         @submit="onSubmit"
       >
         <UFormField
@@ -85,8 +85,8 @@ async function onSubmit(payload: FormSubmitEvent<ForgotPasswordSchema>) {
           :label="$t('auth.forgotPassword.submit')"
           trailing-icon="i-lucide-arrow-right"
           type="submit"
-          :loading="form.loading"
-          @click="form.submit()"
+          :loading="form?.loading"
+          @click="form?.submit()"
         />
       </div>
     </template>

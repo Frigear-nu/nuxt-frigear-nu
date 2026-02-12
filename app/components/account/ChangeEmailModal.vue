@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import type { ZodError } from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import type { AuthError } from '@supabase/auth-js'
 import { changeUserEmailSchema, type ChangeUserEmailSchema } from '#shared/schema/user'
 
 const $emits = defineEmits<{
   (e: 'loading'): void
   (e: 'success', email: string): void
-  (e: 'error', error: Error | AuthError | ZodError): void
+  (e: 'error', error: Error | ZodError): void
   (e: 'development', magicLink: unknown): void
 }>()
 
@@ -39,11 +38,9 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserEmailSchema>) {
     $emits('success', email)
   }
   catch (error: unknown) {
-    $emits('error', error as Error | AuthError | ZodError)
+    $emits('error', error as Error | ZodError)
   }
 }
-
-// FIXME: Need translations.
 </script>
 
 <template>
@@ -76,8 +73,8 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserEmailSchema>) {
       <UButton
         v-if="form"
         type="submit"
-        :loading="form.loading"
-        @click="form.submit()"
+        :loading="form?.loading"
+        @click="form?.submit()"
       >
         {{ $t('auth.magicLink.submit') }}
       </UButton>
