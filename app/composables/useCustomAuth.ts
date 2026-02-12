@@ -59,10 +59,10 @@ export const useCustomAuth = () => {
     })
   }
 
-  const resetPassword = async (token: string, password: string, confirmPassword: string) => {
+  const resetPassword = async (code: string, password: string, confirmPassword: string) => {
     return $fetch('/api/auth/reset-password', {
       method: 'POST',
-      body: { token, password, confirmPassword },
+      body: { code, password, confirmPassword },
     })
   }
 

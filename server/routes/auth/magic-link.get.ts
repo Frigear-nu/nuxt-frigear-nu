@@ -5,7 +5,7 @@ import { NotFoundError, ServerError } from '@nitrotool/errors'
 import { and, eq, gt, isNull } from 'drizzle-orm'
 
 export default defineEventHandler(async (event) => {
-  const { token } = await useValidatedQuery(event, signInWithMagicLinkTokenSchema)
+  const { code } = await useValidatedQuery(event, signInWithMagicLinkTokenSchema)
   const currentTime = new Date()
   const [magicLink] = await db
     .select()
@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
     .where(
       and(
         isNull(schema.magicLinks.usedAt),
-        eq(schema.magicLinks.token, token),
+        eq(schema.magicLinks.code, code),
         gt(schema.magicLinks.expiresAt, currentTime),
       ),
     )

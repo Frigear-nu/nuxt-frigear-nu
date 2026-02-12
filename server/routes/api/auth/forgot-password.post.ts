@@ -16,11 +16,11 @@ export default defineEventHandler(async (event) => {
     return { ok: true }
   }
 
-  const token = createSafeId()
+  const code = createSafeId()
   const expiresAt = addMinutes(new Date(), 30)
   const [createdReset] = await db.insert(schema.passwordResets)
     .values({
-      token,
+      code,
       expiresAt,
       userId: user.id,
 
@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
     .returning()
 
   if (!createdReset) throw ServerError('errors.auth.forgotPassword.failed')
-  const resetUrl = withBaseUrl(withQuery('/auth/reset-password', { token }))
+  const resetUrl = withBaseUrl(withQuery('/auth/reset-password', { code }))
 
   if (import.meta.dev) {
     console.log(`Reset password with this URL: ${resetUrl}`)

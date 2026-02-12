@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
 
   if (!signUp) throw createError({ statusCode: 400, message: 'Signup is disabled.' })
 
-  const { name, email, password } = await useValidatedBody(event, signUpWithPasswordSchema)
+  const { name, email, password, redirect } = await useValidatedBody(event, signUpWithPasswordSchema)
 
   const existingUser = await findUserByEmail(email)
 
@@ -42,20 +42,12 @@ export default defineEventHandler(async (event) => {
 
   if (verifyEmail) {
     // This will mark the email address as verified if it was not from before.
-    const token = createSafeId()
-    const expiresAt = addHours(new Date(), 12)
-    const [createdMagicLink] = await db
-      .insert(schema.magicLinks)
-      .values({
-        token,
-        expiresAt: expiresAt,
-        userId: createdUser.id,
-      })
-      .returning()
+    const { url } = await createMagicLinkForUser({
+      userId: createdUser.id,
+      redirectUrl: redirect && isInternalUrl(redirect) ? redirect : undefined,
+    })
 
-    if (!createdMagicLink) throw ClientError('Could not create magic link.')
-
-    verifyUrl = withBaseUrl(withQuery('/auth/magic-link', { token }))
+    verifyUrl = url
   }
 
   if (import.meta.dev) {
