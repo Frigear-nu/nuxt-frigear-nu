@@ -6,6 +6,7 @@ type FormField = {
   placeholderKey?: string
   hintKey?: string
   type: 'textarea' | 'input' | 'number' | 'date' | 'switch' | 'files'
+  defaultValue?: string | number | boolean
   if?: string
 }
 
@@ -27,6 +28,7 @@ export const projectApplicationForm: Form = {
     purpose: z.string(),
     participants: z.coerce.number(),
     when: z.date(),
+    // TODO..
   }),
   sections: [
     {
@@ -41,7 +43,7 @@ export const projectApplicationForm: Form = {
       fields: [
         { name: 'participants', type: 'number' },
         { name: 'when', type: 'date' },
-        { name: 'projectSupportedByOthers', type: 'switch' },
+        { name: 'projectSupportedByOthers', type: 'switch', defaultValue: false },
         { name: 'supportedByOther', type: 'textarea', if: 'projectSupportedByOthers' },
       ],
     },
