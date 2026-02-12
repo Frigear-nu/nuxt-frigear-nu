@@ -38,8 +38,8 @@ jobs:
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
 
       # OAuth
-      NUXT_OAUTH_GOOGLE_CLIENT_ID: ${{ secrets.SUPABASE_GOOGLE_CLIENT_ID }}
-      NUXT_OAUTH_GOOGLE_SECRET: ${{ secrets.SUPABASE_GOOGLE_SECRET }}
+      NUXT_OAUTH_GOOGLE_CLIENT_ID: ${{ vars.NUXT_OAUTH_GOOGLE_CLIENT_ID }}
+      NUXT_OAUTH_GOOGLE_CLIENT_SECRET: ${{ secrets.NUXT_OAUTH_GOOGLE_CLIENT_SECRET }}
 
     steps:
       - uses: actions/checkout@v4
