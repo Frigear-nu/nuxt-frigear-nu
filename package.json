@@ -23,7 +23,6 @@
     "@nuxthub/core": "^0.10.6",
     "@nuxtjs/device": "4.0.0",
     "@nuxtjs/i18n": "^10.2.1",
-    "@nuxtjs/supabase": "2.0.3",
     "@paralleldrive/cuid2": "^3.3.0",
     "@pinia/colada": "^0.21.2",
     "@pinia/colada-nuxt": "0.3.1",
@@ -54,7 +53,6 @@
     "baseline-browser-mapping": "^2.9.19",
     "eslint": "^9.39.2",
     "nuxt-resend": "^0.0.2",
-    "supabase": "^2.72.7",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.2.2",
     "wrangler": "^4.59.2"

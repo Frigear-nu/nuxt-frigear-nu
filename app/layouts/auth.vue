@@ -3,22 +3,12 @@ definePageMeta({
   header: false,
 })
 
-// todo: check if ssr MUST be disabled or if we need this check every time.
-
-const user = useSupabaseUser()
-const redirectInfo = useSupabaseCookieRedirect()
-// const route = useRoute()
-
-// const mode = computed<'in' | 'up'>(() => {
-//   return route.fullPath.includes('mode=up') ? 'up' : 'in'
-// })
+const { user } = useUserSession()
 
 watch(user, () => {
   if (user.value) {
-    // Get redirect path, and clear it from the cookie
-    const path = redirectInfo.pluck()
-    // Redirect to the saved path, or fallback to home
-    return navigateTo(path || '/account')
+    // FIXME: Use proper redirect here.
+    return navigateTo('/account')
   }
 }, { immediate: true })
 </script>
