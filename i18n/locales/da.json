@@ -291,5 +291,10 @@
       "url": "URL",
       "uuid": "UUID"
     }
+  },
+  "form": {
+    "application": {
+      "background": "TEST"
+    }
   }
 }
