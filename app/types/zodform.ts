@@ -1,0 +1,41 @@
+import type { ButtonProps } from '@nuxt/ui'
+import type { ConcreteComponent } from '@vue/runtime-core'
+
+export type ComponentsMap = Record<string, (params: { key: string, state: any, zodType: any, config: AutoFormConfig }) => ComponentDefinition | null>
+
+export interface ZodAutoFormConfig {
+  /** Submit button configuration */
+  submit?: {
+    /** Name of the globally defined component to use as the submit button */
+    component: ConcreteComponent | string
+    /** Props to pass to the custom submit button */
+    props?: Record<string, any>
+  } | {
+    component?: undefined
+    /** Props to pass to the Nuxt UI `UButton` component */
+    props?: ButtonProps
+  } | false
+
+  /**
+   * Customize default form styles
+   */
+  theme?: {
+    /**
+     * Apply `w-full` class to all input components by default.
+     * @default true
+     */
+    wFull?: boolean
+  }
+
+  /**
+   * Customize the default components used for rendering form fields.
+   *
+   * @example
+   * ```ts
+   * components: {
+   *   email: () => ({ component: UInput, componentProps: { type: 'email' } }),
+   * }
+   * ```
+   */
+  components?: ComponentsMap
+}

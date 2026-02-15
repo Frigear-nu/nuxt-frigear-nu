@@ -5,6 +5,8 @@ export default defineNuxtConfig({
   modules: [
     '@nitrotool/jwt',
     '@nuxthub/core',
+    '@norbiros/nuxt-auto-form',
+    // '../nuxt-auto-form/src',
     'nuxt-studio',
     '@nuxt/ui',
     '@nuxt/content',
@@ -16,7 +18,6 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     '@pinia/nuxt',
     '@pinia/colada-nuxt',
-    '@norbiros/nuxt-auto-form',
   ],
   $production: {
     nitro: {

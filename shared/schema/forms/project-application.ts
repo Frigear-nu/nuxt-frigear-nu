@@ -2,6 +2,7 @@ import { z, type ZodType } from 'zod/v4'
 
 type FormSection = {
   id: string
+  icon?: string
   labelKey?: string
   descriptionKey?: string
   schema: ZodType
@@ -18,8 +19,8 @@ export const projectApplicationForm: SteppedForm = {
   sections: [
     {
       id: 'background',
+      icon: 'i-lucide-book-text',
       schema: z.object({
-        // NOTE: We want to use i18n keys where possible, so we might have customized autoform...
         background: z.string().meta({ title: 'form.application.background', type: 'textarea' }),
         purpose: z.string().meta({ title: 'form.application.purpose', type: 'textarea' }),
       }),
