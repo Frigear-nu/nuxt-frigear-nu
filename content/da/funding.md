@@ -55,32 +55,33 @@ Lidt godt at vide, inden i ansøger
 Foreningen Frigear uddeler årligt en pulje fra forudgående regnskabsårs overskud til awesome, frivilligdrevne projekter i Danmark.
 Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på generalforsamlingen (afholdes i 1. kvartal).
 
-Modtagere af **Frigear støttemidler** bliver endeligt afgjort og meldt ud inden **1. juni**. Afgørelsen baseres på indsendte ansøgninger, som skal være bestyrelsen i hænde **senest 10 dage før generalforsamlingen**.
-Dato for generalforsamlingen offentliggøres (jf. vedtægter) **senest 3 uger før afholdelse**.
-
 ::u-collapsible
 ---
-v-model: open
-class: flex flex-col gap-2 w-full rounded-xl border border-default p-4 shadow-2xl ring ring-default cursor-pointer 
+defaultOpen: false
+class: flex flex-col gap-2 w-full
 ---
 :::u-button
 ---
-label: Lidt mere om ansøgningsprocessen og "aber dabeis" . . . klik her
+class: group
+variant: subtle
 color: neutral
-variant: secondary
+label: Lidt mere om ansøgningsprocessen og aber dabeis . . . klik her
+closeLabel: Luk igen ...
 trailingIcon: i-lucide-chevron-down
-:ui: "{
-        trailingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200'
-      }"
-block
+block: true
+ui:
+  trailingIcon: group-data-[state=open]:rotate-180 transition-transform duration-200
 ---
 :::
 
 #content
 
-**NB:** Frigear puljen går ikke til støtte af enkeltpersoner, institutioner eller foreninger, hvor overskuddet går til enkeltpersoner eller offentlige institutioner eller virkssomheder (her tales ikke om fx husleje eller leje af udstyr i forbindelse med projektet), projekter med lønnede medarbejdere (her tales ikke om fx aflønning af ekstern lyd-tekniker, fragtmand eller lign.), støtte til underskudsdækning, projekter/vedtægter/idégrundlag der går imod Frigears mission, vision, værdier eller vedtægter, eller projekter med politisk eller religiøs agenda.
+**Modtagere** af Frigear **støttemidler** bliver endeligt afgjort og meldt ud inden **1. juni**. Afgørelsen baseres på indsendte ansøgninger, som skal være bestyrelsen i hænde **senest 10 dage før generalforsamlingen**.
+Dato for generalforsamlingen offentliggøres (jf. vedtægter) **senest 3 uger før afholdelse**.
 
-**Husk:** Frigear er udelukkende drevet af frivillige, som bruger deress fritid på at læse jeres ansøgninger igennem — så hjælp os med at hjælpe jer 💜
+**NB:** Frigear midler går ikke til støtte af enkeltpersoner, institutioner eller foreninger, hvor overskuddet går til enkeltpersoner, offentlige institutioner eller virkssomheder (her tales ikke om fx husleje eller leje af udstyr i forbindelse med projektet), projekter med lønnede medarbejdere (her tales ikke om fx aflønning af ekstern lyd-tekniker, fragtmand eller lign.), støtte til underskudsdækning, projekter/vedtægter/idégrundlag der går imod Frigears mission, vision, værdier eller vedtægter, og ej heller projekter med politisk eller religiøs agenda.
+
+**Husk:** Frigear er udelukkende drevet af frivillige, som bruger deres fritid på at læse jeres ansøgninger igennem — så hjælp os med at hjælpe jer 💜
 ::
 
 #features
@@ -212,11 +213,49 @@ class: object-cover object-top w-full h-full shadow-2xl ring ring-default
 #title
 Hvornår kan vi forvente svar?
 
-#description
-- ❌ Hvis ansøgning ikke er kommet i betragtning: 
+::::u-collapsible
+---
+defaultOpen: false
+class: flex flex-col gap-2 w-full mb-6
+---
+:::::u-button
+---
+class: group
+variant: subtle
+color: neutral
+label: "❌ Ansøgning afvist: ASAP efter GF . . . "
+trailingIcon: i-lucide-chevron-down
+block: true
+ui:
+  trailingIcon: group-data-[state=open]:rotate-180 transition-transform duration-200
+---
+:::::
+
+#content
 > Ansøgere hvis ansøgning **IKKE** er kommet i betragtning til potentiel støtte af medlemmerne i år, orienteres umiddelbart efter generalforsamlingen.  
-- ✅ Hvis ansøgning er vedtaget til videre behandling af bestyrelsen:
+::::
+
+::::u-collapsible
+---
+defaultOpen: false
+class: flex flex-col gap-2 w-full mb-6
+---
+:::::u-button
+---
+class: group
+variant: subtle
+color: neutral
+label: "✅ Ansøgning godkendt: Inden 1. juni . . ."
+trailingIcon: i-lucide-chevron-down
+block: true
+ui:
+  trailingIcon: group-data-[state=open]:rotate-180 transition-transform duration-200
+---
+:::::
+
+#content
 > Ansøgninger, der på generalforsamlingen, af medlemmerne vedtages til videre behandling, overgår til juridisk og økonomisk gennemgang hos bestyrelsen, og modtager endeligt svar inden 1. juni.
+::::
 :::
 
 :::u-page-card
