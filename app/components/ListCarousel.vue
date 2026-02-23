@@ -26,9 +26,8 @@ const $emits = defineEmits<{
   (e: 'select', item: Item): void
 }>()
 
-const initialLoad = ref(true)
+const isMounted = ref(false)
 const currentIndex = ref<number>(0)
-
 
 // Ensure there is always an image - even if not provided.
 const currentImageUrl = computed(() => {
@@ -40,7 +39,6 @@ const currentImageUrl = computed(() => {
 
   return props.defaultImage
 })
-
 
 // Carousel
 const { pause, resume, isActive } = useIntervalFn(() => {
@@ -54,7 +52,18 @@ const onClickItem = (item: Item, index: number) => {
   currentIndex.value = index
 }
 
-const onHover = (hovering: boolean): void => {
+const onHoverItem = (item: Item, index: number) => {
+  return (hovering: boolean) => {
+    if (hovering) {
+      currentIndex.value = index
+      pause()
+    } else {
+      resume()
+    }
+  }
+}
+
+const onHoverCard = (hovering: boolean): void => {
   if (hovering) pause()
   else resume()
 }
@@ -63,20 +72,19 @@ const onHover = (hovering: boolean): void => {
 defineExpose({ pause, resume, isActive, currentIndex })
 
 onMounted(() => {
-  initialLoad.value = false
+  isMounted.value = true
 })
 </script>
 
 <template>
   <UCard
-    v-element-hover="onHover"
+    v-element-hover="onHoverCard"
     :ui="{ body: 'p-0 sm:p-0' }"
     :variant="variant"
   >
     <div :class="['flex gap-0 overflow-hidden', reversed ? 'flex-row-reverse' : 'flex-row']">
       <div class="relative w-1/2 md:w-2/3 shrink-0 min-h-full">
-
-      <Transition
+        <Transition
           enter-active-class="transition-opacity duration-300 ease-in-out"
           leave-active-class="transition-opacity duration-300 ease-in-out"
           enter-from-class="opacity-0"
@@ -89,8 +97,14 @@ onMounted(() => {
           />
         </Transition>
 
-        <div class="absolute top-2 right-2 z-10" v-if="!initialLoad && !isActive">
-          <UIcon name="i-lucide-pause" class="w-6 h-6 text-muted" />
+        <div
+          v-if="isMounted && !isActive"
+          class="absolute top-2 right-2 z-10"
+        >
+          <UIcon
+            name="i-lucide-pause"
+            class="w-6 h-6 text-muted"
+          />
         </div>
       </div>
 
@@ -100,6 +114,7 @@ onMounted(() => {
           <UPageCard
             v-for="(item, index) in items"
             :key="item.title"
+            v-element-hover="onHoverItem(item, index)"
             :title="item.title"
             :description="item.description"
             variant="naked"
