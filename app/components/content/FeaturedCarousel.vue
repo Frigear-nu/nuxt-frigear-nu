@@ -22,16 +22,16 @@ const featuredProducts = ref([
 </script>
 
 <template>
-      <ListCarousel :items="featuredProducts">
-        <template #tag="{ tag, isCurrent }">
-          <NuxtLink :to="`/tags/${tag}`">
-            <UBadge
-              :color="isCurrent ? 'primary' : 'secondary'"
-              :variant="isCurrent ? 'solid' : 'outline'"
-            >
-              #{{ tag }}
-            </UBadge>
-          </NuxtLink>
-        </template>
-      </ListCarousel>
+  <ListCarousel :items="featuredProducts">
+    <template #tag="{ tag, isCurrent }">
+      <NuxtLink :to="`/tags/${tag}`">
+        <UBadge
+          :color="isCurrent ? 'primary' : 'secondary'"
+          :variant="isCurrent ? 'solid' : 'outline'"
+        >
+          #{{ tag }}
+        </UBadge>
+      </NuxtLink>
+    </template>
+  </ListCarousel>
 </template>
