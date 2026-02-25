@@ -42,7 +42,8 @@ const currentImageUrl = computed(() => {
 
 // Carousel
 const { pause, resume, isActive } = useIntervalFn(() => {
-  currentIndex.value = (currentIndex.value + 1) % props.items.length
+  if (props.items.length > 0)
+    currentIndex.value = (currentIndex.value + 1) % props.items.length
 }, props.playInterval, {
   immediate: props.play,
 })
