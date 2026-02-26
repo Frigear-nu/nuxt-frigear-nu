@@ -1,0 +1,106 @@
+<script generic="TSteps extends FormStep[]" lang="ts" setup>
+import type { FormStep, SteppedForm, UnionFormSteps } from '#shared/types/form'
+import { deriveFieldsFromSchema } from '#shared/form'
+import { useSteppedForm } from '~/composables/useSteppedForm'
+
+const props = defineProps<{
+  form: SteppedForm<TSteps>
+}>()
+
+const emit = defineEmits<{
+  submit: [data: UnionFormSteps<TSteps>]
+}>()
+
+const formEl = useTemplateRef('formEl')
+const stepped = useSteppedForm(props.form)
+const onSubmit = stepped.createSubmitHandler(data => emit('submit', data))
+
+const currentFields = computed(() => {
+  const step = stepped.currentStep.value
+  if (!step) return []
+  if (step.fields?.length) return step.fields
+  return deriveFieldsFromSchema(step.schema)
+})
+
+const submit = () => {
+  formEl.value?.submit()
+}
+
+// const validate = (state: Partial<UnionFormSteps<TSteps>>) => {
+//   const errors = []
+//   // Inject custom messages?
+//
+//   return errors
+// }
+</script>
+
+<template>
+  <div class="flex flex-col gap-6">
+    <h1
+      v-if="stepped.currentStep.value?.labelKey"
+      class="text-lg"
+    >
+      {{ $t(stepped.currentStep.value.labelKey) }}
+    </h1>
+
+    <UForm
+      ref="formEl"
+      :schema="stepped.currentStep.value?.schema"
+      :state="stepped.state"
+      class="flex flex-col gap-4"
+      loading-auto
+      @submit="onSubmit"
+    >
+      <template v-if="currentFields.length">
+        <FormStepFieldRenderer
+          v-for="field in currentFields"
+          :key="field.name"
+          :field="field"
+          :state="stepped.state"
+          @update:state="(name, value) => { (stepped.state as Record<string, unknown>)[name] = value }"
+        />
+      </template>
+      <template v-else>
+        <slot
+          :name="`step-${stepped.currentStepId.value}`"
+          :state="stepped.state"
+        />
+      </template>
+
+      <!-- Navigation -->
+      <div class="flex items-center justify-between pt-2">
+        <slot
+          name="back-button"
+          :is-first-step="stepped.isFirstStep.value"
+          :go-previous="stepped.goPrev"
+        >
+          <UButton
+            v-if="!stepped.isFirstStep.value"
+            variant="ghost"
+            icon="i-lucide-arrow-left"
+            type="button"
+            @click="stepped.goPrev"
+          >
+            Back
+          </UButton>
+          <span v-else />
+        </slot>
+
+        <slot
+          name="next-button"
+          :is-last-step="stepped.isLastStep.value"
+          :is-submitting="stepped.isSubmitting.value"
+          :submit="submit"
+        >
+          <UButton
+            type="submit"
+            :loading="stepped.isSubmitting.value"
+            :trailing-icon="stepped.isLastStep.value ? 'i-lucide-check' : 'i-lucide-arrow-right'"
+          >
+            {{ stepped.isLastStep.value ? 'Submit' : 'Next' }}
+          </UButton>
+        </slot>
+      </div>
+    </UForm>
+  </div>
+</template>

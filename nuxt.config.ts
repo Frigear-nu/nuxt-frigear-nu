@@ -5,8 +5,6 @@ export default defineNuxtConfig({
   modules: [
     '@nitrotool/jwt',
     '@nuxthub/core',
-    '@norbiros/nuxt-auto-form',
-    // '../nuxt-auto-form/src',
     'nuxt-studio',
     '@nuxt/ui',
     '@nuxt/content',
@@ -113,6 +111,7 @@ export default defineNuxtConfig({
       dialect: 'sqlite',
       casing: 'snake_case',
     },
+    blob: true,
   },
   i18n: {
     defaultLocale: 'da',

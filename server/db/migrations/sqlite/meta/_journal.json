@@ -8,6 +8,13 @@
       "when": 1770842918675,
       "tag": "0000_wandering_wolfsbane",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1772146979155,
+      "tag": "0001_gray_thanos",
+      "breakpoints": true
     }
   ]
 }

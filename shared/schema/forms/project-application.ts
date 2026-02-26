@@ -1,46 +1,68 @@
-import { z, type ZodType } from 'zod/v4'
+import { z } from 'zod/v4'
+import type { UnionFormSteps } from '#shared/types/form'
+import { defineSteppedForm } from '#shared/form'
 
-type FormSection = {
-  id: string
-  icon?: string
-  labelKey?: string
-  descriptionKey?: string
-  schema: ZodType
-}
-
-// TODO: Could possibly be flattened into one object instead of ID
-export type SteppedForm = {
-  id: string
-  sections: FormSection[]
-}
-
-export const projectApplicationForm: SteppedForm = {
-  id: 'project-application',
-  sections: [
+export const testApplicationForm = defineSteppedForm({
+  id: 'test',
+  steps: [
     {
       id: 'background',
       icon: 'i-lucide-book-text',
+      labelKey: 'form.application.background',
       schema: z.object({
-        background: z.string().meta({ title: 'form.application.background', type: 'textarea' }),
-        purpose: z.string().meta({ title: 'form.application.purpose', type: 'textarea' }),
+        background: z.string().meta({
+          title: 'form.application.background',
+          type: 'textarea',
+          placeholder: 'enter some text',
+        }),
+        attachments: z.array(z.instanceof(File))
+          .meta({
+            title: 'Files',
+            type: 'file',
+            multiple: true,
+            description: 'Add any attachments you might want to add',
+          }),
+      }),
+    },
+  ],
+})
+
+export const projectApplicationForm = defineSteppedForm({
+  id: 'project-application',
+  steps: [
+    {
+      id: 'background',
+      icon: 'i-lucide-book-text',
+      labelKey: 'form.application.background',
+      schema: z.object({
+        background: z.string().meta({
+          title: 'form.application.background',
+          type: 'textarea',
+          placeholder: 'enter some text',
+        }),
+        purpose: z.string().meta({
+          title: 'form.application.purpose',
+          type: 'textarea',
+          placeholder: 'enter some text',
+        }),
       }),
     },
     {
       id: 'project',
       schema: z.object({
-        participants: z.number(),
-        when: z.date(),
-        isSupportedByOthers: z.boolean().default(false),
+        participants: z.coerce.number().meta({ title: 'form.application.participants' }),
+        when: z.date().or(z.string()),
+        isSupportedByOthers: z.coerce.boolean().default(false),
         supportedByOthers: z.string().optional(),
       }),
     },
     {
       id: 'budget',
       schema: z.object({
-        totalBudget: z.number(),
+        totalBudget: z.coerce.number(),
         fundsUsage: z.string(),
         ownDeductible: z.string(),
-        profit: z.number().optional(),
+        profit: z.coerce.number().optional(),
         profitPurpose: z.string(),
       }),
     },
@@ -62,9 +84,18 @@ export const projectApplicationForm: SteppedForm = {
     },
     {
       id: 'attachments',
+      labelKey: 'form.application.attachments',
       schema: z.object({
-        attachments: z.array(z.file()),
+        attachments: z.array(z.instanceof(File))
+          .meta({
+            title: 'Files',
+            type: 'file',
+            multiple: true,
+            description: 'Add any attachments you might want to add',
+          }),
       }),
     },
   ],
-}
+})
+
+export type ProjectApplicationForm = UnionFormSteps<typeof projectApplicationForm['steps']>

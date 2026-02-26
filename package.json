@@ -18,9 +18,9 @@
   },
   "dependencies": {
     "@libsql/client": "^0.17.0",
+    "@n8n/json-schema-to-zod": "^1.6.0",
     "@nitrotool/errors": "^1.0.4",
     "@nitrotool/jwt": "^1.0.4",
-    "@norbiros/nuxt-auto-form": "https://pkg.pr.new/hareland/nuxt-auto-form/@norbiros/nuxt-auto-form@4",
     "@nuxthub/core": "^0.10.6",
     "@nuxtjs/device": "4.0.0",
     "@nuxtjs/i18n": "^10.2.1",
@@ -49,6 +49,8 @@
   "devDependencies": {
     "@nuxt/eslint": "^1.12.1",
     "@nuxt/eslint-config": "^1.12.1",
+    "@nuxt/kit": "^4.3.1",
+    "@nuxt/schema": "^4.3.1",
     "@types/escape-html": "^1.0.4",
     "@vue/compiler-sfc": "^3.5.27",
     "baseline-browser-mapping": "^2.9.19",
