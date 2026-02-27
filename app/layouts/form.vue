@@ -18,10 +18,7 @@ definePageMeta({
         </NuxtLink>
       </div>
 
-      <!-- Card -->
-      <div class="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-800 p-8">
-        <NuxtPage />
-      </div>
+      <NuxtPage />
 
       <!-- Footer slot for links like "Already have an account?" -->
       <div class="mt-6 text-center text-sm text-neutral-500 dark:text-neutral-400">

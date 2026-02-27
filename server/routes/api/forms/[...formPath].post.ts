@@ -4,8 +4,9 @@ import { deriveSchemaFromSteppedForm } from '#shared/form'
 import { blob } from '@nuxthub/blob'
 import { db, schema } from '@nuxthub/db'
 import type { BlobObject } from '@nuxthub/core/blob'
-import { createSafeId } from '../../../utils/auth'
 import { replaceVariables } from '#shared/template'
+import type { SteppedForm } from '#shared/types/form'
+import { objectPick } from '@vueuse/core'
 
 export default defineEventHandler(async (event) => {
   const { mail: { from, to: defaultToEmail } } = useRuntimeConfig(event)
@@ -174,5 +175,5 @@ export default defineEventHandler(async (event) => {
     }))
   }
 
-  return storedSubmission
+  return objectPick(storedSubmission, ['id', 'data', 'files', 'createdAt'])
 })

@@ -1,5 +1,6 @@
 // for future usage...
 import { withLeadingSlash } from 'ufo'
+import { objectOmit } from '@vueuse/core'
 
 export default defineEventHandler(async (event) => {
   const formPath = getRouterParam(event, 'formPath')
@@ -12,5 +13,5 @@ export default defineEventHandler(async (event) => {
 
   if (!form) throw createError({ statusCode: 404 })
 
-  return form
+  return objectOmit(form, ['delivery'])
 })

@@ -38,12 +38,31 @@ const asFile = computed(() =>
 const asDate = computed(() =>
   props.field.type === 'date' ? props.field : null,
 )
+const asNumber = computed(() =>
+  props.field.type === 'number' ? props.field : null,
+)
 
 function toCalendarDate(iso?: string) {
   if (!iso) return undefined
   const [y, m, d] = iso.split('-').map(Number)
   return new CalendarDate(y!, m!, d!)
 }
+
+const dateModel = computed({
+  get: () => {
+    if (asDate.value && model.value) {
+      return toCalendarDate(model.value as string)
+    }
+    return undefined
+  },
+  set: (val: CalendarDate | undefined) => {
+    if (asDate.value) {
+      if (val) {
+        model.value = val.toString()
+      }
+    }
+  },
+})
 </script>
 
 <template>
@@ -107,7 +126,7 @@ function toCalendarDate(iso?: string) {
 
     <UInputDate
       v-else-if="asDate"
-      v-model="model"
+      v-model="dateModel"
       :disabled="field.disabled"
       :min-value="toCalendarDate(asDate.minValue)"
       :max-value="toCalendarDate(asDate.maxValue)"
@@ -144,5 +163,13 @@ function toCalendarDate(iso?: string) {
         />
       </template>
     </UFileUpload>
+
+    <UInputNumber
+      v-else-if="asNumber"
+      v-model="model"
+      :placeholder="field.placeholder ? $t(field.placeholder): undefined"
+      :disabled="field.disabled"
+      class="w-full"
+    />
   </UFormField>
 </template>

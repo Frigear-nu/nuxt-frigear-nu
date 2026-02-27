@@ -25,6 +25,7 @@ if (!form.value) {
   })
 }
 
+const stepped = useTemplateRef('stepped')
 const wasSubmitted = ref(false)
 
 // const title = computed(() => form.value?.title)
@@ -41,6 +42,8 @@ const steppedForm = computed(() => {
 
   return testApplicationForm
 })
+
+const currentIndex = computed(() => stepped.value?.stepped.currentStepIndex.value)
 
 // const fileUploader = useUpload(`/api/forms/${form.value.path}`)
 
@@ -83,16 +86,43 @@ const onComplete = async (args: ProjectApplicationForm) => {
     <!--      <div>{{ title }}</div> -->
     <!--      <div>{{ description }}</div> -->
     <!--    </div> -->
-    <FormStepped
-      v-if="!wasSubmitted"
-      :form="steppedForm"
-      @submit="onComplete"
-    />
-    <UEmpty
-      v-else
-      title="Thanks!"
-      icon="i-lucide-check"
-      :actions="[{ label: 'Back home', to: localePath('/'), icon: 'i-lucide-arrow-left' }]"
-    />
+    <UCard>
+      <div
+        v-if="steppedForm?.steps"
+        class="flex justify-center gap-1 mb-8"
+      >
+        <div
+          v-for="(_, index) in steppedForm.steps"
+          :key="index"
+          class="flex flex-col items-center"
+        >
+          <div
+            :class="[
+              'size-6 text-center rounded-3xl',
+              index <= currentIndex ? 'bg-primary' : 'bg-neutral',
+              index === currentIndex ? 'ring-1': '',
+            ]"
+          >
+            {{ index + 1 }}
+          </div>
+          <!--          <UIcon -->
+          <!--            v-if="step.icon" -->
+          <!--            :name="step.icon" -->
+          <!--          /> -->
+        </div>
+      </div>
+      <FormStepped
+        v-if="!wasSubmitted"
+        ref="stepped"
+        :form="steppedForm"
+        @submit="onComplete"
+      />
+      <UEmpty
+        v-else
+        title="Thanks!"
+        icon="i-lucide-check"
+        :actions="[{ label: 'Back home', to: localePath('/'), icon: 'i-lucide-arrow-left' }]"
+      />
+    </UCard>
   </div>
 </template>

@@ -32,6 +32,11 @@ const submit = () => {
 //
 //   return errors
 // }
+
+defineExpose({
+  stepped,
+  form: formEl,
+})
 </script>
 
 <template>
