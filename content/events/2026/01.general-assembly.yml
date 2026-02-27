@@ -1,0 +1,54 @@
+title: General Assembly
+date: 2026-03-15
+startTime: 19:00
+endTime: 21:00
+address: Kongens gade 123, 45. sal
+image: /images/volunteers/info-hero-desktop-1200x400.png
+name:
+  da: Generalforsamling
+  en: General Assembly
+excerpt:
+  da: Generalforsamling 2026
+  en: General Assembly 2026
+description:
+  da: |
+    # Samling igen
+    Vi samles igen for at...
+    **Brug markdown her**
+  en: |
+    # We meet again
+    We meet again to...
+    **Use markdown here**
+tickets:
+  free:
+    name:
+      da: Gratis billett
+      en: Free ticket
+    description:
+      da: "[Gratis]{.text-primary} billett."
+      en: "Free [ticket]{.text-primary}."
+    price: 0
+    stripeId: prod_123
+    currency: DKK
+    memberships: [ ]
+  default:
+    name:
+      da: Standard billett
+      en: Standard ticket
+    description:
+      da: |
+        Standard: [{{ticket}}]{.text-primary}.
+      en: "Standard [ticket]{.text-primary}"
+    price: 100
+    currency: DKK
+    stripeId: stripe_product_id
+    addons: [ stripe_product_id ]
+  premium:
+    name:
+      da: Premium billett
+      en: Premium ticket
+    description:
+      da: Premium billett.
+      en: "Premium [ticket]{.text-primary}."
+    price: 200
+    currency: DKK

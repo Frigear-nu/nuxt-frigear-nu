@@ -3,9 +3,10 @@ import type { CartItem } from '#shared/types/shopping-cart'
 
 type OptionalKeys = 'qty'
 type AddCartItem = Omit<CartItem, OptionalKeys> & Partial<Pick<CartItem, OptionalKeys>>
-type UpdateCartItem = Omit<AddCartItem, 'id'>
+type UpdateCartItem = Partial<Omit<AddCartItem, 'id'>>
 
 const _useShoppingCart = () => {
+  const isOpen = useLocalStorage('cart-modal-open', false)
   const data = useLocalStorage<CartItem[]>('cart', [])
 
   const hasAnyItems = computed(() => data.value.length > 0)
@@ -31,7 +32,7 @@ const _useShoppingCart = () => {
       return Object.assign(existing, item)
     }
 
-    return addToCart({ ...item, id })
+    return addToCart({ ...item, id } as CartItem)
   }
 
   const removeFromCart = (id: string) => {
@@ -40,10 +41,21 @@ const _useShoppingCart = () => {
     data.value.splice(index, 1)
   }
 
+  const hasItem = (id: CartItem['id']) => {
+    return data.value.some(i => i.id === id)
+  }
+
+  const getItem = (id: CartItem['id']) => {
+    return data.value.find(i => i.id === id)
+  }
+
   return {
+    isOpen,
     data: readonly(data),
     clearCart,
     hasAnyItems,
+    hasItem,
+    getItem,
     addToCart,
     updateCartItem,
     removeFromCart,

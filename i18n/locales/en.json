@@ -173,6 +173,22 @@
       "button": "Contact us"
     }
   },
+  "events": {
+    "upcoming": {
+      "title": "Upcoming events"
+    },
+    "detail": {
+      "tickets": {
+        "title": "Tickets",
+        "free": "Free"
+      }
+    }
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "addedToCart": "{title} was added to your cart.",
+    "removedFromCart": "{title} was removed."
+  },
   "zodI18n": {
     "errors": {
       "too_big": {
