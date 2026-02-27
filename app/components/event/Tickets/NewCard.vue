@@ -62,7 +62,7 @@ const canPurchase = computed(() => {
         color="primary"
         variant="card"
         :items="ticketRadioCardItems"
-        :ui="{ item: 'light:bg-default has-data-[state=checked]:bg-primary/5' }"
+        :ui="{ item: 'light:bg-default has-data-[state=checked]:bg-primary/5', fieldset: 'gap-2' }"
       >
         <template #legend>
           <div
@@ -110,7 +110,7 @@ const canPurchase = computed(() => {
         color="primary"
         variant="card"
         :items="ticketProductsRadioCardItems"
-        :ui="{ item: 'light:bg-default has-data-[state=checked]:bg-primary/5' }"
+        :ui="{ item: 'light:bg-default has-data-[state=checked]:bg-primary/5', fieldset: 'gap-2' }"
       >
         <template #legend>
           <div
@@ -155,15 +155,26 @@ const canPurchase = computed(() => {
         </template>
       </URadioGroup>
     </div>
-    <div v-if="canPurchase">
+    <div>
+      <USeparator />
+    </div>
+    <div class="flex flex-col gap-2">
       <UButton
         trailing-icon="i-lucide-shopping-cart"
         class="w-full justify-center"
-        variant="soft"
+        :variant="canPurchase ? 'soft' : 'outline'"
         size="xl"
+        :disabled="!canPurchase"
       >
         Checkout
       </UButton>
+      <UBadge
+        v-if="requiresAtLeastOneProduct && !canPurchase"
+        variant="subtle"
+        class="text-sm"
+      >
+        You have to Choose all required items.
+      </UBadge>
     </div>
   </div>
 </template>

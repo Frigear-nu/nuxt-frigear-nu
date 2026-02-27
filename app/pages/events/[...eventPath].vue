@@ -94,7 +94,7 @@ const hasAnyTickets = computed(() => {
             <h2 class="text-2xl font-bold">
               {{ $t('events.detail.tickets.title') }}
             </h2>
-            <UPageCard :variant="$colorMode.value === 'dark' ? 'subtle' : 'soft'">
+            <UPageCard :variant="$colorMode.value === 'dark' ? 'outline' : 'soft'">
               <EventTicketsNewCard :event="event" />
             </UPageCard>
           </div>
