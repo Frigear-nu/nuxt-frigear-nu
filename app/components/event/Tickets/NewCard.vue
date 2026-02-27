@@ -154,6 +154,14 @@ const canPurchase = computed(() => {
           </div>
         </template>
       </URadioGroup>
+      <UAlert
+        v-if="requiresAtLeastOneProduct && !canPurchase"
+        :variant="$colorMode.value === 'dark' ? 'outline' : 'subtle'"
+        icon="i-lucide-alert-triangle"
+        color="warning"
+        class="mt-4"
+        description="You have to select at least one addon product to continue with this ticket."
+      />
     </div>
     <div>
       <USeparator />
@@ -162,19 +170,12 @@ const canPurchase = computed(() => {
       <UButton
         trailing-icon="i-lucide-shopping-cart"
         class="w-full justify-center"
-        :variant="canPurchase ? 'soft' : 'outline'"
+        :variant="canPurchase ? 'solid' : 'outline'"
         size="xl"
         :disabled="!canPurchase"
       >
         Checkout
       </UButton>
-      <UBadge
-        v-if="requiresAtLeastOneProduct && !canPurchase"
-        variant="subtle"
-        class="text-sm"
-      >
-        You have to Choose all required items.
-      </UBadge>
     </div>
   </div>
 </template>

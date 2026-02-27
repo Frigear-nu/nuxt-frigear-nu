@@ -12,17 +12,17 @@ excerpt:
   en: General Assembly 2026
 description:
   da: |
+    ::callout{class="bg-primary/10 mt-0"}
+      **NB:** Om du er 🎯 scorer du de bedste billetter 🏆
+    ::
     ::h2{.mt-0}
-    Samling igen
+    📆 Samling igen
     ::
     Vi samles igen for at...
     **Brug markdown her**... Om du har ønsker...
     
-    ::callout{class="bg-primary/20"}
-    **Welcome!**
-    ::
     
-    ### Lorem ipsum
+    ### 📚 Lorem ipsum
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
     hamburger ham hock.
@@ -33,7 +33,7 @@ description:
     Beef ribs pork loin, pork chop bresaola hamburger ham hock
     
     
-    ### Bacon ipsum
+    ### 🥓 Bacon ipsum
     Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
     hamburger ham hock.
     Beef ribs pork loin, pork chop bresaola hamburger ham hock
@@ -86,7 +86,7 @@ tickets:
       da: Gratis
       en: Free
     description:
-      da: "[Gratis]{.text-primary} billett."
+      da: "[🆓 Gratis]{.text-primary} billett."
       en: "Free [ticket]{.text-primary}."
     price: 0
     # Since this is a free ticket, no need to go via stripe...
