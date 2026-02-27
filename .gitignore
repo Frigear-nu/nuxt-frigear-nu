@@ -36,3 +36,6 @@ _tmp*
 #VSC
 .history
 .wrangler
+
+# We do not allow any more supabase stuff <3
+supabase/
