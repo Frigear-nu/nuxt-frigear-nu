@@ -26,19 +26,36 @@ export default defineContentConfig({
         slug: z.string().optional(),
         alias: z.array(z.string()).optional(),
         date: z.date(),
-        startTime: z.string().optional(),
-        endTime: z.string().optional(),
+        start: z.date().optional(),
+        end: z.date().optional(),
         address: z.string().optional(),
+        defaultTicket: z.string().optional(),
         tickets: z.record(z.enum(['default']).or(z.string()), z.object({
           name: translated,
           description: translated.optional(),
           price: z.number(),
           currency: z.string(),
-          stripeId: z.string(),
+          stripeId: z.string().optional(),
           // priceId or for subscription?
           memberships: z.array(membership).optional(),
           // Available additional products to purchase, will use stripe data?
-          addons: z.array(z.string()).optional(),
+          products: z.object({
+            require: z.enum(['one_of']).optional(),
+            items: z.array(z.object({
+              id: z.string(), // stripeId
+              label: translated,
+              description: translated.optional(),
+              price: z.number(),
+              currency: z.string(),
+            })),
+          }).optional(),
+          // features: z.array(z.union([
+          //   translated,
+          //   z.object({
+          //     label: translated,
+          //     icon: z.string().optional(),
+          //   }),
+          // ])).optional(),
         })),
       }),
     }),

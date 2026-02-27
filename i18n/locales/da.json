@@ -181,7 +181,14 @@
     "detail": {
       "tickets": {
         "title": "Billetter",
-        "free": "Gratis"
+        "free": "Gratis",
+        "ticket":{
+          "label": "Billett"
+        },
+        "products": {
+          "label": "Produkt",
+          "required": "Påkrævet"
+        }
       }
     }
   },

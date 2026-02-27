@@ -40,6 +40,19 @@ const { localePath, isEnabled, locales } = useSiteI18n()
       <!--      <UContentSearchButton class="lg:hidden" /> -->
 
       <AppHeaderCTA />
+      <UChip
+        v-if="cartItems.length > 0"
+        :text="cartItems.length"
+        size="xl"
+        :ui="{ base: 'p-1 size-3 dark:ring-primary dark:bg-red-500' }"
+      >
+        <UButton
+          v-if="hasAnyItems"
+          icon="i-lucide-shopping-cart"
+          variant="solid"
+          @click="cartIsOpen = !cartIsOpen"
+        />
+      </UChip>
       <ClientOnly>
         <UColorModeButton />
 
@@ -47,19 +60,6 @@ const { localePath, isEnabled, locales } = useSiteI18n()
           <div class="h-8 w-8 animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-md" />
         </template>
       </ClientOnly>
-      <UChip
-        v-if="cartItems.length > 0"
-        :text="cartItems.length"
-        color="neutral"
-        size="xl"
-        :ui="{ root: 'hidden lg:flex', base: 'p-1 size-3 ring-primary' }"
-      >
-        <UButton
-          v-if="hasAnyItems"
-          icon="i-lucide-shopping-cart"
-          @click="cartIsOpen = !cartIsOpen"
-        />
-      </UChip>
     </template>
 
     <template #toggle="{ open, toggle }">
@@ -87,11 +87,13 @@ const { localePath, isEnabled, locales } = useSiteI18n()
         label="Continue shopping"
         color="neutral"
         variant="outline"
+        size="xl"
         @click="close"
       />
       <UButton
         label="Continue to payment"
         color="neutral"
+        size="xl"
       />
     </template>
   </USlideover>

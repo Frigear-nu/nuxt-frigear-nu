@@ -1,7 +1,7 @@
 title: General Assembly
 date: 2026-03-15
-startTime: 19:00
-endTime: 21:00
+start: 2026-03-15 19:00
+end: 2026-03-15 23:59
 address: Kongens gade 123, 45. sal
 image: /images/volunteers/info-hero-desktop-1200x400.png
 name:
@@ -12,37 +12,105 @@ excerpt:
   en: General Assembly 2026
 description:
   da: |
-    # Samling igen
+    ::h2{.mt-0}
+    Samling igen
+    ::
     Vi samles igen for at...
-    **Brug markdown her**
+    **Brug markdown her**... Om du har ønsker...
+    
+    ::callout{class="bg-primary/20"}
+    **Welcome!**
+    ::
+    
+    ### Lorem ipsum
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
+    hamburger ham hock.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    
+    
+    ### Bacon ipsum
+    Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
+    hamburger ham hock.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+
   en: |
-    # We meet again
+    ::h2{.mt-0}
+    We meet again
+    ::
     We meet again to...
     **Use markdown here**
+    
+    
+    ::callout{class="bg-primary/20"}
+    **Welcome!**
+    ::
+
+    ### Lorem ipsum
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
+    hamburger ham hock.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+
+
+    ### Bacon ipsum
+    Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
+    hamburger ham hock.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+
+
+# Tickets and ticket products
+defaultTicket: free
 tickets:
+  # We cna have a free ticket, (arbitrary how many type you want to add.)
   free:
     name:
-      da: Gratis billett
-      en: Free ticket
+      da: Gratis
+      en: Free
     description:
       da: "[Gratis]{.text-primary} billett."
       en: "Free [ticket]{.text-primary}."
     price: 0
-    stripeId: prod_123
+    # Since this is a free ticket, no need to go via stripe...
+    stripeId: free
     currency: DKK
-    memberships: [ ]
+    features:
+      - Simple feature
+      - en: English feature
+        da: Dansk feature
+      - label:
+          en: English with custom icon
+          da: Dansk med egen ikon
+        icon: i-lucide-check-circle
   default:
     name:
-      da: Standard billett
-      en: Standard ticket
+      da: Standard
+      en: Standard
     description:
       da: |
-        Standard: [{{ticket}}]{.text-primary}.
-      en: "Standard [ticket]{.text-primary}"
+        Det er en [{{ticket}}]{.text-primary} billett.
+      en: "A [{{ticket}}]{.text-primary} ticket!"
     price: 100
     currency: DKK
     stripeId: stripe_product_id
-    addons: [ stripe_product_id ]
   premium:
     name:
       da: Premium billett
@@ -52,3 +120,23 @@ tickets:
       en: "Premium [ticket]{.text-primary}."
     price: 200
     currency: DKK
+    stripeId: stripe_product_id
+    memberships: [ price_id_for_subscription_required]
+    products:
+      require: one_of
+      items:
+        - id: stripe_product_id_or_price_id
+          label:
+            da: Dansk Addon
+            en: English Addon
+          description:
+            da: Dansk Addon beskrivelse
+            en: English Addon description
+          price: 100
+          currency: DKK
+        - id: stripe_product_id_or_price_id_2
+          label: Single lang addon
+          price: 100
+          currency: DKK
+
+

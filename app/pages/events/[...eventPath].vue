@@ -2,16 +2,27 @@
 import type { EventsCollectionItem } from '@nuxt/content'
 import { kebabCase } from 'scule'
 import { withLeadingSlash } from 'ufo'
+import { format } from 'date-fns'
 
 const route = useRoute()
-const { addToCart, removeFromCart, hasItem: hasItemInCart } = useShoppingCart()
+const { translatedProperty } = useContent()
+const { locale, defaultLocale } = useSiteI18n()
 
 const [{ data: event }] = await Promise.all([
   useAsyncData<EventsCollectionItem | null>(
     () => `events:${kebabCase(Array.isArray(route.params.eventPath) ? route.params.eventPath.join('/') : route.params.eventPath || '')}`,
-    async () => await queryCollection('events')
-      .path(withLeadingSlash(route.fullPath))
-      .first(),
+    async () => {
+      let fullPath = route.fullPath
+
+      // check if /en/...
+      if (locale.value !== defaultLocale.value && fullPath.startsWith(withLeadingSlash(locale.value))) {
+        fullPath = fullPath.split('/').slice(2).join('/')
+      }
+
+      return await queryCollection('events')
+        .path(withLeadingSlash(fullPath))
+        .first()
+    },
     { immediate: true },
   ),
 ])
@@ -24,124 +35,71 @@ if (!event.value) {
 }
 
 const toast = useToast()
-const { locale, t } = useSiteI18n()
 
-const useTranslatedProperty = (value: string | { [key: string]: string } | undefined): string | undefined => {
-  if (!value) return undefined
-  if (typeof value === 'string') {
-    return value
-  }
-  return value[locale.value as string] || value.en || value as never
-}
+const eventDate = computed(() => {
+  return event.value?.date ? new Date(event.value.date) : undefined
+})
 
-const addTicketToCart = (ticket: EventsCollectionItem['tickets'][string]) => {
-  if (!ticket.stripeId) {
-    console.warn('Ticket does not have a stripeId!')
-    return
-  }
+const startDate = computed(() => {
+  return event.value?.start ? new Date(event.value.start) : undefined
+})
 
-  const title = useTranslatedProperty(ticket.name) || 'Ticket'
-  addToCart({
-    id: ticket.stripeId,
-    title,
-    description: useTranslatedProperty(ticket.description),
-    price: ticket.price,
-    qty: 1,
-  })
-  toast.add(formatToastSuccess(t('cart.addedToCart', { title })))
-}
+const endDate = computed(() => {
+  return event.value?.end ? new Date(event.value.end) : undefined
+})
 
-const removeTicketFromCart = (ticket: EventsCollectionItem['tickets'][string]) => {
-  if (!ticket.stripeId) return
-  removeFromCart(ticket.stripeId)
-  toast.add(formatToastSuccess(t('cart.removedFromCart', { title: useTranslatedProperty(ticket.name) || 'Ticket' })))
-}
+const hasAnyTickets = computed(() => {
+  return event.value.tickets && Object.keys(event.value.tickets).length > 0
+})
 </script>
 
 <template>
   <UContainer v-if="event">
     <div class="flex flex-col gap-8">
       <UPageHeader
-        :headline="new Date(event.date).toLocaleDateString()"
-        :title="useTranslatedProperty(event.name)"
-        :description="useTranslatedProperty(event.excerpt)"
-      />
-      <UMain>
-        <div class="flex flex-col md:flex-row gap-4">
-          <div class="w-full md:w-1/2 lg:w-2/3">
+        :title="translatedProperty(event.name)"
+        :description="translatedProperty(event.excerpt)"
+      >
+        <div class="flex gap-2 mt-2">
+          <UBadge
+            v-if="startDate"
+            variant="subtle"
+            class="text-sm"
+            size="sm"
+          >
+            <strong>Starts:</strong> {{ format(startDate, 'PPP') }}
+          </UBadge>
+          <UBadge
+            v-if="endDate"
+            variant="subtle"
+            class="text-sm"
+            size="sm"
+          >
+            <strong>Ends:</strong> {{ format(endDate, 'PPP') }}
+          </UBadge>
+        </div>
+      </UPageHeader>
+      <div>
+        <div class="flex flex-col md:flex-row gap-8">
+          <div :class="['w-full lg:pr-8', hasAnyTickets ? 'md:w-1/2 lg:w-2/3' : '']">
             <MDC
-              :value="useTranslatedProperty(event.description)"
+              :value="translatedProperty(event.description)"
+              unwrap="div"
             />
           </div>
-          <div class="w-full md:w-1/2 lg:w-1/3">
-            <UPageCard
-              :title="$t('events.detail.tickets.title')"
-            >
-              <UPageList
-                class="gap-4"
-              >
-                <div
-                  v-for="(ticket, key) in event.tickets"
-                  :key="key"
-                  class="pb-2 flex flex-col gap-0.5 border-b border-gray-200 last:border-b-0"
-                >
-                  <div class="text-lg font-semibold">
-                    <div class="flex justify-between">
-                      <div class="w-2/3">
-                        {{ useTranslatedProperty(ticket.name) }}
-                      </div>
-                      <UButton
-                        v-if="!hasItemInCart(ticket.stripeId)"
-                        variant="subtle"
-                        :trailing-icon="ticket.price > 0 ? 'i-lucide-shopping-cart' : 'i-lucide-activity'"
-                        @click="addTicketToCart(ticket)"
-                      >
-                        <template v-if="ticket.price">
-                          {{ ticket.price }} {{ ticket.currency }}
-                        </template>
-                        <template v-else>
-                          {{ $t('events.detail.tickets.free') }}
-                        </template>
-                      </UButton>
-                      <div
-                        v-else
-                        class="flex justify-end items-center gap-2"
-                      >
-                        <!--                        <div class="w-2/4"> -->
-                        <!--                          <UInputNumber -->
-                        <!--                            :default-value="getItemFromCart(ticket.stripeId)?.qty || 0" -->
-                        <!--                            :step="1" -->
-                        <!--                            @change="handleQtyChange(ticket.stripeId, $event.targe)" -->
-                        <!--                          /> -->
-                        <!--                        </div> -->
-                        <UButton
-                          color="error"
-                          icon="i-lucide-trash"
-                          variant="outline"
-                          @click="removeTicketFromCart(ticket)"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <MDC
-                    v-slot="{ body, data }"
-                    class="text-muted"
-                    :value="useTranslatedProperty(ticket.description)"
-                    unwrap
-                  >
-                    <MDCRenderer
-                      v-if="body"
-                      :body="body"
-                      :data="{ ...data, ticket: useTranslatedProperty(ticket.name) }"
-                      unwrap
-                    />
-                  </MDC>
-                </div>
-              </UPageList>
+          <div
+            v-if="hasAnyTickets"
+            class="w-full md:w-1/2 lg:w-1/3 flex flex-col gap-4"
+          >
+            <h2 class="text-2xl font-bold">
+              {{ $t('events.detail.tickets.title') }}
+            </h2>
+            <UPageCard :variant="$colorMode.value === 'dark' ? 'subtle' : 'soft'">
+              <EventTicketsNewCard :event="event" />
             </UPageCard>
           </div>
         </div>
-      </UMain>
+      </div>
     </div>
   </UContainer>
 </template>
