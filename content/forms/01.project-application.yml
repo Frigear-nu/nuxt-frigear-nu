@@ -3,7 +3,7 @@ title: forms.projectApplication.title
 description: forms.projectApplication.description
 delivery:
   - channel: email
-    destination: ["{NUXT_MAIL_TO}"]
+    destination: ["${contact.default}"]
 # In the future we could define forms a bit like this
 form:
   steps:

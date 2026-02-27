@@ -33,7 +33,7 @@ export const projectApplicationForm = defineSteppedForm({
     {
       id: 'background',
       icon: 'i-lucide-book-text',
-      labelKey: 'form.application.background',
+      // labelKey: 'form.application.background',
       schema: z.object({
         background: z.string().meta({
           title: 'form.application.background',
