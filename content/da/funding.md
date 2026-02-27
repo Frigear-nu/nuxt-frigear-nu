@@ -31,7 +31,7 @@ seo:
   color: secondary
   icon: i-lucide-form
   size: xl
-  to: /da/funding/#good-to-know
+  to: /funding/#good-to-know
   trailingIcon: i-lucide-arrow-down-from-line
   variant: subtle
   ---
@@ -340,9 +340,9 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
 
     ::::contact-form-modal
     ---
-    initial: null
     label: Kontakt bestyrelsen for at klage
-    subject: klage
+    initial:
+      subject: complaint
     ---
     ::::
   :::
@@ -415,10 +415,10 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
 
     ::::contact-form-modal
     ---
-    initial: null
     label: Kontakt os om projektstøtte spørgsmål
-    subject: other
-    subjectOther: Projektstøtte spørgsmål
+    initial:
+      subject: other
+      subjectOther: Projektstøtte spørgsmål
     ---
     ::::
   :::
