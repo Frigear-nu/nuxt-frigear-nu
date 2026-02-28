@@ -1,12 +1,12 @@
-title: General Assembly
+title: Local General Assembly
 date: 2026-03-15
 start: 2026-03-15 19:00
 end: 2026-03-15 23:59
 address: Kongens gade 123, 45. sal
 image: /images/volunteers/info-hero-desktop-1200x400.png
 name:
-  da: Generalforsamling 2026
-  en: General Assembly 2026
+  da: "LOCAL: Generalforsamling 2026"
+  en: "LOCAL: General Assembly 2026"
 excerpt:
   da: Generalforsamling for Frigear medlemmer 2026
   en: General Assembly for Frigear members 2026
@@ -47,50 +47,22 @@ description:
     ::h2{.mt-0}
     We meet again
     ::
-    We meet again to...
-    **Use markdown here**
-    
-    
-    ::callout{class="bg-primary/20"}
-    **Welcome!**
-    ::
-
-    ### Lorem ipsum
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
-    hamburger ham hock.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    biltong pork chop.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    biltong pork chop.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-
-
-    ### Bacon ipsum
-    Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
-    hamburger ham hock.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    biltong pork chop.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    biltong pork chop.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    biltong pork chop.
-
+    Emptiness...
 
 # Tickets and ticket products
 defaultTicket: default
 tickets:
   # We cna have a free ticket, (arbitrary how many type you want to add.)
   default:
+    stripeId: prod_U3cYQWfWJTh40Q # this is a free ticket -> but we require "one_of" products
     name:
       da: Adgang
       en: Admission
     description:
-      da: "[{{ticket}} billett]{.text-primary}"
+      da: "[{{ticket}} billett]{.text-primary} til alle festligheter i Frigear. :br det er veldig godt at lave en god beskrivelse for no."
       en: "[{{ticket}} ticket]{.text-primary}."
     price: 0
-    hidePrice: true
-    stripeId: prod_U3cYQWfWJTh40Q # this is a free ticket -> but we require "one_of" products
+    hidePrice: 1
     currency: DKK
     features:
       - Simple feature
@@ -101,10 +73,10 @@ tickets:
           da: Dansk med egen ikon
         icon: i-lucide-check-circle
     products:
+      require: one_of
       title:
         da: Mad
         en: Food
-      require: one_of
       items:
         - id: prod_U3ceq0o7yfwf66
           label: Carnivore
@@ -118,43 +90,4 @@ tickets:
           description: Vegan description
           price: 52.67
           currency: DKK
-  default:
-    name:
-      da: Standard
-      en: Standard
-    description:
-      da: |
-        Det er en [{{ticket}}]{.text-primary} billett.
-      en: "A [{{ticket}}]{.text-primary} ticket!"
-    price: 100
-    currency: DKK
-    stripeId: stripe_product_id
-  premium:
-    name:
-      da: Premium billett
-      en: Premium ticket
-    description:
-      da: Premium billett.
-      en: "Premium [ticket]{.text-primary}."
-    price: 200
-    currency: DKK
-    stripeId: stripe_product_id
-    memberships: [ price_id_for_subscription_required]
-    products:
-      require: one_of
-      items:
-        - id: stripe_product_id_or_price_id
-          label:
-            da: Dansk Addon
-            en: English Addon
-          description:
-            da: Dansk Addon beskrivelse
-            en: English Addon description
-          price: 100
-          currency: DKK
-        - id: stripe_product_id_or_price_id_2
-          label: Single lang addon
-          price: 100
-          currency: DKK
-
 

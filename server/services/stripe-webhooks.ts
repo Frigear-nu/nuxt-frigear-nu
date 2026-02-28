@@ -4,6 +4,7 @@ import type Stripe from 'stripe'
 import type { H3Event } from 'h3'
 import { fromUnixTime } from 'date-fns'
 import { useServerStripe } from '#stripe/server'
+import { db, schema } from '@nuxthub/db'
 
 const debugPayment = (...args: unknown[]) => {
   if (!import.meta.dev) {
@@ -46,11 +47,17 @@ export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.E
     case 'customer.subscription.deleted':
       await deleteStripeCustomerSubscription(stripeEvent.data.object)
       break
-    // case 'payment_method.attached':
-    //   // FIXME: We should probably handle this somehow.
-    //   debugPayment('FIXME!')
-    //   debugPayment(stripeEvent.data.object)
-    //   break
+      // case 'payment_method.attached':
+      //   // FIXME: We should probably handle this somehow.
+      //   debugPayment('FIXME!')
+      //   debugPayment(stripeEvent.data.object)
+      //   break
+
+    case 'checkout.session.completed':
+      await onCheckoutCompleted(stripeEvent.data.object)
+      break
+      // This might be for a ticket, so let's make sure tickets are marked as paid
+
     default:
       return { status: 200 }
   }
@@ -268,5 +275,26 @@ export const transformStripePaymentMethod = (pm: Stripe.PaymentMethod) => {
     brand: pm.card?.brand,
     mobilePay: pm.mobilepay,
     createdAt: fromUnixTime(pm.created),
+  }
+}
+
+export const onCheckoutCompleted = async (checkout: Stripe.Checkout.Session) => {
+  if (!checkout || !checkout.metadata) return
+
+  // check what type it is:
+  const type = checkout.metadata.type as 'ticket' | string
+
+  if (type === 'ticket') {
+    // Check if we can set it as paid:
+    switch (checkout.status) {
+      case 'complete':
+        await db
+          .update(schema.userEventTickets)
+          .set({ paidAt: new Date(), status: 'paid' })
+          .where(eq(schema.userEventTickets.checkoutSessionId, checkout.id))
+        break
+      default:
+        console.log('Unknown checkout status', checkout.status)
+    }
   }
 }

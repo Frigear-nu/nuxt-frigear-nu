@@ -34,12 +34,14 @@ export default defineContentConfig({
           name: translated,
           description: translated.optional(),
           price: z.number(),
+          hidePrice: z.boolean().optional(),
           currency: z.string(),
           stripeId: z.string().optional(),
           // priceId or for subscription?
           memberships: z.array(membership).optional(),
           // Available additional products to purchase, will use stripe data?
           products: z.object({
+            title: translated,
             require: z.enum(['one_of']).optional(),
             items: z.array(z.object({
               id: z.string(), // stripeId
