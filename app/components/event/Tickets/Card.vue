@@ -146,7 +146,8 @@ const onPurchase = () => {
             <UBadge
               v-if="!item.hidePrice"
               variant="subtle"
-              class="text-md font-bold"
+              class="text-md font-semibold px-1 py-0.5"
+              size="xs"
             >
               <div v-if="item.price === 0">
                 {{ $t('events.detail.tickets.free') }}
@@ -199,7 +200,7 @@ const onPurchase = () => {
             </div>
             <UBadge
               variant="subtle"
-              class="text-md font-bold"
+              class="text-md font-semibold px-1 py-0.5"
             >
               <div v-if="item.price === 0">
                 {{ $t('events.detail.tickets.free') }}

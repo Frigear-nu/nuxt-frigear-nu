@@ -72,9 +72,10 @@ tickets:
     price: 0
     # this "hidePrice: boolean | undefined" prevents showing "Free" or "Gratis" next to the main ticket, since this
     # event only has a single ticket and prices are determined based on food.
-    hidePrice: true
+    hidePrice: false
     currency: DKK
     products:
+      # this should probably be on the individual ticket...
       require: one_of # require at least one of the products below to be selected
       # TODO: Might be nice to have multiple "categories" or addons separated - like "steps"?
       title:
@@ -98,5 +99,32 @@ tickets:
               English [Vegan]{.font-bold.text-primary} description. :br
               This supports _full_ markdown - but no nuxt-ui components.
           price: 52.67
+          currency: DKK
+  premium:
+    name:
+      da: Premium billett
+      en: Premium ticket
+    description:
+      da: Premium billett.
+      en: "Premium [ticket]{.text-primary}."
+    price: 200
+    currency: DKK
+    stripeId: stripe_product_id
+    memberships: [ price_id_for_subscription_required ]
+    products:
+      require: one_of
+      items:
+        - id: stripe_product_id_or_price_id
+          label:
+            da: Dansk Addon
+            en: English Addon
+          description:
+            da: Dansk Addon beskrivelse
+            en: English Addon description
+          price: 100
+          currency: DKK
+        - id: stripe_product_id_or_price_id_2
+          label: Single lang addon
+          price: 100
           currency: DKK
 

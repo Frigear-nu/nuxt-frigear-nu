@@ -15,11 +15,10 @@ const { data: userTickets, refetch: refetchUserTickets } = useUserEventTickets()
 
 const [{ data: event }] = await Promise.all([
   useAsyncData<EventsCollectionItem | null>(
-    () => `events:${route.path}`, // route.path is unambiguous
+    () => `events:${route.path}`,
     async () => {
       let fullPath = withoutLeadingSlash(route.path)
 
-      // Strip any locale prefix (e.g. "en/", "fr/")
       const localePrefix = withoutLeadingSlash(locale.value) + '/'
       if (locale.value !== defaultLocale.value && fullPath.startsWith(localePrefix)) {
         fullPath = fullPath.slice(localePrefix.length)
@@ -67,14 +66,13 @@ const hasAnyTickets = computed(() => {
 
 const isLoading = ref(false)
 const isCheckingPayment = ref(false)
-const checkPaymentResult = ref<'success' | 'cancel' | undefined>(undefined)
+const checkPaymentResult = ref<'success' | 'cancel' | 'pending' | undefined>(undefined)
 
 const onPurchase = async (input: { eventPath: string, payload: { ticketKey: string, productIds: string[] } }) => {
   isLoading.value = true
   const { eventPath, payload } = input
   const { ticketKey, productIds } = payload
   try {
-    console.log('onPurchase', { eventPath, ticketKey, productIds })
     const checkoutSession = await $api(`/api/events/purchase-ticket`, {
       method: 'POST',
       body: {
@@ -84,26 +82,12 @@ const onPurchase = async (input: { eventPath: string, payload: { ticketKey: stri
       },
     })
 
-    console.log('checkoutSession', checkoutSession)
-    if (!checkoutSession || !checkoutSession.url) {
+    if (!checkoutSession?.url) {
       toast.add(formatError(new Error('events.detail.tickets.error.purchase')))
       return
     }
 
-    navigateTo(checkoutSession.url, {
-      external: true,
-    })
-
-    toast.add({
-      title: 'Ticket purchased successfully!',
-      close: false,
-      actions: [{
-        label: 'Complete purchase',
-        trailingIcon: 'i-lucide-arrow-right',
-        to: checkoutSession?.url || undefined,
-        color: 'primary',
-      }],
-    })
+    navigateTo(checkoutSession.url, { external: true })
   }
   catch (err) {
     toast.add(formatError(err))
@@ -113,37 +97,46 @@ const onPurchase = async (input: { eventPath: string, payload: { ticketKey: stri
   }
 }
 
-// returning from stripe...
+// --- Stripe return handling ---
 
-// We do not trust this, but it will determine if we will poll for a payment.
 const searchParams = useUrlSearchParams<{ payment?: 'success' | 'cancel' }>()
 
 const checkPurchaseStatus = async () => {
-  //
-  setTimeout(async () => {
-    await refetchUserTickets()
-    const userTicketsV = toValue(userTickets)
-    if (!userTicketsV) return
+  // Give Stripe's webhook a moment to process before polling
+  await new Promise(resolve => setTimeout(resolve, 1500))
 
-    console.log('userTicketsV', userTicketsV)
+  await refetchUserTickets()
+  const userTicketsV = toValue(userTickets)
 
-    // Check if th euser within the last 5 minutes purchased a ticket.
-    const lastPurchased = userTicketsV.find(t => t.createdAt && new Date(t.createdAt) > new Date(Date.now() - 5 * 60 * 1000))
-    if (!lastPurchased) {
-      isCheckingPayment.value = false
-      checkPaymentResult.value = 'cancel'
-      return
-    }
-    checkPaymentResult.value = 'YOU GOT IT!'
+  if (!userTicketsV) {
+    checkPaymentResult.value = 'cancel'
     isCheckingPayment.value = false
-  })
+    return
+  }
+
+  // Look for a ticket purchased within the last 5 minutes
+  const recentlyPurchased = userTicketsV.find(
+    t => t.createdAt && new Date(t.createdAt) > new Date(Date.now() - 5 * 60 * 1000),
+  )
+
+  checkPaymentResult.value = recentlyPurchased ? 'success' : 'cancel'
+  isCheckingPayment.value = false
 }
 
 onMounted(() => {
-  if (searchParams && searchParams.payment) {
-    checkPaymentResult.value = searchParams.payment + ' STAT'
+  const payment = searchParams.payment
+  if (payment === 'success' || payment === 'cancel') {
     isCheckingPayment.value = true
-    checkPurchaseStatus()
+    checkPaymentResult.value = 'pending'
+
+    if (payment === 'success') {
+      checkPurchaseStatus()
+    }
+    else {
+      // Stripe cancel is trusted directly — no need to poll
+      checkPaymentResult.value = 'cancel'
+      isCheckingPayment.value = false
+    }
   }
 })
 </script>
@@ -151,17 +144,66 @@ onMounted(() => {
 <template>
   <UContainer v-if="event">
     <div class="flex flex-col gap-8">
-      <UAlert
-        v-if="isCheckingPayment || checkPaymentResult"
+      <!-- Stripe return banner -->
+      <Transition
+        enter-active-class="transition-all duration-300 ease-out"
+        enter-from-class="opacity-0 -translate-y-2"
+        enter-to-class="opacity-100 translate-y-0"
+        leave-active-class="transition-all duration-200 ease-in"
+        leave-from-class="opacity-100 translate-y-0"
+        leave-to-class="opacity-0 -translate-y-2"
       >
-        <template #description>
-          <UIcon
-            name="i-lucide-cvw"
-            class="animate animate-spin"
-          />
-          {{ checkPaymentResult }}
-        </template>
-      </UAlert>
+        <UAlert
+          v-if="isCheckingPayment || checkPaymentResult === 'success' || checkPaymentResult === 'cancel'"
+          :color="isCheckingPayment || checkPaymentResult === 'pending' ? 'neutral' : checkPaymentResult === 'success' ? 'success' : 'warning'"
+          :variant="'subtle'"
+          class="mt-4"
+          :actions="[{ label: 'See ticket in Account', to: '/account', variant: 'subtle', trailingIcon: 'i-lucide-arrow-right' }]"
+        >
+          <template #leading>
+            <UIcon
+              v-if="isCheckingPayment || checkPaymentResult === 'pending'"
+              name="i-lucide-loader-circle"
+              class="animate-spin size-5"
+            />
+            <UIcon
+              v-else-if="checkPaymentResult === 'success'"
+              name="i-lucide-circle-check"
+              class="size-5"
+            />
+            <UIcon
+              v-else
+              name="i-lucide-circle-x"
+              class="size-5"
+            />
+          </template>
+
+          <template #title>
+            <span v-if="isCheckingPayment || checkPaymentResult === 'pending'">
+              {{ $t('events.detail.tickets.payment.verifying') }}
+            </span>
+            <span v-else-if="checkPaymentResult === 'success'">
+              {{ $t('events.detail.tickets.payment.success.title') }}
+            </span>
+            <span v-else>
+              {{ $t('events.detail.tickets.payment.cancel.title') }}
+            </span>
+          </template>
+
+          <template #description>
+            <span v-if="isCheckingPayment || checkPaymentResult === 'pending'">
+              {{ $t('events.detail.tickets.payment.verifying.description') }}
+            </span>
+            <span v-else-if="checkPaymentResult === 'success'">
+              {{ $t('events.detail.tickets.payment.success.description') }}
+            </span>
+            <span v-else>
+              {{ $t('events.detail.tickets.payment.cancel.description') }}
+            </span>
+          </template>
+        </UAlert>
+      </Transition>
+
       <UPageHeader
         :title="translatedProperty(event.name)"
         :description="translatedProperty(event.excerpt)"
@@ -185,6 +227,7 @@ onMounted(() => {
           </UBadge>
         </div>
       </UPageHeader>
+
       <div>
         <div class="flex flex-col md:flex-row gap-8">
           <div :class="['w-full lg:pr-8', hasAnyTickets ? 'md:w-1/2 lg:w-2/3' : '']">
@@ -201,6 +244,7 @@ onMounted(() => {
               />
             </MDC>
           </div>
+
           <div
             v-if="hasAnyTickets"
             class="w-full md:w-1/2 lg:w-1/3 flex flex-col gap-4"
