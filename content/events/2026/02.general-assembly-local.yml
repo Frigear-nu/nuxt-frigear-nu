@@ -74,6 +74,7 @@ tickets:
         icon: i-lucide-check-circle
     products:
       require: one_of
+      # TODO: Might be nice to have multiple "categories" or addons separated - like "steps"?
       title:
         da: Mad
         en: Food
