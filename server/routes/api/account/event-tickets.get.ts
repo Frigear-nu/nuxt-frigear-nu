@@ -5,5 +5,6 @@ export default defineEventHandler(async (event) => {
 
   return await db.query.userEventTickets.findMany({
     where: (ticket, { eq }) => eq(ticket.userId, userId),
+    orderBy: (ticket, { desc }) => desc(ticket.createdAt),
   })
 })

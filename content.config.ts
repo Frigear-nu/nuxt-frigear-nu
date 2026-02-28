@@ -51,13 +51,6 @@ export default defineContentConfig({
               currency: z.string(),
             })),
           }).optional(),
-          // features: z.array(z.union([
-          //   translated,
-          //   z.object({
-          //     label: translated,
-          //     icon: z.string().optional(),
-          //   }),
-          // ])).optional(),
         })),
       }),
     }),

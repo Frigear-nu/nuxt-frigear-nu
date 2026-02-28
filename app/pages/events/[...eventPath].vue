@@ -2,30 +2,36 @@
 import type { EventsCollectionItem } from '@nuxt/content'
 import { withLeadingSlash, withoutLeadingSlash } from 'ufo'
 import { format } from 'date-fns'
+import { objectDot } from '#shared/object'
+import { useUserEventTickets } from '~/store/queries/user'
+import { useUrlSearchParams } from '@vueuse/core'
 
 const route = useRoute()
 const { $api } = useNuxtApp()
 const { translatedProperty } = useContent()
 const { locale, defaultLocale } = useSiteI18n()
 const { formatError } = useFormattedToast()
+const { data: userTickets, refetch: refetchUserTickets } = useUserEventTickets()
 
-const { data: event } = await useAsyncData<EventsCollectionItem | null>(
-  () => `events:${route.path}`, // route.path is unambiguous
-  async () => {
-    let fullPath = withoutLeadingSlash(route.path)
+const [{ data: event }] = await Promise.all([
+  useAsyncData<EventsCollectionItem | null>(
+    () => `events:${route.path}`, // route.path is unambiguous
+    async () => {
+      let fullPath = withoutLeadingSlash(route.path)
 
-    // Strip any locale prefix (e.g. "en/", "fr/")
-    const localePrefix = withoutLeadingSlash(locale.value) + '/'
-    if (locale.value !== defaultLocale.value && fullPath.startsWith(localePrefix)) {
-      fullPath = fullPath.slice(localePrefix.length)
-    }
+      // Strip any locale prefix (e.g. "en/", "fr/")
+      const localePrefix = withoutLeadingSlash(locale.value) + '/'
+      if (locale.value !== defaultLocale.value && fullPath.startsWith(localePrefix)) {
+        fullPath = fullPath.slice(localePrefix.length)
+      }
 
-    return await queryCollection('events')
-      .path(withLeadingSlash(fullPath))
-      .first()
-  },
-  { watch: [() => route.path] },
-)
+      return await queryCollection('events')
+        .path(withLeadingSlash(fullPath))
+        .first()
+    },
+    { watch: [() => route.path] },
+  ),
+])
 
 if (!event.value) {
   throw createError({
@@ -35,6 +41,17 @@ if (!event.value) {
 }
 
 const toast = useToast()
+
+const templateVariables = computed(() => {
+  const eventV = toValue(event)
+  return {
+    $event: {
+      ...eventV || {},
+      name: translatedProperty(eventV?.name),
+      description: translatedProperty(eventV?.description),
+    },
+  }
+})
 
 const startDate = computed(() => {
   return event.value?.start ? new Date(event.value.start) : undefined
@@ -95,6 +112,40 @@ const onPurchase = async (input: { eventPath: string, payload: { ticketKey: stri
     isLoading.value = false
   }
 }
+
+// returning from stripe...
+
+// We do not trust this, but it will determine if we will poll for a payment.
+const searchParams = useUrlSearchParams<{ payment?: 'success' | 'cancel' }>()
+
+const checkPurchaseStatus = async () => {
+  //
+  setTimeout(async () => {
+    await refetchUserTickets()
+    const userTicketsV = toValue(userTickets)
+    if (!userTicketsV) return
+
+    console.log('userTicketsV', userTicketsV)
+
+    // Check if th euser within the last 5 minutes purchased a ticket.
+    const lastPurchased = userTicketsV.find(t => t.createdAt && new Date(t.createdAt) > new Date(Date.now() - 5 * 60 * 1000))
+    if (!lastPurchased) {
+      isCheckingPayment.value = false
+      checkPaymentResult.value = 'cancel'
+      return
+    }
+    checkPaymentResult.value = 'YOU GOT IT!'
+    isCheckingPayment.value = false
+  })
+}
+
+onMounted(() => {
+  if (searchParams && searchParams.payment) {
+    checkPaymentResult.value = searchParams.payment + ' STAT'
+    isCheckingPayment.value = true
+    checkPurchaseStatus()
+  }
+})
 </script>
 
 <template>
@@ -138,9 +189,17 @@ const onPurchase = async (input: { eventPath: string, payload: { ticketKey: stri
         <div class="flex flex-col md:flex-row gap-8">
           <div :class="['w-full lg:pr-8', hasAnyTickets ? 'md:w-1/2 lg:w-2/3' : '']">
             <MDC
+              v-slot="{ body, data }"
+              class="text-muted"
               :value="translatedProperty(event.description)"
-              unwrap="div"
-            />
+            >
+              <MDCRenderer
+                v-if="body"
+                :body="body"
+                :data="{ ...data, ...templateVariables }"
+                unwrap="div"
+              />
+            </MDC>
           </div>
           <div
             v-if="hasAnyTickets"

@@ -1,3 +1,5 @@
+# schema: content.config.ts @ collections: { events }
+# @see<content.config.ts>
 title: Local General Assembly
 date: 2026-03-15
 start: 2026-03-15 19:00
@@ -13,27 +15,30 @@ excerpt:
 description:
   da: |
     ::callout{class="bg-primary/10 mt-0"}
-      **NB:** Om du er 🎯 scorer du de bedste billetter 🏆
+    **NB:** Om du er 🎯 scorer du de bedste billetter 🏆
     ::
     ::h2{.mt-0}
     📆 Samling igen
     ::
     Vi samles igen for at...
     **Brug markdown her**... Om du ønsker...
+      
+    ## 🪄 Variables
     
-    
-    ### 📚 Lorem ipsum
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
-    hamburger ham hock.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    biltong pork chop.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    biltong pork chop.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    
+    | Variable                            | Current Value                       |
+    |-------------------------------------|-------------------------------------|
+    | `{{$event.name}}`                   | {{$event.name}}                     |
+    | `{{$event.date}}`                   | {{$event.date}}                     |
+    | `{{$event.start}}`                  | {{$event.start}}                    |
+    | `{{$event.end}}`                    | {{$event.end}}                      |
+    | `{{$event.address}}`                | {{$event.address}}                  |
+    | `{{$event.image}}`                  | {{$event.image}}                    |
+    | `{{$event.excerpt}}`                | {{$event.excerpt}}                  |
+    | `{{$event.description}}`            | {{$event.description}}              |
+    | `{{$event.tickets.<key>.stripeId}}` | {{$event.tickets.default.stripeId}} |
     
     ### 🥓 Bacon ipsum
+    
     Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
     hamburger ham hock.
     Beef ribs pork loin, pork chop bresaola hamburger ham hock
@@ -52,7 +57,7 @@ description:
 # Tickets and ticket products
 defaultTicket: default
 tickets:
-  # We cna have a free ticket, (arbitrary how many type you want to add.)
+  # We can have a free ticket, (arbitrary how many types you want to add to `tickets.<any-key>`)
   default:
     stripeId: prod_U3cYQWfWJTh40Q # this is a free ticket -> but we require "one_of" products
     name:
@@ -60,20 +65,17 @@ tickets:
       en: Admission
     description:
       da: "[{{ticket}} billett]{.text-primary} til alle festligheter i Frigear. :br det er veldig godt at lave en god beskrivelse for no."
-      en: "[{{ticket}} ticket]{.text-primary}."
+      en: |
+        [{{ticket}} ticket]{.text-primary}.
+          
+        - 100% gratis for alle
     price: 0
-    hidePrice: 1
+    # this "hidePrice: boolean | undefined" prevents showing "Free" or "Gratis" next to the main ticket, since this
+    # event only has a single ticket and prices are determined based on food.
+    hidePrice: true
     currency: DKK
-    features:
-      - Simple feature
-      - en: English feature
-        da: Dansk feature
-      - label:
-          en: English with custom icon
-          da: Dansk med egen ikon
-        icon: i-lucide-check-circle
     products:
-      require: one_of
+      require: one_of # require at least one of the products below to be selected
       # TODO: Might be nice to have multiple "categories" or addons separated - like "steps"?
       title:
         da: Mad
@@ -83,12 +85,18 @@ tickets:
           label: Carnivore
           description:
             da: Dansk Carnivore beskrivelse
-            en: English Carnivor description
+            en: |
+              English [Carnivore]{.font-bold.text-primary} description
+          # This must be provided, so there is some work to keep things in sync for now.
           price: 52.66
           currency: DKK
         - id: prod_U3cd1y2poAqNyl
           label: Vegan
-          description: Vegan description
+          description:
+            da: Vegansk beskrivelse
+            en: |
+              English [Vegan]{.font-bold.text-primary} description. :br
+              This supports _full_ markdown - but no nuxt-ui components.
           price: 52.67
           currency: DKK
 
