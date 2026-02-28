@@ -129,6 +129,7 @@ onMounted(() => {
     isCheckingPayment.value = true
     checkPaymentResult.value = 'pending'
 
+    // Since we cannot trust this, we will check via a trusted source (our API)
     if (payment === 'success') {
       checkPurchaseStatus()
     }
