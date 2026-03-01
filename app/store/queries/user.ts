@@ -24,6 +24,7 @@ export const useUserPaymentMethods = () => {
 
 export const useUserEventTickets = () => {
   const { $api } = useNuxtApp()
+  const { loggedIn } = useUserSession()
 
   return useQuery({
     key: () => USER_KEYS.eventTickets,
@@ -33,6 +34,6 @@ export const useUserEventTickets = () => {
       return $api('/api/account/event-tickets')
     },
     placeholderData: () => [],
-    enabled: () => import.meta.client,
+    enabled: () => import.meta.client && loggedIn.value,
   })
 }
