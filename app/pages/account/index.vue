@@ -21,6 +21,13 @@ const membershipActions = ref<ButtonProps[]>([
 
 const cards = computed<PageCardProps[]>(() => ([
   {
+    title: t('account.tickets.title'),
+    description: t('account.tickets.description'),
+    icon: 'i-lucide-tickets',
+    to: localePath('/account/tickets'),
+    variant: 'subtle',
+  },
+  {
     title: t('account.membership.title'),
     description: t('account.membership.description'),
     icon: 'i-lucide-credit-card',
