@@ -11,7 +11,9 @@ form:
       icon: i-lucide-user
       fields:
         - name: name
-          label: forms.projectApplication.name
+          label:
+            da: Danish label
+            en: English label
           rules: text|required|min:3|max:255
         - name: dob
           label: forms.projectApplication.dob

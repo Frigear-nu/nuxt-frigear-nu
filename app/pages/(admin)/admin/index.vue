@@ -1,3 +1,5 @@
 <template>
-  ADMIN INDEX
+  <div>
+    ADMIN INDEX
+  </div>
 </template>
