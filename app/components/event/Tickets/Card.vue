@@ -173,7 +173,10 @@ const onPurchase = () => {
             class="text-lg"
           >
             {{ selectedTicket.products?.title ? translatedProperty(selectedTicket?.products.title) : $t('events.detail.tickets.products.label') }}
-            <small class="text-muted">
+            <small
+              v-if="requiresAtLeastOneProduct"
+              class="text-muted"
+            >
               ({{ $t('events.detail.tickets.products.required') }})
             </small>
           </div>
