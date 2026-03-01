@@ -1,0 +1,3 @@
+<template>
+  ADMIN INDEX
+</template>
