@@ -2,7 +2,6 @@
 import type { EventsCollectionItem } from '@nuxt/content'
 import { withLeadingSlash, withoutLeadingSlash } from 'ufo'
 import { format } from 'date-fns'
-import { objectDot } from '#shared/object'
 import { useUserEventTickets } from '~/store/queries/user'
 import { useUrlSearchParams } from '@vueuse/core'
 
