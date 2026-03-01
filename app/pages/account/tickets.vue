@@ -47,7 +47,7 @@ const ticketBadgeButton = (status: string): ButtonProps | undefined => {
     <NuxtLink
       v-for="ticket in tickets"
       :key="ticket.id"
-      :to="ticket.eventPath || '/events'"
+      :to="ticket.eventPath"
     >
       <UCard>
         <div class="flex flex-col gap-2">
