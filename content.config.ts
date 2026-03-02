@@ -26,10 +26,21 @@ const requirement = z.union([
 ])
 
 const environment = z.enum(['production', 'staging', 'development'])
-const variables = z.record(
-  environment,
+const variables = z.union([
+  z.record(
+    environment,
+    z.record(z.string(), z.string()),
+  ),
   z.record(z.string(), z.string()),
-).or(z.record(z.string(), z.string()))
+])
+
+const address = z.union([
+  z.string(),
+  z.object({
+    value: z.string(),
+    link: z.union([z.string(), z.url()]).optional(),
+  }),
+])
 
 export default defineContentConfig({
   collections: {
@@ -48,7 +59,7 @@ export default defineContentConfig({
         date: z.date(),
         start: z.date().optional(),
         end: z.date().optional(),
-        address: z.string().optional(),
+        address: address.optional(),
         defaultTicket: z.string().optional(),
         requirements: z.array(requirement).optional(),
         variables: variables.optional(),
