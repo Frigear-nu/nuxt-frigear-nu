@@ -146,6 +146,18 @@ const eventRequirements = computed(() => {
   return getEventRequirements(event.value || [])
 })
 
+const eventAddress = computed(() => {
+  if (typeof event.value.address === 'string') {
+    return event.value.address
+  }
+
+  if (typeof event.value.address === 'object') {
+    return event.value.address.value
+  }
+
+  return undefined
+})
+
 onMounted(() => {
   const payment = searchParams.payment
   if (payment === 'success' || payment === 'cancel') {
@@ -233,14 +245,14 @@ onMounted(() => {
         :description="translatedProperty(event.description)"
       >
         <div class="flex flex-col md:flex-row gap-2 mt-2">
-          <div>
+          <div class="flex flex-col gap-2">
             <div>
-              <UFieldGroup>
+              <UFieldGroup v-if="startDate">
                 <UBadge
                   variant="soft"
                   class="text-sm font-semibold"
                 >
-                  When
+                  {{ $t('events.detail.when') }}
                 </UBadge>
                 <UBadge
                   v-if="startDate"
@@ -252,6 +264,23 @@ onMounted(() => {
                   <template v-if="endDate">
                     - {{ format(endDate, 'dd.MM.yyyy HH:mm') }}
                   </template>
+                </UBadge>
+              </UFieldGroup>
+            </div>
+            <div v-if="eventAddress">
+              <UFieldGroup>
+                <UBadge
+                  variant="soft"
+                  class="text-sm font-semibold"
+                >
+                  {{ $t('events.detail.where') }}
+                </UBadge>
+                <UBadge
+                  variant="soft"
+                  class="text-sm"
+                  size="sm"
+                >
+                  {{ eventAddress }}
                 </UBadge>
               </UFieldGroup>
             </div>
