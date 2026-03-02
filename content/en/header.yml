@@ -8,3 +8,5 @@ navigation:
     to: /en
   - label: Membership
     to: /en/membership
+  - label: Events
+    to: /en/events

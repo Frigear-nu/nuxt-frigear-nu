@@ -1,0 +1,112 @@
+title: General Assembly (nuxt.frigear.nu)
+date: 2026-03-15
+start: 2026-03-15 19:00
+end: 2026-03-15 23:59
+address: Kongens gade 123, 45. sal
+image: /images/volunteers/fgr/info-hero-desktop-1200x400.png
+name:
+  da: (nuxt) Generalforsamling 2026
+  en: (nuxt) General Assembly 2026
+description:
+  da: Generalforsamling for Frigear medlemmer 2026
+  en: General Assembly for Frigear members 2026
+body:
+  da: |
+    ::callout{class="bg-primary/10 mt-0"}
+      **NB:** Om du er 🎯 scorer du de bedste billetter 🏆
+    ::
+    ::h2{.mt-0}
+    📆 Samling igen
+    ::
+    Vi samles igen for at...
+    **Brug markdown her**... Om du ønsker...
+    
+    
+    ### 🥓 Bacon ipsum
+    Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
+    hamburger ham hock.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+
+  en: |
+    ::h2{.mt-0}
+    We meet again
+    ::
+    We meet again to...
+    **Use markdown here**
+    
+    
+    ::callout{class="bg-primary/20"}
+    **Welcome!**
+    ::
+
+    ### Lorem ipsum
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
+    hamburger ham hock.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+
+
+    ### Bacon ipsum
+    Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
+    hamburger ham hock.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+    Beef ribs pork loin, pork chop bresaola hamburger ham hock
+    biltong pork chop.
+
+
+# Tickets and ticket products
+defaultTicket: default
+requirements:
+  - type: membership # the only supported type of requirement for now
+    title:
+      da: Bare for medlemmer
+      en: Members only
+    method: any # this is the default value
+tickets:
+  # We cna have a free ticket, (arbitrary how many type you want to add.)
+  default:
+    name:
+      da: Adgang
+      en: Admission
+    description:
+      da: "[{{ticket}} billett]{.text-primary}"
+      en: "[{{ticket}} ticket]{.text-primary}."
+    price: 0
+    hidePrice: true
+    stripeId: prod_U4Vt3O4SjcmteT # this is a free ticket -> but we require "one_of" products
+    currency: DKK
+    products:
+      title:
+        da: Mad
+        en: Food
+      require: one_of
+      items:
+        - id: prod_U4VuMoboxBgNup
+          label: Carnivore
+          description:
+            da: Dansk Carnivore beskrivelse
+            en: English Carnivor description
+          price: 52.66
+          currency: DKK
+        - id: prod_U4VvR7GRmWTvTa
+          label: Vegan
+          description: Vegan description
+          price: 52.67
+          currency: DKK
+        - id: none
+          label: None
+          description: Nada..
+          price: 0
+

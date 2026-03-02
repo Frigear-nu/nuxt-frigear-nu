@@ -173,6 +173,45 @@
       "button": "Contact us"
     }
   },
+  "events": {
+    "upcoming": {
+      "title": "Upcoming events"
+    },
+    "detail": {
+      "tickets": {
+        "title": "Tickets",
+        "free": "Free",
+        "view": "Show tickets",
+        "ticket":{
+          "label": "Ticket"
+        },
+        "products": {
+          "label": "Product",
+          "required": "Required"
+        },
+        "payment": {
+          "view": "View payment",
+          "verifying": {
+            "title": "Verifying...",
+            "description": "Checking your payment..."
+          },
+          "success": {
+            "title": "Payment successful!",
+            "description": "Your payment was successful. You can now purchase tickets."
+          },
+          "cancel": {
+            "title": "Payment canceled!",
+            "description": "Your payment was canceled. You can try again."
+          }
+        }
+      }
+    }
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "addedToCart": "{title} was added to your cart.",
+    "removedFromCart": "{title} was removed."
+  },
   "zodI18n": {
     "errors": {
       "too_big": {
