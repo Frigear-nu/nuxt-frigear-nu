@@ -1,12 +1,12 @@
-title: General Assembly
+title: General Assembly (nuxt.frigear.nu)
 date: 2026-03-15
 start: 2026-03-15 19:00
 end: 2026-03-15 23:59
 address: Kongens gade 123, 45. sal
 image: /images/volunteers/fgr/info-hero-desktop-1200x400.png
 name:
-  da: Generalforsamling 2026
-  en: General Assembly 2026
+  da: (nuxt) Generalforsamling 2026
+  en: (nuxt) General Assembly 2026
 description:
   da: Generalforsamling for Frigear medlemmer 2026
   en: General Assembly for Frigear members 2026
@@ -85,7 +85,7 @@ tickets:
       en: "[{{ticket}} ticket]{.text-primary}."
     price: 0
     hidePrice: true
-    stripeId: prod_U3cYQWfWJTh40Q # this is a free ticket -> but we require "one_of" products
+    stripeId: prod_U4Vt3O4SjcmteT # this is a free ticket -> but we require "one_of" products
     currency: DKK
     products:
       title:
@@ -93,14 +93,14 @@ tickets:
         en: Food
       require: one_of
       items:
-        - id: prod_U30CCwoLfWM9cv
+        - id: prod_U4VuMoboxBgNup
           label: Carnivore
           description:
             da: Dansk Carnivore beskrivelse
             en: English Carnivor description
           price: 52.66
           currency: DKK
-        - id: prod_U30NvkM8xzL3Sh
+        - id: prod_U4VvR7GRmWTvTa
           label: Vegan
           description: Vegan description
           price: 52.67
