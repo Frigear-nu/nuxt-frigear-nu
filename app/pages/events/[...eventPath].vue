@@ -147,6 +147,9 @@ const eventRequirements = computed(() => {
 })
 
 const eventAddress = computed(() => {
+  if (!event.value) {
+    return undefined
+  }
   if (typeof event.value.address === 'string') {
     return event.value.address
   }
@@ -156,6 +159,14 @@ const eventAddress = computed(() => {
   }
 
   return undefined
+})
+
+const addressLink = computed(() => {
+  if (!event.value || typeof event.value.address !== 'object') {
+    return undefined
+  }
+
+  return event.value.address?.link
 })
 
 onMounted(() => {
@@ -268,21 +279,28 @@ onMounted(() => {
               </UFieldGroup>
             </div>
             <div v-if="eventAddress">
-              <UFieldGroup>
-                <UBadge
-                  variant="soft"
-                  class="text-sm font-semibold"
-                >
-                  {{ $t('events.detail.where') }}
-                </UBadge>
-                <UBadge
-                  variant="soft"
-                  class="text-sm"
-                  size="sm"
-                >
-                  {{ eventAddress }}
-                </UBadge>
-              </UFieldGroup>
+              <NuxtLink
+                :to="addressLink"
+                :external="Boolean(addressLink && addressLink.startsWith('http'))"
+                :target="addressLink && addressLink.startsWith('http') ? '_blank' : undefined"
+              >
+                <UFieldGroup>
+                  <UBadge
+                    variant="soft"
+                    class="text-sm font-semibold"
+                  >
+                    {{ $t('events.detail.where') }}
+                  </UBadge>
+                  <UBadge
+                    variant="soft"
+                    class="text-sm"
+                    size="sm"
+                    :trailing-icon="addressLink ? 'i-lucide-external-link' : undefined"
+                  >
+                    {{ eventAddress }}
+                  </UBadge>
+                </UFieldGroup>
+              </NuxtLink>
             </div>
           </div>
           <div>
