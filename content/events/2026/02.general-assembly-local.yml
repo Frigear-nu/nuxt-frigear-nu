@@ -91,7 +91,10 @@ tickets:
         # This is a list of values that the user must have ^ one of
         # This can only be a stripe price_id.
         # this is empty by default, so it is only required for the "one_of" method.
-        values: [month_price_id, quarter_id, annual_id]
+        priceIds:
+          #- price_1StvgVGeoReTs5WFxfZVRCrO # monthly
+          - price_1SwjTWGeoReTs5WFdT0Yv801 # quarter
+          - price_1SwjTWGeoReTs5WFNsz7DK7P # annual
         # Set a specific label for this requirement
         title:
           da: Kun for Medlemmer

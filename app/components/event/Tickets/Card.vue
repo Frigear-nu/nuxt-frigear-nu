@@ -2,6 +2,8 @@
 import type { RadioGroupItem } from '@nuxt/ui'
 import type { EventsCollectionItem } from '@nuxt/content'
 import { useLocalStorage } from '@vueuse/core'
+import { useUserMemberships } from '~/store/queries/user'
+import { checkTicketRequirements } from '#shared/events/requirements'
 
 const props = defineProps<{
   event: EventsCollectionItem
@@ -19,6 +21,7 @@ const toast = useToast()
 const { loggedIn } = useUserSession()
 const { localePath } = useSiteI18n()
 const { translatedProperty } = useContent()
+const { data: userMemberships } = useUserMemberships({ isEnabled: loggedIn })
 
 // Ticket
 const selectedTicketKey = useLocalStorage<string | null>('selected-ticket', () => props.event?.defaultTicket || null, {
@@ -27,14 +30,26 @@ const selectedTicketKey = useLocalStorage<string | null>('selected-ticket', () =
 })
 
 const ticketRadioCardItems = computed<RadioGroupItem[]>(() => {
-  return Object.entries(props.event.tickets).map(([key, ticket]) => ({
-    label: translatedProperty(ticket.name) || 'Ticket',
-    description: translatedProperty(ticket.description),
-    value: key,
-    price: ticket.price,
-    currency: ticket.currency,
-    hidePrice: ticket.hidePrice,
-  } satisfies RadioGroupItem))
+  return Object.entries(props.event.tickets).map(([key, ticket]) => {
+    // check if this ticket has requirements, if it does, we want to check if the user
+    // passes the requirements before allowing them to purchase this ticket
+    const ticketRequirements = selectedTicket.value?.requirements || []
+
+    const filteredUserMemberships = (userMemberships.value || []).filter(um => um.priceId) as { priceId: string }[]
+    const { success } = checkTicketRequirements(ticket, filteredUserMemberships)
+
+    return {
+      label: translatedProperty(ticket.name) || 'Ticket',
+      description: translatedProperty(ticket.description),
+      value: key,
+      price: ticket.price,
+      currency: ticket.currency,
+      hidePrice: ticket.hidePrice,
+      disabled: ticketRequirements.length === 0
+        ? false
+        : !success,
+    } satisfies RadioGroupItem
+  })
 })
 
 const selectedTicket = computed(() => props.event.tickets[selectedTicketKey.value as keyof EventsCollectionItem['tickets']])
@@ -48,13 +63,15 @@ const ticketProductsRadioCardItems = computed<RadioGroupItem[]>(() => {
     return []
   }
 
-  return selectedTicket.value.products?.items.map(product => ({
-    label: translatedProperty(product.label),
-    description: translatedProperty(product.description),
-    value: product.id,
-    price: product.price,
-    currency: product.currency,
-  } satisfies RadioGroupItem)) as RadioGroupItem[]
+  return selectedTicket.value.products?.items.map((product) => {
+    return {
+      label: translatedProperty(product.label),
+      description: translatedProperty(product.description),
+      value: product.id,
+      price: product.price,
+      currency: product.currency,
+    } satisfies RadioGroupItem
+  }) as RadioGroupItem[]
 })
 
 const ticketRequirements = computed(() => {
@@ -62,6 +79,16 @@ const ticketRequirements = computed(() => {
 })
 
 const ticketHasRequirements = computed(() => ticketRequirements.value.length > 0)
+
+const ticketRequirementCheck = computed(() => {
+  if (selectedTicket.value) {
+    return checkTicketRequirements(selectedTicket.value, (userMemberships.value || []).filter(um => um.priceId) as {
+      priceId: string
+    }[])
+  }
+
+  return { success: true, failed: [], passed: [] }
+})
 
 // Reset this when the ticket changes...
 watch(selectedTicket, () => {
@@ -90,6 +117,10 @@ router.afterEach((to, from) => {
 
 const canPurchase = computed(() => {
   if (requiresAtLeastOneProduct.value && !selectedProductAddons.value) {
+    return false
+  }
+
+  if (selectedTicket.value && selectedTicket.value?.requirements?.length > 0 && !ticketRequirementCheck.value.success) {
     return false
   }
 
@@ -176,6 +207,19 @@ const onPurchase = () => {
         </template>
       </URadioGroup>
     </UForm>
+    <div
+      v-if="ticketRequirementCheck && !ticketRequirementCheck.success"
+      class="flex flex-col gap-2"
+    >
+      <UAlert
+        v-for="(failed, index) in ticketRequirementCheck.failed"
+        :key="index"
+        :title="translatedProperty(failed.title)"
+        :description="failed.description"
+        :icon="failed.icon || 'i-lucide-alert-triangle'"
+        color="warning"
+      />
+    </div>
     <div v-if="selectedTicketKey && selectedTicket && selectedTicketHasProducts">
       <URadioGroup
         v-model="selectedProductAddons"
@@ -188,7 +232,9 @@ const onPurchase = () => {
           <div
             class="text-lg"
           >
-            {{ selectedTicket.products?.title ? translatedProperty(selectedTicket?.products.title) : $t('events.detail.tickets.products.label') }}
+            {{
+              selectedTicket.products?.title ? translatedProperty(selectedTicket?.products.title) : $t('events.detail.tickets.products.label')
+            }}
             <small
               v-if="requiresAtLeastOneProduct"
               class="text-muted"
