@@ -123,12 +123,23 @@ const checkPurchaseStatus = async () => {
   isCheckingPayment.value = false
 }
 
-const paymentActions = computed<ButtonProps[]>(() => [{
-  label: t('events.detail.tickets.payment.view'),
-  to: localePath('/account/tickets'),
-  variant: 'subtle',
-  trailingIcon: 'i-lucide-arrow-right',
-}])
+const paymentActions = computed<ButtonProps[]>(() => {
+  if (checkPaymentResult.value === 'success') {
+    return [{
+      label: t('events.detail.tickets.view'),
+      to: localePath('/account/tickets'),
+      variant: 'subtle',
+      color: 'neutral',
+      trailingIcon: 'i-lucide-arrow-right',
+    }]
+  }
+
+  if (checkPaymentResult.value === 'cancel') {
+    // TODO: Show try again button with deep link to stripe checkout?
+  }
+
+  return []
+})
 
 const { getEventRequirements } = useEventTicket()
 const eventRequirements = computed(() => {
@@ -193,7 +204,7 @@ onMounted(() => {
 
           <template #title>
             <span v-if="isCheckingPayment || checkPaymentResult === 'pending'">
-              {{ $t('events.detail.tickets.payment.verifying') }}
+              {{ $t('events.detail.tickets.payment.verifying.title') }}
             </span>
             <span v-else-if="checkPaymentResult === 'success'">
               {{ $t('events.detail.tickets.payment.success.title') }}

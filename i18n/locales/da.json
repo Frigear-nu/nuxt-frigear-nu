@@ -181,6 +181,7 @@
     "detail": {
       "tickets": {
         "title": "Billetter",
+        "view": "Se billetter",
         "free": "Gratis",
         "ticket":{
           "label": "Billett"
@@ -188,6 +189,21 @@
         "products": {
           "label": "Produkt",
           "required": "Påkrævet"
+        },
+        "payment": {
+          "view": "Se betaling",
+          "verifying": {
+            "title": "Verifiserer...",
+            "description": "Tjekker din betaling..."
+          },
+          "success": {
+            "title": "Betalingen er godkendt",
+            "description": "Din betaling ble godkendt. Billetterne er klar til brug."
+          },
+          "cancel": {
+            "title": "Betalingen er annulleret",
+            "description": "Betalingen ble annuleret, du kan forsøge igen."
+          }
         }
       }
     }
