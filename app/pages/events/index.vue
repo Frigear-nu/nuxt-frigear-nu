@@ -53,7 +53,7 @@ const pastEvents = computed(() => {
         />
         <UPageGrid>
           <EventCard
-            v-for="event in upcomingEvents"
+            v-for="event in pastEvents"
             :key="event.id"
             :event="event"
           />
