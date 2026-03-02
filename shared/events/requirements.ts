@@ -4,7 +4,7 @@ export const checkTicketRequirements = (
   ticket: EventsCollectionItem['tickets'][string],
   userMemberships: { priceId: string }[],
 ) => {
-  const checks = ticket.requirements.map((requirement: EventsCollectionItem['tickets'][string]['requirements'][number]) => {
+  const checks = [...ticket?.requirements || []].map((requirement: EventsCollectionItem['tickets'][string]['requirements'][number]) => {
     if (requirement.type === 'membership') {
       return checkTicketMembershipRequirement(requirement, userMemberships)
     }

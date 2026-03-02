@@ -232,7 +232,7 @@ onMounted(() => {
         :title="translatedProperty(event.name)"
         :description="translatedProperty(event.description)"
       >
-        <div class="flex gap-2 mt-2">
+        <div class="flex flex-col md:flex-row gap-2 mt-2">
           <UBadge
             v-if="startDate"
             variant="subtle"
