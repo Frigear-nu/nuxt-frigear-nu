@@ -26,6 +26,16 @@ export const ContentStepSchema = z.object({
   schema: z.record(z.string(), z.any()).optional(),
 })
 
+// TODO: Combine many of the simple schema composites.
+const environment = z.enum(['production', 'staging', 'development'])
+const variables = z.union([
+  z.record(
+    environment,
+    z.record(z.string(), z.string()),
+  ),
+  z.record(z.string(), z.string()),
+])
+
 export const CollectionFormSchema = z.object({
   name: z.string(),
   title: z.string().optional(),
@@ -34,6 +44,7 @@ export const CollectionFormSchema = z.object({
   form: z.object({
     steps: z.array(ContentStepSchema),
   }),
+  variables: variables.optional(),
   delivery: z.array(z.union([
     z.object({
       channel: z.literal('email'),
