@@ -59,12 +59,12 @@ defaultTicket: default
 # If you set `public: false`, it will not be listed on the main website, you need a link.
 # public: false
 # If you want the event to be public, but only bookable by a "requirement":
-requirements:
-  - type: membership # the only supported type of requirement for now
-    title:
-      da: Bare for medlemmer
-      en: Members only
-    method: any # this is the default value
+#requirements:
+#  - type: membership # the only supported type of requirement for now
+#    title:
+#      da: Bare for medlemmer
+#      en: Members only
+#    method: any # this is the default value
 tickets:
   # We can have a free ticket, (arbitrary how many types you want to add to `tickets.<any-key>`)
   default:

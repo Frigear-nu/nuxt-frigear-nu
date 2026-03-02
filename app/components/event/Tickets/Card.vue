@@ -175,6 +175,20 @@ const onPurchase = () => {
               unwrap
             />
           </MDC>
+          <div
+            v-if="item.value === selectedTicketKey && ticketRequirementCheck && !ticketRequirementCheck.success"
+            class="flex flex-col gap-2 mt-2"
+          >
+            <UBadge
+              v-for="(failed, index) in ticketRequirementCheck.failed"
+              :key="index"
+              :label="translatedProperty(failed.title)"
+              :description="failed.description"
+              :icon="failed.icon || 'i-lucide-alert-triangle'"
+              color="warning"
+              variant="subtle"
+            />
+          </div>
         </template>
         <template #label="{ item }">
           <div class="flex justify-between">
@@ -207,19 +221,6 @@ const onPurchase = () => {
         </template>
       </URadioGroup>
     </UForm>
-    <div
-      v-if="ticketRequirementCheck && !ticketRequirementCheck.success"
-      class="flex flex-col gap-2"
-    >
-      <UAlert
-        v-for="(failed, index) in ticketRequirementCheck.failed"
-        :key="index"
-        :title="translatedProperty(failed.title)"
-        :description="failed.description"
-        :icon="failed.icon || 'i-lucide-alert-triangle'"
-        color="warning"
-      />
-    </div>
     <div v-if="selectedTicketKey && selectedTicket && selectedTicketHasProducts">
       <URadioGroup
         v-model="selectedProductAddons"
