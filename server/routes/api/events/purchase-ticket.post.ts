@@ -1,6 +1,7 @@
 import { db } from '@nuxthub/db'
 import { eventPurchaseTicketsSchema } from '#shared/schema/events'
 import { withQuery } from 'ufo'
+import { checkTicketRequirements } from '#shared/events/requirements'
 
 const isStripeProductOrPriceId = (id: string) => id.startsWith('prod_') || id.startsWith('price_')
 
@@ -58,6 +59,24 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  // We also extract the current memberships, to test any requirements
+  if (dbEvent.requirements?.length || ticketToPurchase.requirements?.length) {
+    const userSubscriptions = await db.query.stripeSubscriptions.findMany({
+      where: (subscriptions, { eq }) => {
+        return eq(subscriptions.customerId, stripeCustomer.id)
+      },
+    }) as { priceId: string }[]
+
+    // TODO: Test event requirements - since it is not implemented
+    const { success, failed } = checkTicketRequirements(ticketToPurchase, userSubscriptions)
+    if (!success) {
+      throw createError({
+        status: 400,
+        message: failed.map(r => r.title.en || r.title).join(', '),
+      })
+    }
+  }
+
   // add all items to a session - ensure they are prod_ or price_
   const stripe = useTaskStripe()
   const checkoutItems: { price: string, quantity: number }[] = []
@@ -110,7 +129,9 @@ export default defineEventHandler(async (event) => {
     checkoutItems.push(...stripePrices.map(price => ({ price, quantity: 1 })))
   }
 
-  console.log({ checkoutItems })
+  if (checkoutItems.length === 0) {
+    throw new Error('events.detail.tickets.noTicketSelected')
+  }
 
   const returnUrl = withBaseUrl(dbEvent.path)
   const checkout = await stripe.checkout.sessions.create({
