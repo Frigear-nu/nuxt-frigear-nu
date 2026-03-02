@@ -10,7 +10,6 @@ export default defineEventHandler(async (event) => {
 
   const { eventPath, ticketKey, productIds, locale } = await readValidatedBody(event, eventPurchaseTicketsSchema.parse)
 
-  console.log({ eventPath })
   const dbEvent = await queryCollection(event, 'events')
     .path(eventPath)
     .first()
