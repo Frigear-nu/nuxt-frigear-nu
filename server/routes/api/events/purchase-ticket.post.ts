@@ -1,6 +1,6 @@
 import { db } from '@nuxthub/db'
 import { eventPurchaseTicketsSchema } from '#shared/schema/events'
-import { withLeadingSlash, withQuery } from 'ufo'
+import { withQuery } from 'ufo'
 
 const isStripeProductOrPriceId = (id: string) => id.startsWith('prod_') || id.startsWith('price_')
 
