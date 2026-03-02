@@ -62,7 +62,6 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
   defaultOpen: false
   class: flex flex-col gap-2 w-full
   ---
-  <!-- fix width of ALL buttons!! This should be /50 and most others w-full -->
     ::::u-button
     ---
     block: true
@@ -89,7 +88,7 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
 #features
   :::u-page-card
   ---
-  class: object-cover object-top w-full h-full shadow-2xl ring ring-default
+  class: object-cover object-top w-full h-full shadow-2xl ring ring-default object-contain
   icon: i-lucide-calendar-clock
   spotlight: true
   spotlight-color: primary
@@ -99,13 +98,14 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
 
   #description
   Ansøgning --> Generalforsamling --(medlemsafstemning)--> Bestyrelsesvurdering --> Endeligt svar
-
+  
+  #footer
   ::::u-collapsible
   ---
   defaultOpen: false
-  class: flex flex-col gap-2 w-full mb-6
+  class: flex flex-col gap-2 w-full m-0
   ---
-    :::::u-button{.align-end}
+    :::::u-button
     ---
     block: true
     ui:
@@ -114,10 +114,9 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
     color: neutral
     icon: i-lucide-check-circle
     size: lg
-    label: "Se process og tidslinje for støtte"
+    label: "Mere om processen..."
     trailingIcon: i-lucide-chevron-down
     variant: subtle
-    base: 'width-full mb-0 mt-full mt-auto'
     ---
     :::::
 
@@ -132,7 +131,7 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
       :::list-item
       ✅ **Generalforsamlingen henviser** relevante projekter til **bestyrelsen**.
       :::list-item
-      ✅ **Endeligt svar** gives efter grundig vurdering af ansøgninger af bestyrelsen på **mail senest 1. juni**
+      ✅ **Endeligt svar** gives efter grundig gennemgang fra bestyrelsen af ansøgninger, -på **mail senest 1. juni**
     ::
   :::
 
@@ -148,10 +147,12 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
 
   #description
   Pengene til støttedonationer kommer primært fra overskud ved Frigears frivilligprojekter og events, gennemført af foreningens medlemmer igennem året.
+
+  #footer
     ::::u-collapsible
     ---
     defaultOpen: false
-    class: flex flex-col gap-2 w-full mb-6
+    class: flex flex-col gap-2 w-full mb-0
     ---
       :::::u-button
       ---
@@ -162,10 +163,9 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
       color: neutral
       icon: i-lucide-check-circle
       size: lg
-      label: "Mere om hvor pengene kommer fra"
+      label: "Mere om sparegrisen..."
       trailingIcon: i-lucide-chevron-down
       variant: subtle
-      base: 'width-full'
       ---
       :::::
 
@@ -204,10 +204,11 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
   #description
   Hvis ansøgningen er indsendt gennem formen inden deadline...
   
-      ::::u-collapsible
+  #footer
+    ::::u-collapsible
     ---
     defaultOpen: false
-    class: flex flex-col gap-2 w-full mb-6
+    class: flex flex-col gap-2 w-full mb-0
     ---
       :::::u-button
       ---
@@ -218,12 +219,11 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
       color: neutral
       icon: i-lucide-check-circle
       size: lg
-      label: "Se mere om ansøgningskriterier"
+      label: "Mere om kriterier..."
       trailingIcon: i-lucide-chevron-down
       variant: subtle
-      base: 'width-full'
       ---
-      :::::
+    :::::
 
     #content
        ...og indeholdende alle relevante oplysninger vil den komme i betragtning og blive vurderet af medlemmerne på generalforsamlingen.
@@ -275,12 +275,12 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
   Hvad kan Frigear egentlig støtte?
 
   #description
-  **Frigear ønsker at støtte**, hvor end det giver mening, ud fra vores kerneværdier som:> **Frirummet er stort**, og vi ønsker ikke at sætte begrænsninger på jeres drømme med specifics, —så lad idéerne flyde 🐼
+  **Frigear ønsker at støtte**, hvor end det giver mening, ud fra vores kerneværdier og **Frirummet er stort**. Vi ønsker ikke at sætte begrænsninger på jeres drømme med specifics, —så lad idéerne flyde 🐼
 
     ::::u-collapsible
     ---
     defaultOpen: false
-    class: flex flex-col gap-2 w-full mb-6
+    class: flex flex-col gap-2 w-full mb-0
     ---
       :::::u-button
       ---
@@ -291,7 +291,7 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
       color: neutral
       icon: i-lucide-check-circle
       size: lg
-      label: "Se eksempler på hvad vi gerne støtter"
+      label: "Se eksempler..."
       trailingIcon: i-lucide-chevron-down
       variant: subtle
       base: 'width-full'
@@ -316,7 +316,6 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
   - ✅ **Inklusion og mangfoldighed**
         :::list-item
   - ✅ **Subkultur og undergrundsniitiativer**
-      :::
     ::
   :::
 
@@ -331,12 +330,12 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
   Hvad støtter Frigear fx. ikke?
 
   #description
-  Frigear støtter ikke nedenstående, og det er vigtigt at understrege, at dette ikke nødvendigvis er udtømmende, men snarere eksempler som ikke kommer i betragtning:
+  Frigear støtter ikke nedenstående eksempler, og listen er ikke nødvendigvis udtømmende, men snarere eksempler som ikke kommer i betragtning:
 
     ::::u-collapsible
     ---
     defaultOpen: false
-    class: flex flex-col gap-2 w-full mb-6
+    class: flex flex-col gap-2 w-full mb-0
     ---
       :::::u-button
       ---
@@ -347,7 +346,7 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
       color: neutral
       icon: i-lucide-x-circle
       size: lg
-      label: "Se eksempler på hvad vi ikke støtter"
+      label: "Se eksempler..."
       trailingIcon: i-lucide-chevron-down
       variant: subtle
       base: 'width-full'
@@ -393,7 +392,7 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
     ::::u-collapsible
     ---
     defaultOpen: false
-    class: flex flex-col gap-2 w-full mb-6
+    class: flex flex-col gap-2 w-full mb-0
     ---
       :::::u-button
       ---
@@ -418,7 +417,7 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
     ::::u-collapsible
     ---
     defaultOpen: false
-    class: flex flex-col gap-2 w-full mb-6
+    class: flex flex-col gap-2 w-full mb-0
     ---
       :::::u-button
       ---
@@ -436,7 +435,7 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
       :::::
 
     #content
-    > Ansøgninger, der på generalforsamlingen, af medlemmerne vedtages til videre behandling, overgår til juridisk og økonomisk gennemgang hos bestyrelsen, og modtager endeligt svar inden 1. juni.
+    Ansøgninger, der på generalforsamlingen, af medlemmerne vedtages til videre behandling, overgår til juridisk og økonomisk gennemgang hos bestyrelsen, og modtager endeligt svar inden 1. juni.
     ::::
   :::
 
