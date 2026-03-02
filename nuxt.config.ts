@@ -46,6 +46,16 @@ export default defineNuxtConfig({
     experimental: {
       sqliteConnector: 'native',
     },
+    build: {
+      transformers: [
+        '~~/transformers/object-variable-replacement',
+      ],
+    },
+  },
+  ui: {
+    content: true,
+    colorMode: true,
+    mdc: true,
   },
   runtimeConfig: {
     jwtSecret: 'some-string-longer-than-32-chars-to-issue-jwt',

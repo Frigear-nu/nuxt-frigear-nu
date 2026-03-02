@@ -146,6 +146,29 @@ const eventRequirements = computed(() => {
   return getEventRequirements(event.value || [])
 })
 
+const eventAddress = computed(() => {
+  if (!event.value) {
+    return undefined
+  }
+  if (typeof event.value.address === 'string') {
+    return event.value.address
+  }
+
+  if (typeof event.value.address === 'object') {
+    return event.value.address.value
+  }
+
+  return undefined
+})
+
+const addressLink = computed(() => {
+  if (!event.value || typeof event.value.address !== 'object') {
+    return undefined
+  }
+
+  return event.value.address?.link
+})
+
 onMounted(() => {
   const payment = searchParams.payment
   if (payment === 'success' || payment === 'cancel') {
@@ -233,31 +256,64 @@ onMounted(() => {
         :description="translatedProperty(event.description)"
       >
         <div class="flex flex-col md:flex-row gap-2 mt-2">
-          <UBadge
-            v-if="startDate"
-            variant="subtle"
-            class="text-sm"
-            size="sm"
-          >
-            <strong>Starts:</strong> {{ format(startDate, 'PPP') }}
-          </UBadge>
-          <UBadge
-            v-if="endDate"
-            variant="subtle"
-            class="text-sm"
-            size="sm"
-          >
-            <strong>Ends:</strong> {{ format(endDate, 'PPP') }}
-          </UBadge>
-          <UBadge
-            v-for="(req, index) in eventRequirements"
-            :key="index"
-            trailing-icon="i-lucide-triangle-alert"
-            color="warning"
-            variant="subtle"
-          >
-            {{ translatedProperty(req.title || req.type) }}
-          </UBadge>
+          <div class="flex flex-col gap-2">
+            <div>
+              <UFieldGroup v-if="startDate">
+                <UBadge
+                  variant="soft"
+                  class="text-sm font-semibold"
+                >
+                  {{ $t('events.detail.when') }}
+                </UBadge>
+                <UBadge
+                  v-if="startDate"
+                  variant="soft"
+                  class="text-sm"
+                  size="sm"
+                >
+                  {{ format(startDate, 'dd.MM.yyyy HH:mm') }}
+                  <template v-if="endDate">
+                    - {{ format(endDate, 'dd.MM.yyyy HH:mm') }}
+                  </template>
+                </UBadge>
+              </UFieldGroup>
+            </div>
+            <div v-if="eventAddress">
+              <NuxtLink
+                :to="addressLink"
+                :external="Boolean(addressLink && addressLink.startsWith('http'))"
+                :target="addressLink && addressLink.startsWith('http') ? '_blank' : undefined"
+              >
+                <UFieldGroup>
+                  <UBadge
+                    variant="soft"
+                    class="text-sm font-semibold"
+                  >
+                    {{ $t('events.detail.where') }}
+                  </UBadge>
+                  <UBadge
+                    variant="soft"
+                    class="text-sm"
+                    size="sm"
+                    :trailing-icon="addressLink ? 'i-lucide-external-link' : undefined"
+                  >
+                    {{ eventAddress }}
+                  </UBadge>
+                </UFieldGroup>
+              </NuxtLink>
+            </div>
+          </div>
+          <div>
+            <UBadge
+              v-for="(req, index) in eventRequirements"
+              :key="index"
+              trailing-icon="i-lucide-triangle-alert"
+              color="warning"
+              variant="subtle"
+            >
+              {{ translatedProperty(req.title || req.type) }}
+            </UBadge>
+          </div>
         </div>
       </UPageHeader>
 

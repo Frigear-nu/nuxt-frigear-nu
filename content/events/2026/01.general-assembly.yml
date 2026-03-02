@@ -2,7 +2,9 @@ title: General Assembly
 date: 2026-03-15
 start: 2026-03-15 19:00
 end: 2026-03-15 23:59
-address: Kongens gade 123, 45. sal
+address:
+  value: Kongens gade 123, 45. sal
+  link: https://goo.gl/maps/1234567890123456
 image: /images/volunteers/fgr/info-hero-desktop-1200x400.png
 name:
   da: Generalforsamling 2026
@@ -10,6 +12,17 @@ name:
 description:
   da: Generalforsamling for Frigear medlemmer 2026
   en: General Assembly for Frigear members 2026
+# Replaces ${var_name} in the correct environment.
+variables:
+  # FIXME: PRODUCTION Stripe IDs in real prod.
+  production:
+    default_ticket_stripe_id: prod_U3cYQWfWJTh40Q
+    carnivore_stripe_id: prod_U30CCwoLfWM9cv
+    vegetarian_stripe_id: prod_U30NvkM8xzL3Sh
+  development:
+    default_ticket_stripe_id: prod_U3cYQWfWJTh40Q
+    carnivore_stripe_id: prod_U3ceq0o7yfwf66
+    vegetarian_stripe_id: prod_U3cd1y2poAqNyl
 body:
   da: |
     ::callout{class="bg-primary/10 mt-0"}
@@ -20,7 +33,6 @@ body:
     ::
     Vi samles igen for at...
     **Brug markdown her**... Om du ønsker...
-    
     
     ### 🥓 Bacon ipsum
     Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
@@ -85,7 +97,7 @@ tickets:
       en: "[{{ticket}} ticket]{.text-primary}."
     price: 0
     hidePrice: true
-    stripeId: prod_U3cYQWfWJTh40Q # this is a free ticket -> but we require "one_of" products
+    stripeId: "${default_ticket_stripe_id}"
     currency: DKK
     products:
       title:
@@ -93,14 +105,14 @@ tickets:
         en: Food
       require: one_of
       items:
-        - id: prod_U30CCwoLfWM9cv
+        - id: ${carnivore_stripe_id}
           label: Carnivore
           description:
             da: Dansk Carnivore beskrivelse
             en: English Carnivor description
           price: 52.66
           currency: DKK
-        - id: prod_U30NvkM8xzL3Sh
+        - id: ${vegetarian_stripe_id}
           label: Vegan
           description: Vegan description
           price: 52.67
