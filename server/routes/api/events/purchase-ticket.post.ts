@@ -8,11 +8,21 @@ const isStripeProductOrPriceId = (id: string) => id.startsWith('prod_') || id.st
 export default defineEventHandler(async (event) => {
   const userId = await requireUserId(event)
 
-  const { eventPath, ticketKey, productIds, locale } = await readValidatedBody(event, eventPurchaseTicketsSchema.parse)
+  const {
+    eventPath,
+    ticketKey,
+    productIds: inputProductIds,
+    locale,
+  } = await readValidatedBody(event, eventPurchaseTicketsSchema.parse)
 
   const dbEvent = await queryCollection(event, 'events')
     .path(eventPath)
     .first()
+
+  const productIds = inputProductIds.filter((id) => {
+    // check that it is actually in the event
+    return dbEvent?.tickets[ticketKey]?.products?.items.some(p => p.id === id)
+  })
 
   if (!dbEvent) {
     throw createError({
@@ -117,10 +127,20 @@ export default defineEventHandler(async (event) => {
       throw new Error('events.detail.tickets.requires_one')
     }
   }
+
+  const productPriceMap = new Map<string, string>()
   if (productIds && productIds.length > 0) {
     const stripePrices = Array.from(await Promise.all(productIds.map(async (productId) => {
       if (isStripeProductOrPriceId(productId)) {
-        return await resolveStripePriceId(productId)
+        const resolvedId = await resolveStripePriceId(productId)
+
+        // We need to store this for later, only since we support both product/price ids.
+        if (productId.startsWith('prod_') && resolvedId && !productPriceMap.has(productId)) {
+          // This should now be a priceId
+          productPriceMap.set(productId, resolvedId)
+        }
+
+        return resolvedId
       }
       return null
     }))).filter(p => typeof p === 'string')
@@ -158,6 +178,12 @@ export default defineEventHandler(async (event) => {
       ticketKey,
       stripeId: ticketToPurchase.stripeId,
       priceIds: checkoutItems.map(item => item.price),
+      // TODO: This is not working, but we should be able to use the productIds to map to the priceIds
+      // This is a bit of a hack, but it works for now.
+      // allows mapping prod_abc to price_xyz
+      // productPriceMapping: productPriceMap.size > 0
+      //   ? Object.fromEntries(productPriceMap.entries())
+      //   : undefined,
     })
     .returning()
 
