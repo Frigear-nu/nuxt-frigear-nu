@@ -1,7 +1,7 @@
 import { defineCollection, defineContentConfig } from '@nuxt/content'
 import { z } from 'zod/v4'
 
-const membership = z.enum(['annual', 'quarterly', 'monthly', 'free']).or(z.string())
+// const membership = z.enum(['annual', 'quarterly', 'monthly', 'free']).or(z.string())
 const translated = z.string().or(z.record(z.string(), z.string()))
 const image = z.union([
   z.object({
@@ -9,6 +9,20 @@ const image = z.union([
     alt: z.string(),
   }),
   z.string(),
+])
+
+const requirement = z.union([
+  z.object({
+    type: z.literal('membership'),
+    method: z.literal('any').default('any'),
+    title: translated,
+  }),
+  z.object({
+    type: z.literal('membership'),
+    method: z.literal('one_of'),
+    priceIds: z.array(z.string()),
+    title: translated,
+  }),
 ])
 
 export default defineContentConfig({
@@ -20,8 +34,8 @@ export default defineContentConfig({
       type: 'page',
       schema: z.object({
         name: translated,
-        excerpt: translated.optional(),
         description: translated.optional(),
+        body: translated.optional(),
         image: image.optional(),
         slug: z.string().optional(),
         alias: z.array(z.string()).optional(),
@@ -30,6 +44,7 @@ export default defineContentConfig({
         end: z.date().optional(),
         address: z.string().optional(),
         defaultTicket: z.string().optional(),
+        requirements: z.array(requirement).optional(),
         tickets: z.record(z.enum(['default']).or(z.string()), z.object({
           name: translated,
           description: translated.optional(),
@@ -37,8 +52,7 @@ export default defineContentConfig({
           hidePrice: z.boolean().optional(),
           currency: z.string(),
           stripeId: z.string().optional(),
-          // priceId or for subscription?
-          memberships: z.array(membership).optional(),
+          requirements: z.array(requirement).optional(),
           // Available additional products to purchase, will use stripe data?
           products: z.object({
             title: translated,

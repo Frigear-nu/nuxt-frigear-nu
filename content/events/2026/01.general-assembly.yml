@@ -3,14 +3,14 @@ date: 2026-03-15
 start: 2026-03-15 19:00
 end: 2026-03-15 23:59
 address: Kongens gade 123, 45. sal
-image: /images/volunteers/info-hero-desktop-1200x400.png
+image: /images/volunteers/fgr/info-hero-desktop-1200x400.png
 name:
   da: Generalforsamling 2026
   en: General Assembly 2026
-excerpt:
+description:
   da: Generalforsamling for Frigear medlemmer 2026
   en: General Assembly for Frigear members 2026
-description:
+body:
   da: |
     ::callout{class="bg-primary/10 mt-0"}
       **NB:** Om du er 🎯 scorer du de bedste billetter 🏆
@@ -68,6 +68,12 @@ description:
 
 # Tickets and ticket products
 defaultTicket: default
+requirements:
+  - type: membership # the only supported type of requirement for now
+    title:
+      da: Bare for medlemmer
+      en: Members only
+    method: any # this is the default value
 tickets:
   # We cna have a free ticket, (arbitrary how many type you want to add.)
   default:
@@ -87,7 +93,7 @@ tickets:
         en: Food
       require: one_of
       items:
-        - id: prod_U3ceq0o7yfwf66
+        - id: prod_U4VmvOsK6N77at
           label: Carnivore
           description:
             da: Dansk Carnivore beskrivelse
@@ -99,43 +105,8 @@ tickets:
           description: Vegan description
           price: 52.67
           currency: DKK
-  standard:
-    name:
-      da: Standard
-      en: Standard
-    description:
-      da: |
-        Det er en [{{ticket}}]{.text-primary} billett.
-      en: "A [{{ticket}}]{.text-primary} ticket!"
-    price: 100
-    currency: DKK
-    stripeId: stripe_product_id
-  premium:
-    name:
-      da: Premium billett
-      en: Premium ticket
-    description:
-      da: Premium billett.
-      en: "Premium [ticket]{.text-primary}."
-    price: 200
-    currency: DKK
-    stripeId: stripe_product_id
-    memberships: [ price_id_for_subscription_required]
-    products:
-      require: one_of
-      items:
-        - id: stripe_product_id_or_price_id
-          label:
-            da: Dansk Addon
-            en: English Addon
-          description:
-            da: Dansk Addon beskrivelse
-            en: English Addon description
-          price: 100
-          currency: DKK
-        - id: stripe_product_id_or_price_id_2
-          label: Single lang addon
-          price: 100
-          currency: DKK
-
+        - id: none
+          label: None
+          description: Nada..
+          price: 0
 

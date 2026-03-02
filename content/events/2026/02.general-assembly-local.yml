@@ -5,14 +5,14 @@ date: 2026-03-15
 start: 2026-03-15 19:00
 end: 2026-03-15 23:59
 address: Kongens gade 123, 45. sal
-image: /images/volunteers/info-hero-desktop-1200x400.png
+image: /images/volunteers/fgr/info-hero-desktop-1200x400.png
 name:
   da: "LOCAL: Generalforsamling 2026"
   en: "LOCAL: General Assembly 2026"
-excerpt:
+description:
   da: Generalforsamling for Frigear medlemmer 2026
   en: General Assembly for Frigear members 2026
-description:
+body:
   da: |
     ::callout{class="bg-primary/10 mt-0"}
     **NB:** Om du er 🎯 scorer du de bedste billetter 🏆
@@ -22,7 +22,7 @@ description:
     ::
     Vi samles igen for at...
     **Brug markdown her**... Om du ønsker...
-      
+    
     ## 🪄 Variables
     
     | Variable                            | Current Value                       |
@@ -56,6 +56,15 @@ description:
 
 # Tickets and ticket products
 defaultTicket: default
+# If you set `public: false`, it will not be listed on the main website, you need a link.
+# public: false
+# If you want the event to be public, but only bookable by a "requirement":
+requirements:
+  - type: membership # the only supported type of requirement for now
+    title:
+      da: Bare for medlemmer
+      en: Members only
+    method: any # this is the default value
 tickets:
   # We can have a free ticket, (arbitrary how many types you want to add to `tickets.<any-key>`)
   default:
@@ -67,13 +76,26 @@ tickets:
       da: "[{{ticket}} billett]{.text-primary} til alle festligheter i Frigear. :br det er veldig godt at lave en god beskrivelse for no."
       en: |
         [{{ticket}} ticket]{.text-primary}.
-          
+        
         - 100% gratis for alle
     price: 0
     # this "hidePrice: boolean | undefined" prevents showing "Free" or "Gratis" next to the main ticket, since this
     # event only has a single ticket and prices are determined based on food.
     hidePrice: true
     currency: DKK
+    # This is a "membership" ticket, so we can add a "membership" requirement.
+    # If this is provided, a check will be performed to ensure the user has the correct membership - client + server side.
+    requirements:
+      - type: membership # the only supported type of requirement for now
+        method: one_of # you can also provide "any" or nothing here, which is the default value
+        # This is a list of values that the user must have ^ one of
+        # This can only be a stripe price_id.
+        # this is empty by default, so it is only required for the "one_of" method.
+        values: [month_price_id, quarter_id, annual_id]
+        # Set a specific label for this requirement
+        title:
+          da: Kun for Medlemmer
+          en: Members only
     products:
       # this should probably be on the individual ticket...
       #require: one_of # require at least one of the products below to be selected

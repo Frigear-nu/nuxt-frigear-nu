@@ -4,11 +4,12 @@ import { withLeadingSlash, withoutLeadingSlash } from 'ufo'
 import { format } from 'date-fns'
 import { useUserEventTickets } from '~/store/queries/user'
 import { useUrlSearchParams } from '@vueuse/core'
+import type { ButtonProps } from '@nuxt/ui'
 
 const route = useRoute()
 const { $api } = useNuxtApp()
 const { translatedProperty } = useContent()
-const { locale, defaultLocale } = useSiteI18n()
+const { locale, defaultLocale, localePath, t } = useSiteI18n()
 const { formatError } = useFormattedToast()
 const { data: userTickets, refetch: refetchUserTickets } = useUserEventTickets()
 
@@ -122,6 +123,18 @@ const checkPurchaseStatus = async () => {
   isCheckingPayment.value = false
 }
 
+const paymentActions = computed<ButtonProps[]>(() => [{
+  label: t('events.detail.tickets.payment.view'),
+  to: localePath('/account/tickets'),
+  variant: 'subtle',
+  trailingIcon: 'i-lucide-arrow-right',
+}])
+
+const { getEventRequirements } = useEventTicket()
+const eventRequirements = computed(() => {
+  return getEventRequirements(event.value || [])
+})
+
 onMounted(() => {
   const payment = searchParams.payment
   if (payment === 'success' || payment === 'cancel') {
@@ -158,7 +171,7 @@ onMounted(() => {
           :color="isCheckingPayment || checkPaymentResult === 'pending' ? 'neutral' : checkPaymentResult === 'success' ? 'success' : 'warning'"
           :variant="'subtle'"
           class="mt-4"
-          :actions="[{ label: 'See ticket in Account', to: '/account', variant: 'subtle', trailingIcon: 'i-lucide-arrow-right' }]"
+          :actions="paymentActions"
         >
           <template #leading>
             <UIcon
@@ -206,7 +219,7 @@ onMounted(() => {
 
       <UPageHeader
         :title="translatedProperty(event.name)"
-        :description="translatedProperty(event.excerpt)"
+        :description="translatedProperty(event.description)"
       >
         <div class="flex gap-2 mt-2">
           <UBadge
@@ -225,6 +238,15 @@ onMounted(() => {
           >
             <strong>Ends:</strong> {{ format(endDate, 'PPP') }}
           </UBadge>
+          <UBadge
+            v-for="(req, index) in eventRequirements"
+            :key="index"
+            trailing-icon="i-lucide-triangle-alert"
+            color="warning"
+            variant="subtle"
+          >
+            {{ translatedProperty(req.title || req.type) }}
+          </UBadge>
         </div>
       </UPageHeader>
 
@@ -234,7 +256,7 @@ onMounted(() => {
             <MDC
               v-slot="{ body, data }"
               class="text-muted"
-              :value="translatedProperty(event.description)"
+              :value="translatedProperty(event.body)"
             >
               <MDCRenderer
                 v-if="body"

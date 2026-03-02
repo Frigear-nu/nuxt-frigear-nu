@@ -5,14 +5,8 @@ const [{ data: events }] = await Promise.all([
   useAsyncData<EventsCollectionItem[]>('events', async () => queryCollection('events').order('date', 'DESC').all(), { default: () => [] }),
 ])
 
-const { locale, t } = useSiteI18n()
+const { t } = useSiteI18n()
 
-const useTranslatedProperty = (value: string | { [key: string]: string }): string => {
-  if (typeof value === 'string') {
-    return value
-  }
-  return value[locale.value as string] || value.en || value as never
-}
 const useEmptyOrTranslated = (key: string) => {
   const translated = t(key)
   return translated === key ? undefined : translated
@@ -37,15 +31,11 @@ const pastEvents = computed(() => {
           :description="useEmptyOrTranslated('events.upcoming.description')"
         />
         <UPageGrid v-if="upcomingEvents.length">
-          <UPageCard
+          <EventCard
             v-for="event in upcomingEvents"
             :key="event.id"
-            :title="useTranslatedProperty(event.name)"
-            :description="useTranslatedProperty(event.excerpt)"
-            :to="event.path"
-          >
-            <UBadge>{{ new Date(event.date).toLocaleDateString() }}</UBadge>
-          </UPageCard>
+            :event="event"
+          />
         </UPageGrid>
         <UEmpty
           v-else
@@ -62,11 +52,10 @@ const pastEvents = computed(() => {
           :description="useEmptyOrTranslated('events.past.description')"
         />
         <UPageGrid>
-          <UPageCard
+          <EventCard
             v-for="event in upcomingEvents"
             :key="event.id"
-            :title="useTranslatedProperty(event.name)"
-            :description="useTranslatedProperty(event.excerpt)"
+            :event="event"
           />
         </UPageGrid>
       </section>

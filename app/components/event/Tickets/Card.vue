@@ -57,6 +57,12 @@ const ticketProductsRadioCardItems = computed<RadioGroupItem[]>(() => {
   } satisfies RadioGroupItem)) as RadioGroupItem[]
 })
 
+const ticketRequirements = computed(() => {
+  return selectedTicket.value?.requirements || []
+})
+
+const ticketHasRequirements = computed(() => ticketRequirements.value.length > 0)
+
 // Reset this when the ticket changes...
 watch(selectedTicket, () => {
   selectedProductAddons.value = undefined
@@ -142,6 +148,15 @@ const onPurchase = () => {
           <div class="flex justify-between">
             <div class="text-md font-bold">
               {{ item.label }}
+              <sup v-if="ticketHasRequirements">
+                <UBadge
+                  size="sm"
+                  variant="soft"
+                  class="ml-1"
+                >
+                  {{ ticketRequirements.map(r => translatedProperty(r.title || r.type || r)).join(',') }}
+                </UBadge>
+              </sup>
             </div>
             <UBadge
               v-if="!item.hidePrice"
@@ -202,6 +217,7 @@ const onPurchase = () => {
               {{ item.label }}
             </div>
             <UBadge
+              v-if="typeof item.price !== 'undefined'"
               variant="subtle"
               class="text-md font-semibold px-1 py-0.5"
             >
