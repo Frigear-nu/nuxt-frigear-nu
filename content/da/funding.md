@@ -91,58 +91,165 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
   ---
   class: object-cover object-top w-full h-full shadow-2xl ring ring-default
   icon: i-lucide-calendar-clock
+  spotlight: true
+  spotlight-color: primary
   ---
   #title
   Hvad er tidslinjen og processerne?
 
   #description
-  - ✅ **Ansøgninger** skal være bestyrelsen i hænde **senest 10 dage før** generalforsamlingen.
-  - ✅ **Dato** for generalforsamlingen offentliggøres (jf. vedtægter) senest 3 uger før afholdelse.
-  - ✅ **Generalforsamling** afholdes i **1. kvartal**.
-  - ✅ **Generalforsamlingen henviser** relevante projekter til **bestyrelsen**.
-  - ✅ **Endeligt svar** gives efter grundig vurdering af ansøgninger og ansøgere af bestyrelsen på **mail senest 1. juni**
+  Ansøgning --> Generalforsamling --(medlemsafstemning)--> Bestyrelsesvurdering --> Endeligt svar
+
+  ::::u-collapsible
+  ---
+  defaultOpen: false
+  class: flex flex-col gap-2 w-full mb-6
+  ---
+    :::::u-button{.align-end}
+    ---
+    block: true
+    ui:
+      trailingIcon: group-data-[state=open]:rotate-180 transition-transform duration-200
+    class: group width-full
+    color: neutral
+    icon: i-lucide-check-circle
+    size: lg
+    label: "Se process og tidslinje for støtte"
+    trailingIcon: i-lucide-chevron-down
+    variant: subtle
+    base: 'width-full mb-0 mt-full mt-auto'
+    ---
+    :::::
+
+  #content
+    ::u-page-list
+      :::list-item
+      ✅ **Ansøgning** indsendes **senest 10 dage før** generalforsamlingen.
+      :::list-item
+      ✅ **Dato** for generalforsamlingen offentliggøres **senest 3 uger før afholdelse**.
+      :::list-item
+      ✅ **Generalforsamling** afholdes i **1. kvartal**.
+      :::list-item
+      ✅ **Generalforsamlingen henviser** relevante projekter til **bestyrelsen**.
+      :::list-item
+      ✅ **Endeligt svar** gives efter grundig vurdering af ansøgninger af bestyrelsen på **mail senest 1. juni**
+    ::
   :::
 
   :::u-page-card
   ---
   class: object-cover object-top w-full h-full shadow-2xl ring ring-default
   icon: i-lucide-piggy-bank
+  spotlight: true
+  spotlight-color: primary
   ---
   #title
   Hvor kommer pengene fra?
 
   #description
-  - ✅ Overskud fra Frigears egne frivilligprojekter og events, gennemført af foreningens medlemmer året igennem.
-  - ✅ Evt. privatdonationer, fonde, støttemidler m.v.
-  - ✅ Evt. salg af varer, udstyr eller ydelser.
-  - ✅ Evt. udlejning af udstyr, lokaler m.m.
-  - ✅ Evt. samarbejde med andre foreninger, organisationer eller virksomheder.
-  - ✅ Evt. andre indtægtskilder i tråd med Frigears mission, vision og værdier.
+  Pengene til støttedonationer kommer primært fra overskud ved Frigears frivilligprojekter og events, gennemført af foreningens medlemmer igennem året.
+    ::::u-collapsible
+    ---
+    defaultOpen: false
+    class: flex flex-col gap-2 w-full mb-6
+    ---
+      :::::u-button
+      ---
+      block: true
+      ui:
+        trailingIcon: group-data-[state=open]:rotate-180 transition-transform duration-200
+      class: group
+      color: neutral
+      icon: i-lucide-check-circle
+      size: lg
+      label: "Mere om hvor pengene kommer fra"
+      trailingIcon: i-lucide-chevron-down
+      variant: subtle
+      base: 'width-full'
+      ---
+      :::::
+
+    #content
+    ::u-page-list
+      :::list-item
+      ✅ Overskud fra forudgående regnskabsår.
+      :::list-item
+      ✅ Evt. midler fra tidligere år, som ikke er blevet uddelt.
+      :::list-item
+      ✅ Evt. midler fra tidligere år, som er blevet tilbageført.
+      :::list-item
+      ✅ Evt. privatdonationer, fonde, støttemidler m.v.
+      :::list-item
+      ✅ Evt. salg af varer, udstyr eller ydelser.
+      :::list-item
+      ✅ Evt. udlejning af udstyr, lokaler m.m.
+      :::list-item 
+      ✅ Evt. samarbejde med andre foreninger, organisationer eller virksomheder.
+      :::list-item 
+      ✅ Evt. andre indtægtskilder i tråd med Frigears mission, vision og værdier.
+    ::
+    ::::
   :::
 
   :::u-page-card
   ---
   class: object-cover object-top w-full h-full shadow-2xl ring ring-default
   icon: i-lucide-check-circle
+  spotlight: true
+  spotlight-color: primary
   ---
   #title
   Hvornår er en ansøgning “med” i vurderingen?
 
   #description
-  > Alle ansøgninger indsendt gennem formen inden deadline, -og indeholdende alle relevante oplysninger vil komme i betragtning og blive vurderet af medlemmerne på generalforsamlingen.> Ansøgninger indsendt efter deadline vil ikke komme i betragtning til støtte i det pågældende år medmindre andet aftales med bestyrelsen.
+  Hvis ansøgningen er indsendt gennem formen inden deadline...
+  
+      ::::u-collapsible
+    ---
+    defaultOpen: false
+    class: flex flex-col gap-2 w-full mb-6
+    ---
+      :::::u-button
+      ---
+      block: true
+      ui:
+        trailingIcon: group-data-[state=open]:rotate-180 transition-transform duration-200
+      class: group
+      color: neutral
+      icon: i-lucide-check-circle
+      size: lg
+      label: "Se mere om ansøgningskriterier"
+      trailingIcon: i-lucide-chevron-down
+      variant: subtle
+      base: 'width-full'
+      ---
+      :::::
 
-  - ✅ Ansøgning indsendt rettidigt.
-
-  - ❌ Ansøgning indsendt efter deadline er som udgangspunkt afvist.
+    #content
+       ...og indeholdende alle relevante oplysninger vil den komme i betragtning og blive vurderet af medlemmerne på generalforsamlingen.
+    ::u-page-list
+      :::list-item
+      ✅ Ansøgning indsendt rettidigt.
+      :::list-item
+      ✅ Ansøgning indeholder alle relevante oplysninger.
+      :::list-item
+      ❌ Ansøgning indsendt efter deadline er som udgangspunkt afvist.
+      :::list-item
+      ❌ Useriøse eller ufuldstændige ansøgninger kan blive afvist.
+      :::list-item
+      :::
+    ::
   :::
 
-  :::u-page-card
+  <!-- :::u-page-card
   ---
   class: object-cover object-top w-full h-full shadow-2xl ring ring-default
   icon: i-lucide-circle-help
+  spotlight: true
+  spotlight-color: primary
   ---
   #title
-  Hvad har Frigear & Frigear Kulturværksted tidligere støttet?
+  Hvad har Frigear tidligere støttet?
 
   #description
   > Blandt projekter og initiativer Frigear har støttet med midler, frivillige, materialer, konsultering m.v, kan nævnes:
@@ -155,60 +262,20 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
   - ✅ **Copenhagen B-Roll** (Idræts- Skate eventog kulturarrangement med fokus på rollerskating og kreativitet)
   - ✅ **Skuret** (Idræts Skatehal og forening med fokus på børn og unge)
   - ✅ **Frigears frivilligprojekter** (fx genbrugsinitiativer, workshops, kulturevents, m.m.)
-  :::
+  ::: -->
 
   :::u-page-card
   ---
   class: object-cover object-top w-full h-full shadow-2xl ring ring-default
   icon: i-lucide-sparkles
+  spotlight: true
+  spotlight-color: primary
   ---
   #title
   Hvad kan Frigear egentlig støtte?
 
   #description
-  > **Frigear ønsker at støtte**, hvor end det giver mening, ud fra vores kerneværdier som:> **Frirummet er stort**, og vi ønsker ikke at sætte begrænsninger på jeres drømme med specifics, —så lad idéerne flyde 🐼
-
-  - ✅ **Nonprofit**
-  - ✅ **Frivillighed**
-  - ✅ **Socialt ansvar og samarbejde**
-  - ✅ **Bæredygtighed og genbrug**
-  - ✅ **Kunst, kultur og kreativitet**
-  - ✅ **Inklusion og mangfoldighed**
-  :::
-
-  :::u-page-card
-  ---
-  class: object-cover object-top w-full h-full shadow-2xl ring ring-default
-  icon: i-lucide-circle-x
-  ---
-  #title
-  Hvad støtter Frigear fx. ikke?
-
-  #description
-  > Projekter, eller foreninger hvor overskuddet går til enkeltpersoner eller offentlige institutioner.> Projekter med lønnede medarbejdere.> Støtte til projekter eller foreninger med udestående gæld eller udokumenterede regnskaber og ikke transparente økonomiske forhold.> Ansøgninger der ikke indeholder alle relevante oplysninger, eller som på anden vis ikke imødekommer de krav og kriterier, som Frigear har opstillet for ansøgninger.> Projekter eller foreninger der ikke er åbne, offentligt tilgængelige, almennyttige og frivilligdrevne.> Projekter/foreninger med vedtægter/idégrundlag der går imod Frigears mission, vision, værdier eller vedtægter.> Projekter eller foreninger med politiske eller religiøse agendaer støttes ikke.
-
-  - ❌ **Enkeltpersoner** og **offentlige institutioner** eller **virksomheder**.
-
-  - ❌ **Lønnede medarbejdere**.
-
-  - ❌ **Underskudsdækning**.
-
-  - ❌ **Ikke imødekommende** ansøgninger.
-
-  - ❌ **Ikke åbne** foreninger.
-
-  - ❌ **Ikke forenelige** med Frigears værdier.
-
-  - ❌ **politik** eller **religion**.
-  :::
-
-  :::u-page-card
-  ---
-  class: object-cover object-top w-full h-full shadow-2xl ring ring-default
-  icon: i-lucide-message-circle
-  ---
-  #title
-  Hvornår kan vi forvente svar?
+  **Frigear ønsker at støtte**, hvor end det giver mening, ud fra vores kerneværdier som:> **Frirummet er stort**, og vi ønsker ikke at sætte begrænsninger på jeres drømme med specifics, —så lad idéerne flyde 🐼
 
     ::::u-collapsible
     ---
@@ -222,14 +289,130 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
         trailingIcon: group-data-[state=open]:rotate-180 transition-transform duration-200
       class: group
       color: neutral
-      label: "❌ Ansøgning afvist: ASAP efter GF . . ."
+      icon: i-lucide-check-circle
+      size: lg
+      label: "Se eksempler på hvad vi gerne støtter"
       trailingIcon: i-lucide-chevron-down
       variant: subtle
+      base: 'width-full'
       ---
       :::::
 
     #content
-    > Ansøgere hvis ansøgning **IKKE** er kommet i betragtning til potentiel støtte af medlemmerne i år, orienteres umiddelbart efter generalforsamlingen.
+    ::u-page-list
+      :::list-item
+  - ✅ **Nonprofit og almennyttigt**
+      :::list-item
+  - ✅ **Frivillighed og frirum**
+        :::list-item
+  - ✅ **Unge og udsatte**
+        :::list-item
+  - ✅ **Socialt ansvar og samarbejde**
+        :::list-item
+  - ✅ **Bæredygtighed og genbrug**
+        :::list-item
+  - ✅ **Kunst, kultur og kreativitet**
+        :::list-item
+  - ✅ **Inklusion og mangfoldighed**
+        :::list-item
+  - ✅ **Subkultur og undergrundsniitiativer**
+      :::
+    ::
+  :::
+
+  :::u-page-card
+  ---
+  class: object-cover object-top w-full h-full shadow-2xl ring ring-default
+  icon: i-lucide-circle-x
+  spotlight: true
+  spotlight-color: primary
+  ---
+  #title
+  Hvad støtter Frigear fx. ikke?
+
+  #description
+  Frigear støtter ikke nedenstående, og det er vigtigt at understrege, at dette ikke nødvendigvis er udtømmende, men snarere eksempler som ikke kommer i betragtning:
+
+    ::::u-collapsible
+    ---
+    defaultOpen: false
+    class: flex flex-col gap-2 w-full mb-6
+    ---
+      :::::u-button
+      ---
+      block: true
+      ui:
+        trailingIcon: group-data-[state=open]:rotate-180 transition-transform duration-200
+      class: group
+      color: neutral
+      icon: i-lucide-x-circle
+      size: lg
+      label: "Se eksempler på hvad vi ikke støtter"
+      trailingIcon: i-lucide-chevron-down
+      variant: subtle
+      base: 'width-full'
+      ---
+      :::::
+
+    #content
+    ::u-page-list
+      :::list-item
+      ❌ Enkeltpersoner
+      :::list-item
+      ❌ Offentlige institutioner og virksomheder
+      :::list-item
+      ❌ Lønnede medarbejdere
+      :::list-item
+      ❌ Underskudsdækning
+      :::list-item
+      ❌ Ikke imødekommende ansøgninger
+      :::list-item
+      ❌ Ikke åbne foreninger
+      :::list-item
+      ❌ Ikke forenelige med Frigears værdier
+      :::list-item
+      ❌ Politik og religion
+      :::
+    ::
+  :::
+
+
+  :::u-page-card
+  ---
+  class: object-cover object-top w-full h-full shadow-2xl ring ring-default
+  icon: i-lucide-message-circle
+  spotlight: true
+  spotlight-color: primary
+  ---
+  #title
+  Hvornår kan vi forvente svar?
+
+  #description
+  Vi er alle frivillige og arbejder så hurtigt vi kan. Det tager tid at vurdere ansøgninger og sørge for, at midlerne bliver brugt på de rigtige projekter, -men se nedenfor for en generel tidslinje for, hvornår I kan forvente svar på jeres ansøgning:
+
+    ::::u-collapsible
+    ---
+    defaultOpen: false
+    class: flex flex-col gap-2 w-full mb-6
+    ---
+      :::::u-button
+      ---
+      block: true
+      ui:
+        trailingIcon: group-data-[state=open]:rotate-180 transition-transform duration-200
+      class: group
+      color: neutral
+      icon: i-lucide-x-circle
+      size: lg
+      label: "Ansøgning afvist: ASAP efter GF"
+      trailingIcon: i-lucide-chevron-down
+      variant: subtle
+      base: 'width-full'
+      ---
+      :::::
+
+    #content
+    Ansøgere hvis ansøgning **IKKE** er kommet i betragtning til potentiel støtte af medlemmerne i år, orienteres umiddelbart efter generalforsamlingen.
     ::::
 
     ::::u-collapsible
@@ -244,7 +427,9 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
         trailingIcon: group-data-[state=open]:rotate-180 transition-transform duration-200
       class: group
       color: neutral
-      label: "✅ Ansøgning godkendt: Inden 1. juni . . ."
+      icon: i-lucide-check-circle
+      size: lg
+      label: "Ansøgning godkendt: Inden 1. juni"
       trailingIcon: i-lucide-chevron-down
       variant: subtle
       ---
@@ -259,6 +444,8 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
   ---
   class: object-cover object-top w-full h-full shadow-2xl ring ring-default
   icon: i-lucide-scale
+  spotlight: true
+  spotlight-color: primary
   ---
   #title
   Hvad hvis vi ikke bruger alle pengene, eller projektet aldrig bli'r til noget?
@@ -276,6 +463,8 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
   ---
   class: object-cover object-top w-full h-full shadow-2xl ring ring-default
   icon: i-lucide-receipt-text
+  spotlight: true
+  spotlight-color: primary
   ---
   #title
   Skal vi aflægge regnskab?
@@ -292,6 +481,8 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
   ---
   class: object-cover object-top w-full h-full shadow-2xl ring ring-default
   icon: i-lucide-user-lock
+  spotlight: true
+  spotlight-color: primary
   ---
   #title
   Må projektet/foreningen være lukket for en mindre gruppe?
@@ -305,6 +496,8 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
   ---
   class: object-cover object-top w-full h-full shadow-2xl ring ring-default
   icon: i-lucide-user-check
+  spotlight: true
+  spotlight-color: primary
   ---
   #title
   Er det en fordel at være medlem af Frigear?
@@ -331,6 +524,8 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
   ---
   class: object-cover object-top w-full h-full shadow-2xl ring ring-default
   icon: i-lucide-heart-crack
+  spotlight: true
+  spotlight-color: primary
   ---
   #title
   Hvad hvis jeg vil klage over noget?
@@ -351,6 +546,8 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
   ---
   class: object-cover object-top w-full h-full shadow-2xl ring ring-default
   icon: i-lucide-megaphone
+  spotlight: true
+  spotlight-color: primary
   ---
   #title
   Krav om offentlig kreditering
@@ -381,6 +578,8 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
   ---
   class: object-cover object-top w-full h-full shadow-2xl ring ring-default line-clamp-5
   icon: i-lucide-clipboard-check
+  spotlight: true
+  spotlight-color: primary
   ---
   #title
   Hvad skal ansøgningen som minimum indeholde?
