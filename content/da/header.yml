@@ -8,5 +8,7 @@ navigation:
     to: /
   - label: Medlemskab
     to: /membership
+  - label: Events
+    to: /events
   - label: Om Frigear
     to: /info

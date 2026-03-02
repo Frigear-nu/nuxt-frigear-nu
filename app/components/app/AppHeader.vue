@@ -5,6 +5,7 @@ const { data: header } = await useSiteHeader()
 
 const appConfig = useAppConfig()
 const site = useSiteConfig()
+const { data: cartItems, hasAnyItems, isOpen: cartIsOpen } = useShoppingCart()
 
 const { localePath, isEnabled, locales } = useSiteI18n()
 </script>
@@ -39,6 +40,19 @@ const { localePath, isEnabled, locales } = useSiteI18n()
       <!--      <UContentSearchButton class="lg:hidden" /> -->
 
       <AppHeaderCTA />
+      <UChip
+        v-if="cartItems.length > 0"
+        :text="cartItems.length"
+        size="xl"
+        :ui="{ base: 'p-1 size-3 dark:ring-primary dark:bg-red-500' }"
+      >
+        <UButton
+          v-if="hasAnyItems"
+          icon="i-lucide-shopping-cart"
+          variant="solid"
+          @click="cartIsOpen = !cartIsOpen"
+        />
+      </UChip>
       <ClientOnly>
         <UColorModeButton />
 
@@ -60,4 +74,27 @@ const { localePath, isEnabled, locales } = useSiteI18n()
       <AppHeaderBody />
     </template>
   </UHeader>
+  <USlideover
+    v-model:open="cartIsOpen"
+    :title="$t('cart.title')"
+    :ui="{ footer: 'justify-end' }"
+  >
+    <template #body>
+      <ShoppingCart class="h-full" />
+    </template>
+    <template #footer="{ close }">
+      <UButton
+        label="Continue shopping"
+        color="neutral"
+        variant="outline"
+        size="xl"
+        @click="close"
+      />
+      <UButton
+        label="Continue to payment"
+        color="neutral"
+        size="xl"
+      />
+    </template>
+  </USlideover>
 </template>

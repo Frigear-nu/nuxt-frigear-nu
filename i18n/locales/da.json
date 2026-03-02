@@ -95,6 +95,10 @@
         "description": "JPG, GIF eller PNG. 1MB Max."
       }
     },
+    "tickets": {
+      "title": "Billetter",
+      "description": "Se dine billetter og betalinger."
+    },
     "membership": {
       "title": "Medlemskab",
       "description": "Dit medlemskab.",
@@ -173,6 +177,47 @@
       "title": "Kom i kontakt",
       "button": "Kontakt os"
     }
+  },
+  "events": {
+    "upcoming": {
+      "title": "Kommende arrangementer"
+    },
+    "detail": {
+      "when": "Når?",
+      "where": "Hvor?",
+      "tickets": {
+        "title": "Billetter",
+        "view": "Se billetter",
+        "free": "Gratis",
+        "ticket":{
+          "label": "Billett"
+        },
+        "products": {
+          "label": "Produkt",
+          "required": "Påkrævet"
+        },
+        "payment": {
+          "view": "Se betaling",
+          "verifying": {
+            "title": "Verifiserer...",
+            "description": "Tjekker din betaling..."
+          },
+          "success": {
+            "title": "Betalingen er godkendt",
+            "description": "Din betaling ble godkendt. Billetterne er klar til brug."
+          },
+          "cancel": {
+            "title": "Betalingen er annulleret",
+            "description": "Betalingen ble annuleret, du kan forsøge igen."
+          }
+        }
+      }
+    }
+  },
+  "cart": {
+    "title": "Handlekurv",
+    "addedToCart": "{title} ble lagt til i kurven.",
+    "removedFromCart": "{title} ble fjernet."
   },
   "zodI18n": {
     "errors": {
