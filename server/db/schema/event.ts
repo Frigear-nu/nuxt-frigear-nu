@@ -18,6 +18,7 @@ export const userEventTickets = sqliteTable('user_event_tickets', {
   //  so we store it here to be sure it does not disappear.
   stripeId: text('stripe_id'), // product id for the ticket (can be NULL if it is a free ticket)
   priceIds: text('price_ids', { mode: 'json' }).$type<string[]>(), // Any and all prices included in the charge.
+  // productPriceMapping: text('product_price_mapping', { mode: 'json' }).$type<Record<string, string>>(),
   status: text('status', { enum: ['pending', 'paid', 'abandoned', 'cancelled'] }).notNull().default('pending'),
   paidAt: integer('paid_at', { mode: 'timestamp' }),
   abandonedAt: integer('abandoned_at', { mode: 'timestamp' }),
