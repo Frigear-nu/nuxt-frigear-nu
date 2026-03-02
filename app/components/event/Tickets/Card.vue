@@ -99,6 +99,7 @@ const canPurchase = computed(() => {
 const onPurchase = () => {
   isLoading.value = true
   if (!selectedTicketKey.value) {
+    isLoading.value = false
     toast.add(formatToastError(new Error('Please select a ticket to continue.')))
     return
   }
