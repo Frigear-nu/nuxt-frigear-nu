@@ -182,6 +182,8 @@
       "title": "Upcoming events"
     },
     "detail": {
+      "when": "When?",
+      "where": "Where?",
       "tickets": {
         "title": "Tickets",
         "free": "Free",
