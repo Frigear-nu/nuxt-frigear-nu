@@ -102,6 +102,8 @@ export const deleteStripeProduct = async (product: Stripe.Product) => {
 }
 
 const canIngestPrice = (p: Stripe.Price) => {
+  // TODO: We want to sync one-off prices too, but we should first define which product and price is related
+  //  to a membership before we touch this.
   return p.type === 'recurring'
 }
 
