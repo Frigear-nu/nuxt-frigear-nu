@@ -19,11 +19,17 @@ export default defineTransformer({
       : false
 
     let variablesToReplace: Record<string, ValidValue> = variables
-    const environment = process.env.NODE_ENV || 'production'
+    const environment = ['production', 'staging', 'development'].includes(process.env.NODE_ENV || '')
+      ? process.env.NODE_ENV as 'production' | 'staging' | 'development'
+      : 'production'
 
-    // expand from environmentname instead of root.
-    if (hasEnvironments && environment && variables[environment]) {
-      variablesToReplace = (variables[environment] || variables) as Record<string, ValidValue>
+    // ...
+    if (hasEnvironments) {
+      variablesToReplace = (
+        variables[environment]
+        || variables.production
+        || variables
+      ) as Record<string, ValidValue>
     }
 
     return {
