@@ -25,6 +25,12 @@ const requirement = z.union([
   }),
 ])
 
+const environment = z.enum(['production', 'staging', 'development'])
+const variables = z.record(
+  environment,
+  z.record(z.string(), z.string()),
+).or(z.record(z.string(), z.string()))
+
 export default defineContentConfig({
   collections: {
     events: defineCollection({
@@ -45,6 +51,7 @@ export default defineContentConfig({
         address: z.string().optional(),
         defaultTicket: z.string().optional(),
         requirements: z.array(requirement).optional(),
+        variables: variables.optional(),
         tickets: z.record(z.enum(['default']).or(z.string()), z.object({
           name: translated,
           description: translated.optional(),
