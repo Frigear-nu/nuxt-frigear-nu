@@ -94,6 +94,10 @@
         "description": "JPG, GIF or PNG. 1MB Max."
       }
     },
+    "tickets": {
+      "title": "Tickets",
+      "description": "See your event tickets and payments."
+    },
     "membership": {
       "title": "Membership",
       "description": "Your membership type.",

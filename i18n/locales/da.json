@@ -95,6 +95,10 @@
         "description": "JPG, GIF eller PNG. 1MB Max."
       }
     },
+    "tickets": {
+      "title": "Billetter",
+      "description": "Se dine billetter og betalinger."
+    },
     "membership": {
       "title": "Medlemskab",
       "description": "Dit medlemskab.",
