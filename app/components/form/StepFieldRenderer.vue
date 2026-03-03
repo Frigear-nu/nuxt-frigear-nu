@@ -2,17 +2,23 @@
 <script lang="ts" generic="TField extends FormFieldDef, TState extends Record<string, unknown>" setup>
 import { CalendarDate } from '@internationalized/date'
 import type { FormFieldDef } from '#shared/types/form'
+import { kebabCase, upperFirst } from 'scule'
 
 // Unknown-based instead of any
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   field: TField
   state: TState
-}>()
+  i18nPrefix?: string
+}>(), {
+  i18nPrefix: 'form.',
+})
 
 const emit = defineEmits<{
   'update:state': [name: string, value: unknown]
 }>()
+
+const { t } = useSiteI18n()
 
 const model = computed({
   get: () => props.state[props.field.name],
@@ -63,20 +69,71 @@ const dateModel = computed({
     }
   },
 })
+
+const translated = (property: string) => {
+  const definedValue = props.field[property as keyof typeof props.field] as string | undefined
+  if (definedValue) {
+    return t(definedValue)
+  }
+
+  const autoKey = `${props.i18nPrefix}${property}`
+  const autoTranslated = t(autoKey)
+
+  // TODO: Might want to not include the automatic field name in some cases?
+  // for labels, there is an auto mapper for this
+
+  // In case a translation is provided
+  if (autoTranslated !== autoKey || property === 'label') {
+    return autoTranslated
+  }
+
+  return undefined
+}
+
+const formFieldProps = computed(() => {
+  const withLabel = props.field.type !== 'checkbox'
+  const withDescription = props.field.type !== 'checkbox'
+
+  const label = withLabel ? translated('label') : 'NONE'
+  const description = withDescription ? translated('description') : undefined
+  return {
+    _name: props.field.name,
+    label,
+    description,
+    required: props.field.required,
+  }
+})
+
+const fieldProps = computed(() => {
+  const isCheckbox = props.field.type === 'checkbox'
+  const withPlaceholder
+    = !isCheckbox
+      && !toValue(asRadio)
+      && !toValue(asDate)
+      && !toValue(asFile)
+
+  const withLabel = props.field.type === 'checkbox'
+  const withDescription = props.field.type === 'checkbox'
+  return {
+    _name: props.field.name,
+    placeholder: withPlaceholder ? translated('placeholder') : undefined,
+    label: withLabel ? translated('label') : undefined,
+    description: withDescription ? translated('description') : undefined,
+  }
+})
 </script>
 
 <template>
   <UFormField
+    :key="field.name"
     :name="field.name"
-    :label="field.type !== 'checkbox' && field.label ? $t(field.label) : undefined"
-    :description="field.type !== 'checkbox' && field.description ? $t(field.description) : undefined"
-    :required="field.required"
+    v-bind="formFieldProps"
   >
     <UInput
       v-if="field.type === 'text' || field.type === 'email' || field.type === 'password'"
       v-model="model"
       :type="field.type"
-      :placeholder="field.placeholder ? $t(field.placeholder): undefined"
+      v-bind="fieldProps"
       :disabled="field.disabled"
       class="w-full"
     />
@@ -84,7 +141,7 @@ const dateModel = computed({
     <UTextarea
       v-else-if="asTextarea"
       v-model="model"
-      :placeholder="field.placeholder ? $t(field.placeholder): undefined"
+      v-bind="fieldProps"
       :disabled="field.disabled"
       :rows="asTextarea.rows ?? 4"
       class="w-full"
