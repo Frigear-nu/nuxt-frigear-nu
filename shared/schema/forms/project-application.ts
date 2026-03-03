@@ -2,33 +2,8 @@ import { z } from 'zod/v4'
 import type { UnionFormSteps } from '#shared/types/form'
 import { defineSteppedForm } from '#shared/form'
 
-export const testApplicationForm = defineSteppedForm({
-  id: 'test',
-  steps: [
-    {
-      id: 'background',
-      icon: 'i-lucide-book-text',
-      labelKey: 'form.application.background',
-      schema: z.object({
-        background: z.string().meta({
-          title: 'form.application.background',
-          type: 'textarea',
-          placeholder: 'enter some text',
-        }),
-        attachments: z.array(z.instanceof(File))
-          .meta({
-            title: 'Files',
-            type: 'file',
-            multiple: true,
-            description: 'Add any attachments you might want to add',
-          }),
-      }),
-    },
-  ],
-})
-
 export const projectApplicationForm = defineSteppedForm({
-  id: 'project-application',
+  id: 'application',
   steps: [
     {
       id: 'background',
@@ -36,21 +11,22 @@ export const projectApplicationForm = defineSteppedForm({
       // labelKey: 'form.application.background',
       schema: z.object({
         background: z.string().meta({
-          title: 'form.application.background',
+          // title is translated to "label"
+          // and the `<formId>.<stepId>.label` is the default key, so no need to fill it like this:
+          // title: 'form.application.background.label', // as this is the default.
           type: 'textarea',
-          placeholder: 'enter some text',
         }),
         purpose: z.string().meta({
-          title: 'form.application.purpose',
           type: 'textarea',
-          placeholder: 'enter some text',
         }),
       }),
     },
     {
       id: 'project',
       schema: z.object({
-        participants: z.coerce.number().meta({ title: 'form.application.participants' }),
+        participants: z.coerce.number().meta({
+          title: 'form.application.participants',
+        }),
         when: z.date().or(z.string()),
         isSupportedByOthers: z.coerce.boolean().default(false),
         supportedByOthers: z.string().optional(),
@@ -99,3 +75,29 @@ export const projectApplicationForm = defineSteppedForm({
 })
 
 export type ProjectApplicationForm = UnionFormSteps<typeof projectApplicationForm['steps']>
+
+// Test form
+export const testApplicationForm = defineSteppedForm({
+  id: 'test',
+  steps: [
+    {
+      id: 'background',
+      icon: 'i-lucide-book-text',
+      labelKey: '**HELLO**',
+      schema: z.object({
+        background: z.string().meta({
+          title: 'form.application.background',
+          type: 'textarea',
+          placeholder: 'enter some text',
+        }),
+        attachments: z.array(z.instanceof(File))
+          .meta({
+            title: 'Files',
+            type: 'file',
+            multiple: true,
+            description: 'Add any attachments you might want to add',
+          }),
+      }),
+    },
+  ],
+})
