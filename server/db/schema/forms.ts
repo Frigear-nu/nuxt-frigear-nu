@@ -15,4 +15,5 @@ export const formSubmissions = sqliteTable('form_submissions', {
   delivery: text('delivery', { mode: 'json' }).notNull().$type<CollectionForm['delivery']>().default([]),
   deliveredAt: integer('delivered_at', { mode: 'timestamp' }),
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
+  updatedAt: integer('updated_at', { mode: 'timestamp' }).$onUpdateFn(() => new Date()),
 })
