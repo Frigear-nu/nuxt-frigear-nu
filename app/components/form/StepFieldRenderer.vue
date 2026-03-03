@@ -79,8 +79,12 @@ const translated = (property: string) => {
   // TODO: Might want to not include the automatic field name in some cases?
   // for labels, there is an auto mapper for this
 
-  // In case a translation is provided
+  // not the i18n key, or if this is the label, we want it anyways.
   if (autoTranslated !== autoKey || property === 'label') {
+    return autoTranslated
+  }
+
+  if (property === 'label') {
     return autoTranslated
   }
 
