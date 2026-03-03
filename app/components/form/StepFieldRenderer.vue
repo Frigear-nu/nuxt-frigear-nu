@@ -41,6 +41,8 @@ const asFile = computed(() =>
 const asDate = computed(() =>
   props.field.type === 'date' ? props.field : null,
 )
+
+// TODO: Might want to provide options for number field, e.g "steps" "input" etc...
 const asNumber = computed(() =>
   props.field.type === 'number' ? props.field : null,
 )
