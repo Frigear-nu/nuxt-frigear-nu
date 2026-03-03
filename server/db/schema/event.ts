@@ -6,7 +6,10 @@ import { createId } from '@paralleldrive/cuid2'
 const createDomainId = (prefix?: string) => `${prefix || ''}${createId()}`
 
 // Since we load event using nuxt content collections, we only need the wiring for user-ticket
-
+type DBUserEventTicketItem = {
+  priceId: string
+  qty: number
+} | { productId: string, priceId: string, qty: number }
 export const userEventTickets = sqliteTable('user_event_tickets', {
   id: text('id').primaryKey().$defaultFn(() => createDomainId('ticket_')),
   eventPath: text('event_path').notNull(),
@@ -18,7 +21,7 @@ export const userEventTickets = sqliteTable('user_event_tickets', {
   //  so we store it here to be sure it does not disappear.
   stripeId: text('stripe_id'), // product id for the ticket (can be NULL if it is a free ticket)
   priceIds: text('price_ids', { mode: 'json' }).$type<string[]>(), // Any and all prices included in the charge.
-  // productPriceMapping: text('product_price_mapping', { mode: 'json' }).$type<Record<string, string>>(),
+  items: text('items', { mode: 'json' }).$type<DBUserEventTicketItem[]>(),
   status: text('status', { enum: ['pending', 'paid', 'abandoned', 'cancelled'] }).notNull().default('pending'),
   paidAt: integer('paid_at', { mode: 'timestamp' }),
   abandonedAt: integer('abandoned_at', { mode: 'timestamp' }),
