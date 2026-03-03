@@ -11,9 +11,6 @@ importers:
       '@libsql/client':
         specifier: ^0.17.0
         version: 0.17.0
-      '@n8n/json-schema-to-zod':
-        specifier: ^1.6.0
-        version: 1.6.0(zod@3.25.76)
       '@nitrotool/errors':
         specifier: ^1.0.4
         version: 1.0.4
@@ -1799,11 +1796,6 @@ packages:
     resolution: {integrity: sha512-JjTIaXZp9WzhUHpElrqPnl1AzBi/rvRs065F71+aTmlqvTMVkdbjZ8vfFl4nRlgJy+TPBw69ZK4pwFdmOAt4aA==}
     peerDependencies:
       rollup: ^1.20.0 || ^2.0.0 || ^3.0.0 || ^4.0.0
-
-  '@n8n/json-schema-to-zod@1.6.0':
-    resolution: {integrity: sha512-5AryA/GdX0U0+Qx2u3S14vME9ZK4ubS+rOC2MYlRDtRPCalBMGd5heVzU+W5o95JWAm4XQL/s0PZGM9a1xEhHg==}
-    peerDependencies:
-      zod: ^3.0.0
 
   '@napi-rs/wasm-runtime@0.2.12':
     resolution: {integrity: sha512-ZVWUcfwY4E/yPitQJl481FjFo3K22D6qF0DuFH6Y/nbnE11GY5uguDxZMGXPQ8WQ0128MXQD7TnfHyK4oWoIJQ==}
@@ -10255,10 +10247,6 @@ snapshots:
       '@rollup/pluginutils': 5.3.0(rollup@4.55.2)
       json5: 2.2.3
       rollup: 4.55.2
-
-  '@n8n/json-schema-to-zod@1.6.0(zod@3.25.76)':
-    dependencies:
-      zod: 3.25.76
 
   '@napi-rs/wasm-runtime@0.2.12':
     dependencies:
