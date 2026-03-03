@@ -5,7 +5,9 @@ import { type ProjectApplicationForm, testApplicationForm } from '#shared/schema
 import { projectApplicationForm } from '#shared/schema/forms/project-application'
 
 definePageMeta({
+  // header: false,
   layout: 'form',
+  footer: false,
 })
 
 const { localePath } = useSiteI18n()
@@ -81,11 +83,27 @@ const onComplete = async (args: ProjectApplicationForm) => {
 </script>
 
 <template>
-  <div>
-    <!--    <div class="flex flex-col gap-2"> -->
-    <!--      <div>{{ title }}</div> -->
-    <!--      <div>{{ description }}</div> -->
-    <!--    </div> -->
+  <div class="flex flex-col gap-4">
+    <div class="flex justify-center mb-4">
+      <NuxtLink to="/">
+        <UColorModeImage
+          light="/logo.png"
+          dark="/logo-dark.png"
+          class="size-10"
+        />
+      </NuxtLink>
+    </div>
+    <div class="flex flex-col gap-0.5 text-center mb-2">
+      <div class="text-lg font-bold">
+        {{ $t(form.title) }}
+      </div>
+      <div
+        v-if="form.description !== $t(form.description)"
+        class="text-sm text-muted"
+      >
+        {{ $t(form.description) }}
+      </div>
+    </div>
     <UCard>
       <div
         v-if="steppedForm?.steps"
