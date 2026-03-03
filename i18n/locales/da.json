@@ -219,6 +219,22 @@
     "addedToCart": "{title} ble lagt til i kurven.",
     "removedFromCart": "{title} ble fjernet."
   },
+  "form": {
+    "application": {
+      "title": "Projectstotte ordning",
+      "description": "Some description",
+      "background": {
+        "background": {
+          "label": "Bagrund",
+          "description": "Hvad er bagrunnen for at i soger?",
+          "placeholder": "This one has a placeholder"
+        },
+        "purpose": {
+          "label": "HELLO World!"
+        }
+      }
+    }
+  },
   "zodI18n": {
     "errors": {
       "custom": "Ugyldig værdi",
@@ -335,11 +351,6 @@
       "regex": "input",
       "url": "URL",
       "uuid": "UUID"
-    }
-  },
-  "form": {
-    "application": {
-      "background": "TEST"
     }
   }
 }
