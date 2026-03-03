@@ -85,7 +85,7 @@ cards:
         icon: i-lucide-check-circle
         lines:
           - ❌ Ansøgere hvis ansøgning **IKKE** er kommet i betragtning til potentiel støtte af medlemmerne i år, orienteres umiddelbart efter generalforsamlingen. :br :br
-              Dette kan evt. skyldes, at ansøgningen er indsendt for sent, eller at den ikke indeholder de nødvendige oplysninger, eller at den ikke er i tråd med Frigears mission, vision og værdier. :br :br
+            Dette kan evt. skyldes, at ansøgningen er indsendt for sent, eller at den ikke indeholder de nødvendige oplysninger, eller at den ikke er i tråd med Frigears mission, vision og værdier. :br :br
           - ✅ Ansøgninger, der på generalforsamlingen, af medlemmerne vedtages til videre behandling, overgår til juridisk og økonomisk gennemgang hos bestyrelsen, advokat og revisor, og modtager endeligt svar inden 1. juni.
   - title: Hvad hvis vi ikke bruger alle pengene, eller projektet aldrig bli'r til noget?
     icon: i-lucide-scale
@@ -107,7 +107,7 @@ cards:
     faqs:
       - title: Se mere om regnskab...
         icon: i-lucide-check-circle
-        lines:  
+        lines:
           - Vi forbeholder os retten til at udbede **kvitteringer eller dokumentation** på brugen af midlerne i **op til 5 år** :br -(*Jf. gældende lovgivning om regnskaber og dokumentation*). :br :br
           - I visse tilfælde kan det være nødvendigt at aflægge regnskab over brugen af midlerne, hvis projektet ændrer karakter, eller hvis Frigear har behov for yderligere dokumentation i forhold til regnskabsføring.
   - title: Må projektet/foreningen være lukket for en mindre gruppe?
@@ -120,7 +120,7 @@ cards:
         icon: i-lucide-check-circle
         lines:
           - Udover lovmæssige forhold der gør sig gældende omkring nonprofit og almennyttige foreninger, -ønsker Frigear heller ikke at støtte projekter der eksluderer mennesker fra deltagelse, -eller på anden vis går imod vores kerneværdier. :br :br
-          Vi støtter udelukkende åbne, offentligt tilgængelige, almennyttige og frivilligdrevne foreninger og projekter.
+            Vi støtter udelukkende åbne, offentligt tilgængelige, almennyttige og frivilligdrevne foreninger og projekter.
   - title: Er det en fordel at være medlem af Frigear?
     icon: i-lucide-user-check
     description: |
@@ -140,9 +140,9 @@ cards:
     faqs:
       - title: Se mere om tilkendegivelse...
         icon: i-lucide-check-circle
-        lines:  
+        lines:
           - Vi er stolte over vores **frivilliges indsats** er med til at støtte jer, og hjælpe med promotion og tilblivelse af jeres projekt(er). Derfor forventes det også, at I på samme vis ønsker at **anerkende Frigears støtte** på offentlige medier, SoMe-kanaler m.m. hvor det gi'r mening, samt evt. til event(s) med Frigears logo og evt. links og '#hashtags m.v. :br :br
-          Se vores **promo side**, -eller kontakt vores **PR Crew** gennem kontakt på forsiden.
+            Se vores **promo side**, -eller kontakt vores **PR Crew** gennem kontakt på forsiden.
     links:
       - label: Promo materiale og brandkit
         to: /media
@@ -156,7 +156,7 @@ cards:
     faqs:
       - title: Se faqs om krævet info...
         icon: i-lucide-check-circle
-        lines:  
+        lines:
           - ✅ Lidt om jer. :br
           - ✅ Projektets/idéens overordnede formål. :br
           - ✅ Antal event, -eller projektdeltagere. :br

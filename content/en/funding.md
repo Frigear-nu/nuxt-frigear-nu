@@ -1,10 +1,8 @@
 ---
-
 title: Project Application
 seo:
   title: About Frigear - frigear.nu
   description: Information about application criteria for the Frigear fund.
-
 cards:
   - title: What is the timeline and the processes?
     icon: i-lucide-calendar-clock
@@ -86,7 +84,7 @@ cards:
         icon: i-lucide-check-circle
         lines:
           - ❌ Applicants whose application **HAS NOT** been considered for potential support by members this year are informed shortly after the general assembly. :br :br
-              This may be because the application was submitted too late, or it does not contain the necessary information, or it is not in line with Frigear’s mission, vision, and values. :br :br
+            This may be because the application was submitted too late, or it does not contain the necessary information, or it is not in line with Frigear’s mission, vision, and values. :br :br
           - ✅ Applications that, at the general assembly, are approved by the members for further processing, move to legal and financial review by the board, lawyer and auditor, and receive a final answer before June 1st.
   - title: What if we don’t use all the money, or the project never becomes a thing?
     icon: i-lucide-scale
@@ -108,7 +106,7 @@ cards:
     faqs:
       - title: See more about paperwork...
         icon: i-lucide-check-circle
-        lines:  
+        lines:
           - We reserve the right to request **receipts or documentation** for the use of the funds for **up to 5 years** :br -(*In accordance with applicable legislation on accounting and documentation*). :br :br
           - In certain cases it may be necessary to submit accounts for the use of the funds, if the project changes character, or if Frigear needs additional documentation in relation to bookkeeping.
   - title: May the project/association be closed to a smaller group?
@@ -121,7 +119,7 @@ cards:
         icon: i-lucide-check-circle
         lines:
           - Besides legal conditions that apply regarding nonprofit and public-benefit associations, -Frigear also does not want to support projects that exclude people from participation, -or otherwise go against our core values. :br :br
-          We support only open, publicly accessible, public-benefit, and volunteer-driven associations and projects.
+            We support only open, publicly accessible, public-benefit, and volunteer-driven associations and projects.
   - title: Is it an advantage to be a member of Frigear?
     icon: i-lucide-user-check
     description: |
@@ -141,9 +139,9 @@ cards:
     faqs:
       - title: See more about acknowledgement...
         icon: i-lucide-check-circle
-        lines:  
+        lines:
           - We are proud that our **volunteers’ efforts** help support you, and help with promotion and the creation of your project(s). Therefore, it is also expected that you likewise wish to **acknowledge Frigear’s support** on public media, SoMe channels etc. where it makes sense, and possibly at event(s) with Frigear’s logo and maybe links and '#hashtags etc. :br :br
-          See our **promo page**, -or contact our **PR Crew** through the contact on the front page.
+            See our **promo page**, -or contact our **PR Crew** through the contact on the front page.
     links:
       - label: Promo material and brandkit
         to: /en/media
@@ -157,7 +155,7 @@ cards:
     faqs:
       - title: See faqs about required info...
         icon: i-lucide-check-circle
-        lines:  
+        lines:
           - ✅ A bit about you. :br
           - ✅ The project/idea’s overall purpose. :br
           - ✅ Number of event, -or project participants. :br
