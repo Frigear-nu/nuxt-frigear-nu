@@ -45,7 +45,10 @@ defineExpose({
       v-if="stepped.currentStep.value?.labelKey"
       class="text-lg"
     >
-      {{ $t(stepped.currentStep.value.labelKey) }}
+      <MDC
+        :value="$t(stepped.currentStep.value.labelKey)"
+        unwrap
+      />
     </h1>
 
     <UForm
@@ -62,6 +65,7 @@ defineExpose({
           :key="field.name"
           :field="field"
           :state="stepped.state"
+          :i18n-prefix="`form.${form.id}.${stepped.currentStepId.value}.${field.name}.`"
           @update:state="(name, value) => { (stepped.state as Record<string, unknown>)[name] = value }"
         />
       </template>
