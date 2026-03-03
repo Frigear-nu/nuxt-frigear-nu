@@ -18,6 +18,7 @@ Info about the association, our mission, vision, and values.
   to: /projects
   icon: i-lucide-music
   variant: subtle
+  class: min-w-48 
   ---
   See our projects
   :::
@@ -28,11 +29,15 @@ Info about the association, our mission, vision, and values.
   to: /teams
   trailingIcon: i-lucide-users
   variant: subtle
+  class: min-w-48 
   ---
   Meet our teams
   :::
 ::
-:nuxt-img{:height='400' :width='1200' alt="Frigear volunteers at Roskilde Festival" src="/images/volunteers/fgr/info-hero-desktop-1200x400.png"}
+
+:nuxt-img{.mt-12.rounded-xl.hidden.md:block :heigth='400' :width='1200' alt="Frigears frivillige på Roskilde Festival" src="/images/volunteers/fgr/info-hero-desktop-1200x400.png"}
+
+:nuxt-img{.mt-4.rounded-xl.block.md:hidden :height='400' :width='640' alt="Frigears frivillige på Roskilde Festival" src="/images/volunteers/fgr/info-hero-mobile-640x400.png"}
 
 ::u-page-section
 #title

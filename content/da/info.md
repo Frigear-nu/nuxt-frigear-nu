@@ -18,6 +18,7 @@ Info om foreningen, vores mission, vision og værdier.
   to: /projects
   icon: i-lucide-music
   variant: subtle
+  class: min-w-48
   ---
   Se vores projekter
   :::
@@ -28,14 +29,15 @@ Info om foreningen, vores mission, vision og værdier.
   to: /teams
   trailingIcon: i-lucide-users
   variant: subtle
+  class: min-w-48 
   ---
   Mød vores teams
   :::
 ::
 
-![Frigears frivillige på Roskilde Festival](/images/volunteers/fgr/info-hero-desktop-1200x400.png){.hidden.md:block :heigth='400' :width='1200'}
+:nuxt-img{.mt-12.rounded-xl.hidden.md:block :heigth='400' :width='1200' alt="Frigears frivillige på Roskilde Festival" src="/images/volunteers/fgr/info-hero-desktop-1200x400.png"}
 
-![Frigears frivillige på Roskilde Festival](/images/volunteers/fgr/info-hero-mobile-640x400.png){.block.md:hidden :height='400' :width='640'}
+:nuxt-img{.mt-4.rounded-xl.block.md:hidden :height='400' :width='640' alt="Frigears frivillige på Roskilde Festival" src="/images/volunteers/fgr/info-hero-mobile-640x400.png"}
 
 ::u-page-section
 #title
