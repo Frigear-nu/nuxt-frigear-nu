@@ -26,6 +26,14 @@ export default defineNuxtConfig({
         ],
       },
     },
+
+    hub: {
+      blob: {
+        driver: 'cloudflare-r2',
+        bucketName: process.env.HUB_BLOB_BUCKET_NAME || 'blob-frigear-nu',
+        binding: 'BLOB',
+      },
+    },
     image: {
       provider: 'cloudflare',
       quality: 80,
