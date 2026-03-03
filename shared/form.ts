@@ -1,7 +1,6 @@
 import type { ZodType } from 'zod/v4'
 import { z } from 'zod/v4'
 import type { FormStep, SteppedForm, FormFieldDef } from './types/form'
-import { kebabCase, upperFirst } from 'scule'
 
 export function defineSteppedForm<const TSteps extends FormStep[]>(
   form: { id: string, steps: TSteps },

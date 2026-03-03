@@ -2,9 +2,6 @@
 <script lang="ts" generic="TField extends FormFieldDef, TState extends Record<string, unknown>" setup>
 import { CalendarDate } from '@internationalized/date'
 import type { FormFieldDef } from '#shared/types/form'
-import { kebabCase, upperFirst } from 'scule'
-
-// Unknown-based instead of any
 
 const props = withDefaults(defineProps<{
   field: TField
