@@ -145,7 +145,7 @@ cards:
           Se vores **promo side**, -eller kontakt vores **PR Crew** gennem kontakt på forsiden.
     links:
       - label: Promo materiale og brandkit
-        to: /brand
+        to: /media
         icon: i-lucide-qr-code
         variant: subtle
         trailingIcon: i-lucide-square-arrow-out-up-right

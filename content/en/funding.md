@@ -146,7 +146,7 @@ cards:
           See our **promo page**, -or contact our **PR Crew** through the contact on the front page.
     links:
       - label: Promo material and brandkit
-        to: /en/brand
+        to: /en/media
         icon: i-lucide-qr-code
         variant: subtle
         trailingIcon: i-lucide-square-arrow-out-up-right
