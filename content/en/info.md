@@ -35,9 +35,9 @@ Info about the association, our mission, vision, and values.
   :::
 ::
 
-:nuxt-img{.mt-12.rounded-xl.hidden.md:block :heigth='400' :width='1200' alt="Frigears frivillige på Roskilde Festival" src="/images/volunteers/fgr/info-hero-desktop-1200x400.png"}
+:nuxt-img{.mt-0.rounded-xl.hidden.md:block :heigth='400' :width='1200' alt="Frigear volunteers at Roskilde Festival" src="/images/volunteers/fgr/info-hero-desktop-1200x400.png"}
 
-:nuxt-img{.mt-4.rounded-xl.block.md:hidden :height='400' :width='640' alt="Frigears frivillige på Roskilde Festival" src="/images/volunteers/fgr/info-hero-mobile-640x400.png"}
+:nuxt-img{.mt-4.rounded-xl.block.md:hidden :height='400' :width='640' alt="Frigear volunteers at Roskilde Festival" src="/images/volunteers/fgr/info-hero-mobile-640x400.png"}
 
 ::u-page-section
 #title
