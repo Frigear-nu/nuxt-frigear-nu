@@ -56,10 +56,10 @@ export function deriveFieldsFromSchema(schema: ZodType): FormFieldDef[] {
       name,
       type: finalType as FormFieldDef['type'],
       isArray,
-      label: title || upperFirst(kebabCase(name).replace(/-/g, ' ')),
+      label: title,
       description,
       placeholder: placeholder as string | undefined,
-      meta: fieldSchema.meta?.() || meta,
+      meta: Object.keys(meta).length ? meta : undefined,
     }
   })
 }
