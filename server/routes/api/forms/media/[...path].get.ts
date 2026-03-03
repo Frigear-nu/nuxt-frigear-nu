@@ -1,4 +1,5 @@
 import { blob } from '@nuxthub/blob'
+import { NotFoundError } from '@nitrotool/errors'
 
 export default defineEventHandler(async (event) => {
   await requireUserId(event)
@@ -6,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const mediaPath = getRouterParam(event, 'path')
 
   if (!mediaPath) {
-    throw createError({ statusCode: 404 })
+    throw NotFoundError()
   }
 
   return blob.serve(event, mediaPath)
