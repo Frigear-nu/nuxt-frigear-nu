@@ -95,6 +95,10 @@
         "description": "JPG, GIF eller PNG. 1MB Max."
       }
     },
+    "tickets": {
+      "title": "Billetter",
+      "description": "Se dine billetter og betalinger."
+    },
     "membership": {
       "title": "Medlemskab",
       "description": "Dit medlemskab.",
@@ -179,6 +183,8 @@
       "title": "Kommende arrangementer"
     },
     "detail": {
+      "when": "Når?",
+      "where": "Hvor?",
       "tickets": {
         "title": "Billetter",
         "view": "Se billetter",

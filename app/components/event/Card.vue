@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { EventsCollectionItem } from '@nuxt/content'
+import { format } from 'date-fns'
 
 const props = defineProps<{
   event: EventsCollectionItem
@@ -45,12 +46,12 @@ const hasAnyRequirements = computed(() => requirements.value.length > 0)
           </div>
           <div class="flex gap-4">
             <UBadge
-              variant="subtle"
-              :label="new Date(event.date).toLocaleDateString()"
+              variant="soft"
+              :label="format(new Date(event.start || event.date), 'dd.MM.yyyy HH:mm')"
             />
             <UBadge
               v-if="hasEventRequirement"
-              variant="soft"
+              variant="subtle"
               icon="i-lucide-info"
               :label="eventRequirements.map(r => translatedProperty(r?.title || r?.type || r)).join(', ')"
             />
