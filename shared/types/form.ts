@@ -11,7 +11,7 @@ type BaseField = {
 }
 
 export type TextField = BaseField & {
-  type: 'text' | 'email' | 'password'
+  type: 'text' | 'email' | 'password' | 'number'
 }
 
 export type TextareaField = BaseField & {
