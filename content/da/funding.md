@@ -292,8 +292,9 @@ color: primary
 size: xl
 to: /forms/project-application
 icon: i-lucide-music
-variant: warning
+variant: 
 class: min-w-48 
 ---
-Ansøg om projektmidler
+Hop til ansøgningsform
+:::
 ::

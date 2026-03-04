@@ -279,3 +279,23 @@ Which projects are considered is decided by the association’s members at the g
   :::faq-section-list{:items='meta.cards'}
   :::
 ::
+
+::u-page-section
+---
+class: object-cover object-top w-full h-full shadow-2xl ring ring-default rounded-xl px-48
+icon: i-lucide-check-circle
+id: project-application
+---
+
+:::u-button 
+---
+color: primary
+size: xl
+to: /forms/project-application
+icon: i-lucide-music
+variant: 
+class: min-w-48 
+---
+Jump to application form
+:::
+::

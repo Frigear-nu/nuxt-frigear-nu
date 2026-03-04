@@ -114,6 +114,9 @@ importers:
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
+      nuxt-component-meta:
+        specifier: ^0.17.2
+        version: 0.17.2(magicast@0.5.1)
       nuxt-resend:
         specifier: ^0.0.2
         version: 0.0.2(magicast@0.5.1)
