@@ -2,7 +2,11 @@
 import { kebabCase } from 'scule'
 import { withLeadingSlash } from 'ufo'
 import type { ProjectApplicationForm } from '#shared/schema/forms/applications'
-import { projectApplicationForm, boardMemberApplicationForm, testApplicationForm } from '#shared/schema/forms/applications'
+import {
+  projectApplicationForm,
+  boardMemberApplicationForm,
+  testApplicationForm,
+} from '#shared/schema/forms/applications'
 
 definePageMeta({
   // header: false,
