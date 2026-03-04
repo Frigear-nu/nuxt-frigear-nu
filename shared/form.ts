@@ -44,13 +44,16 @@ export function deriveFieldsFromSchema(schema: ZodType): FormFieldDef[] {
   return Object.entries(schema.shape).map(([name, fieldSchema]) => {
     const { schema: resolved, isArray } = unwrapSchema(fieldSchema as ZodType)
 
-    const { type, title, description, placeholder, ...meta } = resolved.meta?.() ?? {}
+    const { type, title, description, placeholder, ...resolvedMeta } = resolved.meta?.() ?? {}
+
+    const meta = fieldSchema?.meta?.() || resolvedMeta || {}
 
     const finalType = fieldSchema.meta()?.type ?? type ?? TYPENAME_MAP[resolved.def.type] ?? resolved.def.type
 
     if (import.meta.dev) {
       console.log({ name, type: finalType, isArray, title, description, placeholder, meta })
     }
+
     return {
       name,
       type: finalType as FormFieldDef['type'],
@@ -58,7 +61,7 @@ export function deriveFieldsFromSchema(schema: ZodType): FormFieldDef[] {
       label: title,
       description,
       placeholder: placeholder as string | undefined,
-      meta: Object.keys(meta).length ? meta : undefined,
+      meta: meta,
     }
   })
 }

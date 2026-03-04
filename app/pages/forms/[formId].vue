@@ -110,7 +110,7 @@ const onComplete = async (args: ProjectApplicationForm) => {
     </div>
     <UCard>
       <div
-        v-if="steppedForm?.steps"
+        v-if="steppedForm?.steps && !wasSubmitted"
         class="flex justify-center gap-1 mb-8"
       >
         <div

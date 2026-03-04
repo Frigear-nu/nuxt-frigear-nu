@@ -35,8 +35,9 @@ const asRadio = computed(() =>
 const asTextarea = computed(() =>
   props.field.type === 'textarea' ? props.field : null,
 )
-const asFile = computed(() =>
-  props.field.type === 'file' ? props.field : null,
+const asFile = computed(() => {
+  return props.field.type === 'file' ? props.field : null
+},
 )
 const asDate = computed(() =>
   props.field.type === 'date' ? props.field : null,
