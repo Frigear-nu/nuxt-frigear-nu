@@ -8,6 +8,10 @@ type BaseField = {
   placeholder?: string
   required?: boolean
   disabled?: boolean
+  isArray?: boolean
+  repeatable?: boolean
+  meta?: Record<string, unknown>
+  fields?: FormFieldDef[]
 }
 
 export type TextField = BaseField & {

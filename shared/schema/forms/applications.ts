@@ -91,18 +91,23 @@ export const boardMemberApplicationForm = defineSteppedForm({
       icon: 'i-lucide-book-text',
       labelKey: '**HELLO**',
       schema: z.object({
-        background: z.string().meta({
+        name: z.string(),
+        city: z.string(),
+        email: z.email(),
+        experience: z.array(z.object({
+          startYear: z.date(),
+          endYear: z.date().optional(),
+          description: z.string().meta({ type: 'textarea' }),
+        })).meta({
           type: 'textarea',
-          placeholder: 'enter some text',
+          repeatable: true,
         }),
-        attachments: z.array(z.instanceof(File))
+        image: z.array(z.instanceof(File))
           .meta({
-            title: 'Files',
             type: 'file',
             multiple: true,
-            description: 'Add any attachments you might want to add',
+            description: 'Add your profile photo',
           }),
-        acceptTerms,
       }),
     },
   ],

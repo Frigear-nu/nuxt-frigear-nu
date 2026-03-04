@@ -19,7 +19,9 @@ const { t } = useSiteI18n()
 
 const model = computed({
   get: () => props.state[props.field.name],
-  set: (val: unknown) => emit('update:state', props.field.name, val),
+  set: (val: unknown) => {
+    emit('update:state', props.field.name, val)
+  },
 })
 
 // Narrow helpers for typed template access
@@ -69,8 +71,29 @@ const dateModel = computed({
   },
 })
 
+function addEntry() {
+  console.log('addEntry')
+  const current = (model.value as Record<string, unknown>[]) ?? []
+  model.value = [...current, {}]
+}
+
+function removeEntry(index: number) {
+  console.log('removeEntry', { index })
+  const current = [...((model.value as Record<string, unknown>[]) ?? [])]
+  current.splice(index, 1)
+  model.value = current
+}
+
+function updateEntry(index: number, name: string, val: unknown) {
+  console.log('updateEntry', { index, name, val })
+  const current = [...toRaw(((model.value as Record<string, unknown>[]) ?? []))]
+  current[index] = toRaw({ ...current[index], [name]: val })
+  model.value = current
+  console.log('updated', { model: toRaw(current) })
+}
+
 const translated = (property: string) => {
-  const definedValue = props.field[property as keyof typeof props.field] as string | undefined
+  const definedValue = props.field[property as keyof typeof props.field] || props.field.meta[property as keyof typeof props.field] as string | undefined
   if (definedValue) {
     return t(definedValue)
   }
@@ -81,12 +104,14 @@ const translated = (property: string) => {
   // TODO: Might want to not include the automatic field name in some cases?
   // for labels, there is an auto mapper for this
 
+  const whiteListed = ['label', 'add']
+
   // not the i18n key, or if this is the label, we want it anyways.
-  if (autoTranslated !== autoKey || (property === 'label' && definedValue !== '')) {
+  if (autoTranslated !== autoKey || (whiteListed.includes(property) && definedValue !== '')) {
     return autoTranslated
   }
 
-  if (property === 'label' && definedValue !== '') {
+  if (whiteListed.includes(property) && definedValue !== '') {
     return autoTranslated
   }
 
@@ -128,6 +153,50 @@ const fieldProps = computed(() => {
 
 <template>
   <UFormField
+    v-if="field.repeatable && field.fields"
+    v-bind="formFieldProps"
+  >
+    <div class="flex flex-col gap-3">
+      <div
+        v-for="(entry, index) in (model as Record<string, unknown>[])"
+        :key="index"
+        class="relative rounded-lg border border-default p-4"
+      >
+        <!-- Remove button -->
+        <UButton
+          icon="i-lucide-x"
+          color="neutral"
+          variant="ghost"
+          size="xs"
+          class="absolute top-2 right-2"
+          @click="removeEntry(index)"
+        />
+
+        <!-- Sub-fields for this entry -->
+        <div class="flex flex-col gap-3">
+          <StepFieldRenderer
+            v-for="subField in field.fields"
+            :key="subField.name"
+            :field="subField"
+            :state="entry"
+            :i18n-prefix="`${i18nPrefix}${subField.name}.`"
+            @update:state="(name, val) => updateEntry(index, name, val)"
+          />
+        </div>
+      </div>
+
+      <!-- Add button -->
+      <UButton
+        icon="i-lucide-plus"
+        color="neutral"
+        variant="outline"
+        :label="translated('add')"
+        @click="addEntry"
+      />
+    </div>
+  </UFormField>
+  <UFormField
+    v-else
     :key="field.name"
     :name="field.name"
     v-bind="formFieldProps"
