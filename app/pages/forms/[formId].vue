@@ -114,7 +114,10 @@ const onComplete = async (args: ProjectApplicationForm) => {
         {{ $t(form.description) }}
       </div>
     </div>
-    <UCard>
+    <UCard
+      variant="subtle"
+      class="dark:bg-neutral-950"
+    >
       <div
         v-if="steppedForm?.steps && steppedForm.steps.length > 1 && !wasSubmitted"
         class="flex justify-center gap-1 mb-8"
