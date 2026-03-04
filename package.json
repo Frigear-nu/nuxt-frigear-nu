@@ -54,6 +54,7 @@
     "@vue/compiler-sfc": "^3.5.27",
     "baseline-browser-mapping": "^2.9.19",
     "eslint": "^9.39.2",
+    "nuxt-component-meta": "^0.17.2",
     "nuxt-resend": "^0.0.2",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.2.2",
