@@ -92,25 +92,31 @@ const onComplete = async (args: ProjectApplicationForm) => {
 
 <template>
   <div class="flex flex-col gap-4">
-    <div class="flex justify-center mb-4">
+    <div class="flex justify-center">
       <NuxtLink to="/">
-        <AppHeaderLogo />
+        <NuxtImg
+          src="/icon-192.png"
+          class="size-14 rounded-full"
+        />
       </NuxtLink>
     </div>
-    <div class="flex flex-col gap-0.5 text-center mb-2">
-      <div class="text-lg font-bold">
+    <div
+      v-if="form.title || form.description"
+      class="flex flex-col gap-1 text-center mb-2"
+    >
+      <div class="text-2xl font-bold">
         {{ $t(form.title) }}
       </div>
       <div
-        v-if="form.description !== $t(form.description)"
-        class="text-sm text-muted"
+        v-if="form.description && form.description !== $t(form.description)"
+        class="text-md text-muted"
       >
         {{ $t(form.description) }}
       </div>
     </div>
     <UCard>
       <div
-        v-if="steppedForm?.steps && !wasSubmitted"
+        v-if="steppedForm?.steps && steppedForm.steps.length > 1 && !wasSubmitted"
         class="flex justify-center gap-1 mb-8"
       >
         <div

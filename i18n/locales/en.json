@@ -218,6 +218,11 @@
     "addedToCart": "{title} was added to your cart.",
     "removedFromCart": "{title} was removed."
   },
+  "steppedForm": {
+    "previous": "Previous",
+    "next": "Continue",
+    "submit": "Submit"
+  },
   "zodI18n": {
     "errors": {
       "too_big": {

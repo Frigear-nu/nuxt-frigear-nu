@@ -235,6 +235,11 @@
       }
     }
   },
+  "steppedForm": {
+    "previous": "Forrige",
+    "next": "Videre",
+    "submit": "Fyr afsted"
+  },
   "zodI18n": {
     "errors": {
       "custom": "Ugyldig værdi",
