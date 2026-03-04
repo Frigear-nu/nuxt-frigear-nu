@@ -1,9 +1,3 @@
 {
-    "github.copilot.enable": {
-        "*": false,
-        "plaintext": false,
-        "markdown": false,
-        "scminput": false
-    },
-    "github.copilot.nextEditSuggestions.enabled": true
+  "eslint.useFlatConfig": true
 }

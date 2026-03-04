@@ -1,0 +1,8 @@
+title: A Simple test form
+delivery:
+  - channel: email
+    destination:
+      - "${contact.default}"
+name: test
+form:
+  steps: []
