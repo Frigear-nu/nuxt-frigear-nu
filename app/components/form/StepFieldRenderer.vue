@@ -154,7 +154,7 @@ const fieldProps = computed(() => {
       v-else-if="asSelect"
       v-model="model"
       :items="asSelect.options"
-      :placeholder="field.placeholder ? $t(field.placeholder): undefined"
+      v-bind="fieldProps"
       :disabled="field.disabled"
       class="w-full"
     />
@@ -163,7 +163,7 @@ const fieldProps = computed(() => {
       v-else-if="asCombobox"
       v-model="model"
       :items="asCombobox.options"
-      :placeholder="field.placeholder ? $t(field.placeholder): undefined"
+      v-bind="fieldProps"
       :disabled="field.disabled"
       class="w-full"
     />
@@ -178,8 +178,7 @@ const fieldProps = computed(() => {
     <UCheckbox
       v-else-if="field.type === 'checkbox'"
       v-model="model"
-      :label="field.label ? $t(field.label) : undefined"
-      :description="field.description ? $t(field.description): undefined"
+      v-bind="fieldProps"
       :required="field.required"
       :disabled="field.disabled"
     />
@@ -188,8 +187,9 @@ const fieldProps = computed(() => {
       v-else-if="asDate"
       v-model="dateModel"
       :disabled="field.disabled"
-      :min-value="toCalendarDate(asDate.minValue)"
-      :max-value="toCalendarDate(asDate.maxValue)"
+      v-bind="fieldProps"
+      :min-value="asDate.minValue ? toCalendarDate(asDate.minValue) : undefined"
+      :max-value="asDate.maxValue ? toCalendarDate(asDate.maxValue) : undefined"
       class="w-full"
     />
 
@@ -197,6 +197,7 @@ const fieldProps = computed(() => {
       v-else-if="asFile"
       v-model="model"
       type="file"
+      v-bind="fieldProps"
       :accept="asFile?.meta?.accept || undefined"
       :multiple="asFile?.meta?.multiple || false"
       :disabled="field.disabled"
@@ -227,7 +228,7 @@ const fieldProps = computed(() => {
     <UInputNumber
       v-else-if="asNumber"
       v-model="model"
-      :placeholder="field.placeholder ? $t(field.placeholder): undefined"
+      v-bind="fieldProps"
       :disabled="field.disabled"
       class="w-full"
     />
