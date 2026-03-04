@@ -1,5 +1,5 @@
 import { withLeadingSlash } from 'ufo'
-import { projectApplicationForm, testApplicationForm } from '#shared/schema/forms/project-application'
+import { projectApplicationForm, boardMemberApplicationForm, testApplicationForm } from '#shared/schema/forms/applications'
 import { deriveSchemaFromSteppedForm } from '#shared/form'
 import { blob } from '@nuxthub/blob'
 import { db, schema } from '@nuxthub/db'
@@ -24,6 +24,7 @@ export default defineEventHandler(async (event) => {
 
   const hardcodedForms = {
     'project-application': projectApplicationForm,
+    'board-member-application': boardMemberApplicationForm,
     'test': testApplicationForm,
   }
 
