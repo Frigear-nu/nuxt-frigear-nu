@@ -97,7 +97,7 @@ const formFieldProps = computed(() => {
   const withLabel = props.field.type !== 'checkbox'
   const withDescription = props.field.type !== 'checkbox'
 
-  const label = withLabel ? translated('label') : 'NONE'
+  const label = withLabel ? translated('label') : undefined
   const description = withDescription ? translated('description') : undefined
   return {
     _name: props.field.name,
