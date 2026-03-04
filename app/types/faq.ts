@@ -10,7 +10,7 @@ export type FaqCardProps = ForwardedProps & {
     lines?: string[]
     as?: string
   }[]
-  links: ButtonProps[]
+  links?: ButtonProps[]
   contact?: ButtonProps & {
     initial?: Record<string, string>
   }
