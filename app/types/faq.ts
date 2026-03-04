@@ -1,6 +1,7 @@
 import type { PageCardProps, ButtonProps } from '@nuxt/ui'
+import type { ContactFormSchema } from '#shared/schema/forms/contact'
 
-type ForwardedProps = Pick<PageCardProps, 'title' | 'description' | 'icon' | 'to' | 'spotlight'>
+type ForwardedProps = Pick<PageCardProps, 'title' | 'description' | 'icon' | 'to' | 'spotlight' | 'variant' | 'class'>
 export type FaqCardProps = ForwardedProps & {
   faqs?: {
     icon?: string
@@ -12,6 +13,6 @@ export type FaqCardProps = ForwardedProps & {
   }[]
   links?: ButtonProps[]
   contact?: ButtonProps & {
-    initial?: Record<string, string>
+    initial?: ContactFormSchema
   }
 }
