@@ -4,7 +4,7 @@ logo:
   dark: /logo-dark.png
   class: h-16 p-1
 logoSmall:
-  light: /logo-small.png
+  light: /favicon.png
   dark: /favicon.svg
   class: h-16 p-1
 navigation:
