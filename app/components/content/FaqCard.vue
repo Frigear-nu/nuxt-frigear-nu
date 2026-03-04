@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<FaqCardProps>(), {
 })
 
 const pageCardProps = computed<PageCardProps>(() => {
-  return objectPick(props, ['title', 'description', 'icon', 'to', 'spotlight'])
+  return objectPick(props, ['title', 'description', 'icon', 'to', 'spotlight', 'variant', 'class'])
 })
 
 const contactFormModalProps = computed(() => {
