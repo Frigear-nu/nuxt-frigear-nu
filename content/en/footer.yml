@@ -4,6 +4,9 @@ right:
   - label: INFO
     variant: link
     to: /en/info
+  - label: FUNDING
+    variant: link
+    to: /en/funding
   - label: SUPPORT
     variant: link
     to: /en#contact
