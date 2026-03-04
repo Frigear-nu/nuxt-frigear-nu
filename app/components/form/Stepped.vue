@@ -41,15 +41,39 @@ defineExpose({
 
 <template>
   <div class="flex flex-col gap-6">
-    <h1
-      v-if="stepped.currentStep.value?.labelKey"
-      class="text-lg"
-    >
-      <MDC
-        :value="$t(stepped.currentStep.value.labelKey)"
-        unwrap
-      />
-    </h1>
+    <div class="flex justify-between">
+      <h1
+        v-if="stepped.currentStep.value?.labelKey"
+        class="text-lg"
+      >
+        <MDC
+          :value="$t(stepped.currentStep.value.labelKey)"
+          unwrap
+        />
+      </h1>
+      <UModal
+        v-if="stepped.currentStep.value?.info"
+        title="Info"
+        :ui="{ footer: 'justify-end' }"
+      >
+        <UButton
+          :icon="stepped.currentStep.value?.info?.icon || 'i-lucide-info'"
+          variant="ghost"
+        />
+        <template #body>
+          <MDC
+            :value="typeof stepped.currentStep.value?.info === 'string' ? stepped.currentStep.value.info : stepped.currentStep.value.info.content"
+            unwrap
+          />
+        </template>
+        <template #footer="{ close }">
+          <UButton
+            label="Close"
+            @click="close"
+          />
+        </template>
+      </UModal>
+    </div>
 
     <UForm
       ref="formEl"

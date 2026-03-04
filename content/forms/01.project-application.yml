@@ -4,6 +4,15 @@ description: form.application.description
 delivery:
   - channel: email
     destination: ["${contact.default}"]
+# Resubmittable means you can start over at the end, possibly with carry-over details.
+resubmittable:
+  start: background
+  alert:
+    title: You started over!
+    description: You can continue, we saved some of the details from earlier.
+  fields:
+    - background.background
+    - background.purpose
 # In the future we could define forms a bit like this
 #form:
 #  steps:
