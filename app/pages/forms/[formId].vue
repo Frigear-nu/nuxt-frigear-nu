@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ButtonProps } from '@nuxt/ui'
 import { kebabCase } from 'scule'
 import { withLeadingSlash } from 'ufo'
 import type { ProjectApplicationForm } from '#shared/schema/forms/applications'
@@ -88,6 +89,50 @@ const onComplete = async (args: ProjectApplicationForm) => {
     wasSubmitted.value = true
   }
 }
+
+const displayAlert = ref(false)
+const alertToDisplay = ref<{ title: string, description: string, color?: string } | null>(null)
+
+const resubmitForm = () => {
+  const resubmit = form.value?.resubmittable
+  stepped.value.stepped.goToStep(resubmit?.start || 0)
+
+  // get the keys to carry over
+  const keysToCarry = (resubmit?.fields || []).map(key => key.split('.').pop() || '').filter(Boolean)
+
+  if (keysToCarry.length) {
+    const allKeys = Object.keys(stepped.value.stepped.state)
+    for (const key of allKeys) {
+      if (!keysToCarry.includes(key)) {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        delete stepped.value.stepped.state[key]
+      }
+    }
+  }
+
+  // TODO: Show the green alert if any
+  if (resubmit && resubmit.alert) {
+    alertToDisplay.value = resubmit.alert
+    displayAlert.value = true
+  }
+
+  wasSubmitted.value = false
+}
+
+const completedFromActions = computed<ButtonProps[]>(() => {
+  const items: ButtonProps[] = [{ label: 'Back home', to: localePath('/'), icon: 'i-lucide-arrow-left' }]
+
+  if (form.value && form.value.resubmittable) {
+    // check what steps and data
+    items.push({
+      label: 'Submit another',
+      icon: 'i-lucide-play',
+      onClick: resubmitForm,
+    })
+  }
+
+  return items
+})
 </script>
 
 <template>
@@ -139,17 +184,25 @@ const onComplete = async (args: ProjectApplicationForm) => {
           <!--          /> -->
         </div>
       </div>
+      <UAlert
+        v-if="displayAlert"
+        v-bind="alertToDisplay"
+        class="my-4"
+        variant="subtle"
+        close
+        @update:open="displayAlert = false"
+      />
       <FormStepped
-        v-if="!wasSubmitted"
+        v-show="!wasSubmitted"
         ref="stepped"
         :form="steppedForm"
         @submit="onComplete"
       />
       <UEmpty
-        v-else
+        v-show="wasSubmitted"
         title="Thanks!"
         icon="i-lucide-check"
-        :actions="[{ label: 'Back home', to: localePath('/'), icon: 'i-lucide-arrow-left' }]"
+        :actions="completedFromActions"
       />
     </UCard>
   </div>
