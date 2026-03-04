@@ -5,10 +5,12 @@ logo:
   class: h-16 p-1
 navigation:
   - label: Home
-    to: /en
+    to: /en/
   - label: Membership
     to: /en/membership
+  - label: Funding
+    to: /en/funding
+  - label: About
+    to: /en/info
   - label: Events
     to: /en/events
-  - label: FUNDING
-    to: /en/funding
