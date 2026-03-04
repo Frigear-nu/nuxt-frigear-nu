@@ -3,7 +3,7 @@ type ValidValues = ValidValue | ValidValue[]
 
 type ReplaceVariableValuesFn = <T extends ValidValues>(
   value: T,
-  variables: Record<string, ValidValue>, // ← was Record<string, string>
+  variables: Record<string, ValidValue>,
 ) => T
 
 export const replaceVariablesInValues: ReplaceVariableValuesFn = <T extends ValidValues>(
@@ -12,7 +12,7 @@ export const replaceVariablesInValues: ReplaceVariableValuesFn = <T extends Vali
 ): T => {
   if (typeof value === 'string') {
     return value.replace(/\$\{(\w+)\}/g, (_, key) =>
-      key in variables ? String(variables[key]) : `\${${key}}`, // ← String() coercion
+      key in variables ? String(variables[key]) : `\${${key}}`,
     ) as T
   }
 

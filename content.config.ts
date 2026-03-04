@@ -1,3 +1,4 @@
+import { CollectionFormSchema } from './shared/schema/content-form'
 import { defineCollection, defineContentConfig } from '@nuxt/content'
 import { z } from 'zod/v4'
 
@@ -85,6 +86,14 @@ export default defineContentConfig({
           }).optional(),
         })),
       }),
+    }),
+    forms: defineCollection({
+      type: 'data',
+      source: {
+        include: 'forms/**/*.yml',
+        prefix: '/',
+      },
+      schema: CollectionFormSchema,
     }),
   },
 })
