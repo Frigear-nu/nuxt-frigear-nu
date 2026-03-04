@@ -2,6 +2,12 @@ import { z } from 'zod/v4'
 import type { UnionFormSteps } from '#shared/types/form'
 import { defineSteppedForm } from '#shared/form'
 
+const acceptTerms = z.literal(true).meta({
+  type: 'checkbox',
+  title: '', // empty string means no label
+  description: 'steppedForm.acceptTerms.description',
+})
+
 export const projectApplicationForm = defineSteppedForm({
   id: 'application',
   steps: [
@@ -62,12 +68,14 @@ export const projectApplicationForm = defineSteppedForm({
       labelKey: 'form.application.attachments.label',
       schema: z.object({
         attachments: z.array(z.instanceof(File))
+          .optional()
           .meta({
             title: 'Files',
             type: 'file',
             multiple: true,
             description: 'Add any attachments you might want to add',
           }),
+        acceptTerms,
       }),
     },
   ],
@@ -94,6 +102,7 @@ export const boardMemberApplicationForm = defineSteppedForm({
             multiple: true,
             description: 'Add any attachments you might want to add',
           }),
+        acceptTerms,
       }),
     },
   ],
@@ -114,12 +123,14 @@ export const testApplicationForm = defineSteppedForm({
           placeholder: 'enter some text',
         }),
         attachments: z.array(z.instanceof(File))
+          .optional()
           .meta({
             title: 'Files',
             type: 'file',
             multiple: true,
             description: 'Add any attachments you might want to add',
           }),
+        acceptTerms,
       }),
     },
   ],
