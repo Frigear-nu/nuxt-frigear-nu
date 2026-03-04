@@ -58,7 +58,7 @@ cards:
           - ✅ Bæredygtighed og genbrug
           - ✅ Kunst, kultur og kreativitet
           - ✅ Inklusion og mangfoldighed
-          - ✅ Subkultur og undergrundsniitiativer
+          - ✅ Subkultur og undergrundsinitiativer
   - title: Hvad støtter Frigear fx. ikke?
     description: |
       **Frigear støtter ikke** nedenstående eksempler. Bemærk, -listen er ikke nødvendigvis udtømmende.
@@ -77,8 +77,7 @@ cards:
           - ❌ Politik og religion
   - title: Hvornår kan vi forvente svar?
     description: |
-      Vi er alle frivillige og arbejder så hurtigt vi kan — men se et par generelle timeline faq herunder
-      .
+      Vi er alle frivillige og arbejder så hurtigt vi kan — men se et par generelle timeline faq herunder.
     icon: i-lucide-message-circle
     faqs:
       - title: se timeline faqs...
@@ -260,7 +259,6 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
     color: primary
     trailingIcon: i-lucide-chevron-down
     variant: subtle
-    color: primary
     icon: i-lucide-info
     size: lg
     ---

@@ -1,7 +1,7 @@
 ---
 title: Project Application
 seo:
-  title: About Frigear - frigear.nu
+  title: Project application - frigear.nu
   description: Information about application criteria for the Frigear fund.
 cards:
   - title: What is the timeline and the processes?
@@ -76,8 +76,7 @@ cards:
           - ❌ Politics and religion
   - title: When can we expect an answer?
     description: |
-      We are all volunteers and work as fast as we can — but see a couple of general timeline faq below
-      .
+      We are all volunteers and work as fast as we can — but see a couple of general timeline faq below.
     icon: i-lucide-message-circle
     faqs:
       - title: see timeline faqs...
@@ -257,7 +256,6 @@ Which projects are considered is decided by the association’s members at the g
     color: primary
     trailingIcon: i-lucide-chevron-down
     variant: subtle
-    color: primary
     icon: i-lucide-info
     size: lg
     ---
