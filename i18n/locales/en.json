@@ -221,7 +221,10 @@
   "steppedForm": {
     "previous": "Previous",
     "next": "Continue",
-    "submit": "Submit"
+    "submit": "Submit",
+    "acceptTerms": {
+      "description": "I accept the [terms and conditions](https://example.com/terms-and-conditions) & [privacy policy](https://example.com/privacy-policy)."
+    }
   },
   "zodI18n": {
     "errors": {
