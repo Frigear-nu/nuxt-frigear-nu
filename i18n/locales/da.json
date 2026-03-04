@@ -238,7 +238,10 @@
   "steppedForm": {
     "previous": "Forrige",
     "next": "Videre",
-    "submit": "Fyr afsted"
+    "submit": "Fyr afsted",
+    "acceptTerms": {
+      "description": "Jeg godtar [betingelsene](https://example.com/terms-and-conditions) & [privatlivspolitik](https://example.com/privacy-policy)."
+    }
   },
   "zodI18n": {
     "errors": {

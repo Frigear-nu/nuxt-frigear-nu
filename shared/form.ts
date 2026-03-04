@@ -1,6 +1,7 @@
 import type { ZodType } from 'zod/v4'
 import { z } from 'zod/v4'
 import type { FormStep, SteppedForm, FormFieldDef } from './types/form'
+import { defu } from 'defu'
 
 export function defineSteppedForm<const TSteps extends FormStep[]>(
   form: { id: string, steps: TSteps },
@@ -44,9 +45,7 @@ export function deriveFieldsFromSchema(schema: ZodType): FormFieldDef[] {
   return Object.entries(schema.shape).map(([name, fieldSchema]) => {
     const { schema: resolved, isArray } = unwrapSchema(fieldSchema as ZodType)
 
-    const { type, title, description, placeholder, ...resolvedMeta } = resolved.meta?.() ?? {}
-
-    const meta = fieldSchema?.meta?.() || resolvedMeta || {}
+    const { type, title, description, placeholder, ...meta } = defu(fieldSchema?.meta?.(), resolved.meta?.())
 
     const finalType = fieldSchema.meta()?.type ?? type ?? TYPENAME_MAP[resolved.def.type] ?? resolved.def.type
 
