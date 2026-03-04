@@ -5,6 +5,19 @@ const { data: footer } = await useSiteFooter()
 </script>
 
 <template>
+  <USeparator
+    type="dashed"
+    size="lg"
+    class="h-px mt-8"
+  >
+    <UColorModeImage
+      light="/logo.png"
+      dark="/logo-dark.png"
+      class="w-auto h-8"
+      loading="lazy"
+      alt="Footer Separator Logo"
+    />
+  </USeparator>
   <UFooter>
     <template
       v-if="footer && footer.left"
@@ -21,7 +34,29 @@ const { data: footer } = await useSiteFooter()
       <UContainer>
         <UFooterColumns
           :columns="footer.sections"
-        />
+        >
+          <template #right>
+            <!--            <UFormField -->
+            <!--              name="email" -->
+            <!--              label="Subscribe to our newsletter" -->
+            <!--              size="lg" -->
+            <!--            > -->
+            <!--              <UInput -->
+            <!--                type="email" -->
+            <!--                class="w-full" -->
+            <!--              > -->
+            <!--                <template #trailing> -->
+            <!--                  <UButton -->
+            <!--                    type="submit" -->
+            <!--                    size="xs" -->
+            <!--                    color="neutral" -->
+            <!--                    label="Subscribe" -->
+            <!--                  /> -->
+            <!--                </template> -->
+            <!--              </UInput> -->
+            <!--            </UFormField> -->
+          </template>
+        </UFooterColumns>
       </UContainer>
     </template>
     <template
@@ -31,9 +66,4 @@ const { data: footer } = await useSiteFooter()
       <AppFooterRight :links="footer && footer.right" />
     </template>
   </UFooter>
-  <div class="px-4 pb-2 container">
-    <small>
-      App developed by Frigear volunteers.
-    </small>
-  </div>
 </template>

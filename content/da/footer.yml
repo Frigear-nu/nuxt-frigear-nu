@@ -1,24 +1,33 @@
 left:
   - "&copy; 2023 - {fullYear} ★ **[FRIGEAR]{.text-primary}** ★ CVR-nr: 44353261"
+sections:
+  - label: Navigation
+    children:
+      - label: Hjem
+        to: /
+      - label: Medlemskab
+        to: /membership
+      - label: Events
+        to: /events
+  - label: Useful links
+    children:
+      - label: Konto
+        to: /account
+      - label: Om Frigear
+        to: /info
+      - label: SUPPORT
+        to: /#contact
+  - label: Legal
+    children:
+      - label: GDPR
+        to: /legal/gdpr
+      - label: BETINGELSER
+        to: /legal/terms
+      - label: SIKKERHED
+        to: /legal/security
 right:
-  - label: INFO
-    variant: link
-    to: /info
-  - label: SUPPORT
-    variant: link
-    to: /#contact
-  - label: GDPR
-    variant: link
-    to: /legal/gdpr
-  - label: BETINGELSER
-    variant: link
-    to: /legal/terms
-  - label: SIKKERHED
-    variant: link
-    to: /legal/security
   - icon: i-simple-icons-github
     target: _BLANK
     rel: "noopener noreferrer"
     to: https://github.com/frigear-nu/nuxt-frigear-nu
-sections: []
 socials: []

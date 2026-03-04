@@ -3,6 +3,10 @@ logo:
   light: /logo.png
   dark: /logo-dark.png
   class: h-16 p-1
+logoSmall:
+  light: /favicon.png
+  dark: /favicon.svg
+  class: h-16 p-1
 navigation:
   - label: Hjem
     to: /
