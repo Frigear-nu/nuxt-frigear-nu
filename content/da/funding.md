@@ -170,6 +170,9 @@ cards:
           - ✅ CVR på organisationen og/eller CPR på enkeltansvarspersoner. :br
           - ✅ Link til hjemmeside og SoMe-kanaler (hvis relevant). :br
           - ✅ Bankoplysninger til evt. udbetaling af støtte.
+
+
+bottomCards:
   - title: Kontakt Frigear om tvivlspørgsmål eller sparring på projektidéer
     icon: i-lucide-mail
     description: |
@@ -228,9 +231,9 @@ cards:
 :nuxt-img{.mt-4.rounded-xl.block.md:hidden :height='500' :width='640' alt="Frigears frivillige på Roskilde Festival" src="/images/volunteers/fgr/funding-hero-mobile-rf-x-50-1200x900.png"}
 ::
 
-::u-page-section
+::card{.shadow-2xl}
+:::u-page-section
 ---
-class: object-cover object-top w-full h-full shadow-2xl ring ring-default rounded-xl
 icon: i-lucide-message-circle-question-mark
 id: good-to-know
 ---
@@ -242,12 +245,12 @@ Lidt stuff, -inden i ansøger . . .
 Foreningen Frigear uddeler årligt en pulje fra forudgående regnskabsårs overskud til awesome, frivilligdrevne projekter i Danmark.
 Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på generalforsamlingen (afholdes i 1. kvartal) . . . . 
 
-  :::u-collapsible
+  ::::u-collapsible
   ---
   defaultOpen: false
   class: flex flex-col gap-2 bg-primary/10 rounded-lg p-1
   ---
-    ::::u-button
+    :::::u-button
     ---
     block: true
     ui:
@@ -261,7 +264,7 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
     icon: i-lucide-info
     size: lg
     ---
-    ::::
+    :::::
 
   #content
 
@@ -271,17 +274,18 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
   **NB:** Frigear midler går ikke til støtte af enkeltpersoner, institutioner eller foreninger, hvor overskuddet går til enkeltpersoner, offentlige institutioner eller virksomheder (her tales ikke om fx husleje eller leje af udstyr i forbindelse med projektet), projekter med lønnede medarbejdere (her tales ikke om fx aflønning af ekstern lyd-tekniker, fragtmand eller lign.), støtte til underskudsdækning, projekter/vedtægter/idégrundlag der går imod Frigears mission, vision, værdier eller vedtægter, og ej heller projekter med politisk eller religiøs agenda.
 
   **Husk:** Frigear er udelukkende drevet af frivillige, som bruger deres fritid på at læse jeres ansøgninger igennem — så hjælp os med at hjælpe jer 💜
-  :::
+  ::::
 
 #features
 
-  :::faq-section-list{:items='meta.cards'}
-  :::
+  ::::faq-section-list{:items='meta.cards'}
+  ::::
+:::
 ::
 
-::u-page-section
+::card{.shadow-2xl}
+:::u-page-section
 ---
-class: object-cover object-top w-full h-full shadow-2xl ring ring-default rounded-xl align-items-center justify-center
 icon: i-lucide-check-circle
 id: project-application
 ---
@@ -289,15 +293,20 @@ id: project-application
 #title
 Er du klar til at ansøge?
 
-:::u-button 
+#links
+::::u-button 
 ---
 color: primary
 size: xl
 to: /forms/project-application
-icon: i-lucide-music
+trailingIcon: i-lucide-arrow-right
 variant: subtle
-class: w-75 mt-12 
+class: mt-12 
 ---
 Hop til ansøgningsformen
+::::
 :::
 ::
+
+::::faq-grid{:items='meta.bottomCards' .grid-cols-1 .md:grid-cols-2 .lg:grid-cols-2}
+::::

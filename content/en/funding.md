@@ -92,7 +92,7 @@ cards:
       - ❌ Unused support funds are returned.
       - ✅ Possible other use of the support funds.
     faqs:
-      - title: See more about returning funds...
+      - title: About returning funds...
         icon: i-lucide-check-circle
         lines:
           - ❌ Fully or partially **Unused support funds** must, as a rule, be **paid back** to Frigear, so they can be distributed to other projects. :br :br
@@ -128,7 +128,7 @@ cards:
     links:
       - label: Hop over and become a member
         icon: i-lucide-user-plus
-        trailingIcon: i-lucide-square-arrow-out-up-right
+        trailingIcon: i-lucide-arrow-right
         variant: subtle
         size: lg
         to: /en/membership
@@ -137,7 +137,7 @@ cards:
     description: |
       ✅ **Yes**. We believe it must be the minimum, -as thanks for our support.
     faqs:
-      - title: See more about acknowledgement...
+      - title: More about crediting...
         icon: i-lucide-check-circle
         lines:
           - We are proud that our **volunteers’ efforts** help support you, and help with promotion and the creation of your project(s). Therefore, it is also expected that you likewise wish to **acknowledge Frigear’s support** on public media, SoMe channels etc. where it makes sense, and possibly at event(s) with Frigear’s logo and maybe links and '#hashtags etc. :br :br
@@ -147,7 +147,7 @@ cards:
         to: /en/media
         icon: i-lucide-qr-code
         variant: subtle
-        trailingIcon: i-lucide-square-arrow-out-up-right
+        trailingIcon: i-lucide-arrow-right
   - title: What must the application at minimum contain and be formatted as?
     icon: i-lucide-clipboard-check
     description: |
@@ -169,6 +169,7 @@ cards:
           - ✅ CVR for the organization and/or CPR for individual responsible persons. :br
           - ✅ Link to website and SoMe channels (if relevant). :br
           - ✅ Bank details for potential payout of support.
+bottomCards: 
   - title: Contact Frigear about questions or sparring on project ideas
     icon: i-lucide-mail
     description: |
@@ -189,7 +190,7 @@ cards:
     
 ---
 
-::u-page-hero
+::u-page-hero{.mb-0}
 #title
 {{ $doc.title }}
 
@@ -227,9 +228,9 @@ cards:
 :nuxt-img{.mt-4.rounded-xl.block.md:hidden :height='500' :width='640' alt="Frigear volunteers at Roskilde Festival" src="/images/volunteers/fgr/funding-hero-mobile-rf-x-50-1200x900.png"}
 ::
 
-::u-page-section
+::card{.shadow-2xl}
+:::u-page-section
 ---
-class: object-cover object-top w-full h-full shadow-2xl ring ring-default rounded-xl
 icon: i-lucide-message-circle-question-mark
 id: good-to-know
 ---
@@ -241,12 +242,12 @@ Some stuff, -before you apply . . .
 The Frigear association annually distributes a pool from the previous financial year’s surplus to awesome, volunteer-driven projects in Denmark.
 Which projects are considered is decided by the association’s members at the general assembly (held in Q1) . . . . 
 
-  :::u-collapsible
+  ::::u-collapsible
   ---
   defaultOpen: false
   class: flex flex-col gap-2 bg-primary/10 rounded-lg p-1
   ---
-    ::::u-button
+    :::::u-button
     ---
     block: true
     ui:
@@ -260,7 +261,7 @@ Which projects are considered is decided by the association’s members at the g
     icon: i-lucide-info
     size: lg
     ---
-    :::: 
+    ::::: 
 
   #content
 
@@ -270,17 +271,17 @@ Which projects are considered is decided by the association’s members at the g
   **NB:** Frigear funds are not granted to individuals, institutions, or associations where the surplus goes to individuals, public institutions or companies (this does not refer to e.g. rent or equipment rental in connection with the project), projects with paid employees (this does not refer to e.g. payment of an external sound technician, carrier or similar), support for covering deficits, projects/bylaws/ideological basis that go against Frigear’s mission, vision, values or bylaws, nor projects with a political or religious agenda.
 
   **Remember:** Frigear is run solely by volunteers who use their free time to read through your applications — so help us help you 💜
-  :::
+  ::::
 
 #features
 
-  :::faq-section-list{:items='meta.cards'}
-  :::
+  ::::faq-section-list{:items='meta.cards'}
+  ::::
+:::
 ::
-
-::u-page-section
+::card{.shadow-2xl}
+:::u-page-section
 ---
-class: object-cover object-top w-full h-full shadow-2xl ring ring-default rounded-xl align-items-center justify-center
 icon: i-lucide-check-circle
 id: project-application
 ---
@@ -288,15 +289,20 @@ id: project-application
 #title
 Are you ready to apply?
 
-:::u-button 
+#links
+::::u-button
 ---
 color: primary
 size: xl
-to: /forms/project-application
-icon: i-lucide-music
+to: /en/forms/project-application
+trailingIcon: i-lucide-arrow-right
 variant: subtle
-class: w-75 mt-12
+class: mt-12
 ---
 Jump to application form
+::::
 :::
 ::
+
+::::faq-grid{:items='meta.bottomCards' .grid-cols-1 .md:grid-cols-2 .lg:grid-cols-2}
+::::
