@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { kebabCase } from 'scule'
 import { withLeadingSlash } from 'ufo'
-import { type ProjectApplicationForm, testApplicationForm } from '#shared/schema/forms/project-application'
-import { projectApplicationForm } from '#shared/schema/forms/project-application'
+import type { ProjectApplicationForm } from '#shared/schema/forms/applications'
+import { projectApplicationForm, boardMemberApplicationForm, testApplicationForm } from '#shared/schema/forms/applications'
 
 definePageMeta({
   // header: false,
@@ -40,6 +40,10 @@ const steppedForm = computed(() => {
 
   if (form.value.path === '/project-application') {
     return projectApplicationForm
+  }
+
+  if (form.value.path === '/board-member-application') {
+    return boardMemberApplicationForm
   }
 
   return testApplicationForm
@@ -86,11 +90,7 @@ const onComplete = async (args: ProjectApplicationForm) => {
   <div class="flex flex-col gap-4">
     <div class="flex justify-center mb-4">
       <NuxtLink to="/">
-        <UColorModeImage
-          light="/logo.png"
-          dark="/logo-dark.png"
-          class="size-10"
-        />
+        <AppHeaderLogo />
       </NuxtLink>
     </div>
     <div class="flex flex-col gap-0.5 text-center mb-2">
