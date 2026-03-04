@@ -71,7 +71,6 @@ const dateModel = computed({
 
 const translated = (property: string) => {
   const definedValue = props.field[property as keyof typeof props.field] as string | undefined
-  console.log(property, typeof definedValue)
   if (definedValue) {
     return t(definedValue)
   }
