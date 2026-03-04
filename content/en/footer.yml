@@ -1,6 +1,9 @@
 left:
   - "&copy; 2023 - {fullYear} ★ **[FRIGEAR]{.text-primary}** ★ CVR-nr: 44353261"
 right:
+  - label: FUNDING
+    variant: link
+    to: /en/funding
   - label: INFO
     variant: link
     to: /en/info

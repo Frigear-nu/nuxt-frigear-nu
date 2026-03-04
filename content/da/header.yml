@@ -12,3 +12,5 @@ navigation:
     to: /events
   - label: Om Frigear
     to: /info
+  - label: Projektstøtte
+    to: /funding

@@ -281,10 +281,13 @@ Hvilke projekter der kommer i betragtning, afgøres af foreningens medlemmer på
 
 ::u-page-section
 ---
-class: object-cover object-top w-full h-full shadow-2xl ring ring-default rounded-xl px-48
+class: object-cover object-top w-full h-full shadow-2xl ring ring-default rounded-xl align-items-center justify-center
 icon: i-lucide-check-circle
 id: project-application
 ---
+
+#title
+Er du klar til at ansøge?
 
 :::u-button 
 ---
@@ -292,9 +295,9 @@ color: primary
 size: xl
 to: /forms/project-application
 icon: i-lucide-music
-variant: 
-class: min-w-48 
+variant: subtle
+class: w-75 mt-12 
 ---
-Hop til ansøgningsform
+Hop til ansøgningsformen
 :::
 ::

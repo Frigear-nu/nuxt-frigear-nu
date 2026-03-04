@@ -10,3 +10,5 @@ navigation:
     to: /en/membership
   - label: Events
     to: /en/events
+  - label: FUNDING
+    to: /en/funding

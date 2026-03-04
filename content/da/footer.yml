@@ -4,6 +4,9 @@ right:
   - label: INFO
     variant: link
     to: /info
+  - label: STØTTE
+    variant: link
+    to: /funding
   - label: SUPPORT
     variant: link
     to: /#contact
