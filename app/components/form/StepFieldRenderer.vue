@@ -82,11 +82,11 @@ const translated = (property: string) => {
   // for labels, there is an auto mapper for this
 
   // not the i18n key, or if this is the label, we want it anyways.
-  if (autoTranslated !== autoKey || property === 'label') {
+  if (autoTranslated !== autoKey || (property === 'label' && definedValue !== '')) {
     return autoTranslated
   }
 
-  if (property === 'label') {
+  if (property === 'label' && definedValue !== '') {
     return autoTranslated
   }
 
@@ -181,7 +181,26 @@ const fieldProps = computed(() => {
       v-bind="fieldProps"
       :required="field.required"
       :disabled="field.disabled"
-    />
+    >
+      <template
+        v-if="field.label"
+        #label
+      >
+        <MDC
+          :value="translated('label')"
+          unwrap
+        />
+      </template>
+      <template
+        v-if="field.description"
+        #description
+      >
+        <MDC
+          :value="translated('description')"
+          unwrap
+        />
+      </template>
+    </UCheckbox>
 
     <UInputDate
       v-else-if="asDate"

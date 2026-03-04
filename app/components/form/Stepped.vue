@@ -88,10 +88,9 @@ defineExpose({
             variant="ghost"
             icon="i-lucide-arrow-left"
             type="button"
+            :label="$t('steppedForm.previous')"
             @click="stepped.goPrev"
-          >
-            Back
-          </UButton>
+          />
           <span v-else />
         </slot>
 
@@ -104,10 +103,9 @@ defineExpose({
           <UButton
             type="submit"
             :loading="stepped.isSubmitting.value"
-            :trailing-icon="stepped.isLastStep.value ? 'i-lucide-check' : 'i-lucide-arrow-right'"
-          >
-            {{ stepped.isLastStep.value ? 'Submit' : 'Next' }}
-          </UButton>
+            :trailing-icon="stepped.isLastStep.value ? 'i-lucide-send' : 'i-lucide-arrow-right'"
+            :label="stepped.isLastStep.value ? $t('steppedForm.submit') : $t('steppedForm.next')"
+          />
         </slot>
       </div>
     </UForm>
