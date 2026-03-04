@@ -111,7 +111,7 @@ const resubmitForm = () => {
   }
 
   // TODO: Show the green alert if any
-  if (resubmit.alert) {
+  if (resubmit && resubmit.alert) {
     alertToDisplay.value = resubmit.alert
     displayAlert.value = true
   }
