@@ -1,0 +1,141 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name != 'push' }}
+
+jobs:
+  changes:
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      src: ${{ steps.filter.outputs.src }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          base: ${{ github.event.merge_group.base_sha || github.event.pull_request.base.sha || github.event.before }}
+          ref: ${{ github.event.merge_group.head_sha || github.sha }}
+          filters: |
+            src:
+              - 'packages/**'
+              - 'test/**'
+              - 'scripts/**'
+              - 'patches/**'
+              - 'pnpm-lock.yaml'
+              - 'pnpm-workspace.yaml'
+              - 'package.json'
+              - 'tsconfig.json'
+              - 'vitest.config.ts'
+              - 'playwright.config.ts'
+              - 'eslint.config.mjs'
+              - '.github/workflows/ci.yml'
+
+  setup:
+    runs-on: ubuntu-24.04-arm
+    needs: changes
+    if: needs.changes.outputs.src == 'true'
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.19.0
+
+      - name: use node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.6
+          cache: pnpm
+
+      - name: install dependencies
+        run: pnpm install
+
+      - name: cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+  lint:
+    runs-on: ubuntu-24.04-arm
+    needs: [changes, setup]
+    if: needs.changes.outputs.src == 'true'
+    timeout-minutes: 10
+    permissions:
+      actions: write
+      contents: read
+    env:
+      NODE_OPTIONS: --max-old-space-size=8192
+      STUDIO_GITHUB_CLIENT_SECRET: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
+      STUDIO_GITHUB_CLIENT_ID: ${{ vars.STUDIO_GITHUB_CLIENT_ID }}
+      NITRO_PRESET: ${{ vars.NITRO_PRESET }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.19.0
+
+      - name: use node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.6
+          cache: pnpm
+
+      - name: restore node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: lint
+        run: pnpm lint
+
+  test:
+    runs-on: ubuntu-24.04-arm
+    needs: [changes, setup, lint]
+    if: needs.changes.outputs.src == 'true' && github.event.pull_request.draft == false
+    timeout-minutes: 15
+    permissions:
+      actions: write
+      contents: read
+    env:
+      NODE_OPTIONS: --max-old-space-size=8192
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.19.0
+
+      - name: use node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.6
+          cache: pnpm
+
+      - name: restore node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: test
+        run: pnpm test
