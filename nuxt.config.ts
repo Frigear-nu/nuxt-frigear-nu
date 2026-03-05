@@ -16,8 +16,12 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     '@pinia/nuxt',
     '@pinia/colada-nuxt',
-    'nuxt-component-meta',
-    '@nuxt/test-utils/module',
+    ...import.meta.dev
+      ? ['nuxt-component-meta']
+      : [],
+    ...import.meta.test
+      ? ['@nuxt/test-utils/module']
+      : [],
   ],
   $production: {
     nitro: {
