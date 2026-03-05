@@ -1,6 +1,8 @@
 import type { ZodType } from 'zod/v4'
 import type { SelectItem, RadioGroupItem, InputMenuItem } from '@nuxt/ui'
 
+type TranslationValue = string | Record<string, string>
+
 type BaseField = {
   name: string
   label?: string
@@ -72,7 +74,7 @@ export type FormStep<TSchema extends ZodType = ZodType> = {
   descriptionKey?: string
   schema: TSchema
   fields?: FormFieldDef[]
-  info?: string | { content: string, icon?: string }
+  info?: TranslationValue | { content: TranslationValue, icon?: string }
 }
 
 export type SteppedForm<TSteps extends FormStep[]> = {

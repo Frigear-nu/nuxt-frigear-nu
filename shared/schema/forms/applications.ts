@@ -12,10 +12,9 @@ export const projectApplicationForm = defineSteppedForm({
   id: 'application',
   steps: [
     {
-      id: 'description',
+      id: 'info',
       schema: z.object({
         description: z.string().optional().meta({
-          title: 'form.application.description',
           type: 'markdown-value',
           content: {
             da: 'Switch to english to see content...',
@@ -60,6 +59,9 @@ _We want to build a complete skatepark for our community_
       id: 'contactInfo',
       icon: 'i-lucide-book-text',
       // labelKey: 'form.application.background',
+      hint: {
+        en: 'This step is for personal details about the person submitting the form.',
+      },
       schema: z.object({
         fullName: z.string(),
         email: z.email(),
@@ -110,11 +112,11 @@ _We want to build a complete skatepark for our community_
     {
       id: 'branding',
       schema: z.object({
-        // logo: z.file().optional().meta({
-        //   type: 'file',
-        //   multiple: 'false',
-        //   mode: 'slim',
-        // }),
+        logo: z.file().optional().meta({
+          type: 'file',
+          multiple: 'false',
+          mode: 'slim',
+        }),
         relevantImages: z.array(z.file()).meta({
           type: 'file',
           multiple: true,
