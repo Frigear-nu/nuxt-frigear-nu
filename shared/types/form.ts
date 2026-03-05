@@ -9,6 +9,10 @@ type BaseField = {
   required?: boolean
   disabled?: boolean
 }
+export type MarkdownValueField = BaseField & {
+  type: 'markdown-value'
+  content: string | Record<'da' | 'en', string>
+}
 
 export type TextField = BaseField & {
   type: 'text' | 'email' | 'password' | 'number'
@@ -51,7 +55,8 @@ export type FileField = BaseField & {
 }
 
 export type FormFieldDef
-  = | TextField
+  = | MarkdownValueField
+    | TextField
     | TextareaField
     | SelectField
     | ComboboxField
@@ -78,8 +83,7 @@ export type SteppedForm<TSteps extends FormStep[]> = {
 }
 
 type UnionToIntersection<U>
-  = (U extends unknown ? (k: U) => void : never) extends
-  (k: infer I) => void ? I : never
+  = (U extends unknown ? (k: U) => void : never) extends (k: infer I) => void ? I : never
 
 type ExtractObjectShape<T>
   = T extends ZodType<infer Shape>

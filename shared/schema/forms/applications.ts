@@ -12,6 +12,52 @@ export const projectApplicationForm = defineSteppedForm({
   id: 'application',
   steps: [
     {
+      id: 'description',
+      schema: z.object({
+        description: z.string().optional().meta({
+          title: 'form.application.description',
+          type: 'markdown-value',
+          content: {
+            da: 'Switch to english to see content...',
+            en: `
+
+::h2{.mt-0}
+ℹ️ Single budget projects
+::
+
+
+Just run through the form and fill in the required fields, -sit back and relax . . .
+
+## ℹ️ Multi budget projects
+
+If your project has multiple parts that can be supported, with different budgets to get it flying, -you can run through
+the form and submit the information relevant for this specifically, and at the end you will have the option to apply
+again for another budget under same project.
+
+💡
+
+_We want to build a complete skatepark for our community_
+
+*** Different budgets for the same endgoal:
+
+**_First Application_**
+
+**1.** Full skatepark - Budget: 350k
+
+**_Another Application_**
+
+**2.** One halfpipe ramp - Budget: 25k
+
+**_Yet Another Application_**
+
+**3.** Buy 5 rails - Budget: 5k
+            `,
+          },
+
+        }),
+      }),
+    },
+    {
       id: 'background',
       icon: 'i-lucide-book-text',
       // labelKey: 'form.application.background',
