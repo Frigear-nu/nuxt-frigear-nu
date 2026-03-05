@@ -19,6 +19,9 @@ right:
   - label: SECURITY
     variant: link
     to: /en/legal/security
+  - label: BRANDING
+    variant: link
+    to: /en/branding
   - icon: i-simple-icons-github
     target: _BLANK
     rel: "noopener noreferrer"
