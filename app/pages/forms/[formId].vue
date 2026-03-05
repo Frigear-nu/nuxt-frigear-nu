@@ -114,6 +114,11 @@ const resubmitForm = () => {
   if (resubmit && resubmit.alert) {
     alertToDisplay.value = resubmit.alert
     displayAlert.value = true
+
+    setTimeout(() => {
+      displayAlert.value = false
+      alertToDisplay.value = null
+    }, 15000)
   }
 
   wasSubmitted.value = false
