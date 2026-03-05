@@ -23,13 +23,9 @@ const model = computed({
   set: (val: unknown) => emit('update:state', props.field.name, val),
 })
 
-const asMarkdownValue = computed(async () => {
-  console.log('asMarkdownValue', props.field)
+const asMarkdownValue = computed(() => {
   return props.field.type === 'markdown-value'
-    ? {
-        ...props.field,
-        value: await parseMarkdown(translatedProperty(props.field?.meta?.content) || ''),
-      }
+    ? props.field
     : null
 })
 
