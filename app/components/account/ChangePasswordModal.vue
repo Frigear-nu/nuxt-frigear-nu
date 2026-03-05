@@ -39,7 +39,7 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserPasswordSchema>) {
 <template>
   <UModal
     v-model:open="displayModal"
-    title="Change Password"
+    :title="$t('auth.dasdsdf')"
   >
     <template #body>
       <UForm

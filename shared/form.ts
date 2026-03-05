@@ -8,7 +8,7 @@ export function defineSteppedForm<const TSteps extends FormStep[]>(
 ) {
   return form as SteppedForm<TSteps>
 }
-function unwrapSchema(schema: ZodType): { schema: ZodType, isArray: boolean } {
+function unwrapSchema(schema: ZodType): { schema: ZodType, isArray: boolean, repeatable?: boolean } {
   if (schema instanceof z.ZodOptional || schema instanceof z.ZodNullable) {
     return unwrapSchema(schema.unwrap())
   }
@@ -16,14 +16,14 @@ function unwrapSchema(schema: ZodType): { schema: ZodType, isArray: boolean } {
     return unwrapSchema(schema._def.innerType)
   }
   if (schema instanceof z.ZodArray) {
+    const meta = schema.meta?.()
+    const isRepeatable = meta?.repeatable === true
     const { schema: inner } = unwrapSchema(schema.element)
-    return { schema: inner, isArray: true }
+    return { schema: inner, isArray: true, repeatable: isRepeatable }
   }
-  // Take the first union member as the representative type
   if (schema instanceof z.ZodUnion) {
     return unwrapSchema(schema._def.options[0])
   }
-  // z.coerce.number() / z.coerce.boolean() etc. wrap in ZodPipe
   if (schema instanceof z.ZodPipe) {
     return unwrapSchema(schema._def.out)
   }
@@ -43,24 +43,29 @@ export function deriveFieldsFromSchema(schema: ZodType): FormFieldDef[] {
   if (!(schema instanceof z.ZodObject)) return []
 
   return Object.entries(schema.shape).map(([name, fieldSchema]) => {
-    const { schema: resolved, isArray } = unwrapSchema(fieldSchema as ZodType)
+    const { schema: resolved, isArray, repeatable } = unwrapSchema(fieldSchema as ZodType)
 
     const { type, title, description, placeholder, ...meta } = defu(fieldSchema?.meta?.(), resolved.meta?.())
 
     const finalType = fieldSchema.meta()?.type ?? type ?? TYPENAME_MAP[resolved.def.type] ?? resolved.def.type
 
     if (import.meta.dev) {
-      console.log({ name, type: finalType, isArray, title, description, placeholder, meta })
+      console.log({ name, type: finalType, isArray, title, description, placeholder, meta, repeatable })
     }
 
     return {
       name,
       type: finalType as FormFieldDef['type'],
       isArray,
+      repeatable: repeatable || resolved?.meta?.()?.repeatable,
+      // NEW: derive sub-fields when the inner schema is an object
+      fields: (repeatable && resolved instanceof z.ZodObject)
+        ? deriveFieldsFromSchema(resolved)
+        : undefined,
       label: title,
       description,
       placeholder: placeholder as string | undefined,
-      meta: meta,
+      meta,
     }
   })
 }
