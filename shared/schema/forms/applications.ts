@@ -53,73 +53,80 @@ _We want to build a complete skatepark for our community_
 **3.** Buy 5 rails - Budget: 5k
             `,
           },
-
         }),
       }),
     },
     {
-      id: 'background',
+      id: 'contactInfo',
       icon: 'i-lucide-book-text',
       // labelKey: 'form.application.background',
       schema: z.object({
-        background: z.string().meta({
-          // title is translated to "label"
-          // and the `<formId>.<stepId>.label` is the default key, so no need to fill it like this:
-          // title: 'form.application.background.label', // as this is the default.
+        fullName: z.string(),
+        email: z.email(),
+        phone: z.string().optional(),
+      }),
+    },
+    {
+      id: 'organizationInfo',
+      schema: z.object({
+        organizationName: z.string(),
+        organizationNumber: z.string(),
+        organizationAddress: z.string(),
+        accountableParties: z.string().meta({
           type: 'textarea',
         }),
-        purpose: z.string().meta({
+        organizationEmail: z.email(),
+        organizationPhone: z.string().optional(),
+      }),
+    },
+    {
+      id: 'organizationAbout',
+      schema: z.object({
+        organizationAbout: z.string().meta({
+          type: 'textarea',
+        }),
+        organizationWebsite: z.string().optional(),
+        organizationFacebook: z.string().optional(),
+        organizationInstagram: z.string().optional(),
+        organizationTikTok: z.string().optional(),
+        organizationYoutube: z.string().optional(),
+        organizationLinkedIn: z.string().optional(),
+      }),
+    },
+    {
+      id: 'financialInfo',
+      schema: z.object({
+        bankName: z.string(),
+        regNr: z.string(),
+        accountNumber: z.string(),
+        annualBudget: z.number(),
+        ownContribution: z.number(),
+        paidStaffAmount: z.number(),
+        financialPatrons: z.string().meta({
           type: 'textarea',
         }),
       }),
     },
     {
-      id: 'project',
+      id: 'branding',
       schema: z.object({
-        participants: z.coerce.number().meta({
-          title: 'form.application.participants',
+        // logo: z.file().optional().meta({
+        //   type: 'file',
+        //   multiple: 'false',
+        //   mode: 'slim',
+        // }),
+        relevantImages: z.array(z.file()).meta({
+          type: 'file',
+          multiple: true,
         }),
-        when: z.date().or(z.string()),
-        isSupportedByOthers: z.coerce.boolean().default(false),
-        supportedByOthers: z.string().optional(),
-      }),
-    },
-    {
-      id: 'budget',
-      schema: z.object({
-        totalBudget: z.coerce.number(),
-        fundsUsage: z.string(),
-        ownDeductible: z.string(),
-        profit: z.coerce.number().optional(),
-        profitPurpose: z.string(),
-      }),
-    },
-    {
-      id: 'legal',
-      schema: z.object({
-        projectName: z.string(),
-        projectResponsible: z.string(),
-        cvrCpr: z.string(),
-      }),
-    },
-    {
-      id: 'info',
-      schema: z.object({
-        websiteSoMe: z.string(),
-        paymentDetails: z.string(),
-      }),
-    },
-    {
-      id: 'attachments',
-      labelKey: 'form.application.attachments.label',
-      schema: z.object({
-        attachments: z.array(z.instanceof(File))
+        threeLineOrgPitch: z.string().meta({
+          type: 'textarea',
+        }),
+        otherMedia: z.array(z.instanceof(File))
           .optional()
           .meta({
-            title: 'Files',
             type: 'file',
             multiple: true,
-            description: 'Add any attachments you might want to add',
           }),
         acceptTerms,
       }),
