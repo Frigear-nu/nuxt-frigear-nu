@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@pinia/colada-nuxt',
     'nuxt-component-meta',
+    '@nuxt/test-utils/module',
   ],
   $production: {
     nitro: {
