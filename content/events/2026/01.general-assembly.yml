@@ -5,7 +5,9 @@ end: 2026-03-15 23:59
 address:
   value: Kongens gade 123, 45. sal
   link: https://goo.gl/maps/1234567890123456
-image: /images/volunteers/fgr/info-hero-desktop-1200x400.png
+image:
+  src: /images/volunteers/fgr/info-hero-desktop-1200x400.png
+  alt: Frigear volunteers
 name:
   da: Generalforsamling 2026
   en: General Assembly 2026
