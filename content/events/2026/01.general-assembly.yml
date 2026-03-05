@@ -5,7 +5,9 @@ end: 2026-03-15 23:59
 address:
   value: Kongens gade 123, 45. sal
   link: https://goo.gl/maps/1234567890123456
-image: /images/volunteers/fgr/info-hero-desktop-1200x400.png
+image:
+  src: /images/volunteers/fgr/info-hero-desktop-1200x400.png
+  alt: Frigear volunteers
 name:
   da: Generalforsamling 2026
   en: General Assembly 2026
@@ -90,10 +92,10 @@ tickets:
   # We cna have a free ticket, (arbitrary how many type you want to add.)
   default:
     name:
-      da: Adgang
+      da: Tilmelding
       en: Admission
     description:
-      da: "[{{ticket}} billett]{.text-primary}"
+      da: "[{{ticket}}s billet]{.text-primary}"
       en: "[{{ticket}} ticket]{.text-primary}."
     price: 0
     hidePrice: true
@@ -108,13 +110,15 @@ tickets:
         - id: ${carnivore_stripe_id}
           label: Carnivore
           description:
-            da: Dansk Carnivore beskrivelse
-            en: English Carnivor description
+            da: Mad & drikke under mødet
+            en: Food & drinks during assembly
           price: 52.66
           currency: DKK
         - id: ${vegetarian_stripe_id}
           label: Vegan
-          description: Vegan description
+          description:
+            da: Mad & drikke under mødet
+            en: Food & drinks during assembly
           price: 52.67
           currency: DKK
         - id: none
