@@ -16,7 +16,7 @@ Frigear branding kit, PR og SoMe information.
   ---
   color: primary
   size: xl
-  to: /projects
+  to: /en/projects
   icon: i-lucide-music
   variant: subtle
   class: min-w-48
@@ -27,7 +27,7 @@ Frigear branding kit, PR og SoMe information.
   ---
   color: secondary
   size: xl
-  to: /teams
+  to: /en/teams
   trailingIcon: i-lucide-users
   variant: subtle
   class: min-w-48 
