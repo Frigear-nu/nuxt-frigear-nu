@@ -11,8 +11,27 @@ resubmittable:
     title: You started over!
     description: You can continue, we saved some of the details from earlier.
   fields:
-    - background.background
-    - background.purpose
+    - contactInfo.fullName
+    - contactInfo.email
+    - contactInfo.phone
+    - organizationInfo.organizationName
+    - organizationInfo.organizationNumber
+    - organizationInfo.organizationAddress
+    - organizationInfo.accountableParties
+    - organizationInfo.organizationEmail
+    - organizationInfo.organizationPhone
+    - organizationAbout.organizationAbout
+    - organizationAbout.organizationWebsite
+    - organizationAbout.organizationFacebook
+    - organizationAbout.organizationInstagram
+    - organizationAbout.organizationTikTok
+    - organizationAbout.organizationYoutube
+    - organizationAbout.organizationLinkedIn
+    - financialInfo.bankName
+    - financialInfo.regNr
+    - financialInfo.accountNumber
+    - financialInfo.financialPatrons
+    - branding.logo
 # In the future we could define forms a bit like this
 #form:
 #  steps:
