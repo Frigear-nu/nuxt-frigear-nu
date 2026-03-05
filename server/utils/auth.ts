@@ -1,5 +1,5 @@
 import { createId } from '@paralleldrive/cuid2'
-import { type H3Event, getQuery, getHeader } from 'h3'
+import type { H3Event } from 'h3'
 import type { ExtendableJwtPayload } from '@nitrotool/jwt/core'
 import { ServerError, UnauthenticatedError } from '@nitrotool/errors'
 import { addMinutes } from 'date-fns'
