@@ -22,6 +22,13 @@ export const ContentStepSchema = z.object({
   id: z.string(),
   icon: z.string().optional(),
   fields: z.array(ContentFieldSchema),
+  info: z.union([
+    z.string(),
+    z.object({
+      content: z.string(),
+      icon: z.string().optional(),
+    }),
+  ]),
   // Optional: explicit JSON Schema override for a step
   schema: z.record(z.string(), z.any()).optional(),
 })
@@ -57,6 +64,18 @@ export const CollectionFormSchema = z.object({
       headers: z.record(z.string(), z.string()).optional(),
     }),
   ])),
+  resubmittable: z.union([
+    z.boolean(),
+    z.object({
+      start: z.string().optional(),
+      fields: z.array(z.string()),
+      alert: z.object({
+        title: z.string(),
+        description: z.string(),
+        color: z.enum(['success', 'warning', 'info', 'error', 'primary', 'secondary']).optional(),
+      }).optional(),
+    }),
+  ]).optional(),
 })
 
 export type CollectionForm = z.infer<typeof CollectionFormSchema>

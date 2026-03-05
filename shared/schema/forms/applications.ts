@@ -118,23 +118,38 @@ export const testApplicationForm = defineSteppedForm({
   id: 'test',
   steps: [
     {
+      id: 'first',
+      icon: 'i-lucide-book-text',
+      labelKey: '**HELLO**',
+      info: {
+        icon: 'i-lucide-book-text',
+        content: 'This is the [MARKDOWN]{.text-primary} description of this step!',
+      },
+      schema: z.object({
+        other: z.string().meta({
+          title: 'form.application.background',
+          type: 'textarea',
+          placeholder: 'enter some text',
+        }),
+      }),
+    },
+    {
       id: 'background',
       icon: 'i-lucide-book-text',
       labelKey: '**HELLO**',
+      info: 'TEst info detail no custom icon',
       schema: z.object({
         background: z.string().meta({
           title: 'form.application.background',
           type: 'textarea',
           placeholder: 'enter some text',
         }),
-        attachments: z.array(z.instanceof(File))
-          .optional()
-          .meta({
-            title: 'Files',
-            type: 'file',
-            multiple: true,
-            description: 'Add any attachments you might want to add',
-          }),
+      }),
+    },
+    {
+      id: 'finish',
+      labelKey: 'FINISHED',
+      schema: z.object({
         acceptTerms,
       }),
     },
