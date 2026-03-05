@@ -58,7 +58,7 @@ _We want to build a complete skatepark for our community_
     {
       id: 'contactInfo',
       icon: 'i-lucide-book-text',
-      // labelKey: 'form.application.background',
+      labelKey: 'form.application.contactInfo.label',
       hint: {
         en: 'This step is for personal details about the person submitting the form.',
       },
@@ -112,10 +112,12 @@ _We want to build a complete skatepark for our community_
     {
       id: 'branding',
       schema: z.object({
-        logo: z.file().optional().meta({
+        logo: z.array(z.file()).meta({
           type: 'file',
-          multiple: 'false',
-          mode: 'slim',
+          multiple: true,
+          // TODO: Make single file input work in a "slim" variant
+          // variant: 'slim',
+          // multiple: false,
         }),
         relevantImages: z.array(z.file()).meta({
           type: 'file',
