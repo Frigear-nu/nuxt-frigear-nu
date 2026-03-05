@@ -31,12 +31,13 @@ function unwrapSchema(schema: ZodType): { schema: ZodType, isArray: boolean } {
 }
 
 const TYPENAME_MAP: Partial<Record<string, FormFieldDef['type']>> = {
-  string: 'text',
-  number: 'number',
-  boolean: 'checkbox',
-  date: 'date',
-  enum: 'select',
-  file: 'file',
+  'string': 'text',
+  'number': 'number',
+  'boolean': 'checkbox',
+  'date': 'date',
+  'enum': 'select',
+  'file': 'file',
+  'markdown-value': 'markdown-value',
 }
 
 export function deriveFieldsFromSchema(schema: ZodType): FormFieldDef[] {

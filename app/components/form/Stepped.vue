@@ -13,6 +13,7 @@ const emit = defineEmits<{
 
 const formEl = useTemplateRef('formEl')
 const stepped = useSteppedForm(props.form)
+const { translatedProperty } = useContent()
 const onSubmit = stepped.createSubmitHandler(data => emit('submit', data))
 
 const currentFields = computed(() => {
@@ -33,6 +34,20 @@ const submit = () => {
 //   return errors
 // }
 
+const stepInformation = computed(() => {
+  console.log(stepped.currentStep.value)
+  if (!stepped.currentStep?.value?.hint) return undefined
+
+  const isContentObject = typeof stepped.currentStep.value.hint === 'object' && ('content' in stepped.currentStep.value.hint)
+
+  return {
+    content: !isContentObject
+      ? stepped.currentStep.value.hint
+      : stepped.currentStep.value.hint.content,
+    icon: stepped.currentStep.value?.hint?.icon || 'i-lucide-info',
+  }
+})
+
 defineExpose({
   stepped,
   form: formEl,
@@ -52,23 +67,23 @@ defineExpose({
         />
       </h1>
       <UModal
-        v-if="stepped.currentStep.value?.info"
-        title="Info"
+        v-if="stepInformation"
+        :title="$t('common.information')"
         :ui="{ footer: 'justify-end' }"
       >
         <UButton
-          :icon="stepped.currentStep.value?.info?.icon || 'i-lucide-info'"
+          :icon="stepInformation.icon"
           variant="ghost"
         />
         <template #body>
           <MDC
-            :value="typeof stepped.currentStep.value?.info === 'string' ? stepped.currentStep.value.info : stepped.currentStep.value.info.content"
+            :value="translatedProperty(stepInformation.content)"
             unwrap
           />
         </template>
         <template #footer="{ close }">
           <UButton
-            label="Close"
+            :label="$t('common.close')"
             @click="close"
           />
         </template>

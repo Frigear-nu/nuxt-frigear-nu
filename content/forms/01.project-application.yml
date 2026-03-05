@@ -6,7 +6,7 @@ delivery:
     destination: ["${contact.default}"]
 # Resubmittable means you can start over at the end, possibly with carry-over details.
 resubmittable:
-  start: background
+  start: contactInfo
   alert:
     title: You started over!
     description: You can continue, we saved some of the details from earlier.

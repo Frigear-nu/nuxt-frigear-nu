@@ -15,12 +15,25 @@ const emit = defineEmits<{
   'update:state': [name: string, value: unknown]
 }>()
 
-const { t } = useSiteI18n()
+const { t, locale } = useSiteI18n()
+const { translatedProperty } = useContent()
 
 const model = computed({
   get: () => props.state[props.field.name],
   set: (val: unknown) => emit('update:state', props.field.name, val),
 })
+
+const asMarkdownValue = computed(() => {
+  return props.field.type === 'markdown-value'
+    ? props.field
+    : null
+})
+
+const { data: parsedMarkdown } = await useAsyncData(
+  () => `forms:${locale.value}:${props.i18nPrefix}${props.field.name}:mdc`,
+  async () => props.field.meta.content ? await parseMarkdown(translatedProperty(props.field.meta.content)) : undefined,
+  { watch: [() => props.field.name] },
+)
 
 // Narrow helpers for typed template access
 const asSelect = computed(() =>
@@ -93,14 +106,14 @@ const translated = (property: string) => {
   return undefined
 }
 
+const hiddenFormFieldTypes: FormFieldDef['type'][] = ['checkbox', 'markdown-value']
 const formFieldProps = computed(() => {
-  const withLabel = props.field.type !== 'checkbox'
-  const withDescription = props.field.type !== 'checkbox'
+  const withLabel = !hiddenFormFieldTypes.includes(props.field.type)
+  const withDescription = !hiddenFormFieldTypes.includes(props.field.type)
 
   const label = withLabel ? translated('label') : undefined
   const description = withDescription ? translated('description') : undefined
   return {
-    _name: props.field.name,
     label,
     description,
     required: props.field.required,
@@ -108,20 +121,17 @@ const formFieldProps = computed(() => {
 })
 
 const fieldProps = computed(() => {
-  const isCheckbox = props.field.type === 'checkbox'
+  const isHiddenFormField = hiddenFormFieldTypes.includes(props.field.type)
   const withPlaceholder
-    = !isCheckbox
+    = !isHiddenFormField
       && !toValue(asRadio)
       && !toValue(asDate)
       && !toValue(asFile)
 
-  const withLabel = props.field.type === 'checkbox'
-  const withDescription = props.field.type === 'checkbox'
   return {
-    _name: props.field.name,
     placeholder: withPlaceholder ? translated('placeholder') : undefined,
-    label: withLabel ? translated('label') : undefined,
-    description: withDescription ? translated('description') : undefined,
+    label: !isHiddenFormField ? translated('label') : undefined,
+    description: !isHiddenFormField ? translated('description') : undefined,
   }
 })
 </script>
@@ -132,8 +142,14 @@ const fieldProps = computed(() => {
     :name="field.name"
     v-bind="formFieldProps"
   >
+    <div v-if="asMarkdownValue && parsedMarkdown">
+      <ContentRenderer
+        :value="parsedMarkdown"
+        unwrap="div"
+      />
+    </div>
     <UInput
-      v-if="field.type === 'text' || field.type === 'email' || field.type === 'password'"
+      v-else-if="field.type === 'text' || field.type === 'email' || field.type === 'password'"
       v-model="model"
       :type="field.type"
       v-bind="fieldProps"

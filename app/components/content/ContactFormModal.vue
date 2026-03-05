@@ -22,6 +22,7 @@ const buttonProps = computed<ButtonProps>(() => {
     return {
       icon: 'i-lucide-mail',
       label: props.label || t('contact.modal.button'),
+      class: 'w-full',
     }
   }
 

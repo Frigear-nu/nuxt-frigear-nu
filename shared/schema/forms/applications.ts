@@ -12,68 +12,123 @@ export const projectApplicationForm = defineSteppedForm({
   id: 'application',
   steps: [
     {
-      id: 'background',
-      icon: 'i-lucide-book-text',
-      // labelKey: 'form.application.background',
-      schema: z.object({
-        background: z.string().meta({
-          // title is translated to "label"
-          // and the `<formId>.<stepId>.label` is the default key, so no need to fill it like this:
-          // title: 'form.application.background.label', // as this is the default.
-          type: 'textarea',
-        }),
-        purpose: z.string().meta({
-          type: 'textarea',
-        }),
-      }),
-    },
-    {
-      id: 'project',
-      schema: z.object({
-        participants: z.coerce.number().meta({
-          title: 'form.application.participants',
-        }),
-        when: z.date().or(z.string()),
-        isSupportedByOthers: z.coerce.boolean().default(false),
-        supportedByOthers: z.string().optional(),
-      }),
-    },
-    {
-      id: 'budget',
-      schema: z.object({
-        totalBudget: z.coerce.number(),
-        fundsUsage: z.string(),
-        ownDeductible: z.string(),
-        profit: z.coerce.number().optional(),
-        profitPurpose: z.string(),
-      }),
-    },
-    {
-      id: 'legal',
-      schema: z.object({
-        projectName: z.string(),
-        projectResponsible: z.string(),
-        cvrCpr: z.string(),
-      }),
-    },
-    {
       id: 'info',
       schema: z.object({
-        websiteSoMe: z.string(),
-        paymentDetails: z.string(),
+        description: z.string().optional().meta({
+          type: 'markdown-value',
+          content: {
+            da: 'Switch to english to see content...',
+            en: `
+
+::h2{.mt-0}
+ℹ️ Single budget projects
+::
+
+
+Just run through the form and fill in the required fields, -sit back and relax . . .
+
+## ℹ️ Multi budget projects
+
+If your project has multiple parts that can be supported, with different budgets to get it flying, -you can run through
+the form and submit the information relevant for this specifically, and at the end you will have the option to apply
+again for another budget under same project.
+
+💡
+
+_We want to build a complete skatepark for our community_
+
+*** Different budgets for the same endgoal:
+
+**_First Application_**
+
+**1.** Full skatepark - Budget: 350k
+
+**_Another Application_**
+
+**2.** One halfpipe ramp - Budget: 25k
+
+**_Yet Another Application_**
+
+**3.** Buy 5 rails - Budget: 5k
+            `,
+          },
+        }),
       }),
     },
     {
-      id: 'attachments',
-      labelKey: 'form.application.attachments.label',
+      id: 'contactInfo',
+      icon: 'i-lucide-book-text',
+      // labelKey: 'form.application.background',
+      hint: {
+        en: 'This step is for personal details about the person submitting the form.',
+      },
       schema: z.object({
-        attachments: z.array(z.instanceof(File))
+        fullName: z.string(),
+        email: z.email(),
+        phone: z.string().optional(),
+      }),
+    },
+    {
+      id: 'organizationInfo',
+      schema: z.object({
+        organizationName: z.string(),
+        organizationNumber: z.string(),
+        organizationAddress: z.string(),
+        accountableParties: z.string().meta({
+          type: 'textarea',
+        }),
+        organizationEmail: z.email(),
+        organizationPhone: z.string().optional(),
+      }),
+    },
+    {
+      id: 'organizationAbout',
+      schema: z.object({
+        organizationAbout: z.string().meta({
+          type: 'textarea',
+        }),
+        organizationWebsite: z.string().optional(),
+        organizationFacebook: z.string().optional(),
+        organizationInstagram: z.string().optional(),
+        organizationTikTok: z.string().optional(),
+        organizationYoutube: z.string().optional(),
+        organizationLinkedIn: z.string().optional(),
+      }),
+    },
+    {
+      id: 'financialInfo',
+      schema: z.object({
+        bankName: z.string(),
+        regNr: z.string(),
+        accountNumber: z.string(),
+        annualBudget: z.number(),
+        ownContribution: z.number(),
+        paidStaffAmount: z.number(),
+        financialPatrons: z.string().meta({
+          type: 'textarea',
+        }),
+      }),
+    },
+    {
+      id: 'branding',
+      schema: z.object({
+        logo: z.file().optional().meta({
+          type: 'file',
+          multiple: 'false',
+          mode: 'slim',
+        }),
+        relevantImages: z.array(z.file()).meta({
+          type: 'file',
+          multiple: true,
+        }),
+        threeLineOrgPitch: z.string().meta({
+          type: 'textarea',
+        }),
+        otherMedia: z.array(z.instanceof(File))
           .optional()
           .meta({
-            title: 'Files',
             type: 'file',
             multiple: true,
-            description: 'Add any attachments you might want to add',
           }),
         acceptTerms,
       }),

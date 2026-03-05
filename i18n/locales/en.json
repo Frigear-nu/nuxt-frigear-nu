@@ -1,8 +1,10 @@
 {
   "common": {
-    "or": "Or"
+    "or": "Or",
+    "close": "Close",
+    "information": "Information"
   },
-  "dateTime":{
+  "dateTime": {
     "format": "MMM d, yyyy, h:mm aaa"
   },
   "auth": {
@@ -188,7 +190,7 @@
         "title": "Tickets",
         "free": "Free",
         "view": "Show tickets",
-        "ticket":{
+        "ticket": {
           "label": "Ticket"
         },
         "products": {
@@ -209,6 +211,100 @@
             "title": "Payment canceled!",
             "description": "Your payment was canceled. You can try again."
           }
+        }
+      }
+    }
+  },
+  "form": {
+    "application": {
+      "title": "Funding Application",
+      "description": "Request funding for your projects.",
+      "contactInfo": {
+        "fullName": {
+          "label": "Full name"
+        },
+        "email": {
+          "label": "E-mail"
+        },
+        "phone": {
+          "label": "Phone"
+        }
+      },
+      "organizationInfo": {
+        "organizationName": {
+          "label": "Organization name"
+        },
+        "organizationNumber": {
+          "label": "Organization number"
+        },
+        "organizationAddress": {
+          "label": "Organization address"
+        },
+        "accountableParties": {
+          "label": "Accountable parties"
+        },
+        "organizationEmail": {
+          "label": "E-mail"
+        },
+        "organizationPhone": {
+          "label": "Phone"
+        }
+      },
+      "organizationAbout": {
+        "organizationAbout": {
+          "label": "About organization"
+        },
+        "organizationWebsite": {
+          "label": "Website"
+        },
+        "organizationFacebook": {
+          "label": "Facebook"
+        },
+        "organizationInstagram": {
+          "label": "Instagram"
+        },
+        "organizationTikTok": {
+          "label": "TikTok"
+        },
+        "organizationYoutube": {
+          "label": "Youtube"
+        },
+        "organizationLinkedIn": {
+          "label": "LinkedIn"
+        }
+      },
+      "financialInfo": {
+        "bankName": {
+          "label": "Bank name"
+        },
+        "regNr": {
+          "label": "Reg. Nr."
+        },
+        "accountNumber": {
+          "label": "Account number"
+        },
+        "annualBudget": {
+          "label": "Annual budget"
+        },
+        "ownContribution": {
+          "label": "Own contribution"
+        },
+        "paidStaffAmount": {
+          "label": "Paid staff amount"
+        },
+        "financialPatrons": {
+          "label": "Financial patrons"
+        }
+      },
+      "branding": {
+        "relevantImages": {
+          "label": "Relevant images"
+        },
+        "threeLineOrgPitch": {
+          "label": "3-line organization pitch"
+        },
+        "otherMedia": {
+          "label": "Other media"
         }
       }
     }
