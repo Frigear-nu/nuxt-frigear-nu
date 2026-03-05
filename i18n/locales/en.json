@@ -220,6 +220,7 @@
       "title": "Funding Application",
       "description": "Request funding for your projects.",
       "contactInfo": {
+        "label": "Contact info",
         "fullName": {
           "label": "Full name"
         },
@@ -297,6 +298,9 @@
         }
       },
       "branding": {
+        "logo": {
+          "label": "Logo"
+        },
         "relevantImages": {
           "label": "Relevant images"
         },
