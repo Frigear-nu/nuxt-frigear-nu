@@ -1,7 +1,7 @@
 import type { ZodType } from 'zod/v4'
 import type { SelectItem, RadioGroupItem, InputMenuItem } from '@nuxt/ui'
 
-type TranslationValue = string | Record<string, string>
+type TranslationValue = string | Record<'da' | 'en', string>
 
 type BaseField = {
   name: string
@@ -10,10 +10,16 @@ type BaseField = {
   placeholder?: string
   required?: boolean
   disabled?: boolean
+  meta?: {
+    [key: string]: TranslationValue | undefined
+    hint?: TranslationValue
+  }
 }
 export type MarkdownValueField = BaseField & {
   type: 'markdown-value'
-  content: string | Record<'da' | 'en', string>
+  meta?: {
+    content: TranslationValue
+  }
 }
 
 export type TextField = BaseField & {
@@ -52,8 +58,10 @@ export type DateField = BaseField & {
 
 export type FileField = BaseField & {
   type: 'file'
-  accept?: string
-  multiple?: boolean
+  meta?: {
+    accept?: string
+    multiple?: boolean
+  }
 }
 
 export type FormFieldDef
