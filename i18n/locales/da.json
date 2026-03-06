@@ -48,15 +48,25 @@
       "link": "Magic Link"
     },
     "resetPassword": {
-      "title": "Endre kodeord",
+      "title": "Nulstil kodeord",
       "new": {
         "label": "Nytt kodeord"
       },
       "current": {
         "label": "Nuværende kodeord"
+      }
+    },
+    "changePassword": {
+      "title": "Endre kodeord",
+      "submit": "Endre password",
+      "new": {
+        "label": "Nytt kodeord"
       },
       "confirm": {
         "label": "Bekræft nytt kodeord"
+      },
+      "current": {
+        "label": "Nuværende kodeord"
       }
     }
   },
