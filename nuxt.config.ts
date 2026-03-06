@@ -97,6 +97,7 @@ export default defineNuxtConfig({
     '/sign-in': { prerender: false },
     '/account': { prerender: false },
     '/account/**': { prerender: false },
+    '/admin/**': { prerender: false },
     // Static Redirects
     '/sign-up': { redirect: { to: '/sign-in?mode=up' } },
     // Temporary Redirects: should be removed in 2027 possibly.
