@@ -1,7 +1,7 @@
 left:
   - "&copy; 2023 - {fullYear} ★ **[FRIGEAR]{.text-primary}** ★ CVR-nr: 44353261"
 sections:
-  - label: Navigation
+  - label: Navigasjon
     children:
       - label: Hjem
         to: /
@@ -9,45 +9,31 @@ sections:
         to: /membership
       - label: Events
         to: /events
-  - label: Useful links
+  - label: Nyttige links
     children:
       - label: Konto
         to: /account
       - label: Om Frigear
         to: /info
-      - label: SUPPORT
+      - label: Support
         to: /#contact
+  - label: Andet
+    children:
+      - label: Støtte
+        to: /funding
+      - label: Styremedlem
+        to: /board
+      - label: Branding
+        to: /branding
   - label: Legal
     children:
       - label: GDPR
         to: /legal/gdpr
-      - label: BETINGELSER
+      - label: Betingelser
         to: /legal/terms
-      - label: SIKKERHED
+      - label: Sikkerhed
         to: /legal/security
 right:
-right:
-  - label: INFO
-    variant: link
-    to: /info
-  - label: STØTTE
-    variant: link
-    to: /funding
-  - label: SUPPORT
-    variant: link
-    to: /#contact
-  - label: GDPR
-    variant: link
-    to: /legal/gdpr
-  - label: BETINGELSER
-    variant: link
-    to: /legal/terms
-  - label: SIKKERHED
-    variant: link
-    to: /legal/security
-  - label: BRANDING
-    variant: link
-    to: /branding
   - icon: i-simple-icons-github
     target: _BLANK
     rel: "noopener noreferrer"
