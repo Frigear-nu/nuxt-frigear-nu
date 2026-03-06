@@ -10,18 +10,19 @@ seo:
 ---
 orientation: horizontal
 ---
-:nuxt-img{.rounded-full.p-4.dark:bg-neutral-800.bg-neutral-200.w-fit.md:max-w-full.mx-auto :height='250' :width='250' alt="Frigear logo" format="webp" quality="70" src="/logo-with-rf-bg.jpg"}
+:nuxt-img{.rounded-full.p-4.dark:bg-neutral-800.bg-neutral-200.w-fit.md:max-w-full.mx-auto :height='320' :width='320' alt="Frigear logo" format="webp" quality="70" src="/logo-with-rf-bg.jpg"}
 
 #title
 [{{ $doc.title }}]{.fancy-text}
 
   :::typewriter-effect
-  Non-profit
-  Frivillig
-  Fond
-  Forening
-  Projecter
-  Er du med?
+  Nonprofit
+  Frivilligdrevet
+  Projekstøtte
+  Frivillig Forening
+  Projekafvikling
+  Almennyttigt
+  Skal du med?
   Bliv frivillig nu!
   :::
 
