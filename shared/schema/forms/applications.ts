@@ -63,8 +63,15 @@ If your project has multiple parts that can be supported, with different budgets
         en: 'This step is for personal details about the person submitting the form.',
       },
       schema: z.object({
-        fullName: z.string(),
-        email: z.email(),
+        fullName: z.string().meta({
+          hint: 'This is without translation hint!',
+        }),
+        email: z.email().meta({
+          hint: {
+            en: 'English hint text',
+            da: 'Danish hint text',
+          },
+        }),
         phone: z.string().optional(),
       }),
     },
