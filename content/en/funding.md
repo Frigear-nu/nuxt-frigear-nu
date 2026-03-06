@@ -215,7 +215,7 @@ bottomCards:
   color: secondary
   icon: i-lucide-form
   size: xl
-  to: /en/funding/#good-to-know
+  to: /en/funding#good-to-know
   trailingIcon: i-lucide-arrow-down-from-line
   variant: subtle
   ---
