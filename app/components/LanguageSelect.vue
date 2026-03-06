@@ -79,11 +79,11 @@ function getFlagUrl(locale: string): string {
               <span class="text-sm">
                 {{ localeItem.name }}
               </span>
-              <NuxtImg
+              <img
                 :src="getFlagUrl(localeItem.code)"
                 :alt="localeItem.name"
                 class="w-5 h-4 object-cover rounded-sm"
-              />
+              >
             </NuxtLink>
           </li>
         </ul>
