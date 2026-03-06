@@ -224,7 +224,7 @@ bottomCards:
 
 :nuxt-img{.mt-12.rounded-xl.hidden.md:block :height='600' :width='1200' alt="Frigear volunteers at Roskilde Festival" src="/images/volunteers/fgr/funding-hero-rf-x-50-1200x900.png"}
 
-:nuxt-img{.mt-4.rounded-xl.block.md:hidden :height='500' :width='640' alt="Frigear volunteers at Roskilde Festival" src="/images/volunteers/fgr/funding-hero-mobile-rf-x-50-1200x900.png"}
+:nuxt-img{.mt-4.rounded-xl.block.md:hidden :height='500' :width='640' alt="Frigear volunteers at Roskilde Festival" src="/images/volunteers/fgr/funding-hero-mobile-rf-x-50-500x600.png"}
 ::
 
 ::card{.shadow-2xl}
