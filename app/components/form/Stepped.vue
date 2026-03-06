@@ -56,7 +56,7 @@ defineExpose({
 
 <template>
   <div class="flex flex-col gap-6">
-    <div class="flex justify-between">
+    <div class="flex">
       <h1
         v-if="stepped.currentStep.value?.labelKey"
         class="text-lg"
@@ -71,10 +71,15 @@ defineExpose({
         :title="$t('common.information')"
         :ui="{ footer: 'justify-end' }"
       >
-        <UButton
-          :icon="stepInformation.icon"
-          variant="ghost"
-        />
+        <UTooltip text="See help information about this step.">
+          <sup>
+            <UButton
+              :icon="stepInformation.icon"
+              variant="link"
+              color="neutral"
+            />
+          </sup>
+        </UTooltip>
         <template #body>
           <MDC
             :value="translatedProperty(stepInformation.content)"
