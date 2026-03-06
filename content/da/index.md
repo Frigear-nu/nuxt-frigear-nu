@@ -19,11 +19,11 @@ orientation: horizontal
   Nonprofit
   Frivilligdrevet
   Projekstøtte
-  Frivillig Forening
-  Projekafvikling
+  Frivilligforening
+  Projektafvikling
   Almennyttigt
   Skal du med?
-  Bliv frivillig nu!
+  Bliv frivillig!
   :::
 
 #links
