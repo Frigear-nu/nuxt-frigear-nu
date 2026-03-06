@@ -22,7 +22,7 @@ watch(user, () => {
       <UColorModeImage
         light="/logo.png"
         dark="/logo-dark.png"
-        class="size-24"
+        class="w-24"
       />
     </NuxtLink>
 
