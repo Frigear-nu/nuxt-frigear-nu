@@ -1,30 +1,41 @@
 left:
   - "&copy; 2023 - {fullYear} ★ **[FRIGEAR]{.text-primary}** ★ CVR-nr: 44353261"
+sections:
+  - label: Navigation
+    children:
+      - label: Home
+        to: /en
+      - label: Membership
+        to: /en/membership
+      - label: Events
+        to: /en/events
+  - label: Useful links
+    children:
+      - label: Account
+        to: /en/account
+      - label: About Frigear
+        to: /en/info
+      - label: Support
+        to: /en#contact
+  - label: Other
+    children:
+      - label: Funding
+        to: /en/funding
+      - label: Board application
+        to: /en/board
+      - label: Branding
+        to: /en/branding
+  - label: Legal
+    children:
+      - label: GDPR
+        to: /en/legal/gdpr
+      - label: Terms
+        to: /en/legal/terms
+      - label: Security
+        to: /en/legal/security
 right:
-  - label: INFO
-    variant: link
-    to: /en/info
-  - label: FUNDING
-    variant: link
-    to: /en/funding
-  - label: SUPPORT
-    variant: link
-    to: /en#contact
-  - label: GDPR
-    variant: link
-    to: /en/legal/gdpr
-  - label: TERMS
-    variant: link
-    to: /en/legal/terms
-  - label: SECURITY
-    variant: link
-    to: /en/legal/security
-  - label: BRANDING
-    variant: link
-    to: /en/branding
   - icon: i-simple-icons-github
     target: _BLANK
     rel: "noopener noreferrer"
     to: https://github.com/frigear-nu/nuxt-frigear-nu
-sections: []
 socials: []
