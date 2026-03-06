@@ -141,7 +141,35 @@ const fieldProps = computed(() => {
     :key="field.name"
     :name="field.name"
     v-bind="formFieldProps"
+    :ui="{ hint: 'flex flex-row' }"
   >
+    <template
+      v-if="field.meta.hint"
+      #hint
+    >
+      <UModal
+        :title="$t('common.information')"
+        :ui="{ footer: 'justify-end' }"
+      >
+        <UTooltip :text="translatedProperty(field.meta.hint)">
+          <UButton
+            size="sm"
+            icon="i-lucide-info"
+            variant="link"
+            color="neutral"
+          />
+        </UTooltip>
+        <template #body>
+          {{ translatedProperty(field.meta.hint) }}
+        </template>
+        <template #footer="{ close }">
+          <UButton
+            :label="$t('common.close')"
+            @click="close"
+          />
+        </template>
+      </UModal>
+    </template>
     <div v-if="asMarkdownValue && parsedMarkdown">
       <ContentRenderer
         :value="parsedMarkdown"

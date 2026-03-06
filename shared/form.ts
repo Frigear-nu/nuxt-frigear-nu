@@ -8,24 +8,40 @@ export function defineSteppedForm<const TSteps extends FormStep[]>(
 ) {
   return form as SteppedForm<TSteps>
 }
+function isSchemaOptional(schema: ZodType): boolean {
+  if (schema instanceof z.ZodOptional || schema instanceof z.ZodNullable) {
+    return true
+  }
+  if (schema instanceof z.ZodDefault) {
+    return true
+  }
+  if (schema instanceof z.ZodPipe) {
+    return isSchemaOptional(schema._zod.def.in)
+  }
+  return false
+}
+
 function unwrapSchema(schema: ZodType): { schema: ZodType, isArray: boolean } {
+  // Strip optionality/nullability wrappers
   if (schema instanceof z.ZodOptional || schema instanceof z.ZodNullable) {
     return unwrapSchema(schema.unwrap())
   }
+  // Strip defaults — field can be omitted, so walk the inner type
   if (schema instanceof z.ZodDefault) {
-    return unwrapSchema(schema._def.innerType)
+    return unwrapSchema(schema._zod.def.innerType)
   }
+  // Unwrap arrays, recursing into the element type
   if (schema instanceof z.ZodArray) {
     const { schema: inner } = unwrapSchema(schema.element)
     return { schema: inner, isArray: true }
   }
-  // Take the first union member as the representative type
+  // Take the first union member as representative
   if (schema instanceof z.ZodUnion) {
-    return unwrapSchema(schema._def.options[0])
+    return unwrapSchema(schema._zod.def.options[0])
   }
-  // z.coerce.number() / z.coerce.boolean() etc. wrap in ZodPipe
+  // ZodPipe: z.coerce.number() etc. — the meaningful type is on the *out* side
   if (schema instanceof z.ZodPipe) {
-    return unwrapSchema(schema._def.out)
+    return unwrapSchema(schema._zod.def.out)
   }
   return { schema, isArray: false }
 }
@@ -45,19 +61,21 @@ export function deriveFieldsFromSchema(schema: ZodType): FormFieldDef[] {
 
   return Object.entries(schema.shape).map(([name, fieldSchema]) => {
     const { schema: resolved, isArray } = unwrapSchema(fieldSchema as ZodType)
+    const required = !isSchemaOptional(fieldSchema as ZodType)
 
     const { type, title, description, placeholder, ...meta } = defu(fieldSchema?.meta?.(), resolved.meta?.())
 
     const finalType = fieldSchema.meta()?.type ?? type ?? TYPENAME_MAP[resolved.def.type] ?? resolved.def.type
 
     if (import.meta.dev) {
-      console.log({ name, type: finalType, isArray, title, description, placeholder, meta })
+      console.log({ name, type: finalType, isArray, required, title, description, placeholder, meta })
     }
 
     return {
       name,
       type: finalType as FormFieldDef['type'],
       isArray,
+      required,
       label: title,
       description,
       placeholder: placeholder as string | undefined,
