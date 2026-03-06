@@ -1,5 +1,4 @@
 import { createId } from '@paralleldrive/cuid2'
-import type { Users, MagicLinks } from '@nuxthub/db/schema'
 import type { H3Event } from 'h3'
 import type { ExtendableJwtPayload } from '@nitrotool/jwt/core'
 import { ServerError, UnauthenticatedError } from '@nitrotool/errors'

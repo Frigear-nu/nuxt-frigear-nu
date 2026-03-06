@@ -26,6 +26,28 @@ sections:
       - label: SIKKERHED
         to: /legal/security
 right:
+right:
+  - label: INFO
+    variant: link
+    to: /info
+  - label: STØTTE
+    variant: link
+    to: /funding
+  - label: SUPPORT
+    variant: link
+    to: /#contact
+  - label: GDPR
+    variant: link
+    to: /legal/gdpr
+  - label: BETINGELSER
+    variant: link
+    to: /legal/terms
+  - label: SIKKERHED
+    variant: link
+    to: /legal/security
+  - label: BRANDING
+    variant: link
+    to: /branding
   - icon: i-simple-icons-github
     target: _BLANK
     rel: "noopener noreferrer"

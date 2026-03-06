@@ -1,0 +1,10 @@
+name: "🚀 Feature request"
+description: Suggest a feature that will improve this app
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of what the problem is.
+    validations:
+      required: true

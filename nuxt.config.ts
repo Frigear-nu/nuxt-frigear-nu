@@ -16,6 +16,12 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     '@pinia/nuxt',
     '@pinia/colada-nuxt',
+    ...import.meta.dev
+      ? ['nuxt-component-meta']
+      : [],
+    ...import.meta.test
+      ? ['@nuxt/test-utils/module']
+      : [],
   ],
   $production: {
     nitro: {
@@ -24,6 +30,14 @@ export default defineNuxtConfig({
         '0 */2 * * *': [
           'stripe:sync',
         ],
+      },
+    },
+
+    hub: {
+      blob: {
+        driver: 'cloudflare-r2',
+        bucketName: process.env.HUB_BLOB_BUCKET_NAME || 'blob-frigear-nu',
+        binding: 'BLOB',
       },
     },
     image: {
@@ -83,6 +97,7 @@ export default defineNuxtConfig({
     '/sign-in': { prerender: false },
     '/account': { prerender: false },
     '/account/**': { prerender: false },
+    '/admin/**': { prerender: false },
     // Static Redirects
     '/sign-up': { redirect: { to: '/sign-in?mode=up' } },
     // Temporary Redirects: should be removed in 2027 possibly.
@@ -121,6 +136,7 @@ export default defineNuxtConfig({
       dialect: 'sqlite',
       casing: 'snake_case',
     },
+    blob: true,
   },
   i18n: {
     defaultLocale: 'da',

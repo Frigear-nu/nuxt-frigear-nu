@@ -8,7 +8,9 @@ navigation:
     to: /
   - label: Medlemskab
     to: /membership
+  - label: Projektstøtte
+    to: /funding
+  - label: Foreningen
+    to: /info
   - label: Events
     to: /events
-  - label: Om Frigear
-    to: /info
