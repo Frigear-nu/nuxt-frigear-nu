@@ -31,8 +31,14 @@ const asMarkdownValue = computed(() => {
 
 const { data: parsedMarkdown } = await useAsyncData(
   () => `forms:${locale.value}:${props.i18nPrefix}${props.field.name}:mdc`,
-  async () => props.field.meta.content ? await parseMarkdown(translatedProperty(props.field.meta.content)) : undefined,
-  { watch: [() => props.field.name] },
+  async () => {
+    if (!props.field.meta?.content) return undefined
+    const md = translatedProperty(props.field.meta?.content)
+
+    if (!md) return undefined
+    return await parseMarkdown(md)
+  },
+  { watch: [locale, () => props.field.name] },
 )
 
 // Narrow helpers for typed template access
@@ -111,11 +117,9 @@ const formFieldProps = computed(() => {
   const withLabel = !hiddenFormFieldTypes.includes(props.field.type)
   const withDescription = !hiddenFormFieldTypes.includes(props.field.type)
 
-  const label = withLabel ? translated('label') : undefined
-  const description = withDescription ? translated('description') : undefined
   return {
-    label,
-    description,
+    label: withLabel ? translated('label') : undefined,
+    description: withDescription ? translated('description') : undefined,
     required: props.field.required,
   }
 })
@@ -144,7 +148,7 @@ const fieldProps = computed(() => {
     :ui="{ hint: 'flex flex-row' }"
   >
     <template
-      v-if="field.meta.hint"
+      v-if="field.meta && field.meta.hint"
       #hint
     >
       <UModal
