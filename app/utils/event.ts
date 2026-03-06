@@ -9,7 +9,7 @@ export const getEventImage = (event: Ref<EventsCollectionItem> | EventsCollectio
   }
 
   if (item && item.image) {
-    return item.image
+    return typeof item.image === 'string' ? item.image : item.image.src
   }
 
   const appConfig = useAppConfig()
