@@ -46,6 +46,18 @@
     "provider": {
       "google": "Google",
       "link": "Magic Link"
+    },
+    "resetPassword": {
+      "title": "Endre kodeord",
+      "new": {
+        "label": "Nytt kodeord"
+      },
+      "current": {
+        "label": "Nuværende kodeord"
+      },
+      "confirm": {
+        "label": "Bekræft nytt kodeord"
+      }
     }
   },
   "actions": {

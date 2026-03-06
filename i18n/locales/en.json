@@ -51,6 +51,18 @@
     "provider": {
       "google": "Google",
       "link": "Magic Link"
+    },
+    "resetPassword": {
+      "title": "Change password",
+      "new": {
+        "label": "New password"
+      },
+      "current": {
+        "label": "Current password"
+      },
+      "confirm": {
+        "label": "Confirm password"
+      }
     }
   },
   "actions": {
