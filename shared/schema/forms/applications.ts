@@ -19,37 +19,37 @@ export const projectApplicationForm = defineSteppedForm({
           content: {
             da: 'Switch to english to see content...',
             en: `
+::u-page-section
+---
+class: py-0
+ui:
+  container: py-0 sm:py-0 lg:py-0
+  title: text-3xl sm:text-4xl lg:text-5xl
+---
+#title
+How to apply for Frigear funding 💰
 
-::h2{.mt-0}
-ℹ️ Single budget projects
+
+#description
+If your project has multiple parts that can be supported, with different budgets to get it flying, -you can run through the form and submit the information relevant for this specifically, and at the end you will have the option to apply again for another budget under same project.
 ::
 
 
-Just run through the form and fill in the required fields, -sit back and relax . . .
 
-## ℹ️ Multi budget projects
-
-If your project has multiple parts that can be supported, with different budgets to get it flying, -you can run through
-the form and submit the information relevant for this specifically, and at the end you will have the option to apply
-again for another budget under same project.
-
-💡
-
-_We want to build a complete skatepark for our community_
-
-*** Different budgets for the same endgoal:
-
-**_First Application_**
-
-**1.** Full skatepark - Budget: 350k
-
-**_Another Application_**
-
-**2.** One halfpipe ramp - Budget: 25k
-
-**_Yet Another Application_**
-
-**3.** Buy 5 rails - Budget: 5k
+::accordion
+  :::accordion-item{label="Application Examples" icon="i-lucide-info"}
+  
+  ### Different budgets for the same endgoal:
+  >_We want to build a complete skatepark for our community_
+  
+  **_First Application_** :br
+  **1.** Full skatepark - Budget: 350k :br
+  **_Another Application_** :br
+  **2.** One halfpipe ramp - Budget: 25k :br
+  **_Yet Another Application_** :br
+  **3.** Buy 5 rails - Budget: 5k :br
+  :::
+::
             `,
           },
         }),
@@ -99,7 +99,7 @@ _We want to build a complete skatepark for our community_
       id: 'financialInfo',
       schema: z.object({
         bankName: z.string(),
-        regNr: z.string(),
+        regNr: z.string().length(4),
         accountNumber: z.string(),
         annualBudget: z.number(),
         ownContribution: z.number(),
@@ -126,7 +126,7 @@ _We want to build a complete skatepark for our community_
         threeLineOrgPitch: z.string().meta({
           type: 'textarea',
         }),
-        otherMedia: z.array(z.instanceof(File))
+        otherMedia: z.array(z.file())
           .optional()
           .meta({
             type: 'file',
