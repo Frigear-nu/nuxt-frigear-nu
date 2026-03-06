@@ -21,7 +21,7 @@ sections:
     children:
       - label: Funding
         to: /en/funding
-      - label: Board application
+      - label: Board
         to: /en/board
       - label: Branding
         to: /en/branding

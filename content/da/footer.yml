@@ -1,7 +1,7 @@
 left:
   - "&copy; 2023 - {fullYear} ★ **[FRIGEAR]{.text-primary}** ★ CVR-nr: 44353261"
 sections:
-  - label: Navigasjon
+  - label: Navigation
     children:
       - label: Hjem
         to: /
@@ -13,15 +13,15 @@ sections:
     children:
       - label: Konto
         to: /account
-      - label: Om Frigear
+      - label: Foreningen
         to: /info
       - label: Support
         to: /#contact
   - label: Andet
     children:
-      - label: Støtte
+      - label: Projektstøtte
         to: /funding
-      - label: Styremedlem
+      - label: Bestyrelse
         to: /board
       - label: Branding
         to: /branding
