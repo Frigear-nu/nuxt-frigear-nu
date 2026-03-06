@@ -39,7 +39,7 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserPasswordSchema>) {
 <template>
   <UModal
     v-model:open="displayModal"
-    title="Change Password"
+    :title="$t('auth.changePassword.title')"
   >
     <template #body>
       <UForm
@@ -52,7 +52,7 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserPasswordSchema>) {
         @submit="onSubmit"
       >
         <UFormField
-          label="Current Password"
+          :label="$t('auth.changePassword.current.label')"
           name="currentPassword"
         >
           <UInput
@@ -63,7 +63,7 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserPasswordSchema>) {
         </UFormField>
 
         <UFormField
-          label="New Password"
+          :label="$t('auth.changePassword.new.label')"
           name="newPassword"
         >
           <UInput
@@ -74,7 +74,7 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserPasswordSchema>) {
         </UFormField>
 
         <UFormField
-          label="Confirm New Password"
+          :label="$t('auth.changePassword.confirm.label')"
           name="confirmNewPassword"
         >
           <UInput
@@ -86,7 +86,9 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserPasswordSchema>) {
         <ULink
           to="/sign-in"
           class="underline"
-        >Forgot password?</ULink>
+        >
+          {{ $t('auth.forgotPassword.title') }}
+        </ULink>
       </UForm>
     </template>
     <template #footer>
@@ -97,7 +99,7 @@ async function onSubmit(payload: FormSubmitEvent<ChangeUserPasswordSchema>) {
         :loading="form?.loading"
         @click="form?.submit()"
       >
-        Change
+        {{ $t('auth.changePassword.submit') }}
       </UButton>
     </template>
   </UModal>

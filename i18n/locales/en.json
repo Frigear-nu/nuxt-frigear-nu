@@ -53,15 +53,25 @@
       "link": "Magic Link"
     },
     "resetPassword": {
-      "title": "Change password",
+      "title": "Reset password",
       "new": {
         "label": "New password"
       },
       "current": {
         "label": "Current password"
+      }
+    },
+    "changePassword": {
+      "title": "Change password",
+      "submit": "Change password",
+      "new": {
+        "label": "Nytt kodeord"
       },
       "confirm": {
-        "label": "Confirm password"
+        "label": "Bekræft nytt kodeord"
+      },
+      "current": {
+        "label": "Current password"
       }
     }
   },
