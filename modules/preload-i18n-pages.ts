@@ -1,6 +1,11 @@
-import { defineNuxtModule, useNuxt } from '@nuxt/kit'
-import { withLeadingSlash, withTrailingSlash, joinRelativeURL } from 'ufo'
+import { defineNuxtModule, useNuxt, logger } from '@nuxt/kit'
+import { withLeadingSlash, joinRelativeURL } from 'ufo'
 
+const log = logger.withTag('i18n-preload')
+
+/**
+ * This module
+ */
 export default defineNuxtModule({
   meta: {
     name: 'i18n-preload',
@@ -8,42 +13,60 @@ export default defineNuxtModule({
   },
   hooks: {
     'nitro:config'(nitroConfig) {
-      // TODO: add the path of a locale prefixed path to the prerender list.
+      if (nitroConfig.dev) {
+        log.warn('Not initializing prerender, dev: true')
+        return
+      }
       const nuxt = useNuxt()
       const i18nOptions = nuxt.options.i18n
       const defaultLocale = i18nOptions.defaultLocale
       nitroConfig.prerender = nitroConfig.prerender || {}
       nitroConfig.prerender.routes = nitroConfig.prerender.routes || []
-      //
-      const routes: string[] = []
-      if (i18nOptions) {
-        const localesToPrerender = i18nOptions.locales?.map((locale) => {
-          return typeof locale === 'string' ? locale : locale.code
-        })
 
-        if (localesToPrerender) {
-          for (const route in nitroConfig.prerender.routes) {
+      if (i18nOptions) {
+        const routesToPrerender = new Set<string>()
+        const locales = i18nOptions.locales?.map(locale =>
+          typeof locale === 'string' ? locale : locale.code,
+        )
+
+        if (locales) {
+          for (const route of nitroConfig.prerender.routes) {
             if (!route) continue
 
-            // Find all items without a locale prefix,
-            // and add them to the prerender list with the non-default locale prefixes
-            routes.push(
-              ...localesToPrerender
-                .filter((locale) => {
-                  return locale !== defaultLocale
-                  // Ensures that we can pre-render specific locale pages too.
-                    && !route.startsWith(withLeadingSlash(withTrailingSlash(locale)))
-                })
-                .map((locale) => {
-                  return withLeadingSlash(joinRelativeURL(locale, route))
-                }),
+            // Skip routes that are just a locale code (e.g. "/da", "/en")
+            const isLocaleRoute = locales.some(
+              locale => withLeadingSlash(locale) === route,
             )
+            if (isLocaleRoute) continue
+
+            const candidates = locales
+              .filter((locale) => {
+                return (
+                  // not default locale
+                  locale !== defaultLocale
+                  && !route.startsWith(withLeadingSlash(locale) + '/')
+                )
+              })
+              .map((locale) => {
+                const prefixed = withLeadingSlash(joinRelativeURL(locale, route))
+                // Avoid "/en/" — normalize to "/en"
+                return prefixed.endsWith('/') && prefixed !== '/'
+                  ? prefixed.slice(0, -1)
+                  : prefixed
+              })
+
+            for (const candidate of candidates) {
+              routesToPrerender.add(candidate)
+            }
           }
         }
-      }
 
-      nitroConfig.prerender.routes.push(...(routes || []))
-      // nitroConfig.prerender.routes.push('/sitemap.xml')
+        nitroConfig.prerender.routes = [...new Set([
+          ...nitroConfig.prerender.routes,
+          ...routesToPrerender,
+        ])]
+        console.log('prerender', nitroConfig.prerender.routes)
+      }
     },
   },
 })
