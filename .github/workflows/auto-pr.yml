@@ -11,69 +11,24 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Fetch main
-        run: git fetch origin main
-
-      - name: Generate commit log
-        id: commits
-        run: |
-          LOG=$(git log origin/main..HEAD --pretty=format:"- %s (%an)" --no-merges)
-          echo "log<<EOF" >> $GITHUB_OUTPUT
-          echo "$LOG" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create or update PR
-        id: pr
         uses: actions/github-script@v7
         with:
           script: |
             const owner = context.repo.owner;
             const repo = context.repo.repo;
-            const body = `This PR was automatically created when staging was updated.
 
-            **Merging this PR will deploy to production.**
-
-            ### Commits
-            ${{ steps.commits.outputs.log }}
-
-            ---
-            Last push by: @${{ github.actor }}
-            Staging SHA: \`${{ github.sha }}\``;
-
-            const { data: prs } = await github.rest.pulls.list({
-              owner, repo, state: 'open', head: `${owner}:staging`, base: 'main'
+            const existing = await github.rest.pulls.list({
+              owner, repo, state: 'open', head: owner + ':staging', base: 'main'
             });
 
-            let pr;
-            if (prs.length > 0) {
-              pr = prs[0];
-              await github.rest.pulls.update({
-                owner, repo, pull_number: pr.number, body
-              });
-              console.log(`Updated PR #${pr.number}`);
-            } else {
-              const result = await github.rest.pulls.create({
+            if (existing.data.length === 0) {
+              await github.rest.pulls.create({
                 owner, repo,
-                title: '🚀 Deploy to production',
+                title: 'Deploy to production',
                 head: 'staging',
                 base: 'main',
-                body
+                body: 'Merging this PR will deploy staging to production.'
               });
-              pr = result.data;
-              console.log(`Created PR #${pr.number}`);
             }
-
-            core.setOutput('number', pr.number);
-            core.setOutput('url', pr.html_url);
-
-      - name: Summary
-        run: |
-          echo "## 🚀 Production PR" >> $GITHUB_STEP_SUMMARY
-          echo "| | |" >> $GITHUB_STEP_SUMMARY
-          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
-          echo "| PR | [#${{ steps.pr.outputs.number }}](${{ steps.pr.outputs.url }}) |" >> $GITHUB_STEP_SUMMARY
-          echo "| Actor | @${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| SHA | \`${{ github.sha }}\` |" >> $GITHUB_STEP_SUMMARY
