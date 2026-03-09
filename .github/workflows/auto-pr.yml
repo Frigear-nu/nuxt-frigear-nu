@@ -55,7 +55,6 @@ jobs:
               --base main \
               --head staging \
               --title "🚀 Deploy to production" \
-              --label "production" \
               --body "$(cat <<EOF
           This PR was automatically created when staging was updated.
 
