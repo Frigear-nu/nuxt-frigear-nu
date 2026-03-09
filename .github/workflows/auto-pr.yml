@@ -17,7 +17,6 @@ jobs:
       - name: Generate commit log
         id: commits
         run: |
-          # Get all commits between main and staging
           LOG=$(git log origin/main..HEAD --pretty=format:"- %s (%an)" --no-merges)
           echo "log<<EOF" >> $GITHUB_OUTPUT
           echo "$LOG" >> $GITHUB_OUTPUT
@@ -25,40 +24,72 @@ jobs:
 
       - name: Create or update PR to main
         id: pr
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: main
-          branch: staging
-          title: "🚀 Deploy to production"
-          body: |
-            This PR was automatically created when staging was updated.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if a PR already exists
+          EXISTING_PR=$(gh pr list --base main --head staging --json number,url --jq '.[0]')
 
-            **Merging this PR will deploy to production.**
+          if [ -n "$EXISTING_PR" ]; then
+            PR_NUMBER=$(echo $EXISTING_PR | jq -r '.number')
+            PR_URL=$(echo $EXISTING_PR | jq -r '.url')
+            OPERATION="updated"
 
-            ### Commits
-            ${{ steps.commits.outputs.log }}
+            # Update the PR body
+            gh pr edit $PR_NUMBER --body "$(cat <<EOF
+          This PR was automatically created when staging was updated.
 
-            ---
-            Last push by: @${{ github.actor }}
-            Staging SHA: `${{ github.sha }}`
-          labels: production
+          **Merging this PR will deploy to production.**
+
+          ### Commits
+          ${{ steps.commits.outputs.log }}
+
+          ---
+          Last push by: @${{ github.actor }}
+          Staging SHA: \`${{ github.sha }}\`
+          EOF
+          )"
+          else
+            # Create a new PR
+            PR_URL=$(gh pr create \
+              --base main \
+              --head staging \
+              --title "🚀 Deploy to production" \
+              --label "production" \
+              --body "$(cat <<EOF
+          This PR was automatically created when staging was updated.
+
+          **Merging this PR will deploy to production.**
+
+          ### Commits
+          ${{ steps.commits.outputs.log }}
+
+          ---
+          Last push by: @${{ github.actor }}
+          Staging SHA: \`${{ github.sha }}\`
+          EOF
+          )")
+            PR_NUMBER=$(gh pr list --base main --head staging --json number --jq '.[0].number')
+            OPERATION="created"
+          fi
+
+          echo "url=$PR_URL" >> $GITHUB_OUTPUT
+          echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "operation=$OPERATION" >> $GITHUB_OUTPUT
 
       - name: Print PR link to job summary
-        if: steps.pr.outputs.pull-request-url != ''
         run: |
           echo "## 🚀 Production PR" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**[${{ steps.pr.outputs.pull-request-operation == 'created' && 'New PR created' || 'Existing PR updated' }}](${{ steps.pr.outputs.pull-request-url }})**" >> $GITHUB_STEP_SUMMARY
+          echo "**[${{ steps.pr.outputs.operation == 'created' && 'New PR created' || 'Existing PR updated' }}](${{ steps.pr.outputs.url }})**" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| | |" >> $GITHUB_STEP_SUMMARY
           echo "|---|---|" >> $GITHUB_STEP_SUMMARY
-          echo "| PR | #${{ steps.pr.outputs.pull-request-number }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Status | ${{ steps.pr.outputs.pull-request-operation }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| PR | #${{ steps.pr.outputs.number }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Status | ${{ steps.pr.outputs.operation }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Actor | @${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
           echo "| SHA | \`${{ github.sha }}\` |" >> $GITHUB_STEP_SUMMARY
 
       - name: Annotate with PR link
-        if: steps.pr.outputs.pull-request-url != ''
         run: |
-          echo "::notice title=🚀 Production PR #${{ steps.pr.outputs.pull-request-number }}::${{ steps.pr.outputs.pull-request-url }}"
+          echo "::notice title=🚀 Production PR #${{ steps.pr.outputs.number }}::${{ steps.pr.outputs.url }}"
