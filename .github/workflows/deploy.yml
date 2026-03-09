@@ -43,6 +43,8 @@ jobs:
     name: Deploy to staging
     runs-on: ubuntu-22.04
     environment: staging
+    env:
+      CLOUDFLARE_ENV: staging
     steps:
       - uses: actions/checkout@v4
       - name: Install pnpm
@@ -57,7 +59,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Build
-        run: CLOUDFLARE_ENV=staging pnpm build
+        run: pnpm build
       - name: Migrate staging DB
         run: npx wrangler d1 migrations apply staging-frigear-nu --remote
       - name: Deploy to staging
