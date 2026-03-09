@@ -75,7 +75,9 @@ const headerDescription = computed(() => {
     </UContainer>
 
     <UContainer class="mt-8">
-      <NuxtPage />
+      <ClientOnly>
+        <NuxtPage />
+      </ClientOnly>
     </UContainer>
   </div>
 </template>
