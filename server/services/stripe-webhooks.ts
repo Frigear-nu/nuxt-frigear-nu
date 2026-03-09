@@ -47,6 +47,9 @@ export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.E
     case 'customer.subscription.deleted':
       await deleteStripeCustomerSubscription(stripeEvent.data.object)
       break
+    case 'subscription_schedule.updated':
+      debugPayment('subscription_schedule.updated', stripeEvent.data.object)
+      break
       // case 'payment_method.attached':
       //   // FIXME: We should probably handle this somehow.
       //   debugPayment('FIXME!')

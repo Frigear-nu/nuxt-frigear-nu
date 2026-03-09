@@ -116,7 +116,7 @@ cards:
           Frigear støtter udelukkende åbne projekter.
     faqs:
       - title: Se mere om eksklution...
-        icon: i-lucide-check-circle
+        icon: i-lucide-x-circle
         lines:
           - Udover lovmæssige forhold der gør sig gældende omkring nonprofit og almennyttige foreninger, -ønsker Frigear heller ikke at støtte projekter der eksluderer mennesker fra deltagelse, -eller på anden vis går imod vores kerneværdier. :br :br
             Vi støtter udelukkende åbne, offentligt tilgængelige, almennyttige og frivilligdrevne foreninger og projekter.
@@ -144,7 +144,7 @@ cards:
             Se vores **promo side**, -eller kontakt vores **PR Crew** gennem kontakt på forsiden.
     links:
       - label: Promo materiale og brandkit
-        to: /media
+        to: /branding
         icon: i-lucide-qr-code
         variant: subtle
         trailingIcon: i-lucide-square-arrow-out-up-right
@@ -225,9 +225,9 @@ bottomCards:
   Ansøg støtte til jeres awesome projekt
   :::
 
-:nuxt-img{.mt-12.rounded-xl.hidden.md:block :height='600' :width='1200' alt="Frigears frivillige på Roskilde Festival" src="/images/volunteers/fgr/funding-hero-rf-x-50-1200x900.png"}
+:nuxt-img{.mt-12 .rounded-xl .hidden .md:block :height='500' :width='1200' alt="Frigears frivillige på Roskilde Festival" src="/images/volunteers/fgr/funding-hero-rf-x-50-1200x900.png"}
 
-:nuxt-img{.mt-4.rounded-xl.block.md:hidden :height='500' :width='640' alt="Frigears frivillige på Roskilde Festival" src="/images/volunteers/fgr/funding-hero-mobile-rf-x-50-500x600.png"}
+:nuxt-img{.mt-4 .rounded-xl .block .md:hidden :height='500' :width='600' alt="Frigears frivillige på Roskilde Festival" src="/images/volunteers/fgr/funding-hero-mobile-rf-x-50-500x600.png"}
 ::
 
 ::card{.shadow-2xl}

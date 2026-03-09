@@ -8,7 +8,7 @@ export const useUserMemberships = ({ isEnabled}: { isEnabled?: MaybeRefOrGetter<
     key: () => USER_KEYS.membership,
     query: () => $api('/api/account/memberships'),
     placeholderData: () => [],
-    enabled: isEnabled ? isEnabled : () => true,
+    enabled: isEnabled ? () => import.meta.client && toValue(isEnabled) : () => import.meta.client,
   })
 }
 
