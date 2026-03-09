@@ -34,6 +34,7 @@
     },
     {
       "custom_domain": true,
+      // TODO: make this frigear.nu for production
       "pattern": "nuxt.frigear.nu"
     }
   ],
