@@ -116,7 +116,7 @@ cards:
           Frigear støtter udelukkende åbne projekter.
     faqs:
       - title: Se mere om eksklution...
-        icon: i-lucide-check-circle
+        icon: i-lucide-x-circle
         lines:
           - Udover lovmæssige forhold der gør sig gældende omkring nonprofit og almennyttige foreninger, -ønsker Frigear heller ikke at støtte projekter der eksluderer mennesker fra deltagelse, -eller på anden vis går imod vores kerneværdier. :br :br
             Vi støtter udelukkende åbne, offentligt tilgængelige, almennyttige og frivilligdrevne foreninger og projekter.
@@ -144,7 +144,7 @@ cards:
             Se vores **promo side**, -eller kontakt vores **PR Crew** gennem kontakt på forsiden.
     links:
       - label: Promo materiale og brandkit
-        to: /media
+        to: /branding
         icon: i-lucide-qr-code
         variant: subtle
         trailingIcon: i-lucide-square-arrow-out-up-right

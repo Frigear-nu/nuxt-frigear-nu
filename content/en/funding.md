@@ -115,7 +115,7 @@ cards:
           Frigear supports only open projects.
     faqs:
       - title: See more about exclusion...
-        icon: i-lucide-check-circle
+        icon: i-lucide-x-circle
         lines:
           - Besides legal conditions that apply regarding nonprofit and public-benefit associations, -Frigear also does not want to support projects that exclude people from participation, -or otherwise go against our core values. :br :br
             We support only open, publicly accessible, public-benefit, and volunteer-driven associations and projects.
@@ -143,7 +143,7 @@ cards:
             See our **promo page**, -or contact our **PR Crew** through the contact on the front page.
     links:
       - label: Promo material and brandkit
-        to: /en/media
+        to: /en/branding
         icon: i-lucide-qr-code
         variant: subtle
         trailingIcon: i-lucide-arrow-right
