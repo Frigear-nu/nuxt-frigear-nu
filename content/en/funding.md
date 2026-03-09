@@ -115,7 +115,7 @@ cards:
           Frigear supports only open projects.
     faqs:
       - title: See more about exclusion...
-        icon: i-lucide-check-circle
+        icon: i-lucide-x-circle
         lines:
           - Besides legal conditions that apply regarding nonprofit and public-benefit associations, -Frigear also does not want to support projects that exclude people from participation, -or otherwise go against our core values. :br :br
             We support only open, publicly accessible, public-benefit, and volunteer-driven associations and projects.
@@ -143,7 +143,7 @@ cards:
             See our **promo page**, -or contact our **PR Crew** through the contact on the front page.
     links:
       - label: Promo material and brandkit
-        to: /en/media
+        to: /en/branding
         icon: i-lucide-qr-code
         variant: subtle
         trailingIcon: i-lucide-arrow-right
@@ -189,7 +189,7 @@ bottomCards:
     
 ---
 
-::u-page-hero{.mb-0}
+::u-page-hero
 #title
 {{ $doc.title }}
 
@@ -222,9 +222,9 @@ bottomCards:
   Apply for support for your awesome project
   :::
 
-:nuxt-img{.mt-12.rounded-xl.hidden.md:block :height='600' :width='1200' alt="Frigear volunteers at Roskilde Festival" src="/images/volunteers/fgr/funding-hero-rf-x-50-1200x900.png"}
+:nuxt-img{.mt-12 .rounded-xl .hidden .md:block :height='500' :width='1200' alt="Frigear volunteers at Roskilde Festival" src="/images/volunteers/fgr/funding-hero-rf-x-50-1200x900.png"}
 
-:nuxt-img{.mt-4.rounded-xl.block.md:hidden :height='500' :width='640' alt="Frigear volunteers at Roskilde Festival" src="/images/volunteers/fgr/funding-hero-mobile-rf-x-50-500x600.png"}
+:nuxt-img{.mt-4 .rounded-xl .block .md:hidden :height='500' :width='600' alt="Frigear volunteers at Roskilde Festival" src="/images/volunteers/fgr/funding-hero-mobile-rf-x-50-500x600.png"}
 ::
 
 ::card{.shadow-2xl}
