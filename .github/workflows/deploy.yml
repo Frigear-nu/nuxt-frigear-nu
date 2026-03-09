@@ -5,6 +5,16 @@ on:
     branches:
       - main
       - staging
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
 
 env:
   NODE_OPTIONS: --max-old-space-size=8192
@@ -38,8 +48,34 @@ env:
   NUXT_OAUTH_GOOGLE_CLIENT_SECRET: ${{ secrets.NUXT_OAUTH_GOOGLE_CLIENT_SECRET }}
 
 jobs:
+  ci:
+    name: CI (lint + test)
+    runs-on: ubuntu-22.04
+    env:
+      NITRO_PRESET: ${{ vars.NITRO_PRESET }}
+      STUDIO_GITHUB_CLIENT_SECRET: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
+      STUDIO_GITHUB_CLIENT_ID: ${{ vars.STUDIO_GITHUB_CLIENT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.19.0
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.6
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install
+      - name: Lint
+        run: pnpm lint
+      - name: Test
+        run: pnpm test
+
   deploy-staging:
-    if: github.ref_name == 'staging'
+    needs: ci
+    if: github.ref_name == 'staging' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'staging')
     name: Deploy to staging
     runs-on: ubuntu-22.04
     environment: staging
@@ -66,7 +102,8 @@ jobs:
         run: pnpm cf:deploy-staging
 
   deploy-production:
-    if: github.ref_name == 'main'
+    needs: ci
+    if: github.ref_name == 'main' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'production')
     name: Deploy to production
     runs-on: ubuntu-22.04
     environment: production

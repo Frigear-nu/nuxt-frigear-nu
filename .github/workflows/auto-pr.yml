@@ -1,36 +1,42 @@
-name: Auto PR
-
-on:
-  push:
-    branches:
-      - staging
-
-jobs:
-  open-pr:
-    name: "Open PR: Staging -> Production"
-    runs-on: ubuntu-22.04
-    permissions:
-      pull-requests: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Create or update PR
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-
-            const existing = await github.rest.pulls.list({
-              owner, repo, state: 'open', head: owner + ':staging', base: 'main'
-            });
-
-            if (existing.data.length === 0) {
-              await github.rest.pulls.create({
-                owner, repo,
-                title: 'Deploy to production',
-                head: 'staging',
-                base: 'main',
-                body: 'Merging this PR will deploy staging to production.'
-              });
-            }
+#name: Auto PR
+#
+#on:
+#  push:
+#    branches:
+#      - staging
+#  workflow_dispatch:
+#    inputs:
+#      deploy:
+#        description: 'Deploy staging to production'
+#        required: false
+#        default: 'true'
+#
+#jobs:
+#  open-pr:
+#    name: "Open PR: Staging -> Production"
+#    runs-on: ubuntu-22.04
+#    permissions:
+#      pull-requests: write
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - name: Create or update PR
+#        uses: actions/github-script@v7
+#        with:
+#          script: |
+#            const owner = context.repo.owner;
+#            const repo = context.repo.repo;
+#
+#            const existing = await github.rest.pulls.list({
+#              owner, repo, state: 'open', head: owner + ':staging', base: 'main'
+#            });
+#
+#            if (existing.data.length === 0) {
+#              await github.rest.pulls.create({
+#                owner, repo,
+#                title: 'Deploy to production',
+#                head: 'staging',
+#                base: 'main',
+#                body: 'Merging this PR will deploy staging to production.'
+#              });
+#            }
