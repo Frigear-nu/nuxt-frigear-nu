@@ -22,69 +22,64 @@ jobs:
           echo "$LOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: Ensure production label exists
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh label create "production" --color "0075ca" --description "Production deployment" 2>/dev/null || true
+
       - name: Create or update PR to main
         id: pr
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Check if a PR already exists
+          BODY=$(cat <<EOF
+          This PR was automatically created when staging was updated.
+
+          **Merging this PR will deploy to production.**
+
+          ### Commits
+          ${{ steps.commits.outputs.log }}
+
+          ---
+          Last push by: @${{ github.actor }}
+          Staging SHA: \`${{ github.sha }}\`
+          EOF
+          )
+
           EXISTING_PR=$(gh pr list --base main --head staging --json number,url --jq '.[0]')
 
           if [ -n "$EXISTING_PR" ]; then
             PR_NUMBER=$(echo $EXISTING_PR | jq -r '.number')
             PR_URL=$(echo $EXISTING_PR | jq -r '.url')
-            OPERATION="updated"
 
-            # Update the PR body
-            gh pr edit $PR_NUMBER --body "$(cat <<EOF
-          This PR was automatically created when staging was updated.
+            gh pr edit $PR_NUMBER --body "$BODY"
 
-          **Merging this PR will deploy to production.**
-
-          ### Commits
-          ${{ steps.commits.outputs.log }}
-
-          ---
-          Last push by: @${{ github.actor }}
-          Staging SHA: \`${{ github.sha }}\`
-          EOF
-          )"
+            echo "url=$PR_URL" >> $GITHUB_OUTPUT
+            echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
+            echo "operation=updated" >> $GITHUB_OUTPUT
           else
-            # Create a new PR
             PR_URL=$(gh pr create \
               --base main \
               --head staging \
               --title "🚀 Deploy to production" \
-              --body "$(cat <<EOF
-          This PR was automatically created when staging was updated.
+              --label "production" \
+              --body "$BODY")
 
-          **Merging this PR will deploy to production.**
-
-          ### Commits
-          ${{ steps.commits.outputs.log }}
-
-          ---
-          Last push by: @${{ github.actor }}
-          Staging SHA: \`${{ github.sha }}\`
-          EOF
-          )")
             PR_NUMBER=$(gh pr list --base main --head staging --json number --jq '.[0].number')
-            OPERATION="created"
-          fi
 
-          echo "url=$PR_URL" >> $GITHUB_OUTPUT
-          echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
-          echo "operation=$OPERATION" >> $GITHUB_OUTPUT
+            echo "url=$PR_URL" >> $GITHUB_OUTPUT
+            echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
+            echo "operation=created" >> $GITHUB_OUTPUT
+          fi
 
       - name: Print PR link to job summary
         run: |
           echo "## 🚀 Production PR" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**[${{ steps.pr.outputs.operation == 'created' && 'New PR created' || 'Existing PR updated' }}](${{ steps.pr.outputs.url }})**" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
           echo "| | |" >> $GITHUB_STEP_SUMMARY
           echo "|---|---|" >> $GITHUB_STEP_SUMMARY
-          echo "| PR | #${{ steps.pr.outputs.number }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| PR | [#${{ steps.pr.outputs.number }}](${{ steps.pr.outputs.url }}) |" >> $GITHUB_STEP_SUMMARY
           echo "| Status | ${{ steps.pr.outputs.operation }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Actor | @${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
           echo "| SHA | \`${{ github.sha }}\` |" >> $GITHUB_STEP_SUMMARY
