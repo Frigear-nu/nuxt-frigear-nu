@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     .update(schema.passwordResets)
     .set({ usedAt: new Date() })
     .where(
-      () => and(
+      and(
         isNull(schema.passwordResets.usedAt),
         gt(schema.passwordResets.expiresAt, new Date()),
         eq(schema.passwordResets.code, code),
