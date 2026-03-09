@@ -1,0 +1,21 @@
+{
+  "eslint.useFlatConfig": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.quickSuggestions": { "other": true, "comments": true, "strings": true },
+  "editor.suggestOnTriggerCharacters": true,
+  "mdc.enableComponentMetadataCompletions": true,
+  "genieai.quickFix.enable": true,
+  "remote.extensionKind": {
+    "genieai.chatgpt-vscode": ["ui"]
+  },
+  "files.associations": {
+    "**/content/**/*.md": "mdc"
+  },
+
+  "[markdown]": {
+    "editor.wordBasedSuggestions": "off"
+  },
+  "[mdc]": {
+    "editor.wordBasedSuggestions": "off"
+  }
+}

@@ -2,6 +2,7 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineNuxtConfig({
   extends: ['simple-content-site'],
+
   modules: [
     '@nitrotool/jwt',
     '@nuxthub/core',
@@ -16,7 +17,11 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     '@pinia/nuxt',
     '@pinia/colada-nuxt',
+    './modules/scs-i18n',
+    ...(import.meta.dev ? ['nuxt-component-meta'] : []),
+    ...(import.meta.test ? ['@nuxt/test-utils/module'] : []),
   ],
+
   $production: {
     nitro: {
       scheduledTasks: {
@@ -24,6 +29,14 @@ export default defineNuxtConfig({
         '0 */2 * * *': [
           'stripe:sync',
         ],
+      },
+    },
+
+    hub: {
+      blob: {
+        driver: 'cloudflare-r2',
+        bucketName: process.env.HUB_BLOB_BUCKET_NAME || 'blob-frigear-nu',
+        binding: 'BLOB',
       },
     },
     image: {
@@ -35,13 +48,23 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  devtools: {
+    timeline: {
+      enabled: true,
+    },
+  },
+
   css: ['~/assets/css/main.css'],
+
   site: {
     name: 'Frigear.nu',
   },
+
   colorMode: {
     preference: 'dark',
   },
+
   content: {
     experimental: {
       sqliteConnector: 'native',
@@ -52,11 +75,13 @@ export default defineNuxtConfig({
       ],
     },
   },
+
   ui: {
     content: true,
     colorMode: true,
     mdc: true,
   },
+
   runtimeConfig: {
     jwtSecret: 'some-string-longer-than-32-chars-to-issue-jwt',
     stripeWebhookSecret: '',
@@ -79,10 +104,12 @@ export default defineNuxtConfig({
       other: '',
     },
   },
+
   routeRules: {
     '/sign-in': { prerender: false },
     '/account': { prerender: false },
     '/account/**': { prerender: false },
+    '/admin/**': { prerender: false },
     // Static Redirects
     '/sign-up': { redirect: { to: '/sign-in?mode=up' } },
     // Temporary Redirects: should be removed in 2027 possibly.
@@ -96,7 +123,9 @@ export default defineNuxtConfig({
     '/api/_auth/**': { prerender: false },
     '/api/auth/**': { prerender: false },
   },
+
   compatibilityDate: '2025-12-11',
+
   nitro: {
     experimental: {
       tasks: true,
@@ -116,12 +145,15 @@ export default defineNuxtConfig({
       ],
     },
   },
+
   hub: {
     db: {
       dialect: 'sqlite',
       casing: 'snake_case',
     },
+    blob: true,
   },
+
   i18n: {
     defaultLocale: 'da',
     strategy: 'prefix_except_default',
@@ -137,6 +169,7 @@ export default defineNuxtConfig({
       name: 'English',
     }],
   },
+
   image: {
     presets: {
       avatar: {
@@ -148,14 +181,17 @@ export default defineNuxtConfig({
       },
     },
   },
+
   ogImage: {
     zeroRuntime: true,
     // @ts-expect-error Not sure why this is not typed: https://nuxtseo.com/docs/og-image/guides/emojis
     emojiStrategy: 'fetch',
   },
+
   resend: {
     apiKey: process.env.NUXT_RESEND_API_KEY!,
   },
+
   stripe: {
     server: {
       key: process.env.STRIPE_SECRET_KEY!,
@@ -167,6 +203,7 @@ export default defineNuxtConfig({
       options: { /* your api options override for stripe client side https://stripe.com/docs/js/initializing#init_stripe_js-options */},
     },
   },
+
   studio: {
     dev: false,
     repository: {

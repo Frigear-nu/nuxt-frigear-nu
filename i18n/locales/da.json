@@ -46,6 +46,28 @@
     "provider": {
       "google": "Google",
       "link": "Magic Link"
+    },
+    "resetPassword": {
+      "title": "Nulstil kodeord",
+      "new": {
+        "label": "Nytt kodeord"
+      },
+      "current": {
+        "label": "Nuværende kodeord"
+      }
+    },
+    "changePassword": {
+      "title": "Endre kodeord",
+      "submit": "Endre password",
+      "new": {
+        "label": "Nytt kodeord"
+      },
+      "confirm": {
+        "label": "Bekræft nytt kodeord"
+      },
+      "current": {
+        "label": "Nuværende kodeord"
+      }
     }
   },
   "actions": {
@@ -218,6 +240,30 @@
     "title": "Handlekurv",
     "addedToCart": "{title} ble lagt til i kurven.",
     "removedFromCart": "{title} ble fjernet."
+  },
+  "form": {
+    "application": {
+      "title": "Projectstotte ordning",
+      "description": "Some description",
+      "background": {
+        "background": {
+          "label": "Bagrund",
+          "description": "Hvad er bagrunnen for at i soger?",
+          "placeholder": "This one has a placeholder"
+        },
+        "purpose": {
+          "label": "HELLO World!"
+        }
+      }
+    }
+  },
+  "steppedForm": {
+    "previous": "Forrige",
+    "next": "Videre",
+    "submit": "Fyr afsted",
+    "acceptTerms": {
+      "description": "Jeg godtar [betingelsene](https://example.com/terms-and-conditions) & [privatlivspolitik](https://example.com/privacy-policy)."
+    }
   },
   "zodI18n": {
     "errors": {

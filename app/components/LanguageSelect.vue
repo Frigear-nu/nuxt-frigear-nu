@@ -6,44 +6,41 @@ const localeObj = computed(() => locales.find(l => l.code === locale.value) || {
   code: locale.value,
 })
 
-function getEmojiFlag(locale: string): string {
+function getFlagUrl(locale: string): string {
   const languageToCountry: Record<string, string> = {
-    ar: 'sa', // Arabic -> Saudi Arabia
-    bn: 'bd', // Bengali -> Bangladesh
-    ca: 'es', // Catalan -> Spain
-    ckb: 'iq', // Central Kurdish -> Iraq
-    cs: 'cz', // Czech -> Czech Republic (note: modern country code is actually 'cz')
-    da: 'dk', // Danish -> Denmark
-    el: 'gr', // Greek -> Greece
-    en: 'gb', // English -> Great Britain
-    et: 'ee', // Estonian -> Estonia
-    he: 'il', // Hebrew -> Israel
-    hi: 'in', // Hindi -> India
-    hy: 'am', // Armenian -> Armenia
-    ja: 'jp', // Japanese -> Japan
-    kk: 'kz', // Kazakh -> Kazakhstan
-    km: 'kh', // Khmer -> Cambodia
-    ko: 'kr', // Korean -> South Korea
-    ky: 'kg', // Kyrgyz -> Kyrgyzstan
-    lb: 'lu', // Luxembourgish -> Luxembourg
-    ms: 'my', // Malay -> Malaysia
-    nb: 'no', // Norwegian Bokmål -> Norway
-    sl: 'si', // Slovenian -> Slovenia
-    sv: 'se', // Swedish -> Sweden
-    uk: 'ua', // Ukrainian -> Ukraine
-    ur: 'pk', // Urdu -> Pakistan
-    vi: 'vn', // Vietnamese -> Vietnam
-    es: 'es', // Spanish -> Spain
-    id: 'id', // Indonesian -> Indonesia
+    ar: 'sa',
+    bn: 'bd',
+    ca: 'es',
+    ckb: 'iq',
+    cs: 'cz',
+    da: 'dk',
+    el: 'gr',
+    en: 'gb',
+    et: 'ee',
+    he: 'il',
+    hi: 'in',
+    hy: 'am',
+    ja: 'jp',
+    kk: 'kz',
+    km: 'kh',
+    ko: 'kr',
+    ky: 'kg',
+    lb: 'lu',
+    ms: 'my',
+    nb: 'no',
+    sl: 'si',
+    sv: 'se',
+    uk: 'ua',
+    ur: 'pk',
+    vi: 'vn',
+    es: 'es',
+    id: 'id',
   }
 
   const baseLanguage = locale.split('-')[0]?.toLowerCase() || locale
   const countryCode = languageToCountry[baseLanguage] || locale.replace(/^.*-/, '').slice(0, 2)
 
-  return countryCode.toUpperCase()
-    .split('')
-    .map(char => String.fromCodePoint(0x1F1A5 + char.charCodeAt(0)))
-    .join('')
+  return `https://flagcdn.com/24x18/${countryCode.toLowerCase()}.png`
 }
 </script>
 
@@ -60,9 +57,11 @@ function getEmojiFlag(locale: string): string {
         :aria-label="$t('locale.switch', localeObj)"
       >
         <template #trailing>
-          <span class="text-lg">
-            {{ getEmojiFlag(locale) }}
-          </span>
+          <img
+            :src="getFlagUrl(locale)"
+            :alt="localeObj.name"
+            class="w-5 h-4 object-cover rounded-sm"
+          >
         </template>
       </UButton>
 
@@ -80,9 +79,11 @@ function getEmojiFlag(locale: string): string {
               <span class="text-sm">
                 {{ localeItem.name }}
               </span>
-              <span class="size-5 text-center">
-                {{ getEmojiFlag(localeItem.code) }}
-              </span>
+              <img
+                :src="getFlagUrl(localeItem.code)"
+                :alt="localeItem.name"
+                class="w-5 h-4 object-cover rounded-sm"
+              >
             </NuxtLink>
           </li>
         </ul>

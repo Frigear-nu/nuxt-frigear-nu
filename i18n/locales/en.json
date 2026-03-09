@@ -1,8 +1,10 @@
 {
   "common": {
-    "or": "Or"
+    "or": "Or",
+    "close": "Close",
+    "information": "Information"
   },
-  "dateTime":{
+  "dateTime": {
     "format": "MMM d, yyyy, h:mm aaa"
   },
   "auth": {
@@ -49,6 +51,28 @@
     "provider": {
       "google": "Google",
       "link": "Magic Link"
+    },
+    "resetPassword": {
+      "title": "Reset password",
+      "new": {
+        "label": "New password"
+      },
+      "current": {
+        "label": "Current password"
+      }
+    },
+    "changePassword": {
+      "title": "Change password",
+      "submit": "Change password",
+      "new": {
+        "label": "Nytt kodeord"
+      },
+      "confirm": {
+        "label": "Bekræft nytt kodeord"
+      },
+      "current": {
+        "label": "Current password"
+      }
     }
   },
   "actions": {
@@ -188,7 +212,7 @@
         "title": "Tickets",
         "free": "Free",
         "view": "Show tickets",
-        "ticket":{
+        "ticket": {
           "label": "Ticket"
         },
         "products": {
@@ -213,10 +237,116 @@
       }
     }
   },
+  "form": {
+    "application": {
+      "title": "Funding Application",
+      "description": "Request funding for your projects.",
+      "contactInfo": {
+        "label": "Contact info",
+        "fullName": {
+          "label": "Full name"
+        },
+        "email": {
+          "label": "E-mail"
+        },
+        "phone": {
+          "label": "Phone"
+        }
+      },
+      "organizationInfo": {
+        "organizationName": {
+          "label": "Organization name"
+        },
+        "organizationNumber": {
+          "label": "Organization number"
+        },
+        "organizationAddress": {
+          "label": "Organization address"
+        },
+        "accountableParties": {
+          "label": "Accountable parties"
+        },
+        "organizationEmail": {
+          "label": "E-mail"
+        },
+        "organizationPhone": {
+          "label": "Phone"
+        }
+      },
+      "organizationAbout": {
+        "organizationAbout": {
+          "label": "About organization"
+        },
+        "organizationWebsite": {
+          "label": "Website"
+        },
+        "organizationFacebook": {
+          "label": "Facebook"
+        },
+        "organizationInstagram": {
+          "label": "Instagram"
+        },
+        "organizationTikTok": {
+          "label": "TikTok"
+        },
+        "organizationYoutube": {
+          "label": "Youtube"
+        },
+        "organizationLinkedIn": {
+          "label": "LinkedIn"
+        }
+      },
+      "financialInfo": {
+        "bankName": {
+          "label": "Bank name"
+        },
+        "regNr": {
+          "label": "Reg. Nr."
+        },
+        "accountNumber": {
+          "label": "Account number"
+        },
+        "annualBudget": {
+          "label": "Annual budget"
+        },
+        "ownContribution": {
+          "label": "Own contribution"
+        },
+        "paidStaffAmount": {
+          "label": "Paid staff amount"
+        },
+        "financialPatrons": {
+          "label": "Financial patrons"
+        }
+      },
+      "branding": {
+        "logo": {
+          "label": "Logo"
+        },
+        "relevantImages": {
+          "label": "Relevant images"
+        },
+        "threeLineOrgPitch": {
+          "label": "3-line organization pitch"
+        },
+        "otherMedia": {
+          "label": "Other media"
+        }
+      }
+    }
+  },
   "cart": {
     "title": "Shopping Cart",
     "addedToCart": "{title} was added to your cart.",
     "removedFromCart": "{title} was removed."
+  },
+  "steppedForm": {
+    "previous": "Previous",
+    "next": "Continue",
+    "submit": "Submit",
+    "acceptTerms": {
+      "description": "I accept the [terms and conditions](https://example.com/terms-and-conditions) & [privacy policy](https://example.com/privacy-policy)."
+    }
   },
   "zodI18n": {
     "errors": {

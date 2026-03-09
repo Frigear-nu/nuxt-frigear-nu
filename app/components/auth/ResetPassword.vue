@@ -52,18 +52,18 @@ async function onSubmit(payload: FormSubmitEvent<ResetPasswordSchema>) {
     @submit="onSubmit"
   >
     <UPageCard
-      title="Reset password"
+      :title="$t('auth.resetPassword.title')"
       variant="subtle"
       class="space-y-4"
     >
-      <UFormField label="Password">
+      <UFormField :label="$t('auth.resetPassword.new.label')">
         <UInput
           v-model="state.password"
           type="password"
           autocomplete="new-password"
         />
       </UFormField>
-      <UFormField label="Confirm Password">
+      <UFormField :label="$t('auth.resetPassword.confirm.label')">
         <UInput
           v-model="state.confirmPassword"
           type="password"
@@ -78,7 +78,7 @@ async function onSubmit(payload: FormSubmitEvent<ResetPasswordSchema>) {
           :loading="form.loading"
           @click="form.submit()"
         >
-          Reset password
+          {{ $t('auth.resetPassword.title') }}
         </UButton>
       </div>
     </UPageCard>

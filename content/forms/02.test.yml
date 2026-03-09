@@ -1,0 +1,15 @@
+name: test
+title: A Simple test form
+delivery:
+  - channel: email
+    destination:
+      - "${contact.default}"
+resubmittable:
+  start: background
+  alert:
+    title: You started over!
+    description: You can continue, we saved some of the details from earlier.
+    color: success # optional
+  fields:
+    - background.background
+    - background.purpose

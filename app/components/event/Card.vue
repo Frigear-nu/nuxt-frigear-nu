@@ -38,8 +38,15 @@ const hasAnyRequirements = computed(() => requirements.value.length > 0)
   <NuxtLink :to="event.path">
     <UCard>
       <div class="flex flex-col gap-2">
-        <NuxtImg :src="getEventImage(event)" />
-        <USeparator class="my-2" />
+        <NuxtImg
+          v-if="event.image"
+          :src="getEventImage(event)"
+          :alt="typeof event.image === 'object' ? event.image.alt : undefined"
+        />
+        <USeparator
+          v-if="event.image"
+          class="my-2"
+        />
         <div class="flex flex-col gap-1 justify-between">
           <div class="text-lg font-semibold">
             {{ translatedProperty(event.name) }}
