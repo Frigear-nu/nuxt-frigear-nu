@@ -59,6 +59,7 @@
   },
   "env": {
     "staging": {
+      "name": "staging-frigear-nu",
       "routes": [
         {
           "custom_domain": true,
