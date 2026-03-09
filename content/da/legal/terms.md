@@ -212,6 +212,11 @@ Betingelserne gælder for køb via frigear.nu og omfatter medlemskab, merchandis
   Klage indgives via kontaktformularen, så vi først kan forsøge at løse sagen hurtigt.
 
   ::::contact-form-modal
+  ---
+  label: Klag over betingelser
+  initial:
+    subject: complaint
+  ---
   ::::
   :::
 
