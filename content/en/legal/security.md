@@ -17,7 +17,7 @@ Security standards
 Our baseline security standards and the controls we use to keep member, -volunteer, and -partner data safe.
 ::
 
-::div{.flex.flex-col.gap-4.mt-4}
+::div{.flex .flex-col .gap-4 .mt-4}
   :::u-page-card
   ---
   icon: i-lucide-shield
@@ -202,7 +202,7 @@ Our baseline security standards and the controls we use to keep member, -volunte
     https://eur-lex.europa.eu/eli/dir/2015/2366/oj/eng
   :::
 
-::div{.grid.grid-cols-1.sm:grid-cols-2.md:grid-cols-3.lg:grid-cols-4.xl:grid-cols-5.gap-4.mt-6.center.justify-center}
+::div{.grid .grid-cols-1 .sm:grid-cols-2 .md:grid-cols-3 .lg:grid-cols-4 .xl:grid-cols-5 .gap-4 .mt-6 .center .justify-center}
 
 :::u-page-card
 ---
@@ -233,12 +233,12 @@ class: text-center
 GDPR (EU 2016/679)
 
 #description
-:::div{.h-full.w-full.bg-neutral-100.dark:bg-neutral-800.rounded-full.items-center.justify-center.mt-4.mb-4.p-2.flex}
-  ::::img{src="/images/compliance/badges/gdpr.svg" alt="GDPR (EU 2016/679)" loading="lazy" class="h-full.w-full.object-contain"}
+:::div{.h-full .w-full .bg-neutral-100 .dark:bg-neutral-800 .rounded-full.items-center .justify-center .mt-4 .mb-4 .p-2.flex}
+  ::::img{src="/images/compliance/badges/gdpr.svg" alt="GDPR (EU 2016/679)" loading="lazy" class="h-full .w-full .object-contain"}
   ::::
 :::
 
-:::div{.mt-2.text-sm}
+:::div{.mt-2 .text-sm}
   EU data protection regulation.  
   [Official legal text](https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng){target="_blank" rel="noopener noreferrer"}
 :::
@@ -253,7 +253,7 @@ class: text-center
 ISO/IEC 27001
 
 #description
-:::div{.h-full.w-full.bg-neutral-100.dark:bg-neutral-800.rounded-full.items-center.justify-center.mt-4.mb-4.p-2.flex}
+:::div{.h-full .w-full .bg-neutral-100 .dark:bg-neutral-800 .rounded-full .items-center .justify-center .mt-4 .mb-4 .p-2 .flex}
   ::::img{src="/images/compliance/badges/iso-27001.svg" alt="ISO/IEC 27001" loading="lazy" class="h-full.w-full.object-contain"}
   ::::
 :::
@@ -273,12 +273,12 @@ class: text-center
 PCI DSS (payments)
 
 #description
-:::div{.h-full.w-full.bg-neutral-100.dark:bg-neutral-800.rounded-full.items-center.justify-center.mt-4.mb-4.p-2.flex}
+:::div{.h-full .w-full .bg-neutral-100 .dark:bg-neutral-800 .rounded-full .items-center .justify-center .mt-4 .mb-4 .p-2 .flex}
   ::::img{src="/images/compliance/badges/pci-dss.svg" alt="PCI DSS" loading="lazy" class="h-full.w-full.object-contain"}
   ::::
 :::
 
-:::div{.mt-2.text-sm}
+:::div{.mt-2 .text-sm}
   Payment card security standard (handled by our payment providers).  
   [Official PCI DSS page](https://www.pcisecuritystandards.org/standards/pci-dss/){target="_blank" rel="noopener noreferrer"}
 :::
@@ -293,12 +293,12 @@ class: text-center
 PSD2 (EU payments)
 
 #description
-:::div{.h-full.w-full.bg-neutral-100.dark:bg-neutral-800.rounded-full.items-center.justify-center.mt-4.mb-4.p-2.flex}
+:::div{.h-full .w-full .bg-neutral-100 .dark:bg-neutral-800 .rounded-full .items-center .justify-center .mt-4 .mb-4 .p-2 .flex}
   ::::img{src="/images/compliance/badges/psd2.svg" alt="PSD2" loading="lazy" class="h-full.w-full.object-contain"}
   ::::
 :::
 
-:::div{.mt-2.text-sm}
+:::div{.mt-2 .text-sm}
   EU payment services rules (incl. Strong Customer Authentication).  
   [Official legal text](https://eur-lex.europa.eu/eli/dir/2015/2366/oj/eng){target="_blank" rel="noopener noreferrer"}
 :::
