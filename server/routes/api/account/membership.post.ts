@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
     // 2. Invoice for the remaining amount immediately
     if (isUpgrade) {
       const updated = await stripe.subscriptions.update(activeSubscription.id, {
-        items: [{ price: priceWithProduct.id, id: subscriptionItem?.id || undefined }].filter(Boolean) as [{ id?: string, price?: string }],
+        items: [{ price: priceWithProduct.id, id: subscriptionItem?.id || undefined }],
         proration_behavior: 'always_invoice',
       })
 
@@ -65,7 +65,7 @@ export default defineEventHandler(async (event) => {
 
     // since this is a downgrade, we want to:
     // 1. move to the new subscription at the end of the cycle
-    // 2. invoice for the remaining amount at the end of the cycle
+    // 2. invoice for the amount at the end of the cycle
     const existingSchedules = await stripe.subscriptionSchedules.list({ customer: stripeSubscription.customer as string })
     const existingSchedule = existingSchedules.data.find(s => s.subscription === activeSubscription.id)
     const schedule = existingSchedule
