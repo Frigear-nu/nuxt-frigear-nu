@@ -24,71 +24,36 @@ jobs:
 
       - name: Create or update PR to main
         id: pr
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # Check if a PR already exists
-          EXISTING_PR=$(gh pr list --base main --head staging --json number,url --jq '.[0]')
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: main
+          branch: staging
+          title: "🚀 Deploy to production"
+          labels: production
+          body: |
+            This PR was automatically created when staging was updated.
 
-          if [ -n "$EXISTING_PR" ]; then
-            PR_NUMBER=$(echo $EXISTING_PR | jq -r '.number')
-            PR_URL=$(echo $EXISTING_PR | jq -r '.url')
-            OPERATION="updated"
+            **Merging this PR will deploy to production.**
 
-            # Update the PR body
-            gh pr edit $PR_NUMBER --body "$(cat <<EOF
-          This PR was automatically created when staging was updated.
+            ### Commits
+            ${{ steps.commits.outputs.log }}
 
-          **Merging this PR will deploy to production.**
-
-          ### Commits
-          ${{ steps.commits.outputs.log }}
-
-          ---
-          Last push by: @${{ github.actor }}
-          Staging SHA: \`${{ github.sha }}\`
-          EOF
-          )"
-          else
-            # Create a new PR
-            PR_URL=$(gh pr create \
-              --base main \
-              --head staging \
-              --title "🚀 Deploy to production" \
-              --body "$(cat <<EOF
-          This PR was automatically created when staging was updated.
-
-          **Merging this PR will deploy to production.**
-
-          ### Commits
-          ${{ steps.commits.outputs.log }}
-
-          ---
-          Last push by: @${{ github.actor }}
-          Staging SHA: \`${{ github.sha }}\`
-          EOF
-          )")
-            PR_NUMBER=$(gh pr list --base main --head staging --json number --jq '.[0].number')
-            OPERATION="created"
-          fi
-
-          echo "url=$PR_URL" >> $GITHUB_OUTPUT
-          echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
-          echo "operation=$OPERATION" >> $GITHUB_OUTPUT
+            ---
+            Last push by: @${{ github.actor }}
+            Staging SHA: `${{ github.sha }}`
 
       - name: Print PR link to job summary
         run: |
           echo "## 🚀 Production PR" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**[${{ steps.pr.outputs.operation == 'created' && 'New PR created' || 'Existing PR updated' }}](${{ steps.pr.outputs.url }})**" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
           echo "| | |" >> $GITHUB_STEP_SUMMARY
           echo "|---|---|" >> $GITHUB_STEP_SUMMARY
-          echo "| PR | #${{ steps.pr.outputs.number }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Status | ${{ steps.pr.outputs.operation }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| PR | [#${{ steps.pr.outputs.pull-request-number }}](${{ steps.pr.outputs.pull-request-url }}) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Status | ${{ steps.pr.outputs.pull-request-operation }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Actor | @${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
           echo "| SHA | \`${{ github.sha }}\` |" >> $GITHUB_STEP_SUMMARY
 
       - name: Annotate with PR link
         run: |
-          echo "::notice title=🚀 Production PR #${{ steps.pr.outputs.number }}::${{ steps.pr.outputs.url }}"
+          echo "::notice title=🚀 Production PR #${{ steps.pr.outputs.pull-request-number }}::${{ steps.pr.outputs.pull-request-url }}"
