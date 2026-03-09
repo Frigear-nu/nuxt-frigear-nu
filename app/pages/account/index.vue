@@ -4,7 +4,8 @@ import { useSiteI18n } from '#imports'
 import { useUserMemberships } from '~/store/queries/user'
 
 const { t, localePath } = useSiteI18n()
-const { data: userMemberships } = useUserMemberships()
+const { isLoggedIn } = useAuth()
+const { data: userMemberships } = useUserMemberships({ isEnabled: isLoggedIn })
 const { data: cartItems, hasAnyItems: hasAnyCartItems } = useShoppingCart()
 
 // Membership
