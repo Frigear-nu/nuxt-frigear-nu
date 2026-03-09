@@ -18,6 +18,8 @@ export default defineEventHandler(async (event) => {
     },
   })
 
+  if (!stripeCustomersWithSubs.length) return []
+
   // we do not want to return two arrays; it will be a very odd case where a user actually has
   // multiple stripe customers attached, therefore, we flatten it.
   return stripeCustomersWithSubs.flatMap(({ subscriptions }) => {

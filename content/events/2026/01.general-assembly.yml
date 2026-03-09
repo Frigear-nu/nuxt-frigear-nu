@@ -18,7 +18,7 @@ description:
 variables:
   # FIXME: PRODUCTION Stripe IDs in real prod.
   production:
-    default_ticket_stripe_id: prod_U3cYQWfWJTh40Q
+    default_ticket_stripe_id: prod_U4Vt3O4SjcmteT
     carnivore_stripe_id: prod_U30CCwoLfWM9cv
     vegetarian_stripe_id: prod_U30NvkM8xzL3Sh
   development:
