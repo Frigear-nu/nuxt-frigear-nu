@@ -34,6 +34,7 @@ if (!form.value) {
 }
 
 const stepped = useTemplateRef('stepped')
+const isLoading = computed(() => stepped.value?.stepped.isSubmitting.value)
 const wasSubmitted = ref(false)
 
 // const title = computed(() => form.value?.title)
@@ -219,7 +220,7 @@ const completedFormActions = computed<ButtonProps[]>(() => {
         @submit="onComplete"
       />
       <UEmpty
-        v-show="wasSubmitted"
+        v-show="wasSubmitted && !isLoading"
         title="Thanks!"
         icon="i-lucide-check"
         :actions="completedFormActions"

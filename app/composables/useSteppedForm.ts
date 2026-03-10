@@ -41,6 +41,7 @@ export const useSteppedForm = <const TSteps extends FormStep[]>(
         Object.assign(state, parsed)
 
         if (isLastStep.value) {
+          await new Promise(resolve => setTimeout(resolve, 2500))
           await onComplete(state as UnionSteps)
         }
         else {
