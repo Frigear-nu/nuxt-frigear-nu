@@ -6,6 +6,13 @@ This allows simple editing and management of a website simply using
 markdown/[nuxt-content/mdc](https://github.com/nuxt-content/mdc) and yaml - soon also through a
 UI [nuxt-content/studio](https://github.com/nuxt-content/studio).
 
+## Docs
+- [Deploying](./docs/4.deploying.md)
+  - [Deployment Checklist](./docs/5.deployment-checklist.md)
+- [Stripe](./docs/10.stripe.md)
+- [Forms](./docs/20.forms.md)
+- [Events](./docs/100.events.md)
+
 ## Structure
 
 > Normally you will be working with the `content/` folder, as this is the easiest way to build things that can be edited
