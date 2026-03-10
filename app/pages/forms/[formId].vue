@@ -18,6 +18,7 @@ definePageMeta({
 const { localePath } = useSiteI18n()
 const route = useRoute()
 const { $api } = useNuxtApp()
+const { translatedProperty } = useContent()
 
 const formId = computed(() => route.params.formId as string)
 
@@ -33,6 +34,7 @@ if (!form.value) {
 }
 
 const stepped = useTemplateRef('stepped')
+const isLoading = computed(() => stepped.value?.stepped.isSubmitting.value)
 const wasSubmitted = ref(false)
 
 // const title = computed(() => form.value?.title)
@@ -92,6 +94,17 @@ const onComplete = async (args: ProjectApplicationForm) => {
 
 const displayAlert = ref(false)
 const alertToDisplay = ref<{ title: string, description: string, color?: string } | null>(null)
+const translatedAlert = computed(() => {
+  if (!alertToDisplay.value) {
+    return null
+  }
+
+  return {
+    ...alertToDisplay.value,
+    title: translatedProperty(alertToDisplay.value.title),
+    description: translatedProperty(alertToDisplay.value.description),
+  }
+})
 
 const resubmitForm = () => {
   const resubmit = form.value?.resubmittable
@@ -124,7 +137,7 @@ const resubmitForm = () => {
   wasSubmitted.value = false
 }
 
-const completedFromActions = computed<ButtonProps[]>(() => {
+const completedFormActions = computed<ButtonProps[]>(() => {
   const items: ButtonProps[] = [{ label: 'Back home', to: localePath('/'), icon: 'i-lucide-arrow-left' }]
 
   if (form.value && form.value.resubmittable) {
@@ -194,7 +207,7 @@ const completedFromActions = computed<ButtonProps[]>(() => {
       </div>
       <UAlert
         v-if="displayAlert"
-        v-bind="alertToDisplay"
+        v-bind="translatedAlert"
         class="my-4"
         variant="subtle"
         close
@@ -207,10 +220,10 @@ const completedFromActions = computed<ButtonProps[]>(() => {
         @submit="onComplete"
       />
       <UEmpty
-        v-show="wasSubmitted"
+        v-show="wasSubmitted && !isLoading"
         title="Thanks!"
         icon="i-lucide-check"
-        :actions="completedFromActions"
+        :actions="completedFormActions"
       />
     </UCard>
   </div>
