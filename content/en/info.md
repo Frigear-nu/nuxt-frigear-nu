@@ -18,7 +18,7 @@ Info about the association, our mission, vision, and values.
   to: /projects
   icon: i-lucide-music
   variant: subtle
-  class: min-w-48 
+  class: min-w-48 hidden
   ---
   See our projects
   :::
@@ -29,7 +29,7 @@ Info about the association, our mission, vision, and values.
   to: /teams
   trailingIcon: i-lucide-users
   variant: subtle
-  class: min-w-48 
+  class: min-w-48 hidden
   ---
   Meet our teams
   :::
@@ -50,7 +50,7 @@ We build communities around **art, culture, and volunteering** — ideally with 
 Frigear is also a **play-and-learning platform**: a place where you can try things out, level up your skills, and create something together with others.
 We’re for anyone **driven by engagement and curiosity**, and by the desire to **build open and sustainable project solutions** — **together**.
 
-**Come as you are** — with hands, brains, ideas, curiosity… or just the urge to join in and create something awesome.
+**Come as you are . . .** <br> — with hands, brains, ideas, curiosity… or just the urge to join in and create something awesome.
 
 #features
 :::u-page-card
