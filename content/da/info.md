@@ -18,7 +18,7 @@ Info om foreningen, vores mission, vision og værdier.
   to: /projects
   icon: i-lucide-music
   variant: subtle
-  class: min-w-48
+  class: min-w-48 hidden
   ---
   Se vores projekter
   :::
@@ -29,7 +29,7 @@ Info om foreningen, vores mission, vision og værdier.
   to: /teams
   trailingIcon: i-lucide-users
   variant: subtle
-  class: min-w-48 
+  class: min-w-48 hidden
   ---
   Mød vores teams
   :::
@@ -50,7 +50,7 @@ Vi bygger fællesskaber omkring **kunst, kultur og frivillighed** — gerne med 
 Frigear er også en **lege- og læringsplatform**: et sted, hvor du kan prøve ting af, blive dygtigere og skabe noget sammen med andre.
 Vi er for alle, der er **drevet af engagement, nysgerrighed** og lysten til at **skabe åbne og bæredygtige projektløsninger** — **sammen**.
 
-**Kom som du er** — med hænder, hjerne, idéer, nysgerrighed… eller bare lysten til at være med og skabe noget awesome.
+**Kom som du er . . .** <br> — med hænder, hjerne, idéer, nysgerrighed… eller bare lysten til at være med og skabe noget awesome.
 
 #features
 :::u-page-card
@@ -104,7 +104,7 @@ Vores vision
 #description
 Vi vil være en katalysator for frivillighed og udvikling i **kreative, kulturelle, og sociale fællesskaber**.
 
-**Drømmen?** Flere steder hvor man kan mødes, bygge, dyrke interesser, lære, og dele viden — steder hvor det føles naturligt at **udfolde sine ideer og færdigheder** uden at være begrænset i et overflod af regler og forventninger før ideerne har fået en chance.
+**Drømmen ... ?** <br> Flere steder hvor man kan mødes, bygge, dyrke interesser, lære, og dele viden — steder hvor det føles naturligt at **udfolde sine ideer og færdigheder** uden at være begrænset i et overflod af regler og forventninger før ideerne har fået en chance.
 :::
 
 :::u-page-card
@@ -115,7 +115,7 @@ icon: i-lucide-badge-check
 Om inklusion
 
 #description
-Frigear er et åbent og inkluderende fællesskab. Vi diskriminerer ikke på baggrund af etnicitet, hudfarve, køn, seksualitet, alder, religion eller politisk ståsted.
+Frigear er et åbent og inkluderende fællesskab. Vi diskriminerer ikke på baggrund af etnicitet, hudfarve, køn, seksualitet, alder, religion eller politisk ståsted. <br> <br>
 Vi er her for **frivillighed og sammenhold**.
 
 Vi har nultolerance over for diskrimination og arbejder aktivt for et trygt miljø for alle.
@@ -134,8 +134,8 @@ Bæredygtigt engagement
 Frivillighed skal kunne holde i længden. 
 Hos os er der plads til hverdagsliv, pauser og perioder med mindre energi — det er helt normalt, og det skal være i orden at sige fra.
 
-Vi går efter **realistiske ambitioner**, tydelige rammer og en kultur, hvor man bidrager på en måde, der giver mening, og hvor vi melder ud hvis en opgave er for tung eller vi har brug for hjælp.
-Kort sagt: **frivillighed sammen, på egne præmisser**.
+Vi går efter **realistiske ambitioner**, tydelige rammer og en kultur, hvor man bidrager på en måde, der giver mening, og hvor vi melder ud hvis en opgave er for tung eller vi har brug for hjælp.  <br> <br>
+**frivillighed sammen, -på dine præmisser**.
 :::
 
 :::u-page-card
