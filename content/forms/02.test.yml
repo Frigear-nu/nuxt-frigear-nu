@@ -5,10 +5,14 @@ delivery:
     destination:
       - "${contact.default}"
 resubmittable:
-  start: background
+  start: first
   alert:
-    title: You started over!
-    description: You can continue, we saved some of the details from earlier.
+    title:
+      en: You started over!
+      da: Du startede over!
+    description:
+      en: You can continue, we saved some of the details from earlier.
+      da: Du ka fortsette, vi gemte nogle af de oplysninger fra tidligere.
     color: success # optional
   fields:
     - background.background
