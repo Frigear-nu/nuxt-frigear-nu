@@ -104,7 +104,7 @@ Our vision
 #description
 We want to be a catalyst for volunteering and development in **creative, cultural, and social communities**.
 
-**The dream?** More places where you can meet, build, pursue interests, learn, and share knowledge — places where it feels natural to **unfold your ideas and skills** without being boxed in by an overload of rules and expectations before ideas have even had a chance.
+**The dream ... ?** More places where you can meet, build, pursue interests, learn, and share knowledge — places where it feels natural to **unfold your ideas and skills** without being boxed in by an overload of rules and expectations before ideas have even had a chance.
 :::
 
 :::u-page-card
@@ -115,7 +115,7 @@ icon: i-lucide-badge-check
 About inclusion
 
 #description
-Frigear is an open and inclusive community. We do not discriminate based on ethnicity, skin color, gender, sexuality, age, religion, or political stance.
+Frigear is an open and inclusive community. We do not discriminate based on ethnicity, skin color, gender, sexuality, age, religion, or political stance.  <br> <br>
 We’re here for **volunteering and togetherness**.
 
 We have zero tolerance for discrimination and actively work to ensure a safe environment for everyone.
@@ -134,8 +134,8 @@ Sustainable engagement
 Volunteering should be sustainable over time. 
 With us, there’s room for everyday life, breaks, and periods with lower energy — that’s completely normal, and it should be okay to say no.
 
-We aim for **realistic ambitions**, clear frameworks, and a culture where you contribute in a way that makes sense — and where we speak up if a task is too heavy or we need help.
-In short: **volunteering together, on your own terms**.
+We aim for **realistic ambitions**, clear frameworks, and a culture where you contribute in a way that makes sense — and where we speak up if a task is too heavy or we need help.  <br> <br>
+**volunteering together, on your terms**.
 :::
 
 :::u-page-card
