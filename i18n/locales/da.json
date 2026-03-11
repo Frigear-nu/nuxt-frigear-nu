@@ -247,7 +247,7 @@
       "description": "En beskrivelse",
       "contactInfo": {
         "label": "Kontakt Info",
-        "description": "Om deg, der søger",
+        "description": "Om dig, der søger",
         "fullName": {
           "label": "Fuldt navn",
           "placeholder": "Hej, hva hedder du?"
