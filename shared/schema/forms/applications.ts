@@ -93,13 +93,13 @@ If your project has multiple parts that can be supported, with different budgets
       icon: 'i-lucide-book-text',
       labelKey: 'form.application.contactInfo.label',
       hint: {
-        da: 'Dette er for personlige detaljer om den som sender skjemaet.',
+        da: 'Dette er for personlige detaljer om den som sender skemaet.',
         en: 'This step is for personal details about the person submitting the form.',
       },
       schema: z.object({
         fullName: z.string().meta({
           hint: {
-            da: 'Dit fulle navn',
+            da: 'Dit fulde navn',
             en: 'Your full name',
           },
         }),
