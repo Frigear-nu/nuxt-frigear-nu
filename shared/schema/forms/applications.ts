@@ -228,25 +228,13 @@ export const testApplicationForm = defineSteppedForm({
       },
       schema: z.object({
         other: z.string().meta({
-          title: 'form.application.background',
+          // you can use i18n manually
+          // title: 'form.application.background',
           type: 'textarea',
           placeholder: 'enter some text',
         }),
       }),
     },
-    // {
-    //   id: 'background',
-    //   icon: 'i-lucide-book-text',
-    //   labelKey: '**HELLO**',
-    //   hint: 'TEst info detail no custom icon',
-    //   schema: z.object({
-    //     background: z.string().meta({
-    //       title: 'form.application.background',
-    //       type: 'textarea',
-    //       placeholder: 'enter some text',
-    //     }),
-    //   }),
-    // },
     {
       id: 'finish',
       labelKey: 'FINISHED',
