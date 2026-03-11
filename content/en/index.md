@@ -15,8 +15,14 @@ orientation: horizontal
 [{{ $doc.title }}]{.fancy-text} :br
 
   :::typewriter-effect
-  Non-profit
-  Volunteer now
+  Nonprofit
+  Volunteer run
+  Project funding
+  Volunteer organization
+  Event production
+  For the common good
+  You wanna join?
+  Become a volunteer!
   :::
 
 #links
@@ -27,7 +33,7 @@ orientation: horizontal
   to: /#contact
   variant: subtle
   ---
-  Contact us
+  Get in touch
   :::
 
   :::u-button{color="primary" size="xl" to="/pricing"}

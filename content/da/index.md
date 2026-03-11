@@ -20,7 +20,7 @@ orientation: horizontal
   Frivilligdrevet
   Projekstøtte
   Frivilligforening
-  Projektafvikling
+  Event produktion
   Almennyttigt
   Skal du med?
   Bliv frivillig!
