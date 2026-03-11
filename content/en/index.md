@@ -1,15 +1,16 @@
 ---
 title: Frigear
+links: []
 seo:
   title: frigear.nu
-  description: ""
+  description: Frigear is a nonprofit organization, solely run by volunteers.
 ---
 
 ::u-page-hero
 ---
 orientation: horizontal
 ---
-:nuxt-img{.rounded-full.p-4.dark:bg-neutral-800.bg-neutral-200.w-fit.md:max-w-full.mx-auto :height='250' :width='250' alt="Frigear logo" format="webp" quality="70" src="/logo-with-rf-bg.jpg"}
+:nuxt-img{.rounded-full .p-4 .dark:bg-neutral-800 .bg-neutral-200 .w-fit .md:max-w-full .mx-auto :height='250' :width='250' alt="Frigear logo" format="webp" quality="70" src="/logo-with-rf-bg.jpg"}
 
 #title
 [{{ $doc.title }}]{.fancy-text} :br
@@ -29,19 +30,26 @@ orientation: horizontal
   :::u-button
   ---
   color: primary
+  icon: i-carbon-email
   size: xl
-  to: /#contact
+  to: /en/#contact
   variant: subtle
   ---
   Get in touch
   :::
 
-  :::u-button{color="primary" size="xl" to="/pricing"}
-  Become a member
+  :::u-button
+  ---
+  color: primary 
+  size: xl 
+  to: /en/membership
+  trailing-icon: i-lucide-arrow-right
+  ---
+  Membership
   :::
 ::
 
-::u-container{#contact .mb-4.flex.flex-col.lg:flex-row.md:justify-between.gap-4}
+::u-container{#contact .mb-6 .sm:mb-4 .flex .flex-col .lg:flex-row .md:justify-between .gap-2 .sm:gap-4 .px-1 .sm:px-3 .md:px-4 .lg:px-6}
   :::u-page-feature
   #title
   Contact us
@@ -52,7 +60,7 @@ orientation: horizontal
 
   :u-separator
 
-    ::::div{.my-2.flex.gap-2}
+    ::::div{.mb-4 .sm:mb-2 .mt-4 .sm:mt-2 .flex .gap-2}
       :::::u-button
       ---
       title: Frigear Instagram
@@ -110,7 +118,13 @@ orientation: horizontal
     ::::
   :::
 
-  :::u-card{.w-full.lg:w-lg variant="subtle"}
+  :::u-card{.w-full .lg:w-lg}
+  ---
+  variant: subtle
+  ui:
+    body: p-2 sm:p-4
+  ---
+  
   :site-contact-form
   :::
 ::
