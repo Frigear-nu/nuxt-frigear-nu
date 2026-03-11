@@ -26,27 +26,27 @@ ui:
   title: text-3xl sm:text-4xl lg:text-5xl
 ---
 #title
-How to apply for Frigear funding 💰
+Sådan ansøger du om Frigear-støtte 💰
 
 
 #description
-If your project has multiple parts that can be supported, with different budgets to get it flying, -you can run through the form and submit the information relevant for this specifically, and at the end you will have the option to apply again for another budget under same project.
+Hvis dit projekt har flere dele, der kan støttes med forskellige budgetter for at komme i luften, kan du udfylde formularen og indsende de oplysninger, der er relevante for netop denne del – og til sidst vil du have mulighed for at ansøge igen om et andet budget under samme projekt.
 ::
 
 
 
 ::accordion
-  :::accordion-item{label="Application Examples" icon="i-lucide-info"}
+  :::accordion-item{label="Ansøgningseksempler" icon="i-lucide-info"}
   
-  ### Different budgets for the same endgoal:
-  >_We want to build a complete skatepark for our community_
+  ### Forskellige budgetter for samme slutmål:
+  >_Vi vil bygge et komplet skatepark til vores lokalsamfund_
   
-  **_First Application_** :br
-  **1.** Full skatepark - Budget: 350k :br
-  **_Another Application_** :br
-  **2.** One halfpipe ramp - Budget: 25k :br
-  **_Yet Another Application_** :br
-  **3.** Buy 5 rails - Budget: 5k :br
+  **_Første ansøgning_** :br
+  **1.** Fuldt skatepark – Budget: 350k :br
+  **_Endnu en ansøgning_** :br
+  **2.** Én halfpipe-rampe – Budget: 25k :br
+  **_Yderligere en ansøgning_** :br
+  **3.** Køb 5 rails – Budget: 5k :br
   :::
 ::
 `,
