@@ -16,11 +16,14 @@ description:
   en: General Assembly for Frigear members 2026
 # Replaces ${var_name} in the correct environment.
 variables:
-  # FIXME: PRODUCTION Stripe IDs in real prod.
   production:
-    default_ticket_stripe_id: prod_U4Vt3O4SjcmteT
-    carnivore_stripe_id: prod_U4VuMoboxBgNup
-    vegetarian_stripe_id: prod_U4VvR7GRmWTvTa
+    default_ticket_stripe_id: prod_U4VmvOsK6N77at
+    carnivore_stripe_id: prod_U30CCwoLfWM9cv
+    vegetarian_stripe_id: prod_U30NvkM8xzL3Sh
+  staging:
+    default_ticket_stripe_id: prod_U86IiINi4lfa2w
+    carnivore_stripe_id: price_1T9q7PKA7HeOLrjzrwffbOcW
+    vegetarian_stripe_id: price_1T9q7PKA7HeOLrjznM4mfAdf
   development:
     default_ticket_stripe_id: prod_U3cYQWfWJTh40Q
     carnivore_stripe_id: prod_U3ceq0o7yfwf66
