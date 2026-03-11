@@ -82,7 +82,7 @@ export type FormStep<TSchema extends ZodType = ZodType> = {
   descriptionKey?: string
   schema: TSchema
   fields?: FormFieldDef[]
-  info?: TranslationValue | { content: TranslationValue, icon?: string }
+  hint?: TranslationValue | { content: TranslationValue, icon?: string }
 }
 
 export type SteppedForm<TSteps extends FormStep[]> = {

@@ -180,7 +180,7 @@ export const testApplicationForm = defineSteppedForm({
       id: 'first',
       icon: 'i-lucide-book-text',
       labelKey: '**HELLO**',
-      info: {
+      hint: {
         icon: 'i-lucide-book-text',
         content: 'This is the [MARKDOWN]{.text-primary} description of this step!',
       },
@@ -192,23 +192,27 @@ export const testApplicationForm = defineSteppedForm({
         }),
       }),
     },
-    {
-      id: 'background',
-      icon: 'i-lucide-book-text',
-      labelKey: '**HELLO**',
-      info: 'TEst info detail no custom icon',
-      schema: z.object({
-        background: z.string().meta({
-          title: 'form.application.background',
-          type: 'textarea',
-          placeholder: 'enter some text',
-        }),
-      }),
-    },
+    // {
+    //   id: 'background',
+    //   icon: 'i-lucide-book-text',
+    //   labelKey: '**HELLO**',
+    //   hint: 'TEst info detail no custom icon',
+    //   schema: z.object({
+    //     background: z.string().meta({
+    //       title: 'form.application.background',
+    //       type: 'textarea',
+    //       placeholder: 'enter some text',
+    //     }),
+    //   }),
+    // },
     {
       id: 'finish',
       labelKey: 'FINISHED',
       schema: z.object({
+        files: z.array(z.file()).meta({
+          type: 'file',
+          multiple: true,
+        }),
         acceptTerms,
       }),
     },

@@ -35,7 +35,8 @@ export default defineNuxtConfig({
     hub: {
       blob: {
         driver: 'cloudflare-r2',
-        bucketName: process.env.HUB_BLOB_BUCKET_NAME || 'blob-frigear-nu',
+        // this is not defined because then it will be defined twice in wrangler.json
+        // bucketName: process.env.HUB_BLOB_BUCKET_NAME || 'blob-frigear-nu',
         binding: 'BLOB',
       },
     },

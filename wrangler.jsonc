@@ -22,7 +22,7 @@
   "r2_buckets": [
     {
       "bucket_name": "blob-frigear-nu",
-      "jurisdiction": "EU",
+      "jurisdiction": "eu",
       "binding": "BLOB"
     }
   ],
@@ -59,6 +59,7 @@
   },
   "env": {
     "staging": {
+      "name": "staging-frigear-nu",
       "routes": [
         {
           "custom_domain": true,
@@ -77,7 +78,7 @@
       "r2_buckets": [
         {
           "bucket_name": "blob-staging-frigear-nu",
-          "jurisdiction": "EU",
+          "jurisdiction": "eu",
           "binding": "BLOB"
         }
       ]
