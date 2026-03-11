@@ -243,12 +243,14 @@
   },
   "form": {
     "application": {
-      "title": "Projectstotte ordning",
-      "description": "Some description",
+      "title": "Projektstøtte ordning",
+      "description": "En beskrivelse",
       "contactInfo": {
         "label": "Kontakt Info",
+        "description": "Om deg, der søger",
         "fullName": {
-          "label": "Fult navn"
+          "label": "Fuldt navn",
+          "placeholder": "Hej, hva hedder du?"
         },
         "email": {
           "label": "E-mail"
@@ -258,31 +260,33 @@
         }
       },
       "organizationInfo": {
+        "title": "Information om organisationen",
         "organizationName": {
-          "label": "Org. Navn"
+          "label": "Org. Navn",
+          "placeholder": "Den stærke organisation"
         },
         "organizationNumber": {
-          "label": "Organization number"
+          "label": "CVR/Org. Nummer"
         },
         "organizationAddress": {
-          "label": "Organization address"
+          "label": "Organisationsadresse"
         },
         "accountableParties": {
-          "label": "Accountable parties"
+          "label": "Ansvarlige parter"
         },
         "organizationEmail": {
           "label": "E-mail"
         },
         "organizationPhone": {
-          "label": "Phone"
+          "label": "Telefon"
         }
       },
       "organizationAbout": {
         "organizationAbout": {
-          "label": "About organization"
+          "label": "Om organisationen"
         },
         "organizationWebsite": {
-          "label": "Website"
+          "label": "Hjemmeside"
         },
         "organizationFacebook": {
           "label": "Facebook"
@@ -302,25 +306,25 @@
       },
       "financialInfo": {
         "bankName": {
-          "label": "Bank name"
+          "label": "Banknavn"
         },
         "regNr": {
           "label": "Reg. Nr."
         },
         "accountNumber": {
-          "label": "Konto nummer"
+          "label": "Kontonummer"
         },
         "annualBudget": {
-          "label": "Annual budget"
+          "label": "Årligt budget"
         },
         "ownContribution": {
-          "label": "Own contribution"
+          "label": "Eget bidrag"
         },
         "paidStaffAmount": {
-          "label": "Paid staff amount"
+          "label": "Antal lønnede medarbejdere"
         },
         "financialPatrons": {
-          "label": "Financial patrons"
+          "label": "Finansielle støtter"
         }
       },
       "branding": {
@@ -328,13 +332,13 @@
           "label": "Logo"
         },
         "relevantImages": {
-          "label": "Relevant images"
+          "label": "Relevante billeder"
         },
         "threeLineOrgPitch": {
-          "label": "3-line organization pitch"
+          "label": "3-linjers organisationspitch"
         },
         "otherMedia": {
-          "label": "Other media"
+          "label": "Andet medie"
         }
       }
     }
