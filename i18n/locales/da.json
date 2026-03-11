@@ -245,14 +245,96 @@
     "application": {
       "title": "Projectstotte ordning",
       "description": "Some description",
-      "background": {
-        "background": {
-          "label": "Bagrund",
-          "description": "Hvad er bagrunnen for at i soger?",
-          "placeholder": "This one has a placeholder"
+      "contactInfo": {
+        "label": "Kontakt Info",
+        "fullName": {
+          "label": "Fult navn"
         },
-        "purpose": {
-          "label": "HELLO World!"
+        "email": {
+          "label": "E-mail"
+        },
+        "phone": {
+          "label": "Telefon"
+        }
+      },
+      "organizationInfo": {
+        "organizationName": {
+          "label": "Org. Navn"
+        },
+        "organizationNumber": {
+          "label": "Organization number"
+        },
+        "organizationAddress": {
+          "label": "Organization address"
+        },
+        "accountableParties": {
+          "label": "Accountable parties"
+        },
+        "organizationEmail": {
+          "label": "E-mail"
+        },
+        "organizationPhone": {
+          "label": "Phone"
+        }
+      },
+      "organizationAbout": {
+        "organizationAbout": {
+          "label": "About organization"
+        },
+        "organizationWebsite": {
+          "label": "Website"
+        },
+        "organizationFacebook": {
+          "label": "Facebook"
+        },
+        "organizationInstagram": {
+          "label": "Instagram"
+        },
+        "organizationTikTok": {
+          "label": "TikTok"
+        },
+        "organizationYoutube": {
+          "label": "YouTube"
+        },
+        "organizationLinkedIn": {
+          "label": "LinkedIn"
+        }
+      },
+      "financialInfo": {
+        "bankName": {
+          "label": "Bank name"
+        },
+        "regNr": {
+          "label": "Reg. Nr."
+        },
+        "accountNumber": {
+          "label": "Konto nummer"
+        },
+        "annualBudget": {
+          "label": "Annual budget"
+        },
+        "ownContribution": {
+          "label": "Own contribution"
+        },
+        "paidStaffAmount": {
+          "label": "Paid staff amount"
+        },
+        "financialPatrons": {
+          "label": "Financial patrons"
+        }
+      },
+      "branding": {
+        "logo": {
+          "label": "Logo"
+        },
+        "relevantImages": {
+          "label": "Relevant images"
+        },
+        "threeLineOrgPitch": {
+          "label": "3-line organization pitch"
+        },
+        "otherMedia": {
+          "label": "Other media"
         }
       }
     }

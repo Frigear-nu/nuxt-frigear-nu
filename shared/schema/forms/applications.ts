@@ -17,7 +17,40 @@ export const projectApplicationForm = defineSteppedForm({
         description: z.string().optional().meta({
           type: 'markdown-value',
           content: {
-            da: 'Switch to english to see content...',
+            da: `
+::u-page-section
+---
+class: py-0
+ui:
+  container: py-0 sm:py-0 lg:py-0
+  title: text-3xl sm:text-4xl lg:text-5xl
+---
+#title
+How to apply for Frigear funding 💰
+
+
+#description
+If your project has multiple parts that can be supported, with different budgets to get it flying, -you can run through the form and submit the information relevant for this specifically, and at the end you will have the option to apply again for another budget under same project.
+::
+
+
+
+::accordion
+  :::accordion-item{label="Application Examples" icon="i-lucide-info"}
+  
+  ### Different budgets for the same endgoal:
+  >_We want to build a complete skatepark for our community_
+  
+  **_First Application_** :br
+  **1.** Full skatepark - Budget: 350k :br
+  **_Another Application_** :br
+  **2.** One halfpipe ramp - Budget: 25k :br
+  **_Yet Another Application_** :br
+  **3.** Buy 5 rails - Budget: 5k :br
+  :::
+::
+`,
+            // ENGLISH:
             en: `
 ::u-page-section
 ---
@@ -50,7 +83,7 @@ If your project has multiple parts that can be supported, with different budgets
   **3.** Buy 5 rails - Budget: 5k :br
   :::
 ::
-            `,
+`,
           },
         }),
       }),
@@ -60,11 +93,15 @@ If your project has multiple parts that can be supported, with different budgets
       icon: 'i-lucide-book-text',
       labelKey: 'form.application.contactInfo.label',
       hint: {
+        da: 'Dette er for personlige detaljer om den som sender skjemaet.',
         en: 'This step is for personal details about the person submitting the form.',
       },
       schema: z.object({
         fullName: z.string().meta({
-          hint: 'This is without translation hint!',
+          hint: {
+            da: 'Dit fulle navn',
+            en: 'Your full name',
+          },
         }),
         email: z.email().meta({
           hint: {
@@ -110,7 +147,12 @@ If your project has multiple parts that can be supported, with different budgets
         accountNumber: z.string(),
         annualBudget: z.number(),
         ownContribution: z.number(),
-        paidStaffAmount: z.number(),
+        paidStaffAmount: z.number().meta({
+          hint: {
+            da: 'Personale med betaling',
+            en: 'Paid staff',
+          },
+        }),
         financialPatrons: z.string().meta({
           type: 'textarea',
         }),
