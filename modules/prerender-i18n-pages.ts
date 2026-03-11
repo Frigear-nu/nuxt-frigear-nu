@@ -1,27 +1,27 @@
 import { defineNuxtModule, useNuxt, logger } from '@nuxt/kit'
 import { withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'ufo'
 
-const log = logger.withTag('i18n-preload')
+const log = logger.withTag('i18n-prerender')
 
 /**
  * This module
  */
 export default defineNuxtModule({
   meta: {
-    name: 'i18n-preload',
-    configKey: 'i18nPreload',
+    name: 'i18n-prerender',
+    configKey: 'i18nPrerender',
   },
   hooks: {
     'nitro:config'(nitroConfig) {
       const nuxt = useNuxt()
       if (nuxt.options.dev) {
-        log.warn('Not initializing prerender, dev: true')
+        log.warn('Not initializing i18n prerender, dev: true')
         return
       }
 
       const i18nOptions = nuxt.options.i18n
       if (!i18nOptions) {
-        log.warn('No i18n options found, skipping prerender route generation')
+        log.warn('No i18n options found, skipping i18n prerender route generation')
         return
       }
 
