@@ -34,6 +34,7 @@ orientation: horizontal
   size: xl
   to: /#contact
   variant: subtle
+  class: flex-1 justify-center
   ---
   Kontakt os
   :::
@@ -44,6 +45,7 @@ orientation: horizontal
   size: xl
   to: /membership
   trailing-icon: i-lucide-arrow-right
+  class: flex-1 justify-center
   ---
   Bliv medlem
   :::

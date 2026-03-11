@@ -34,6 +34,7 @@ orientation: horizontal
   size: xl
   to: /en/#contact
   variant: subtle
+  class: flex-1 justify-center
   ---
   Get in touch
   :::
@@ -44,6 +45,7 @@ orientation: horizontal
   size: xl 
   to: /en/membership
   trailing-icon: i-lucide-arrow-right
+  class: flex-1 justify-center
   ---
   Membership
   :::
