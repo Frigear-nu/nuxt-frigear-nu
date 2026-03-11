@@ -37,30 +37,33 @@ export default defineNuxtModule({
         typeof locale === 'string' ? locale : locale.code,
       )
 
-      if (locales) {
-        for (const route of nitroConfig.prerender.routes) {
-          // skip the default locale root page. e.g `/da`
-          if (!route || route === withLeadingSlash(defaultLocale)) continue
+      if (!locales) {
+        log.warn('No locales found: skipping.')
+        return
+      }
 
-          const candidates = locales
-            .filter((locale) => {
-              return (
+      for (const route of nitroConfig.prerender.routes) {
+        // skip the default locale root page. e.g `/da`
+        if (!route || route === withLeadingSlash(defaultLocale)) continue
+
+        const candidates = locales
+          .filter((locale) => {
+            return (
               // not default locale
-                locale !== defaultLocale
-                // todo: this might be wrong for some routes...
-                && !route.startsWith(withLeadingSlash(locale) + '/')
-              )
-            })
-            .map((locale) => {
-              const prefixed = withLeadingSlash(joinRelativeURL(locale, route))
-              return prefixed === '/'
-                ? prefixed
-                : withoutTrailingSlash(prefixed)
-            })
+              locale !== defaultLocale
+              // todo: this might be wrong for some routes...
+              && !route.startsWith(withLeadingSlash(locale) + '/')
+            )
+          })
+          .map((locale) => {
+            const prefixed = withLeadingSlash(joinRelativeURL(locale, route))
+            return prefixed === '/'
+              ? prefixed
+              : withoutTrailingSlash(prefixed)
+          })
 
-          for (const candidate of candidates) {
-            routesToPrerender.add(candidate)
-          }
+        for (const candidate of candidates) {
+          routesToPrerender.add(candidate)
         }
       }
 
