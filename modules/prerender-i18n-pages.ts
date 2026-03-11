@@ -15,13 +15,13 @@ export default defineNuxtModule({
     'nitro:config'(nitroConfig) {
       const nuxt = useNuxt()
       if (nuxt.options.dev) {
-        log.warn('Not initializing i18n prerender, dev: true')
+        log.warn('Not initializing prerender, dev: true')
         return
       }
 
       const i18nOptions = nuxt.options.i18n
       if (!i18nOptions) {
-        log.warn('No i18n options found, skipping i18n prerender route generation')
+        log.warn('No i18n options found, skipping prerender route generation')
         return
       }
 
@@ -33,11 +33,11 @@ export default defineNuxtModule({
       nitroConfig.prerender.ignore = nitroConfig.prerender.ignore || []
 
       const routesToPrerender = new Set<string>()
-      const locales = i18nOptions.locales?.map(locale =>
+      const localeCodes = i18nOptions.locales?.map(locale =>
         typeof locale === 'string' ? locale : locale.code,
       )
 
-      if (!locales) {
+      if (!localeCodes) {
         log.warn('No locales found: skipping.')
         return
       }
@@ -46,7 +46,7 @@ export default defineNuxtModule({
         // skip the default locale root page. e.g `/da`
         if (!route || route === withLeadingSlash(defaultLocale)) continue
 
-        const candidates = locales
+        const candidates = localeCodes
           .filter((locale) => {
             return (
               // not default locale
