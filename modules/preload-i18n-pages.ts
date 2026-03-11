@@ -34,13 +34,8 @@ export default defineNuxtModule({
 
         if (locales) {
           for (const route of nitroConfig.prerender.routes) {
-            if (!route) continue
-
-            // Skip routes that are just a locale code (e.g. "/da", "/en")
-            const isLocaleRoute = locales.some(
-              locale => withLeadingSlash(locale) === route,
-            )
-            if (isLocaleRoute) continue
+            // skip the default locale root page. e.g `/da`
+            if (!route || route === withLeadingSlash(defaultLocale)) continue
 
             const candidates = locales
               .filter((locale) => {
@@ -53,11 +48,9 @@ export default defineNuxtModule({
               })
               .map((locale) => {
                 const prefixed = withLeadingSlash(joinRelativeURL(locale, route))
-                if (prefixed === '/') {
-                  return prefixed
-                }
-
-                return withoutTrailingSlash(prefixed)
+                return prefixed === '/'
+                  ? prefixed
+                  : withoutTrailingSlash(prefixed)
               })
 
             for (const candidate of candidates) {
