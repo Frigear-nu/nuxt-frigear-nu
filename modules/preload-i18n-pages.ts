@@ -13,11 +13,12 @@ export default defineNuxtModule({
   },
   hooks: {
     'nitro:config'(nitroConfig) {
-      if (nitroConfig.dev) {
+      const nuxt = useNuxt()
+      if (nuxt.options.dev) {
         log.warn('Not initializing prerender, dev: true')
         return
       }
-      const nuxt = useNuxt()
+
       const i18nOptions = nuxt.options.i18n
       const defaultLocale = i18nOptions.defaultLocale
       nitroConfig.prerender = nitroConfig.prerender || {}
