@@ -1,5 +1,5 @@
 import { defineNuxtModule, useNuxt, logger } from '@nuxt/kit'
-import { withLeadingSlash, joinRelativeURL } from 'ufo'
+import { withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'ufo'
 
 const log = logger.withTag('i18n-preload')
 
@@ -22,6 +22,9 @@ export default defineNuxtModule({
       const defaultLocale = i18nOptions.defaultLocale
       nitroConfig.prerender = nitroConfig.prerender || {}
       nitroConfig.prerender.routes = nitroConfig.prerender.routes || []
+      // TODO: We should probably include common pages to NOT be pre-rendered,
+      // this must include the locale prefix too otherwise it will still prerender those paths.
+      nitroConfig.prerender.ignore = nitroConfig.prerender.ignore || []
 
       if (i18nOptions) {
         const routesToPrerender = new Set<string>()
@@ -44,15 +47,17 @@ export default defineNuxtModule({
                 return (
                   // not default locale
                   locale !== defaultLocale
+                  // todo: this might be wrong for some routes...
                   && !route.startsWith(withLeadingSlash(locale) + '/')
                 )
               })
               .map((locale) => {
                 const prefixed = withLeadingSlash(joinRelativeURL(locale, route))
-                // Avoid "/en/" — normalize to "/en"
-                return prefixed.endsWith('/') && prefixed !== '/'
-                  ? prefixed.slice(0, -1)
-                  : prefixed
+                if (prefixed === '/') {
+                  return prefixed
+                }
+
+                return withoutTrailingSlash(prefixed)
               })
 
             for (const candidate of candidates) {
@@ -65,7 +70,10 @@ export default defineNuxtModule({
           ...nitroConfig.prerender.routes,
           ...routesToPrerender,
         ])]
-        console.log('prerender', nitroConfig.prerender.routes)
+
+        if (nuxt.options.dev) {
+          console.log('routes to prerender: ', nitroConfig.prerender.routes)
+        }
       }
     },
   },
