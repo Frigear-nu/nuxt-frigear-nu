@@ -12,10 +12,10 @@
   },
   "d1_databases": [
     {
-      "database_id": "03188510-ac62-4ffb-80dd-0d9912aa3d55",
+      "database_id": "d82135a0-bf5a-4ce3-8d9d-ca7d5fa26f49",
       "binding": "DB",
       "migrations_table": "_hub_migrations",
-      "database_name": "nuxt-frigear-nu",
+      "database_name": "frigear-nu",
       "migrations_dir": ".output/server/db/migrations/sqlite"
     }
   ],
@@ -30,11 +30,8 @@
   "routes": [
     {
       "custom_domain": true,
-      "pattern": "nuxt.frigear.dev"
-    },
-    {
-      "custom_domain": true,
-      // TODO: make this frigear.nu for production
+      // TODO: 1. before production release we must remove current DNS for frigear.nu
+      // TODO: 2. make this frigear.nu for real production release
       "pattern": "nuxt.frigear.nu"
     }
   ],

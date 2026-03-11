@@ -135,7 +135,7 @@ Volunteering should be sustainable over time.
 With us, there’s room for everyday life, breaks, and periods with lower energy — that’s completely normal, and it should be okay to say no.
 
 We aim for **realistic ambitions**, clear frameworks, and a culture where you contribute in a way that makes sense — and where we speak up if a task is too heavy or we need help.  <br> <br>
-**volunteering together, on your terms**.
+**volunteering together, -on your terms**.
 :::
 
 :::u-page-card
