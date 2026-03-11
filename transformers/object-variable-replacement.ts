@@ -10,6 +10,7 @@ export default defineTransformer({
     const { id, __metadata, ...properties } = file
     const variables = (file?.variables || {}) as Record<string, ValidValue>
     const rootVariableKeys = Object.keys(variables)
+    let variablesToReplace: Record<string, ValidValue> = variables
 
     //
     if (rootVariableKeys.length === 0) return file
@@ -18,9 +19,9 @@ export default defineTransformer({
       ? typeof variables[rootVariableKeys[0]] === 'object'
       : false
 
-    let variablesToReplace: Record<string, ValidValue> = variables
-    const environment = ['production', 'staging', 'development'].includes(process.env.NODE_ENV || '')
-      ? process.env.NODE_ENV as 'production' | 'staging' | 'development'
+    const rawEnvName = process.env?.CLOUDFLARE_ENV || process.env.NODE_ENV || ''
+    const environment = ['production', 'staging', 'development'].includes(rawEnvName)
+      ? rawEnvName as 'production' | 'staging' | 'development'
       : 'production'
 
     // ...

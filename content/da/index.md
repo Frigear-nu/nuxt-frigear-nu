@@ -3,24 +3,24 @@ title: Frigear
 links: []
 seo:
   title: frigear.nu
-  description: Frigear er en non-profit som er udviklet af frivillige.
+  description: Frigear er en non-profit organisation, udelukkende drevet af frivillige.
 ---
 
 ::u-page-hero
 ---
 orientation: horizontal
 ---
-:nuxt-img{.rounded-full.p-4.dark:bg-neutral-800.bg-neutral-200.w-fit.md:max-w-full.mx-auto :height='320' :width='320' alt="Frigear logo" format="webp" quality="70" src="/logo-with-rf-bg.jpg"}
+:nuxt-img{.rounded-full .p-4 .dark:bg-neutral-800 .bg-neutral-200 .w-fit .md:max-w-full .mx-auto :height='320' :width='320' alt="Frigear logo" format="webp" quality="70" src="/logo-with-rf-bg.jpg"}
 
 #title
-[{{ $doc.title }}]{.fancy-text}
+[{{ $doc.title }}]{.fancy-text} :br
 
   :::typewriter-effect
   Nonprofit
   Frivilligdrevet
   Projekstøtte
   Frivilligforening
-  Projektafvikling
+  Event produktion
   Almennyttigt
   Skal du med?
   Bliv frivillig!
@@ -49,7 +49,7 @@ orientation: horizontal
   :::
 ::
 
-::u-container{#contact .mb-4.flex.flex-col.lg:flex-row.md:justify-between.gap-4}
+::u-container{#contact .mb-6 .sm:mb-4 .flex .flex-col .lg:flex-row .md:justify-between .gap-2 .sm:gap-4 .px-1 .sm:px-3 .md:px-4 .lg:px-6}
   :::u-page-feature
   #title
   Kontakt os
@@ -60,7 +60,7 @@ orientation: horizontal
 
   :u-separator
 
-    ::::div{.my-2.flex.gap-2}
+    ::::div{.mb-4 .sm:mb-2 .mt-4 .sm:mt-2 .flex .gap-2}
       :::::u-button
       ---
       title: Frigear Instagram
@@ -118,7 +118,13 @@ orientation: horizontal
     ::::
   :::
 
-  :::u-card{.w-full.lg:w-lg variant="subtle"}
+  :::u-card{.w-full .lg:w-lg}
+  ---
+  variant: subtle
+  ui:
+    body: p-2 sm:p-4
+  ---
+
   :site-contact-form
   :::
 ::

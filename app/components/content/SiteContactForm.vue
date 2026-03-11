@@ -234,13 +234,13 @@ function onError(event: FormErrorEvent) {
           <USelect
             v-model="state.phonePrefix"
             :items="phonePrefixes"
-            class="w-3/12 "
+            class="w-4/12 sm:w-3/12"
           />
           <UInput
             v-model="state.phone"
             :placeholder="t('contact.form.phone.placeholder')"
             autocomplete="tel"
-            class="w-9/12 "
+            class="w-8/12 sm:w-9/12"
           />
         </UFieldGroup>
         <template #help>
