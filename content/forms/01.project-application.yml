@@ -28,7 +28,7 @@ resubmittable:
     - organizationAbout.organizationFacebook
     - organizationAbout.organizationInstagram
     - organizationAbout.organizationTikTok
-    - organizationAbout.organizationYoutube
+    - organizationAbout.organizationYouTube
     - organizationAbout.organizationLinkedIn
     - financialInfo.bankName
     - financialInfo.regNr
