@@ -112,7 +112,7 @@
         "label": "E-mail",
         "description": "Din awesome e-mail.",
         "change": {
-          "title": "Skift  e-mail",
+          "title": "Skift din e-mail",
           "label": "Ny e-mail"
         }
       },
