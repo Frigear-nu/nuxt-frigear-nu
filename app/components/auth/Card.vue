@@ -192,7 +192,7 @@ function onPasswordResetError(err: Error) {
         variant="link"
         to="/"
         class="flex-1 justify-center bg-accented/10 border border-accented text-toned/60"
-        :ui="{ base: 'gap-8' }"
+        :ui="{ base: 'gap-4' }"
       >
         {{ $t('actions.cancel') }}
       </UButton>
@@ -201,7 +201,7 @@ function onPasswordResetError(err: Error) {
         trailing-icon="i-lucide-arrow-right"
         variant="subtle"
         class="flex-1 justify-center"
-        :ui="{ base: 'gap-8' }"
+        :ui="{ base: 'gap-4' }"
         @click="mode = mode === 'up' ? 'in' : 'up'"
       >
         {{ mode === 'in' ? $t('auth.signUp') : $t('auth.signIn') }}
