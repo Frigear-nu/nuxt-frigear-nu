@@ -155,14 +155,13 @@ const fieldProps = computed(() => {
         :title="$t('common.information')"
         :ui="{ footer: 'justify-end' }"
       >
-        <UTooltip :text="translatedProperty(field.meta.hint)">
-          <UButton
-            size="sm"
-            icon="i-lucide-info"
-            variant="link"
-            color="neutral"
-          />
-        </UTooltip>
+        <UButton
+          size="sm"
+          icon="i-lucide-info"
+          variant="link"
+          color="neutral"
+          :title="translatedProperty(field.meta.hint)"
+        />
         <template #body>
           {{ translatedProperty(field.meta.hint) }}
         </template>
