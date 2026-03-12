@@ -148,7 +148,7 @@ function onPasswordResetError(err: Error) {
       @submit="onSubmit"
     >
       <template #description>
-        {{ mode === 'up' ? 'Already have an account?' : 'Don\'t have an account?' }}
+        {{ mode === 'up' ? $t('auth.alreadyHaveAnAccount') : $t('auth.dontHaveAnAccount') }}
         <ULink
           class="text-primary font-medium"
           @click="mode = mode === 'up' ? 'in' : 'up'"

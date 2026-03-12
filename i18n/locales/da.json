@@ -10,13 +10,15 @@
     "signOut": "Log ud",
     "dashboard": "Konto",
     "signedInAs": "Logget ind som",
+    "dontHaveAnAccount": "Har du ik' en Frigear konto endnu? ➜",
+    "alreadyHaveAnAccount": "Har du allerede en Frigear konto? ➜",
     "name": {
       "label": "Navn",
       "placeholder": "Navn Navnesen"
     },
     "email": {
       "label": "E-mail",
-      "placeholder": "frivillig-helt{'@'}et-domain.lol",
+      "placeholder": "frivillig-helt{'@'}domain.lol",
       "sent": {
         "title": "E-mail sendt!",
         "description": "Vi har sendt dig en e-mail. Tjek lige din inbox eller spam.",
@@ -24,12 +26,12 @@
       }
     },
     "password": {
-      "label": "Dit mega svære kodeord",
+      "label": "Dit mega svære password",
       "placeholder": "********"
     },
     "forgotPassword": {
-      "title": "Glemt kodeord?",
-      "submit": "Gendan kodeord"
+      "title": "Glemt password?",
+      "submit": "Gendan password"
     },
     "magicLink": {
       "title": "Magic Link",
@@ -144,10 +146,10 @@
     },
     "security": {
       "title": "Sikkerhed",
-      "description": "Skift kodeord, Social login etc.",
+      "description": "Skift password, Social login etc.",
       "password": {
-        "title": "Kodeord",
-        "description": "Skift dit kodeord."
+        "title": "password",
+        "description": "Skift dit password."
       }
     }
   },

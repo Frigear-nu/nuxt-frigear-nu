@@ -10,6 +10,8 @@
     "signOut": "Sign Out",
     "dashboard": "Dashboard",
     "signedInAs": "Signed in as",
+    "dontHaveAnAccount": "Don't have a Frigear account yet? ➜",
+    "alreadyHaveAnAccount": "Already got a Frigear account? ➜",
     "name": {
       "label": "Name",
       "placeholder": "John Doe"
