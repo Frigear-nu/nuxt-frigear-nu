@@ -133,7 +133,7 @@
       "currentPlan": "Nuværende plan:",
       "cancelsAt": "Afsluttes {date}",
       "renewsAutomaticallyAt": "Fornyes automagisk {date}",
-      "cancel": "Annulér medlemskab",
+      "cancel": "Annullér medlemskab",
       "changePaymentMethod": "Skift betalingsmetode",
       "update": {
         "title": "Skift medlemskab",
@@ -148,7 +148,7 @@
       "title": "Sikkerhed",
       "description": "Skift password, Social login etc.",
       "password": {
-        "title": "password",
+        "title": "Password",
         "description": "Skift dit password."
       }
     }
