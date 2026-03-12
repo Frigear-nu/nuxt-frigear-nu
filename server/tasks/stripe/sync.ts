@@ -1,53 +1,27 @@
-import {
-  upsertStripeProduct,
-  upsertStripePrice,
-  upsertStripeCustomer,
-  upsertStripeCustomerSubscription,
-} from '#server/services/stripe-webhooks'
-import { useTaskStripe } from '#server/utils/stripe'
+type KeyedCount<Key extends string> = Record<Key, string>
 
 export default defineTask({
   async run() {
-    const stripe = useTaskStripe()
+    const results = await Promise.allSettled([
+      runTask<KeyedCount<'products'>>('stripe:sync:products'),
+      runTask<KeyedCount<'prices'>>('stripe:sync:prices'),
+      runTask<KeyedCount<'customers'>>('stripe:sync:customers'),
+      runTask<KeyedCount<'subscriptions'>>('stripe:sync:subscriptions'),
+    ])
 
-    const counts = {
-      products: 0,
-      prices: 0,
-      customers: 0,
-      subscriptions: 0,
+    const mappedResult = Object.fromEntries(
+      results
+        .filter(r => r.status === 'fulfilled')
+        .map((r) => {
+          const result = r.value.result as KeyedCount<string>
+          const scope = Object.keys(result)[0]
+          const count = Object.values(result)[0]
+          return [scope, count]
+        }),
+    )
+
+    return {
+      result: mappedResult,
     }
-    // FIXME: this could probably be separate tasks to isolate any failures.
-
-    // 1. fetch all products
-    for await (const product of stripe.products.list({
-      active: true,
-    })) {
-      await upsertStripeProduct(product)
-      counts.products++
-    }
-
-    // 2. Fetch all prices
-    for await (const price of stripe.prices.list({
-      active: true,
-    })) {
-      await upsertStripePrice(stripe, price)
-      counts.prices++
-    }
-
-    // 3. Fetch all customers subscriptions
-    for await (const customer of stripe.customers.list()) {
-      await upsertStripeCustomer(customer)
-      counts.customers++
-    }
-
-    // 4. Fetch all subscriptions
-    for await (const subscription of stripe.subscriptions.list({
-      status: 'active',
-    })) {
-      await upsertStripeCustomerSubscription(subscription)
-      counts.subscriptions++
-    }
-
-    return { result: counts }
   },
 })
