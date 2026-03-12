@@ -85,9 +85,13 @@
   },
   "payment": {
     "interval": {
-      "month": "Month",
-      "quarter": "Quarter",
-      "year": "Year"
+      "month": "Monthly",
+      "quarter": "Quarterly",
+      "year": "Yearly"
+    },
+    "membership": {
+      "subscribe": "Become member",
+      "feeIncluded":"*Payment fees are included in amount"
     }
   },
   "account": {
@@ -235,9 +239,9 @@
     }
   },
   "cart": {
-    "title": "Shopping Cart",
+    "title": "Cart",
     "addedToCart": "{title} was added to your cart.",
-    "removedFromCart": "{title} was removed."
+    "removedFromCart": "{title} stuff was removed."
   },
   "form": {
     "application": {
