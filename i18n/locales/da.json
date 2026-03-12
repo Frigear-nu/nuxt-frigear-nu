@@ -380,14 +380,14 @@
       "invalid_literal": "Ugyldig literal-værdi, forventede {expected}",
       "invalid_return_type": "Ugyldig returtype fra funktion",
       "invalid_string": {
-        "cuid": "Ugyldig {validering}",
-        "datetime": "Ugyldig {validering}",
-        "email": "Ugyldig {validering}",
+        "cuid": "Ugyldig {validation}",
+        "datetime": "Ugyldig {validation}",
+        "email": "Ugyldig {validation}",
         "endsWith": "Ugyldig værdi: skal slutte med \"{endsWith}\"",
         "regex": "Ugyldig",
         "startsWith": "Ugyldig værdi: skal starte med \"{startsWith}\"",
-        "url": "Ugyldig {validering}",
-        "uuid": "Ugyldig {validering}"
+        "url": "Ugyldig {validation}",
+        "uuid": "Ugyldig {validation}"
       },
       "invalid_type": "Forventede {expected}, modtog {received}",
       "invalid_type_received_undefined": "Påkrævet",
