@@ -265,8 +265,18 @@
         "organizationNumber": {
           "label": "Organization number"
         },
-        "organizationAddress": {
-          "label": "Organization address"
+        "organizationAddressStreet": {
+          "label": "Address"
+        },
+        "organizationAddressCo": {
+          "label": "C/O",
+          "description": "A C/O address"
+        },
+        "organizationAddressPostcode": {
+          "label": "Postcode"
+        },
+        "organizationAddressCity": {
+          "label": "City"
         },
         "accountableParties": {
           "label": "Accountable parties"
@@ -294,7 +304,7 @@
         "organizationTikTok": {
           "label": "TikTok"
         },
-        "organizationYoutube": {
+        "organizationYouTube": {
           "label": "YouTube"
         },
         "organizationLinkedIn": {

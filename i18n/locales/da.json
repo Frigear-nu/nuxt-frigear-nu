@@ -268,8 +268,18 @@
         "organizationNumber": {
           "label": "CVR/Org. Nummer"
         },
-        "organizationAddress": {
-          "label": "Organisationsadresse"
+        "organizationAddressStreet": {
+          "label": "Adresse"
+        },
+        "organizationAddressCo": {
+          "label": "C/O",
+          "description": ""
+        },
+        "organizationAddressPostcode": {
+          "label": "Postnummer"
+        },
+        "organizationAddressCity": {
+          "label": "By"
         },
         "accountableParties": {
           "label": "Ansvarlige parter"
@@ -297,7 +307,7 @@
         "organizationTikTok": {
           "label": "TikTok"
         },
-        "organizationYoutube": {
+        "organizationYouTube": {
           "label": "YouTube"
         },
         "organizationLinkedIn": {
