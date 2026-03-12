@@ -4,9 +4,6 @@
     "close": "Close",
     "information": "Information"
   },
-  "dateTime": {
-    "format": "MMM d, yyyy, h:mm aaa"
-  },
   "auth": {
     "signIn": "Sign In",
     "signUp": "Sign Up",
@@ -245,11 +242,12 @@
   "form": {
     "application": {
       "title": "Funding Application",
-      "description": "Request funding for your projects.",
+      "description": "Request funding for your awesome projects.",
       "contactInfo": {
         "label": "Contact info",
         "fullName": {
-          "label": "Full name"
+          "label": "Full name",
+          "placeholder": "Hei, What's your name?"
         },
         "email": {
           "label": "E-mail"
@@ -259,8 +257,10 @@
         }
       },
       "organizationInfo": {
+        "title": "Information about your organization",
         "organizationName": {
-          "label": "Organization name"
+          "label": "Org. name",
+          "placeholder": "Mega hot org-name"
         },
         "organizationNumber": {
           "label": "Organization number"
@@ -270,16 +270,16 @@
         },
         "organizationAddressCo": {
           "label": "C/O",
-          "description": "A C/O address"
+          "description": "Potential C/O address, or Att: person"
         },
         "organizationAddressPostcode": {
-          "label": "Postcode"
+          "label": "Zipcode"
         },
         "organizationAddressCity": {
           "label": "City"
         },
         "accountableParties": {
-          "label": "Accountable parties"
+          "label": "Accountable persons"
         },
         "organizationEmail": {
           "label": "E-mail"
@@ -290,7 +290,8 @@
       },
       "organizationAbout": {
         "organizationAbout": {
-          "label": "About organization"
+          "label": "About organization",
+          "description": "Write a little about what the purpose and mission of your organization is"
         },
         "organizationWebsite": {
           "label": "Website"
@@ -322,30 +323,34 @@
           "label": "Account number"
         },
         "annualBudget": {
-          "label": "Annual budget"
+          "label": "Annual budget",
+          "description": "The entire annual budget of your organization"
         },
         "ownContribution": {
-          "label": "Own contribution"
+          "label": "Own contribution",
+          "description": "How much do you intend to bring to the table for the project yourselves?"
         },
         "paidStaffAmount": {
-          "label": "Paid staff amount"
+          "label": "Paid staff?",
+          "description": "Does your org. have monthly paid, year round staff?"
         },
         "financialPatrons": {
-          "label": "Financial patrons"
+          "label": "Other financial patrons?",
+          "description": "Is parts of the project funded from other parties?"
         }
       },
       "branding": {
         "logo": {
-          "label": "Logo"
+          "label": "Logo(s)"
         },
         "relevantImages": {
           "label": "Relevant images"
         },
         "threeLineOrgPitch": {
-          "label": "3-line organization pitch"
+          "label": "3-line project pitch"
         },
         "otherMedia": {
-          "label": "Other media"
+          "label": "Other media files"
         }
       }
     }
@@ -355,7 +360,7 @@
     "next": "Continue",
     "submit": "Submit",
     "acceptTerms": {
-      "description": "I accept the [terms and conditions](https://example.com/terms-and-conditions) & [privacy policy](https://example.com/privacy-policy)."
+      "description": "I accept Frigear [Terms & Conditions](https://frigear.nu/legal/terms) & [Privacy Policy](https://frigear.nu/legal/gdpr)."
     }
   },
   "zodI18n": {
