@@ -138,7 +138,10 @@ export const transformStripePrice = (p: Stripe.Price): NewStripePrices => {
 
 export const upsertStripePrice = async (stripe: Stripe, price: Stripe.Price) => {
   if (!canIngestPrice(price)) return
-
+  // TODO: Might want to do this more efficiently at some point..
+  // Ensure product exists first
+  const product = await stripe.products.retrieve(price.product as string)
+  await upsertStripeProduct(product)
   const { id, ...remaining } = transformStripePrice(price)
 
   return db
