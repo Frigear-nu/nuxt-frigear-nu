@@ -124,11 +124,12 @@ ui:
         organizationAddressStreet: z.string().meta({
           autocomplete: 'street-address',
         }),
-        organizationAddressCo: z.string().optional(),
-        hint: {
-          en: 'If mailbox doesn´t hold the org. name',
-          da: 'Hvis jeres org. navn ikke frmgår af postkassen.',
-        },
+        organizationAddressCo: z.string().optional().meta({
+          hint: {
+            en: 'If mailbox doesn´t hold the org. name',
+            da: 'Hvis jeres org. navn ikke frmgår af postkassen.',
+          },
+        }),
         organizationAddressPostcode: z.string().meta({
           autocomplete: 'postal-code',
         }),
