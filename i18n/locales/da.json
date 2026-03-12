@@ -205,7 +205,7 @@
       "title": "Kommende arrangementer"
     },
     "detail": {
-      "when": "Når?",
+      "when": "Hvornår?",
       "where": "Hvor?",
       "tickets": {
         "title": "Billetter",
@@ -243,16 +243,112 @@
   },
   "form": {
     "application": {
-      "title": "Projectstotte ordning",
-      "description": "Some description",
-      "background": {
-        "background": {
-          "label": "Bagrund",
-          "description": "Hvad er bagrunnen for at i soger?",
-          "placeholder": "This one has a placeholder"
+      "title": "Projektstøtte ordning",
+      "description": "En beskrivelse",
+      "contactInfo": {
+        "label": "Kontakt Info",
+        "description": "Om dig, der søger",
+        "fullName": {
+          "label": "Fuldt navn",
+          "placeholder": "Hej, hva hedder du?"
         },
-        "purpose": {
-          "label": "HELLO World!"
+        "email": {
+          "label": "E-mail"
+        },
+        "phone": {
+          "label": "Telefon"
+        }
+      },
+      "organizationInfo": {
+        "title": "Information om organisationen",
+        "organizationName": {
+          "label": "Org. Navn",
+          "placeholder": "Den stærke organisation"
+        },
+        "organizationNumber": {
+          "label": "CVR/Org. Nummer"
+        },
+        "organizationAddressStreet": {
+          "label": "Adresse"
+        },
+        "organizationAddressCo": {
+          "label": "C/O",
+          "description": ""
+        },
+        "organizationAddressPostcode": {
+          "label": "Postnummer"
+        },
+        "organizationAddressCity": {
+          "label": "By"
+        },
+        "accountableParties": {
+          "label": "Ansvarlige parter"
+        },
+        "organizationEmail": {
+          "label": "E-mail"
+        },
+        "organizationPhone": {
+          "label": "Telefon"
+        }
+      },
+      "organizationAbout": {
+        "organizationAbout": {
+          "label": "Om organisationen"
+        },
+        "organizationWebsite": {
+          "label": "Hjemmeside"
+        },
+        "organizationFacebook": {
+          "label": "Facebook"
+        },
+        "organizationInstagram": {
+          "label": "Instagram"
+        },
+        "organizationTikTok": {
+          "label": "TikTok"
+        },
+        "organizationYouTube": {
+          "label": "YouTube"
+        },
+        "organizationLinkedIn": {
+          "label": "LinkedIn"
+        }
+      },
+      "financialInfo": {
+        "bankName": {
+          "label": "Banknavn"
+        },
+        "regNr": {
+          "label": "Reg. Nr."
+        },
+        "accountNumber": {
+          "label": "Kontonummer"
+        },
+        "annualBudget": {
+          "label": "Årligt budget"
+        },
+        "ownContribution": {
+          "label": "Eget bidrag"
+        },
+        "paidStaffAmount": {
+          "label": "Antal lønnede medarbejdere"
+        },
+        "financialPatrons": {
+          "label": "Finansielle støtter"
+        }
+      },
+      "branding": {
+        "logo": {
+          "label": "Logo"
+        },
+        "relevantImages": {
+          "label": "Relevante billeder"
+        },
+        "threeLineOrgPitch": {
+          "label": "3-linjers organisationspitch"
+        },
+        "otherMedia": {
+          "label": "Andet medie"
         }
       }
     }

@@ -136,6 +136,7 @@ const fieldProps = computed(() => {
     placeholder: withPlaceholder ? translated('placeholder') : undefined,
     label: !isHiddenFormField ? translated('label') : undefined,
     description: !isHiddenFormField ? translated('description') : undefined,
+    autocomplete: !isHiddenFormField ? props.field.meta?.autocomplete : undefined,
   }
 })
 </script>
@@ -155,14 +156,13 @@ const fieldProps = computed(() => {
         :title="$t('common.information')"
         :ui="{ footer: 'justify-end' }"
       >
-        <UTooltip :text="translatedProperty(field.meta.hint)">
-          <UButton
-            size="sm"
-            icon="i-lucide-info"
-            variant="link"
-            color="neutral"
-          />
-        </UTooltip>
+        <UButton
+          size="sm"
+          icon="i-lucide-info"
+          variant="link"
+          color="neutral"
+          :title="translatedProperty(field.meta.hint)"
+        />
         <template #body>
           {{ translatedProperty(field.meta.hint) }}
         </template>

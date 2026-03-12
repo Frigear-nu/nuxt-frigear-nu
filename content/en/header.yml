@@ -4,13 +4,13 @@ logo:
   dark: /logo-dark.png
   class: h-16 p-1
 navigation:
-  - label: Home
+  - label: HOME
     to: /en/
-  - label: Membership
+  - label: MEMBERSHIP
     to: /en/membership
-  - label: Funding
+  - label: FUNDING
     to: /en/funding
-  - label: About
+  - label: ABOUT
     to: /en/info
-  - label: Events
+  - label: EVENTS
     to: /en/events

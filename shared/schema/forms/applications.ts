@@ -17,7 +17,40 @@ export const projectApplicationForm = defineSteppedForm({
         description: z.string().optional().meta({
           type: 'markdown-value',
           content: {
-            da: 'Switch to english to see content...',
+            da: `
+::u-page-section
+---
+class: py-0
+ui:
+  container: py-0 sm:py-0 lg:py-0
+  title: text-3xl sm:text-4xl lg:text-5xl
+---
+#title
+Sådan ansøger du om Frigear-støtte 💰
+
+
+#description
+Hvis dit projekt har flere dele, der kan støttes med forskellige budgetter for at komme i luften, kan du udfylde formularen og indsende de oplysninger, der er relevante for netop denne del – og til sidst vil du have mulighed for at ansøge igen om et andet budget under samme projekt.
+::
+
+
+
+::accordion
+  :::accordion-item{label="Ansøgningseksempler" icon="i-lucide-info"}
+  
+  ### Forskellige budgetter for samme slutmål:
+  >_Vi vil bygge et komplet skatepark til vores lokalsamfund_
+  
+  **_Første ansøgning_** :br
+  **1.** Fuldt skatepark – Budget: 350k :br
+  **_Endnu en ansøgning_** :br
+  **2.** Én halfpipe-rampe – Budget: 25k :br
+  **_Yderligere en ansøgning_** :br
+  **3.** Køb 5 rails – Budget: 5k :br
+  :::
+::
+`,
+            // ENGLISH:
             en: `
 ::u-page-section
 ---
@@ -50,7 +83,7 @@ If your project has multiple parts that can be supported, with different budgets
   **3.** Buy 5 rails - Budget: 5k :br
   :::
 ::
-            `,
+`,
           },
         }),
       }),
@@ -60,11 +93,15 @@ If your project has multiple parts that can be supported, with different budgets
       icon: 'i-lucide-book-text',
       labelKey: 'form.application.contactInfo.label',
       hint: {
+        da: 'Dette er for personlige detaljer om den som sender skemaet.',
         en: 'This step is for personal details about the person submitting the form.',
       },
       schema: z.object({
         fullName: z.string().meta({
-          hint: 'This is without translation hint!',
+          hint: {
+            da: 'Dit fulde navn',
+            en: 'Your full name',
+          },
         }),
         email: z.email().meta({
           hint: {
@@ -80,7 +117,14 @@ If your project has multiple parts that can be supported, with different budgets
       schema: z.object({
         organizationName: z.string(),
         organizationNumber: z.string(),
-        organizationAddress: z.string(),
+        organizationAddressStreet: z.string().meta({
+          autocomplete: 'street-address',
+        }),
+        organizationAddressCo: z.string().optional(),
+        organizationAddressPostcode: z.string().meta({
+          autocomplete: 'postal-code',
+        }),
+        organizationAddressCity: z.string(),
         accountableParties: z.string().meta({
           type: 'textarea',
         }),
@@ -98,7 +142,7 @@ If your project has multiple parts that can be supported, with different budgets
         organizationFacebook: z.string().optional(),
         organizationInstagram: z.string().optional(),
         organizationTikTok: z.string().optional(),
-        organizationYoutube: z.string().optional(),
+        organizationYouTube: z.string().optional(),
         organizationLinkedIn: z.string().optional(),
       }),
     },
@@ -110,7 +154,12 @@ If your project has multiple parts that can be supported, with different budgets
         accountNumber: z.string(),
         annualBudget: z.number(),
         ownContribution: z.number(),
-        paidStaffAmount: z.number(),
+        paidStaffAmount: z.number().meta({
+          hint: {
+            da: 'Personale med betaling',
+            en: 'Paid staff',
+          },
+        }),
         financialPatrons: z.string().meta({
           type: 'textarea',
         }),
@@ -186,25 +235,13 @@ export const testApplicationForm = defineSteppedForm({
       },
       schema: z.object({
         other: z.string().meta({
-          title: 'form.application.background',
+          // you can use i18n manually
+          // title: 'form.application.background',
           type: 'textarea',
           placeholder: 'enter some text',
         }),
       }),
     },
-    // {
-    //   id: 'background',
-    //   icon: 'i-lucide-book-text',
-    //   labelKey: '**HELLO**',
-    //   hint: 'TEst info detail no custom icon',
-    //   schema: z.object({
-    //     background: z.string().meta({
-    //       title: 'form.application.background',
-    //       type: 'textarea',
-    //       placeholder: 'enter some text',
-    //     }),
-    //   }),
-    // },
     {
       id: 'finish',
       labelKey: 'FINISHED',

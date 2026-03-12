@@ -16,7 +16,10 @@ resubmittable:
     - contactInfo.phone
     - organizationInfo.organizationName
     - organizationInfo.organizationNumber
-    - organizationInfo.organizationAddress
+    - organizationInfo.organizationAddressStreet
+    - organizationInfo.organizationAddressCo
+    - organizationInfo.organizationAddressPostcode
+    - organizationInfo.organizationAddressCity
     - organizationInfo.accountableParties
     - organizationInfo.organizationEmail
     - organizationInfo.organizationPhone
@@ -25,7 +28,7 @@ resubmittable:
     - organizationAbout.organizationFacebook
     - organizationAbout.organizationInstagram
     - organizationAbout.organizationTikTok
-    - organizationAbout.organizationYoutube
+    - organizationAbout.organizationYouTube
     - organizationAbout.organizationLinkedIn
     - financialInfo.bankName
     - financialInfo.regNr
