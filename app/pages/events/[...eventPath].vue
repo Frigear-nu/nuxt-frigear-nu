@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { EventsCollectionItem } from '@nuxt/content'
 import { withLeadingSlash, withoutLeadingSlash } from 'ufo'
-import { format } from 'date-fns'
 import { useUserEventTickets } from '~/store/queries/user'
 import { useUrlSearchParams } from '@vueuse/core'
 import type { ButtonProps } from '@nuxt/ui'
@@ -146,6 +145,14 @@ const eventRequirements = computed(() => {
   return getEventRequirements(event.value || [])
 })
 
+const dateTimeLocale = computed(() => {
+  if (!locale.value) {
+    return 'da-DK'
+  }
+
+  return locale.value === 'en' ? 'en-US' : 'da-DK'
+})
+
 const eventAddress = computed(() => {
   if (!event.value) {
     return undefined
@@ -260,7 +267,7 @@ onMounted(() => {
             <div>
               <UFieldGroup v-if="startDate">
                 <UBadge
-                  variant="soft"
+                  variant="outline"
                   class="text-sm font-semibold"
                 >
                   {{ $t('events.detail.when') }}
@@ -271,9 +278,26 @@ onMounted(() => {
                   class="text-sm"
                   size="sm"
                 >
-                  {{ format(startDate, 'dd.MM.yyyy HH:mm') }}
+                  <NuxtTime
+                    :datetime="startDate"
+                    year="numeric"
+                    month="long"
+                    day="numeric"
+                    hour="2-digit"
+                    minute="2-digit"
+                    :locale="dateTimeLocale"
+                  />
                   <template v-if="endDate">
-                    - {{ format(endDate, 'dd.MM.yyyy HH:mm') }}
+                    -
+                    <NuxtTime
+                      :datetime="endDate"
+                      year="numeric"
+                      month="long"
+                      day="numeric"
+                      hour="2-digit"
+                      minute="2-digit"
+                      :locale="dateTimeLocale"
+                    />
                   </template>
                 </UBadge>
               </UFieldGroup>

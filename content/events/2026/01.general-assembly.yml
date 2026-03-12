@@ -88,7 +88,7 @@ defaultTicket: default
 requirements:
   - type: membership # the only supported type of requirement for now
     title:
-      da: Bare for medlemmer
+      da: Kun for medlemmer
       en: Members only
     method: any # this is the default value
 tickets:
