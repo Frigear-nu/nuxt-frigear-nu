@@ -424,7 +424,7 @@
         },
         "phone": {
           "exact": "Telefon skal være {maximum} cifre.",
-          "inclusive": "Telefon må høyst indeholde {maximum} cifre.",
+          "inclusive": "Telefon må højst indeholde {maximum} cifre.",
           "not_inclusive": "Telefon skal indeholde mindre end {maximum} cifre."
         }
       },
