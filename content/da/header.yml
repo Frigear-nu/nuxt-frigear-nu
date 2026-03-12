@@ -4,13 +4,13 @@ logo:
   dark: /logo-dark.png
   class: h-16 p-1
 navigation:
-  - label: Hjem
+  - label: HJEM
     to: /
-  - label: Medlemskab
+  - label: MEDLEMSKAB
     to: /membership
-  - label: Projektstøtte
+  - label: PROJEKSTØTTE
     to: /funding
-  - label: Foreningen
+  - label: FORENINGEN
     to: /info
-  - label: Events
+  - label: EVENTS
     to: /events
