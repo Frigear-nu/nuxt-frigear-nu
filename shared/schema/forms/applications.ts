@@ -80,10 +80,10 @@ If your project has multiple parts that can be supported, with different budgets
       schema: z.object({
         organizationName: z.string(),
         organizationNumber: z.string(),
-        organizationAddressCo: z.string(),
         organizationAddressStreet: z.string().meta({
           autocomplete: 'street-address',
         }),
+        organizationAddressCo: z.string().optional(),
         organizationAddressPostcode: z.string().meta({
           autocomplete: 'postal-code',
         }),
