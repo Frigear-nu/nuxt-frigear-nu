@@ -34,6 +34,11 @@ const { data: footer } = await useSiteFooter()
       <UContainer>
         <UFooterColumns
           :columns="footer.sections"
+          :ui="{
+            center: 'pl-12 grid grid-cols-2 grid-flow-row gap-x-auto gap-y-16 pt-12 lg:grid-cols-4 lg:grid-flow-col lg:auto-cols-fr lg:gap-x-8 lg:gap-y-8 xl:col-span-2',
+            label: 'text-xs font-semibold tracking-wide',
+            list: 'mt-3 space-y-3 pl-2',
+          }"
         >
           <template #right>
             <!--            <UFormField -->
