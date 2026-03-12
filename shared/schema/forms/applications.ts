@@ -80,7 +80,14 @@ If your project has multiple parts that can be supported, with different budgets
       schema: z.object({
         organizationName: z.string(),
         organizationNumber: z.string(),
-        organizationAddress: z.string(),
+        organizationAddressCo: z.string(),
+        organizationAddressStreet: z.string().meta({
+          autocomplete: 'street-address',
+        }),
+        organizationAddressPostcode: z.string().meta({
+          autocomplete: 'postal-code',
+        }),
+        organizationAddressCity: z.string(),
         accountableParties: z.string().meta({
           type: 'textarea',
         }),
@@ -98,7 +105,7 @@ If your project has multiple parts that can be supported, with different budgets
         organizationFacebook: z.string().optional(),
         organizationInstagram: z.string().optional(),
         organizationTikTok: z.string().optional(),
-        organizationYoutube: z.string().optional(),
+        organizationYouTube: z.string().optional(),
         organizationLinkedIn: z.string().optional(),
       }),
     },
