@@ -2,7 +2,7 @@
 title: Frigear
 links: []
 seo:
-  title: frigear.nu
+  title: Home
   description: Frigear is a nonprofit organization, solely run by volunteers.
 ---
 
