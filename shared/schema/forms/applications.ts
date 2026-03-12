@@ -98,6 +98,7 @@ If your project has multiple parts that can be supported, with different budgets
       },
       schema: z.object({
         fullName: z.string().meta({
+          autocomplete: 'name',
           hint: {
             da: 'Dit fulde navn',
             en: 'Your full name',
@@ -138,7 +139,9 @@ If your project has multiple parts that can be supported, with different budgets
         organizationAbout: z.string().meta({
           type: 'textarea',
         }),
-        organizationWebsite: z.string().optional(),
+        organizationWebsite: z.string().optional().meta({
+          autocomplete: 'url',
+        }),
         organizationFacebook: z.string().optional(),
         organizationInstagram: z.string().optional(),
         organizationTikTok: z.string().optional(),
