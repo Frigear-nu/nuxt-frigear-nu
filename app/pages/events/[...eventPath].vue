@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { EventsCollectionItem } from '@nuxt/content'
 import { withLeadingSlash, withoutLeadingSlash } from 'ufo'
-import { format } from 'date-fns'
 import { useUserEventTickets } from '~/store/queries/user'
 import { useUrlSearchParams } from '@vueuse/core'
 import type { ButtonProps } from '@nuxt/ui'
