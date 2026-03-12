@@ -12,6 +12,7 @@ type BaseField = {
   disabled?: boolean
   meta?: {
     [key: string]: TranslationValue | undefined
+    autocomplete?: string
     hint?: TranslationValue
   }
 }

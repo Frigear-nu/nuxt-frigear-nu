@@ -136,6 +136,7 @@ const fieldProps = computed(() => {
     placeholder: withPlaceholder ? translated('placeholder') : undefined,
     label: !isHiddenFormField ? translated('label') : undefined,
     description: !isHiddenFormField ? translated('description') : undefined,
+    autocomplete: !isHiddenFormField ? props.field.meta?.autocomplete : undefined,
   }
 })
 </script>
