@@ -64,10 +64,7 @@ const { data: footer } = await useSiteFooter()
         </UFooterColumns>
       </UContainer>
     </template>
-    <template
-      v-if="footer && footer.right"
-      #right
-    >
+    <template #right>
       <AppFooterRight :links="footer && footer.right" />
     </template>
   </UFooter>

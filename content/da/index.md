@@ -69,6 +69,7 @@ orientation: horizontal
       icon: i-simple-icons-instagram
       size: xl
       target: _blank
+      rel: "noopener noreferrer"
       to: https://www.instagram.com/frigear.nu
       variant: subtle
       ---
@@ -80,6 +81,7 @@ orientation: horizontal
       icon: i-simple-icons-facebook
       size: xl
       target: _blank
+      rel: "noopener noreferrer"
       to: https://www.facebook.com/Frigear.nu
       variant: subtle
       ---
@@ -91,6 +93,7 @@ orientation: horizontal
       icon: i-simple-icons-linkedin
       size: xl
       target: _blank
+      rel: "noopener noreferrer"
       to: https://www.linkedin.com/company/frigear
       variant: subtle
       ---
@@ -102,6 +105,7 @@ orientation: horizontal
       icon: i-simple-icons-tiktok
       size: xl
       target: _blank
+      rel: "noopener noreferrer"
       to: https://www.tiktok.com/@frigear.nu
       variant: subtle
       ---
@@ -113,6 +117,7 @@ orientation: horizontal
       icon: i-simple-icons-youtube
       size: xl
       target: _blank
+      rel: "noopener noreferrer"
       to: https://www.youtube.com/@frigear
       variant: subtle
       ---

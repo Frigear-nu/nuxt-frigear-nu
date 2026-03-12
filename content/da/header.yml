@@ -8,7 +8,7 @@ navigation:
     to: /
   - label: MEDLEMSKAB
     to: /membership
-  - label: PROJEKSTØTTE
+  - label: PROJEKTSTØTTE
     to: /funding
   - label: FORENINGEN
     to: /info
