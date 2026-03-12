@@ -11,9 +11,9 @@ const { data: footer } = await useSiteFooter()
     class="h-px mt-8"
   >
     <UColorModeImage
-      light="/logo.png"
-      dark="/logo-dark.png"
-      class="w-auto h-8"
+      light="/images/branding/logos/square/frigear-bullhorn-icon-4a2fda-d-blue.png"
+      dark="/images/branding/logos/square/frigear-bullhorn-icon-white.png"
+      class="w-24 h-auto"
       loading="lazy"
       alt="Footer Separator Logo"
     />
