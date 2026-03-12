@@ -237,6 +237,11 @@
       }
     }
   },
+  "cart": {
+    "title": "Shopping Cart",
+    "addedToCart": "{title} was added to your cart.",
+    "removedFromCart": "{title} was removed."
+  },
   "form": {
     "application": {
       "title": "Funding Application",
@@ -260,8 +265,18 @@
         "organizationNumber": {
           "label": "Organization number"
         },
-        "organizationAddress": {
-          "label": "Organization address"
+        "organizationAddressStreet": {
+          "label": "Address"
+        },
+        "organizationAddressCo": {
+          "label": "C/O",
+          "description": "A C/O address"
+        },
+        "organizationAddressPostcode": {
+          "label": "Postcode"
+        },
+        "organizationAddressCity": {
+          "label": "City"
         },
         "accountableParties": {
           "label": "Accountable parties"
@@ -289,8 +304,8 @@
         "organizationTikTok": {
           "label": "TikTok"
         },
-        "organizationYoutube": {
-          "label": "Youtube"
+        "organizationYouTube": {
+          "label": "YouTube"
         },
         "organizationLinkedIn": {
           "label": "LinkedIn"
@@ -334,11 +349,6 @@
         }
       }
     }
-  },
-  "cart": {
-    "title": "Shopping Cart",
-    "addedToCart": "{title} was added to your cart.",
-    "removedFromCart": "{title} was removed."
   },
   "steppedForm": {
     "previous": "Previous",
