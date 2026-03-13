@@ -10,12 +10,12 @@ seo:
 ---
 orientation: horizontal
 ---
-:nuxt-img{.rounded-full .p-4 .dark:bg-neutral-800 .bg-neutral-200 .w-fit .md:max-w-full .mx-auto :height='320' :width='320' alt="Frigear FGR logo" format="webp" quality="80" src="/logo-with-rf-bg.jpg"}
+:nuxt-img{#index-hero-img .rounded-full .p-4 .dark:bg-neutral-800 .bg-neutral-200 .w-fit .md:max-w-md .mx-auto :height="auto" :width="380" alt="Frigear FGR logo" format="webp" quality="70" src="/logo-with-rf-bg.jpg"}
 
 #title
-[{{ $doc.title }}]{.fancy-text} :br
+[{{ $doc.title }}]{#typewriter-title .fancy-text} :br :br
 
-  :::typewriter-effect
+  :::typewriter-effect{.mt-0 .block .leading-tight .min-h-[2.4em] .sm:min-h-[1.1em] .text-wrap .sm:text-nowrap}
   Nonprofit
   Volunteer run
   Project funding
@@ -41,8 +41,8 @@ orientation: horizontal
 
   :::u-button
   ---
-  color: primary 
-  size: xl 
+  color: primary
+  size: xl
   to: /en/membership
   trailing-icon: i-lucide-arrow-right
   class: flex-1 justify-center
