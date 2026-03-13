@@ -110,6 +110,9 @@ export default defineNuxtConfig({
       complaint: '',
       other: '',
     },
+    acl: {
+      admins: '', // admin1@gmail.com,admin2@gmail.com
+    },
   },
 
   routeRules: {

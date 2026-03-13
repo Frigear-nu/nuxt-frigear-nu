@@ -6,11 +6,16 @@ export default defineNuxtRouteMiddleware((to) => {
 
   if (!isAccountRoute || !isAdminGroup) return
 
-  const { loggedIn } = useUserSession()
+  const { user, loggedIn } = useUserSession()
 
-  if (isAdminGroup) {
-    // todo: check admin rights..
+  if (!isAdminGroup && loggedIn.value) {
+    return
   }
-  if (loggedIn.value) return
+
+  if (isAdminGroup
+    && user.value?.email
+    && useRuntimeConfig()?.acl?.admins?.split(',').includes(user.value.email)) {
+    return
+  }
   return navigateTo(`/sign-in?redirect=${encodeURIComponent(to.fullPath)}`, { replace: true })
 })
