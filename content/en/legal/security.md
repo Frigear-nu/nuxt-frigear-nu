@@ -108,21 +108,21 @@ Our baseline security standards and the controls we use to keep member, -volunte
     - [ISO 27001 Cloudflare Trust Hub Compliance](https://www.cloudflare.com/trust-hub/compliance-resources/){rel="noopener noreferrer"}
 
   - **Google** (Google Workspace): lists independent certifications such as **ISO/IEC 27001** and privacy-related cloud standards like **ISO/IEC 27018 / ISO/IEC 27701** (availability varies by product and scope):
-    - [ISO 27701 Google - Lær om sikkerhed](https://workspace.google.com/learn-more/security/security-whitepaper/page-5/){rel="noopener noreferrer"}
-    - [ISO 27701 Google Virksomhedssikkerhed](https://business.safety.google/compliance/){rel="noopener noreferrer"}
+    - [Google security whitepaper (ISO 27701 context)](https://workspace.google.com/learn-more/security/security-whitepaper/page-5/){rel="noopener noreferrer"}
+    - [Google business compliance resources](https://business.safety.google/compliance/){rel="noopener noreferrer"}
 
   - **Microsoft** (Microsoft 365): publishes compliance offerings and audit reports (including **ISO 27001** and related frameworks) via the Microsoft compliance documentation and the Service Trust Portal:
-    - [Lær om Microsoft](https://learn.microsoft.com/en-us/compliance/regulatory/offering-home){rel="noopener noreferrer"}
+    - [Microsoft compliance offerings](https://learn.microsoft.com/en-us/compliance/regulatory/offering-home){rel="noopener noreferrer"}
     - [Microsoft Services](https://servicetrust.microsoft.com/){rel="noopener noreferrer"}
 
   **Payments (we do not store card numbers)**
   - **Stripe**: states **SOC 1** and **SOC 2 Type II** audits and **PCI Service Provider Level 1**:
-    - [Stripe sikkerhed](https://docs.stripe.com/security){rel="noopener noreferrer"}
+    - [Stripe security](https://docs.stripe.com/security){rel="noopener noreferrer"}
     - [Stripe PCI Compliance](https://stripe.com/guides/pci-compliance){rel="noopener noreferrer"}
 
   - **MobilePay** (Vipps MobilePay): states **PCI DSS compliant payment services** and that they handle **PSD2/SCA** requirements:
     - [Vipps Pay checkout](https://developer.vippsmobilepay.com/docs/plugins-ext/checkout-magento/){rel="noopener noreferrer"}
-    - [MobilePay forhandler info](https://developer.vippsmobilepay.com/docs/knowledge-base/merchant-info/){rel="noopener noreferrer"}
+    - [MobilePay merchant info](https://developer.vippsmobilepay.com/docs/knowledge-base/merchant-info/){rel="noopener noreferrer"}
   :::
 
   :::u-page-card
@@ -187,19 +187,19 @@ Our baseline security standards and the controls we use to keep member, -volunte
   Security standards/attestations regarding the handling of personal data and payments:
 
   - **GDPR — Regulation (EU) 2016/679** (data protection):
-    [GDPR Forordning](https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng){rel="noopener noreferrer"}
+    [GDPR Standards](https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng){rel="noopener noreferrer"}
 
   - **ISO/IEC 27001** (information security management system baseline):
     [ISO 27001 Baseline](https://www.iso.org/standard/27001){rel="noopener noreferrer"}
 
   - **SOC 2** (independent assurance report for service organisations, Trust Services Criteria):
-    [SOC2 Uafhængig assurance](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2){rel="noopener noreferrer"}
+    [SOC2 Independent assurance](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2){rel="noopener noreferrer"}
 
   - **PCI DSS** (payment card data security standard):
-    [PCI DSS standarder](https://www.pcisecuritystandards.org/standards/pci-dss/){rel="noopener noreferrer"}
+    [PCI DSS standards](https://www.pcisecuritystandards.org/standards/pci-dss/){rel="noopener noreferrer"}
 
   - **PSD2 — Directive (EU) 2015/2366** (payment services, including SCA requirements):
-    [PSD2 Direktiv](https://eur-lex.europa.eu/eli/dir/2015/2366/oj/eng){rel="noopener noreferrer"}
+    [PSD2 Directive](https://eur-lex.europa.eu/eli/dir/2015/2366/oj/eng){rel="noopener noreferrer"}
   :::
 
 ::div{.grid .grid-cols-1 .sm:grid-cols-2 .md:grid-cols-3 .lg:grid-cols-4 .xl:grid-cols-5 .gap-4 .mt-6 .center .justify-center}
