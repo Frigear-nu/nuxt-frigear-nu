@@ -27,9 +27,10 @@ export default defineNuxtConfig({
       scheduledTasks: {
         // at minute 0 every 2 hours
         // '0 */2 * * *': [
-        // 'stripe:sync',
         // ],
+        // every 30 mintues:
         '*/30 * * * *': [
+          'stripe:sync:supabase-users',
           'stripe:sync:products',
           'stripe:sync:prices',
           'stripe:sync:customers',
@@ -109,6 +110,9 @@ export default defineNuxtConfig({
       finance: '',
       complaint: '',
       other: '',
+    },
+    acl: {
+      admins: '', // admin1@gmail.com,admin2@gmail.com
     },
   },
 
