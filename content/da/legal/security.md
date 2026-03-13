@@ -104,25 +104,25 @@ Vores grundlæggende sikkerhedsstandarder og de kontroller vi bruger til at besk
 
   **Kerneleverandører**
   - **Cloudflare** (sikkerhed/performance edge-tjenester): offentliggør compliance-ressourcer, der dækker **SOC 2 Type II** samt deres tilgang til **ISO 27001 / ISO 27701** og **PCI DSS**:
-    - https://www.cloudflare.com/trust-hub/
-    - https://www.cloudflare.com/trust-hub/compliance-resources/
+    - [ISO 27001 Cloudflare Trust Hub](https://www.cloudflare.com/trust-hub/){rel="noopener noreferrer"}
+    - [ISO 27001 Cloudflare Trust Hub Compliance](https://www.cloudflare.com/trust-hub/compliance-resources/){rel="noopener noreferrer"}
 
   - **Google** (Google Workspace): angiver uafhængige certificeringer som **ISO/IEC 27001** og privatlivsrelaterede cloud-standarder som **ISO/IEC 27018 / ISO/IEC 27701** (tilgængelighed varierer efter produkt og omfang):
-    - https://workspace.google.com/learn-more/security/security-whitepaper/page-5/
-    - https://business.safety.google/compliance/
+    - [ISO 27701 Google - Lær om sikkerhed](https://workspace.google.com/learn-more/security/security-whitepaper/page-5/){rel="noopener noreferrer"}
+    - [ISO 27701 Google Virksomhedssikkerhed](https://business.safety.google/compliance/){rel="noopener noreferrer"}
 
   - **Microsoft** (Microsoft 365): offentliggør compliance-tilbud og revisionsrapporter (herunder **ISO 27001** og relaterede rammeværk) via Microsofts compliance-dokumentation og Service Trust Portal:
-    - https://learn.microsoft.com/en-us/compliance/regulatory/offering-home
-    - https://servicetrust.microsoft.com/
+    - [Lær om Microsoft](https://learn.microsoft.com/en-us/compliance/regulatory/offering-home){rel="noopener noreferrer"}
+    - [Microsoft Services](https://servicetrust.microsoft.com/){rel="noopener noreferrer"}
 
   **Betalinger (vi opbevarer ikke kortnumre)**
   - **Stripe**: angiver **SOC 1** og **SOC 2 Type II** audits samt **PCI Service Provider Level 1**:
-    - https://docs.stripe.com/security
-    - https://stripe.com/guides/pci-compliance
+    - [Stripe sikkerhed](https://docs.stripe.com/security){rel="noopener noreferrer"}
+    - [Stripe PCI Compliance](https://stripe.com/guides/pci-compliance){rel="noopener noreferrer"}
 
   - **MobilePay** (Vipps MobilePay): angiver **PCI DSS**-kompatible betalingstjenester og at de håndterer **PSD2/SCA**-krav:
-    - https://developer.vippsmobilepay.com/docs/plugins-ext/checkout-magento/
-    - https://developer.vippsmobilepay.com/docs/knowledge-base/merchant-info/
+    - [Vipps Pay checkout](https://developer.vippsmobilepay.com/docs/plugins-ext/checkout-magento/){rel="noopener noreferrer"}
+    - [MobilePay forhandler info](https://developer.vippsmobilepay.com/docs/knowledge-base/merchant-info/){rel="noopener noreferrer"}
   :::
 
   :::u-page-card
@@ -187,19 +187,19 @@ Vores grundlæggende sikkerhedsstandarder og de kontroller vi bruger til at besk
   Sikkerhedsstandarder/attestationer vedrørende håndtering af persondata og betalinger:
 
   - **GDPR — Forordning (EU) 2016/679** (databeskyttelse):
-    https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng
+    [GDPR Forordning](https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng){rel="noopener noreferrer"}
 
   - **ISO/IEC 27001** (baseline for informationssikkerhedsledelse):
-    https://www.iso.org/standard/27001
+    [ISO 27001 Baseline](https://www.iso.org/standard/27001){rel="noopener noreferrer"}
 
   - **SOC 2** (uafhængig assurance-rapport for serviceorganisationer, Trust Services Criteria):
-    https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2
+    [SOC2 Uafhængig assurance](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2){rel="noopener noreferrer"}
 
   - **PCI DSS** (sikkerhedsstandard for betalingskortdata):
-    https://www.pcisecuritystandards.org/standards/pci-dss/
+    [PCI DSS standarder](https://www.pcisecuritystandards.org/standards/pci-dss/){rel="noopener noreferrer"}
 
   - **PSD2 — Direktiv (EU) 2015/2366** (betalingstjenester, herunder SCA):
-    https://eur-lex.europa.eu/eli/dir/2015/2366/oj/eng
+    [PSD2 Direktiv](https://eur-lex.europa.eu/eli/dir/2015/2366/oj/eng){rel="noopener noreferrer"}
   :::
 
 ::div{.grid.grid-cols-1.sm:grid-cols-2.md:grid-cols-3.lg:grid-cols-4.xl:grid-cols-5.gap-4.mt-6.center.justify-center}
