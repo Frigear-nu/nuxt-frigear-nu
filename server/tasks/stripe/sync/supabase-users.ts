@@ -33,10 +33,10 @@ export default defineTask({
           })
 
           if (subscriptions.data.length) {
-            subscriptionCounts += subscriptions.data.length
             await Promise.allSettled(
               subscriptions.data.map(async (subscription) => {
                 await upsertStripeCustomerSubscription(subscription)
+                subscriptionCounts++
               }),
             )
           }
