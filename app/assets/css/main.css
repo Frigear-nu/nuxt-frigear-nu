@@ -8,6 +8,10 @@
     @apply bg-linear-to-r from-blue-700 via-25% via-secondary-800 to-purple-600 bg-clip-text text-transparent
 }
 
+#index-hero-img {
+  @apply md:justify-self-end-safe md:mr-12
+}
+
 #typewriter-title {
   @apply text-7xl md:text-8xl
 }
