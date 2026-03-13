@@ -50,15 +50,19 @@ const splitG = (s: string): string[] => seg ? Array.from(seg.segment(s), x => x.
 
 const isMdcAst = (x: any) =>
   x && typeof x === 'object' && (
-    typeof x.type === 'string'
-    || ('children' in x || 'value' in x)
+    typeof x.type === 'string' // mdast/hast style
+    || ('children' in x || 'value' in x) // lenient
   )
 
+// Extract items from slot:
+// - Plain text -> split on newlines into multiple items
+// - <MDC :value="ast" /> -> keep as single MDC item
 const slotItems = computed<(string | AnyObj)[]>(() => {
   const v = slots.default?.() ?? []
   const out: (string | AnyObj)[] = []
 
   for (const n of v) {
+    // <MDC :value="..."/>
     if (n && typeof n === 'object' && (n.type?.name === 'MDC' || n.type === MDCComp)) {
       const ast = (n.props && (n.props.value ?? n.props.ast)) ?? null
       if (ast) out.push(ast)
@@ -191,6 +195,8 @@ watch(currentItem, () => {
   }
 })
 
+/* ---------- MDC slicing ---------- */
+// Extract visible text from MDC AST for timing
 function mdcText(node: any): string {
   if (!node) return ''
   if (typeof node === 'string') return node
@@ -203,6 +209,7 @@ function mdcText(node: any): string {
   return ''
 }
 
+// Deep slice MDC AST by grapheme count
 function sliceMdc(node: any, take: { n: number }): any | null {
   if (take.n <= 0 || node == null) return null
 
@@ -216,7 +223,7 @@ function sliceMdc(node: any, take: { n: number }): any | null {
     take.n = 0
     return part
   }
-
+  
   if (Array.isArray(node)) {
     const out: any[] = []
     for (const child of node) {
@@ -228,6 +235,7 @@ function sliceMdc(node: any, take: { n: number }): any | null {
   }
 
   if (typeof node === 'object') {
+    // text-like node
     if (typeof node.value === 'string') {
       const g = splitG(node.value)
       if (g.length <= take.n) {
@@ -239,6 +247,7 @@ function sliceMdc(node: any, take: { n: number }): any | null {
       return { ...node, value: part }
     }
 
+    // container
     if (Array.isArray(node.children)) {
       const kids: any[] = []
       for (const k of node.children) {
@@ -246,6 +255,7 @@ function sliceMdc(node: any, take: { n: number }): any | null {
         const kk = sliceMdc(k, take)
         if (kk != null) kids.push(kk)
       }
+    // keep node shell so formatting remains
       return { ...node, children: kids }
     }
 
@@ -255,21 +265,25 @@ function sliceMdc(node: any, take: { n: number }): any | null {
   return null
 }
 
+/* ---------- Rendered nodes ---------- */
 const renderedNodes = computed(() => {
   const item = currentItem.value
   const count = charIdx.value
 
+  // strings
   if (typeof item === 'string') {
     const g = splitG(item).slice(0, count).join('')
     return [g]
   }
 
+  // MDC AST
   if (isMdcAst(item)) {
     const taken = { n: count }
     const sliced = sliceMdc(item, taken)
     return [h(MDCComp as any, { value: sliced })]
   }
-
+  
+  // fallback: slot vnode truncation (plain vnode children)
   const slotVNodes = slots.default?.() ?? []
   return truncateVNodes(slotVNodes, count)
 })
@@ -326,7 +340,9 @@ function truncateVNodes(nodes: any[], takeChars: number): any[] {
         }
         return h(type, p, kids.length ? kids : null)
       }
-
+      
+      // components with important props but no children (incl. <MDC :value>) should not render fully,
+      // so render an empty shell while typing 0 chars
       return remaining > 0 ? h(type, p, null) : null
     }
 
@@ -401,39 +417,3 @@ const sizingNodes = computed(() => {
     </span>
   </component>
 </template>
-
-<style scoped>
-.typewriter-root {
-  position: relative;
-  display: block;
-  width: 100%;
-  line-height: 1.05;
-  text-wrap: auto;
-}
-
-.typewriter-sizer {
-  display: block;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.typewriter-live {
-  position: absolute;
-  inset: 0;
-  display: block;
-}
-
-@media (min-width: 640px) {
-  .typewriter-root,
-  .typewriter-sizer,
-  .typewriter-live {
-    white-space: nowrap;
-  }
-}
-
-@keyframes blink {
-  to {
-    visibility: hidden;
-  }
-}
-</style>
