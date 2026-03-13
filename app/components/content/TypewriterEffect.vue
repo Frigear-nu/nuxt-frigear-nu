@@ -6,7 +6,7 @@ import {
 /* eslint-disable no-use-before-define */
 type AnyObj = Record<string, unknown>
 type Props = {
-  items?: Array<string | AnyObj> // strings or MDC AST objects
+  items?: Array<string | AnyObj>
   speed?: number
   backSpeed?: number
   pauseMs?: number
@@ -45,6 +45,7 @@ const slots = useSlots()
 const seg = typeof Intl !== 'undefined' && 'Segmenter' in Intl
   ? new Intl.Segmenter(undefined, { granularity: 'grapheme' })
   : null
+
 const splitG = (s: string): string[] => seg ? Array.from(seg.segment(s), x => x.segment) : Array.from(s)
 
 const isMdcAst = (x: any) =>
@@ -59,6 +60,7 @@ const isMdcAst = (x: any) =>
 const slotItems = computed<(string | AnyObj)[]>(() => {
   const v = slots.default?.() ?? []
   const out: (string | AnyObj)[] = []
+
   for (const n of v) {
     // <MDC :value="..."/>
     if (n && typeof n === 'object' && (n.type?.name === 'MDC' || n.type === MDCComp)) {
@@ -66,15 +68,16 @@ const slotItems = computed<(string | AnyObj)[]>(() => {
       if (ast) out.push(ast)
       continue
     }
-    // strings (flatten)
+
     if (typeof n === 'string') {
       out.push(...n.split(/\r?\n/).map(s => s.trim()).filter(Boolean))
       continue
     }
-    // vnode children text
+
     const txt = vnodeToText(n)
     if (txt) out.push(...txt.split(/\r?\n/).map(s => s.trim()).filter(Boolean))
   }
+
   return out
 })
 
@@ -99,6 +102,7 @@ const isClient = ref(false)
 const idx = ref(0)
 const phase = ref<'typing' | 'deleting' | 'pause'>('typing')
 const charIdx = ref(0)
+
 let raf: number | null = null
 let lastTs = 0
 let untilNextMs = 0
@@ -125,6 +129,7 @@ const keystroke = (cps: number) => {
   const delta = base * Math.max(0, Math.min(1, props.jitter))
   return base + (Math.random() * 2 - 1) * delta
 }
+
 const punctPause = (ch: string) => (/[.,!?;:]/.test(ch) ? props.punctPauseMs : 0)
 
 const tick = (ts: number) => {
@@ -132,6 +137,7 @@ const tick = (ts: number) => {
     raf = requestAnimationFrame(tick)
     return
   }
+
   if (!lastTs) lastTs = ts
   const dt = ts - lastTs
   lastTs = ts
@@ -166,6 +172,7 @@ const tick = (ts: number) => {
       }
     }
   }
+
   raf = requestAnimationFrame(tick)
 }
 
@@ -175,10 +182,12 @@ onMounted(() => {
   untilNextMs = keystroke(props.speed)
   raf = requestAnimationFrame(tick)
 })
+
 onBeforeUnmount(() => {
   if (raf) cancelAnimationFrame(raf)
   if (endPauseTimer) clearTimeout(endPauseTimer)
 })
+
 watch(currentItem, () => {
   if (phase.value === 'typing') {
     charIdx.value = 0
@@ -214,7 +223,7 @@ function sliceMdc(node: any, take: { n: number }): any | null {
     take.n = 0
     return part
   }
-
+  
   if (Array.isArray(node)) {
     const out: any[] = []
     for (const child of node) {
@@ -246,11 +255,10 @@ function sliceMdc(node: any, take: { n: number }): any | null {
         const kk = sliceMdc(k, take)
         if (kk != null) kids.push(kk)
       }
-      // keep node shell so formatting remains
+    // keep node shell so formatting remains
       return { ...node, children: kids }
     }
 
-    // leaf without text
     return { ...node }
   }
 
@@ -274,7 +282,7 @@ const renderedNodes = computed(() => {
     const sliced = sliceMdc(item, taken)
     return [h(MDCComp as any, { value: sliced })]
   }
-
+  
   // fallback: slot vnode truncation (plain vnode children)
   const slotVNodes = slots.default?.() ?? []
   return truncateVNodes(slotVNodes, count)
@@ -282,6 +290,7 @@ const renderedNodes = computed(() => {
 
 function truncateVNodes(nodes: any[], takeChars: number): any[] {
   let remaining = takeChars
+
   const cloneNode = (node: any): any => {
     if (remaining <= 0 || node == null) return null
 
@@ -331,7 +340,7 @@ function truncateVNodes(nodes: any[], takeChars: number): any[] {
         }
         return h(type, p, kids.length ? kids : null)
       }
-
+      
       // components with important props but no children (incl. <MDC :value>) should not render fully,
       // so render an empty shell while typing 0 chars
       return remaining > 0 ? h(type, p, null) : null
@@ -349,30 +358,62 @@ function truncateVNodes(nodes: any[], takeChars: number): any[] {
       else out.push(c)
     }
   }
+
   return out
 }
+
+/* ---------- sizing layer: reserve height for the biggest phrase ---------- */
+function itemText(item: string | AnyObj | undefined): string {
+  if (typeof item === 'string') return item
+  if (isMdcAst(item)) return mdcText(item)
+  return ''
+}
+
+const sizingItem = computed(() => {
+  if (!normalizedItems.value.length) return ''
+  return normalizedItems.value.reduce((longest, item) => {
+    return splitG(itemText(item)).length > splitG(itemText(longest as any)).length ? item : longest
+  }, normalizedItems.value[0] as string | AnyObj)
+})
+
+const sizingNodes = computed(() => {
+  const item = sizingItem.value
+
+  if (typeof item === 'string') return [item]
+
+  if (isMdcAst(item)) {
+    return [h(MDCComp as any, { value: item })]
+  }
+
+  return []
+})
 </script>
 
 <template>
   <component
     :is="tag"
-    :class="props.class"
-    style="vertical-align: baseline;"
+    :class="['typewriter-root', props.class]"
   >
-    <Rendered :nodes="renderedNodes" />
     <span
-      v-if="caret"
-      class="w-px bg-current inline-block align-baseline"
-      :class="phase !== 'pause' ? 'animate-[blink_1s_steps(2,start)_infinite]' : 'opacity-0'"
+      class="typewriter-sizer"
       aria-hidden="true"
-    />
+    >
+      <Rendered :nodes="sizingNodes" />
+      <span
+        v-if="caret"
+        class="w-px inline-block"
+        aria-hidden="true"
+      />
+    </span>
+
+    <span class="typewriter-live">
+      <Rendered :nodes="renderedNodes" />
+      <span
+        v-if="caret"
+        class="w-px bg-current inline-block align-baseline"
+        :class="phase !== 'pause' ? 'animate-[blink_1s_steps(2,start)_infinite]' : 'opacity-0'"
+        aria-hidden="true"
+      />
+    </span>
   </component>
 </template>
-
-<style scoped>
-@keyframes blink {
-  to {
-    visibility: hidden;
-  }
-}
-</style>
