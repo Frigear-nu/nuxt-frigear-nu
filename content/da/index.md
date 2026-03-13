@@ -2,7 +2,7 @@
 title: Frigear
 links: []
 seo:
-  title: frigear.nu
+  title: Hjem
   description: Frigear er en non-profit organisation, udelukkende drevet af frivillige.
 ---
 

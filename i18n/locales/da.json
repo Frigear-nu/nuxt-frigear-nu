@@ -1,6 +1,8 @@
 {
   "common": {
-    "or": "Eller"
+    "or": "Eller",
+    "close": "Luk",
+    "information": "Information"
   },
   "auth": {
     "signIn": "Log ind",
@@ -8,38 +10,40 @@
     "signOut": "Log ud",
     "dashboard": "Konto",
     "signedInAs": "Logget ind som",
+    "dontHaveAnAccount": "Har du ik' en Frigear konto endnu? ➜",
+    "alreadyHaveAnAccount": "Har du allerede en Frigear konto? ➜",
     "name": {
       "label": "Navn",
       "placeholder": "Navn Navnesen"
     },
     "email": {
       "label": "E-mail",
-      "placeholder": "volunteerHero{'@'}someDomain.lol",
+      "placeholder": "frivillig-helt{'@'}domain.lol",
       "sent": {
         "title": "E-mail sendt!",
         "description": "Vi har sendt dig en e-mail. Tjek lige din inbox eller spam.",
-        "note": "Du ka' bare lukke det her vindue."
+        "note": "Du ka' bare lukke det her vindue, og se mailen."
       }
     },
     "password": {
-      "label": "Kodeord",
+      "label": "Dit mega svære password",
       "placeholder": "********"
     },
     "forgotPassword": {
-      "title": "Glemt kodeord?",
-      "submit": "Gendan kodeord"
+      "title": "Glemt password?",
+      "submit": "Gendan password"
     },
     "magicLink": {
       "title": "Magic Link",
-      "submit": "Send link",
+      "submit": "Send mig et magisk link",
       "modal": {
         "in": {
           "title": "Log ind med Magic Link",
-          "description": "Du kan log ind med din e-mail, så fyrer vi et link."
+          "description": "Du kan skrive din e-mail, så fyrer vi dig et magisk link til at logge ind."
         },
         "up": {
           "title": "Opret konto med Magic Link",
-          "description": "Din konto vil ik' ha no kodeord, du kan trygt log ind med din e-mail."
+          "description": "Din konto vil ik' ha' noget password, men du kan trygt logge ind fra din e-mail."
         }
       }
     },
@@ -48,34 +52,34 @@
       "link": "Magic Link"
     },
     "resetPassword": {
-      "title": "Nulstil kodeord",
+      "title": "Nulstil password",
       "new": {
-        "label": "Nytt kodeord"
+        "label": "Nyt password"
       },
       "current": {
-        "label": "Nuværende kodeord"
+        "label": "Nuværende password"
       }
     },
     "changePassword": {
-      "title": "Endre kodeord",
-      "submit": "Endre password",
+      "title": "Skift password",
+      "submit": "Skift password",
       "new": {
-        "label": "Nytt kodeord"
+        "label": "Nyt password"
       },
       "confirm": {
-        "label": "Bekræft nytt kodeord"
+        "label": "Bekræft nyt password"
       },
       "current": {
-        "label": "Nuværende kodeord"
+        "label": "Nuværende password"
       }
     }
   },
   "actions": {
     "view": "Vis",
     "backTo": "Tilbage til",
-    "save": "Lagre",
+    "save": "Gem",
     "select": "Vælg",
-    "change": "Ændre",
+    "change": "Skift",
     "cancel": "Annullér"
   },
   "locale": {
@@ -84,12 +88,12 @@
   "payment": {
     "interval": {
       "month": "Månedlig",
-      "quarter": "Kvartal",
-      "year": "Årlig"
+      "quarter": "Kvartals",
+      "year": "Årligt"
     },
     "membership": {
       "subscribe": "Bliv medlem",
-      "feeIncluded":"*Betalingsgebyr er indeholdt i beløb"
+      "feeIncluded":"*Betalingsgebyrer er indeholdt i beløb"
     }
   },
   "account": {
@@ -99,7 +103,7 @@
     },
     "profile": {
       "title": "Profil",
-      "description": "Ændre dine brugeroplysninger.",
+      "description": "Skift dine brugeroplysninger.",
       "name": {
         "label": "Navn",
         "description": "Dit fulde navn."
@@ -108,7 +112,7 @@
         "label": "E-mail",
         "description": "Din awesome e-mail.",
         "change": {
-          "title": "Ændre e-mail",
+          "title": "Skift din e-mail",
           "label": "Ny e-mail"
         }
       },
@@ -125,15 +129,15 @@
       "title": "Medlemskab",
       "description": "Dit medlemskab.",
       "active": "AKTIV",
-      "cancelling": "AVSLUTTES...",
+      "cancelling": "AFSLUTTES...",
       "currentPlan": "Nuværende plan:",
-      "cancelsAt": "Avsluttes {date}",
-      "renewsAutomaticallyAt": "Fornyes automagisk den {date}",
-      "cancel": "Annuler medlemskab",
-      "changePaymentMethod": "Ændre betalingsmetode",
+      "cancelsAt": "Afsluttes {date}",
+      "renewsAutomaticallyAt": "Fornyes automagisk {date}",
+      "cancel": "Annullér medlemskab",
+      "changePaymentMethod": "Skift betalingsmetode",
       "update": {
-        "title": "Ændre medlemskab",
-        "description": "Ændre din medlemskabsplan."
+        "title": "Skift medlemskab",
+        "description": "Skift din medlemskabsplan."
       },
       "subscribe": {
         "title": "Bliv medlem",
@@ -142,10 +146,10 @@
     },
     "security": {
       "title": "Sikkerhed",
-      "description": "Ændre kodeord, Social login etc.",
+      "description": "Skift password, Social login etc.",
       "password": {
-        "title": "Kodeord",
-        "description": "Ændre dit kodeord."
+        "title": "Password",
+        "description": "Skift dit password."
       }
     }
   },
@@ -153,7 +157,7 @@
     "title": "Kontakt",
     "form": {
       "name": {
-        "label": "Dit seje navn",
+        "label": "Dit mega seje navn",
         "placeholder": "Hej, hva hedder du? .. put her"
       },
       "email": {
@@ -163,7 +167,7 @@
       "phone": {
         "label": "Telefon",
         "placeholder": "12345678",
-        "hint": "Telefon skal være 8 cifre (valgfrit)."
+        "hint": "Telefon skal være 8 cifre (men er valgfrit)."
       },
       "subject": {
         "label": "Emne",
@@ -187,8 +191,8 @@
         "label": "Besked",
         "placeholder": "Jeg vil snakke om et awesome Frigear projekt...",
         "placeholders": {
-          "complaint": "Jeg har en klage om ...",
-          "other": "Hva tænker du på?"
+          "complaint": "Jeg har desværre en klage om ...",
+          "other": "Hvad har du i tankerne?"
         }
       },
       "submit": {
@@ -212,7 +216,7 @@
         "view": "Se billetter",
         "free": "Gratis",
         "ticket":{
-          "label": "Billett"
+          "label": "Billet"
         },
         "products": {
           "label": "Produkt",
@@ -221,33 +225,33 @@
         "payment": {
           "view": "Se betaling",
           "verifying": {
-            "title": "Verifiserer...",
+            "title": "Verificerer...",
             "description": "Tjekker din betaling..."
           },
           "success": {
             "title": "Betalingen er godkendt",
-            "description": "Din betaling ble godkendt. Billetterne er klar til brug."
+            "description": "Din betaling blev godkendt. Billetterne er klar til brug."
           },
           "cancel": {
             "title": "Betalingen er annulleret",
-            "description": "Betalingen ble annuleret, du kan forsøge igen."
+            "description": "Betalingen blev annuleret, men prøv lige igen, eller kontakt support."
           }
         }
       }
     }
   },
   "cart": {
-    "title": "Handlekurv",
-    "addedToCart": "{title} ble lagt til i kurven.",
-    "removedFromCart": "{title} ble fjernet."
+    "title": "Kurv",
+    "addedToCart": "{title} stuff lagt i kurven.",
+    "removedFromCart": "{title} stuff fjernet fra kurven."
   },
   "form": {
     "application": {
-      "title": "Projektstøtte ordning",
-      "description": "En beskrivelse",
+      "title": "Projektstøtte ansøgning",
+      "description": "Ansøg om Frigear midler til jeres nice projekter.",
       "contactInfo": {
-        "label": "Kontakt Info",
-        "description": "Om dig, der søger",
+        "label": "Kontakt information",
+        "description": "Om dig, der smækker ansøgningen afsted",
         "fullName": {
           "label": "Fuldt navn",
           "placeholder": "Hej, hva hedder du?"
@@ -256,24 +260,24 @@
           "label": "E-mail"
         },
         "phone": {
-          "label": "Telefon"
+          "label": "Dit fonnummer."
         }
       },
       "organizationInfo": {
-        "title": "Information om organisationen",
+        "title": "Information om jeres organisation",
         "organizationName": {
-          "label": "Org. Navn",
-          "placeholder": "Den stærke organisation"
+          "label": "Organisationens navn",
+          "placeholder": "Mega lækkert org-navn."
         },
         "organizationNumber": {
-          "label": "CVR/Org. Nummer"
+          "label": "CVR. Nr:"
         },
         "organizationAddressStreet": {
           "label": "Adresse"
         },
         "organizationAddressCo": {
-          "label": "C/O",
-          "description": ""
+          "label": "C/O eller Att:",
+          "description": "Evt. C/O adresse, eller Att: person."
         },
         "organizationAddressPostcode": {
           "label": "Postnummer"
@@ -282,18 +286,19 @@
           "label": "By"
         },
         "accountableParties": {
-          "label": "Ansvarlige parter"
+          "label": "Ansvarlige personer"
         },
         "organizationEmail": {
           "label": "E-mail"
         },
         "organizationPhone": {
-          "label": "Telefon"
+          "label": "Fonnummer"
         }
       },
       "organizationAbout": {
         "organizationAbout": {
-          "label": "Om organisationen"
+          "label": "Om jeres organisation",
+          "description": "Skriv lidt om jer og jeres organisations formål m.v."
         },
         "organizationWebsite": {
           "label": "Hjemmeside"
@@ -325,30 +330,34 @@
           "label": "Kontonummer"
         },
         "annualBudget": {
-          "label": "Årligt budget"
+          "label": "Årligt org. budget",
+          "description": "Jeres samlede budget for hele organisationen."
         },
         "ownContribution": {
-          "label": "Eget bidrag"
+          "label": "Eget bidrag",
+          "description": "Hvor meget tænker i selv at lægge af midler i projektet?"
         },
         "paidStaffAmount": {
-          "label": "Antal lønnede medarbejdere"
+          "label": "Lønnede ansatte?",
+          "description": "Har jeres org. faste månedslønnede ansatte?"
         },
         "financialPatrons": {
-          "label": "Finansielle støtter"
+          "label": "Andre bidragsydere til projektet",
+          "description": "Er projektet yderligere støttet af midler fra andre?"
         }
       },
       "branding": {
         "logo": {
-          "label": "Logo"
+          "label": "Logo(er)"
         },
         "relevantImages": {
           "label": "Relevante billeder"
         },
         "threeLineOrgPitch": {
-          "label": "3-linjers organisationspitch"
+          "label": "3-linjers projekt pitch"
         },
         "otherMedia": {
-          "label": "Andet medie"
+          "label": "Andet materiale"
         }
       }
     }
@@ -358,7 +367,7 @@
     "next": "Videre",
     "submit": "Fyr afsted",
     "acceptTerms": {
-      "description": "Jeg godtar [betingelsene](https://example.com/terms-and-conditions) & [privatlivspolitik](https://example.com/privacy-policy)."
+      "description": "Jeg accepterer Frigear [betingelserne](https://frigear.nu/legal/terms) & [privatlivspolitik](https://frigear.nu/legal/gdpr)."
     }
   },
   "zodI18n": {
@@ -415,7 +424,7 @@
         },
         "phone": {
           "exact": "Telefon skal være {maximum} cifre.",
-          "inclusive": "Telefon må høyst indeholde {maximum} cifre.",
+          "inclusive": "Telefon må højst indeholde {maximum} cifre.",
           "not_inclusive": "Telefon skal indeholde mindre end {maximum} cifre."
         }
       },
@@ -446,7 +455,7 @@
           "not_inclusive": "Teksten skal indeholde mere end {minimum} tegn"
         }
       },
-      "unrecognized_keys": "Ukendte nøgle(r) i objektet: {keys}"
+      "unrecognized_keys": "Ukendt(e) nøgle(r) i objektet: {keys}"
     },
     "types": {
       "array": "liste",
