@@ -26,9 +26,9 @@ export default defineNuxtConfig({
     nitro: {
       scheduledTasks: {
         // at minute 0 every 2 hours
-        // '0 */2 * * *': [
-        // 'stripe:sync',
-        // ],
+        '0 */2 * * *': [
+          'stripe:sync:supabase-users',
+        ],
         '*/30 * * * *': [
           'stripe:sync:products',
           'stripe:sync:prices',
