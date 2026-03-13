@@ -9,7 +9,7 @@ export default defineTask({
 
     let subscriptions = 0
 
-    for await (const subscription of stripe.subscriptions.list()) {
+    for await (const subscription of stripe.subscriptions.list({ status: 'active' })) {
       await upsertStripeCustomerSubscription(subscription)
       subscriptions++
     }

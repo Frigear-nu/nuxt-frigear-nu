@@ -148,7 +148,7 @@ function onPasswordResetError(err: Error) {
       @submit="onSubmit"
     >
       <template #description>
-        {{ mode === 'up' ? 'Already have an account?' : 'Don\'t have an account?' }}
+        {{ mode === 'up' ? $t('auth.alreadyHaveAnAccount') : $t('auth.dontHaveAnAccount') }}
         <ULink
           class="text-primary font-medium"
           @click="mode = mode === 'up' ? 'in' : 'up'"
@@ -185,22 +185,27 @@ function onPasswordResetError(err: Error) {
       @development="onPasswordResetDevelopment"
     />
   </UPageCard>
-
-  <div class="flex gap-4">
-    <UButton
-      icon="i-lucide-x"
-      variant="soft"
-      to="/"
-    >
-      {{ $t('actions.cancel') }}
-    </UButton>
-    <UButton
-      v-if="!emailWasDispatched"
-      trailing-icon="i-lucide-arrow-right"
-      variant="subtle"
-      @click="mode = mode === 'up' ? 'in' : 'up'"
-    >
-      {{ mode === 'in' ? $t('auth.signUp') : $t('auth.signIn') }}
-    </UButton>
-  </div>
+  <UPageCard class="w-full max-w-md border-none ring-accented/5">
+    <div class="flex gap-x-16">
+      <UButton
+        icon="i-lucide-x"
+        variant="link"
+        to="/"
+        class="flex-1 justify-center bg-accented/10 border border-accented text-toned/60"
+        :ui="{ base: 'gap-4' }"
+      >
+        {{ $t('actions.cancel') }}
+      </UButton>
+      <UButton
+        v-if="!emailWasDispatched"
+        trailing-icon="i-lucide-arrow-right"
+        variant="subtle"
+        class="flex-1 justify-center"
+        :ui="{ base: 'gap-4' }"
+        @click="mode = mode === 'up' ? 'in' : 'up'"
+      >
+        {{ mode === 'in' ? $t('auth.signUp') : $t('auth.signIn') }}
+      </UButton>
+    </div>
+  </UPageCard>
 </template>
