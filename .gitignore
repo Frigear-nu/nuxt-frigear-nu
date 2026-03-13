@@ -39,3 +39,5 @@ _tmp*
 
 # We do not allow any more supabase stuff <3
 supabase/
+# Sentry Config File
+.env.sentry-build-plugin
