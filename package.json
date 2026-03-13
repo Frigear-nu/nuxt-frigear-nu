@@ -40,7 +40,6 @@
     "@vue-email/render": "^0.0.9",
     "consola": "^3.4.2",
     "date-fns": "^4.1.0",
-    "dotenv": "^17.3.1",
     "drizzle-kit": "^0.31.8",
     "drizzle-orm": "^0.45.1",
     "escape-html": "^1.0.3",
