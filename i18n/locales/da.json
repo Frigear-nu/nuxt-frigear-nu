@@ -257,17 +257,19 @@
           "placeholder": "Hej, hva hedder du?"
         },
         "email": {
-          "label": "E-mail"
+          "label": "E-mail",
+          "placeholder": "megasnazzyme(at)some.lol"
         },
         "phone": {
-          "label": "Dit fonnummer."
+          "label": "Dit eget fonnummer",
+          "placeholder": "66666666"
         }
       },
       "organizationInfo": {
         "title": "Information om jeres organisation",
         "organizationName": {
           "label": "Organisationens navn",
-          "placeholder": "Mega lækkert org-navn."
+          "placeholder": "Mega lækkert org-navn her..."
         },
         "organizationNumber": {
           "label": "CVR. Nr:"
@@ -277,28 +279,35 @@
         },
         "organizationAddressCo": {
           "label": "C/O eller Att:",
-          "description": "Evt. C/O adresse, eller Att: person."
+          "description": "Evt. C/O, eller Att: person.",
+          "placeholder": "C/O Sorte Slyngel..."
         },
         "organizationAddressPostcode": {
-          "label": "Postnummer"
+          "label": "Postnummer",
+          "placeholder": "6666"
         },
         "organizationAddressCity": {
-          "label": "By"
+          "label": "By",
+          "placeholder": "Snævren By"
         },
         "accountableParties": {
-          "label": "Ansvarlige personer"
+          "label": "Ansvarlige personer",
+          "placeholder": "Søren Banjomus: banjo(at)mus.lol ... \nSorte Slyngel: ... \nAnden: ..."
         },
         "organizationEmail": {
-          "label": "E-mail"
+          "label": "E-mail",
+          "placeholder": "cool-name(at)hot-org.lol ..."
         },
         "organizationPhone": {
-          "label": "Fonnummer"
+          "label": "Fonnummer",
+          "placeholder": "42666642"
         }
       },
       "organizationAbout": {
         "organizationAbout": {
           "label": "Om jeres organisation",
-          "description": "Skriv lidt om jer og jeres organisations formål m.v."
+          "description": "Skriv lidt om jer og jeres organisations formål m.v.",
+          "placeholder": "Hej, vi er xxx, -og vi faldskærme af restplast som ..."
         },
         "organizationWebsite": {
           "label": "Hjemmeside"
@@ -354,7 +363,7 @@
           "label": "Relevante billeder"
         },
         "threeLineOrgPitch": {
-          "label": "3-linjers projekt pitch"
+          "label": "Jeres vildt fede projekt-pitch"
         },
         "otherMedia": {
           "label": "Andet materiale"
