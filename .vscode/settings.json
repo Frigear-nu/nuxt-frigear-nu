@@ -1,7 +1,7 @@
 {
   "eslint.useFlatConfig": true,
   "editor.inlineSuggest.enabled": true,
-  "editor.quickSuggestions": { "other": true, "comments": true, "strings": true },
+  "editor.quickSuggestions": { "other": "on", "comments": "on", "strings": "on" },
   "editor.suggestOnTriggerCharacters": true,
   "mdc.enableComponentMetadataCompletions": true,
   "genieai.quickFix.enable": true,
@@ -9,9 +9,13 @@
     "genieai.chatgpt-vscode": ["ui"]
   },
   "files.associations": {
-    "**/content/**/*.md": "mdc"
+    "**/content/**/*.md": "mdc",
+    "*.css": "tailwindcss"
   },
-
+  "tailwindCSS.classAttributes": ["class", "ui"],
+  "tailwindCSS.experimental.classRegex": [
+    ["ui:\\s*{([^)]*)\\s*}", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
   "[markdown]": {
     "editor.wordBasedSuggestions": "off"
   },

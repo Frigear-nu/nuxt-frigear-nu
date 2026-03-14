@@ -10,9 +10,9 @@ import {
 } from '#shared/schema/forms/applications'
 
 definePageMeta({
-  // header: false,
+  header: true,
   layout: 'form',
-  footer: false,
+  footer: true,
 })
 
 const { localePath } = useSiteI18n()
@@ -29,7 +29,7 @@ const { data: form } = await useAsyncData(() => `form:${kebabCase(route.path)}`,
 if (!form.value) {
   throw createError({
     status: 404,
-    message: 'Form not found',
+    message: 'Form ik´ fundet!',
   })
 }
 
@@ -138,13 +138,14 @@ const resubmitForm = () => {
 }
 
 const completedFormActions = computed<ButtonProps[]>(() => {
-  const items: ButtonProps[] = [{ label: 'Back home', to: localePath('/'), icon: 'i-lucide-arrow-left' }]
+  const items: ButtonProps[] = [{ label: 'Done!', to: localePath('/funding'), icon: 'i-lucide-x', variant: 'ghost' }]
 
   if (form.value && form.value.resubmittable) {
     // check what steps and data
     items.push({
-      label: 'Submit another',
+      label: 'Send en mere',
       icon: 'i-lucide-play',
+      variant: 'subtle',
       onClick: resubmitForm,
     })
   }
@@ -157,9 +158,10 @@ const completedFormActions = computed<ButtonProps[]>(() => {
   <div class="flex flex-col gap-4">
     <div class="flex justify-center">
       <NuxtLink to="/">
-        <NuxtImg
-          src="/icon-192.png"
-          class="size-14 rounded-full"
+        <UAvatar
+          src="/images/branding/logos/circular/frigear-bullhorn-icon-18a841-l-green-darkgreen-shadow-1500x1500-circle-friendly.png"
+          size="xl"
+          class=""
         />
       </NuxtLink>
     </div>
@@ -172,14 +174,15 @@ const completedFormActions = computed<ButtonProps[]>(() => {
       </div>
       <div
         v-if="form.description && form.description !== $t(form.description)"
-        class="text-md text-muted"
+        class="text-md text-toned"
       >
         {{ $t(form.description) }}
       </div>
     </div>
     <UCard
-      variant="subtle"
-      class="dark:bg-neutral-950"
+      variant="outline"
+      spotlight="true"
+      class="gradient-linear-br-teal-purple max-w-full h-auto max-h-fit"
     >
       <div
         v-if="steppedForm?.steps && steppedForm.steps.length > 1 && !wasSubmitted"
@@ -221,7 +224,7 @@ const completedFormActions = computed<ButtonProps[]>(() => {
       />
       <UEmpty
         v-show="wasSubmitted && !isLoading"
-        title="Thanks!"
+        title="Tak for saddan!"
         icon="i-lucide-check"
         :actions="completedFormActions"
       />

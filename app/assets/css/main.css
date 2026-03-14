@@ -3,53 +3,75 @@
 
 @source "../../../content/**/*";
 
+/* Tailwind/Nuxt UI theme tokens belong here */
+/* @theme {
+  /* Example:
+  --font-display: "Inter", "sans-serif";
 
-.fancy-text{
-    @apply bg-linear-to-r from-blue-700 via-25% via-secondary-800 to-purple-600 bg-clip-text text-transparent
+} */
+
+/* Nuxt UI CSS variables belong here */
+/* :root {
+  /* Example:
+  --ui-container: var(--container-8xl);
+  --ui-radius: 0.5rem;
+
+} */
+
+/* Optional, but good default with Nuxt UI apparently */
+body {
+  @apply antialiased text-default bg-default scheme-light dark:scheme-dark;
+}
+
+.fancy-text {
+  @apply bg-linear-to-r from-blue-700 via-25% via-secondary-800 to-purple-600 bg-clip-text text-transparent;
+}
+
+.gradient-linear-br-teal-purple {
+  @apply bg-linear-to-br from-teal-200/90 via-purple-200/50 to-transparent;
+  @variant dark {
+  @apply bg-linear-to-br from-cyan-700/20  via-25%  via-lime-600/10 to-45% to-transparent;
+  }
 }
 
 #index-hero-img {
-  @apply md:justify-self-end-safe md:mr-12
+  @apply md:justify-self-end-safe md:mr-12;
 }
 
 #typewriter-title {
-  @apply text-7xl md:text-8xl
+  @apply text-7xl md:text-8xl;
 }
 
 .typewriter-root {
-    position: relative;
-    display: block;
-    width: 100%;
-    line-height: 1.05;
-    text-wrap: auto;
-  }
-  
-  .typewriter-sizer {
-    display: block;
-    visibility: hidden;
-    pointer-events: none;
-  }
-  
-  .typewriter-live {
-    position: absolute;
-    inset: 0;
-    display: block;
-  }
-  
-  @media (min-width: 640px) {
-    .typewriter-root,
-    .typewriter-sizer,
-    .typewriter-live {
-      white-space: nowrap;
-    }
-  }
-  
-  @keyframes blink {
-    to {
-      visibility: hidden;
-    }
-  }
+  position: relative;
+  display: block;
+  width: 100%;
+  line-height: 1.05;
+  text-wrap: auto;
+}
 
-/*@theme {*/
-/*    --font-display: "Inter", "sans-serif";*/
-/*}*/
+.typewriter-sizer {
+  display: block;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.typewriter-live {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+@media (min-width: 640px) {
+  .typewriter-root,
+  .typewriter-sizer,
+  .typewriter-live {
+    white-space: nowrap;
+  }
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
