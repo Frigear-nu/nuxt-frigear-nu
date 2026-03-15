@@ -1,4 +1,4 @@
-<!-- components/StepFieldRenderer.vue -->
+<!-- components/form/StepFieldRenderer.vue -->
 <script lang="ts" generic="TField extends FormFieldDef, TState extends Record<string, unknown>" setup>
 import { CalendarDate } from '@internationalized/date'
 import type {
@@ -210,9 +210,9 @@ const fieldProps = computed(() => {
   const isHiddenFormField = hiddenFormFieldTypes.includes(props.field.type)
   const withPlaceholder
     = !isHiddenFormField
-      && !toValue(asRadio)
-      && !toValue(asDate)
-      && !toValue(asFile)
+      && props.field.type !== 'radio'
+      && props.field.type !== 'date'
+      && props.field.type !== 'file'
 
   return {
     placeholder: withPlaceholder ? translated('placeholder') : undefined,

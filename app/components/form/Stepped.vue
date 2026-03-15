@@ -1,3 +1,4 @@
+<!-- components/form/Stepped.vue -->
 <script generic="TSteps extends FormStep[]" lang="ts" setup>
 import type { FormStep, SteppedForm, UnionFormSteps } from '#shared/types/form'
 import { deriveFieldsFromSchema } from '#shared/form'
