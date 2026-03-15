@@ -1,17 +1,18 @@
 <!-- components/StepFieldRenderer.vue -->
 <script lang="ts" generic="TField extends FormFieldDef, TState extends Record<string, unknown>" setup>
 import { CalendarDate } from '@internationalized/date'
-import type { FormFieldDef } from '#shared/types/form'
+import type {
+  FormFieldDef,
+  TextareaField,
+  SelectField,
+  ComboboxField,
+  RadioField,
+  FileField,
+  DateField,
+  NumberField,
+  MarkdownValueField,
+} from '#shared/types/form'
 
-// TODO: Move this to form.ts . . .
-type TextareaField = Extract<FormFieldDef, { type: 'textarea' }>
-type SelectField = Extract<FormFieldDef, { type: 'select' }>
-type ComboboxField = Extract<FormFieldDef, { type: 'combobox' }>
-type RadioField = Extract<FormFieldDef, { type: 'radio' }>
-type FileField = Extract<FormFieldDef, { type: 'file' }>
-type DateField = Extract<FormFieldDef, { type: 'date' }>
-type NumberField = Extract<FormFieldDef, { type: 'number' }>
-type MarkdownValueField = Extract<FormFieldDef, { type: 'markdown-value' }>
 type ChoiceValue = string | number | boolean | bigint | null | undefined
 
 const props = withDefaults(defineProps<{
