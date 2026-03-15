@@ -44,14 +44,14 @@ const { data: form } = await useAsyncData<FormContentDoc | null>(() => `form:${k
   return await queryCollection('forms').path(withLeadingSlash(toValue(formId))).first() as FormContentDoc | null
 })
 
-const formDoc = computed<FormContentDoc>(() => form.value as FormContentDoc)
-
 if (!form.value) {
   throw createError({
     statusCode: 404,
     statusMessage: t('form.notFound'),
   })
 }
+
+const formDoc = computed<FormContentDoc>(() => form.value as FormContentDoc)
 
 const stepped = useTemplateRef<SteppedExpose>('stepped')
 const isLoading = computed(() => stepped.value?.stepped.isSubmitting.value ?? false)

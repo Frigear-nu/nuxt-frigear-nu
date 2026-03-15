@@ -248,6 +248,7 @@
     "removedFromCart": "{title} stuff fjernet fra kurven."
   },
   "form": {
+    "notFound": "Form blev sku ik' fundet!",
     "success": {
       "title": "Tak for sådan!",
       "done": "Færdig!",
