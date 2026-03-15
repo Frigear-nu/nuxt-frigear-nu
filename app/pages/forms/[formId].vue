@@ -11,28 +11,12 @@ import {
   testApplicationForm,
 } from '#shared/schema/forms/applications'
 
-type ResubmittableConfig = {
-  start?: string
-  fields: string[]
-  alert?: {
-    title: string
-    description: string
-    color?: AlertColor
-  }
-}
-
-type FormContentDoc = {
-  path: string
-  title?: string
-  description?: string
-  resubmittable?: boolean | ResubmittableConfig
-}
-
-type FormSubmissionResponse = {
-  id?: string | number
-}
-
-type AlertColor = 'error' | 'info' | 'success' | 'primary' | 'secondary' | 'tertiary' | 'neutral' | 'warning'
+import type {
+  AlertColor,
+  ResubmittableConfig,
+  FormContentDoc,
+  FormSubmissionResponse,
+} from '#shared/types/forms-content'
 
 type SteppedExpose = {
   stepped: {
