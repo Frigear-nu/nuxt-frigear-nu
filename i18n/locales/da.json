@@ -75,6 +75,8 @@
     }
   },
   "actions": {
+    "selectFiles": "Vælg filer",
+    "removeAllFiles": "Fjern alle filer",
     "view": "Vis",
     "backTo": "Tilbage til",
     "save": "Gem",

@@ -357,7 +357,7 @@ const fieldProps = computed(() => {
     >
       <template #actions="{ open }">
         <UButton
-          label="Select files"
+          :label="$t('actions.selectFiles')"
           icon="i-lucide-upload"
           color="neutral"
           variant="outline"
@@ -368,7 +368,7 @@ const fieldProps = computed(() => {
       <template #files-bottom="{ removeFile, files }">
         <UButton
           v-if="Array.isArray(files) ? files.length > 0 : !!files"
-          label="Remove all files"
+          :label="$t('actions.removeAllFiles')"
           color="neutral"
           @click="removeFile()"
         />

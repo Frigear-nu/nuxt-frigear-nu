@@ -75,6 +75,8 @@
     }
   },
   "actions": {
+    "selectFiles": "Select files",
+    "removeAllFiles": "Remove all files",
     "view": "Show",
     "backTo": "Back to",
     "save": "Save",
