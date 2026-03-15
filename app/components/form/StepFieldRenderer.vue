@@ -3,6 +3,7 @@
 import { CalendarDate } from '@internationalized/date'
 import type { FormFieldDef } from '#shared/types/form'
 
+// TODO: Move this to form.ts . . .
 type TextareaField = Extract<FormFieldDef, { type: 'textarea' }>
 type SelectField = Extract<FormFieldDef, { type: 'select' }>
 type ComboboxField = Extract<FormFieldDef, { type: 'combobox' }>
