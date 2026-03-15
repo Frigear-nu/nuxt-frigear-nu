@@ -80,7 +80,6 @@ const fieldRendererState = stepped.state as Record<string, unknown>
 function updateFieldState(name: string, value: unknown) {
   fieldRendererState[name] = value
 }
-
 </script>
 
 <template>

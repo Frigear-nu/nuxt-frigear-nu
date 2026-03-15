@@ -33,7 +33,7 @@ definePageMeta({
   footer: true,
 })
 
-const { localePath } = useSiteI18n()
+const { localePath, t } = useSiteI18n()
 const route = useRoute()
 const { $api } = useNuxtApp()
 const { translatedProperty } = useContent()
@@ -44,10 +44,12 @@ const { data: form } = await useAsyncData<FormContentDoc | null>(() => `form:${k
   return await queryCollection('forms').path(withLeadingSlash(toValue(formId))).first() as FormContentDoc | null
 })
 
+const formDoc = computed<FormContentDoc>(() => form.value as FormContentDoc)
+
 if (!form.value) {
   throw createError({
-    status: 404,
-    message: 'Form ik´ fundet!',
+    statusCode: 404,
+    statusMessage: t('form.notFound'),
   })
 }
 
@@ -68,24 +70,6 @@ const steppedForm = computed<GenericSteppedForm<FormStep[]>>(() => {
   }
 
   return testApplicationForm as GenericSteppedForm<FormStep[]>
-})
-
-if (!form.value) {
-  throw createError({
-    status: 404,
-    message: 'Form ik´ fundet!',
-  })
-}
-
-const formDoc = computed<FormContentDoc>(() => {
-  if (!form.value) {
-    throw createError({
-      status: 404,
-      message: 'Form ik´ fundet!',
-    })
-  }
-
-  return form.value
 })
 
 const currentIndex = computed(() => stepped.value?.stepped.currentStepIndex.value ?? 0)
