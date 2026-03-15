@@ -1,7 +1,16 @@
 import type { ZodType } from 'zod/v4'
 import type { SelectItem, RadioGroupItem, InputMenuItem } from '@nuxt/ui'
 
-type TranslationValue = string | Record<'da' | 'en', string>
+export type TranslationValue = string | Record<'da' | 'en', string>
+
+export type FormFieldMeta = {
+  [key: string]: TranslationValue | string | boolean | undefined
+  autocomplete?: string
+  hint?: TranslationValue
+  content?: TranslationValue
+  accept?: string
+  multiple?: boolean
+}
 
 type BaseField = {
   name: string
@@ -10,21 +19,23 @@ type BaseField = {
   placeholder?: string
   required?: boolean
   disabled?: boolean
-  meta?: {
-    [key: string]: TranslationValue | undefined
-    autocomplete?: string
-    hint?: TranslationValue
-  }
+  isArray?: boolean
+  meta?: FormFieldMeta
 }
+
 export type MarkdownValueField = BaseField & {
   type: 'markdown-value'
-  meta?: {
+  meta?: FormFieldMeta & {
     content: TranslationValue
   }
 }
 
 export type TextField = BaseField & {
-  type: 'text' | 'email' | 'password' | 'number'
+  type: 'text' | 'email' | 'password'
+}
+
+export type NumberField = BaseField & {
+  type: 'number'
 }
 
 export type TextareaField = BaseField & {
@@ -53,13 +64,13 @@ export type CheckboxField = BaseField & {
 
 export type DateField = BaseField & {
   type: 'date'
-  minValue?: string // ISO date string, e.g. '2024-01-01'
+  minValue?: string
   maxValue?: string
 }
 
 export type FileField = BaseField & {
   type: 'file'
-  meta?: {
+  meta?: FormFieldMeta & {
     accept?: string
     multiple?: boolean
   }
@@ -68,6 +79,7 @@ export type FileField = BaseField & {
 export type FormFieldDef
   = | MarkdownValueField
     | TextField
+    | NumberField
     | TextareaField
     | SelectField
     | ComboboxField
@@ -89,8 +101,6 @@ export type FormStep<TSchema extends ZodType = ZodType> = {
 export type SteppedForm<TSteps extends FormStep[]> = {
   id: string
   steps: TSteps
-  // TODO: Make this be  the whole object w/o step naming or with?
-  // schema?: UnionFormSteps<TSteps>
 }
 
 type UnionToIntersection<U>
