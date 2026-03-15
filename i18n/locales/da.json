@@ -248,6 +248,9 @@
     "removedFromCart": "{title} stuff fjernet fra kurven."
   },
   "form": {
+    "help": {
+      "stepInfo": "Klik for lidt info-hjælp om det her shit!"
+    },
     "notFound": "Form blev sku ik' fundet!",
     "success": {
       "title": "Tak for sådan!",

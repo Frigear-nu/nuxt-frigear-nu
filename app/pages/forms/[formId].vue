@@ -220,9 +220,8 @@ const completedFormActions = computed<ButtonProps[]>(() => {
         {{ translatedFormDescription }}
       </div>
     </div>
-    <UCard
+    <UPageCard
       variant="outline"
-      spotlight="true"
       class="gradient-linear-br-teal-purple max-w-full h-auto max-h-fit"
     >
       <div
@@ -269,6 +268,6 @@ const completedFormActions = computed<ButtonProps[]>(() => {
         icon="i-lucide-check"
         :actions="completedFormActions"
       />
-    </UCard>
+    </UPageCard>
   </div>
 </template>

@@ -100,7 +100,7 @@ function updateFieldState(name: string, value: unknown) {
         :description="$t('common.information')"
         :ui="{ footer: 'justify-end' }"
       >
-        <UTooltip text="See help information about this step.">
+        <UTooltip :text="$t('form.help.stepInfo')">
           <sup>
             <UButton
               :icon="stepInformation.icon"

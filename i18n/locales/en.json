@@ -248,6 +248,9 @@
     "removedFromCart": "{title} stuff was removed."
   },
   "form": {
+    "help": {
+      "stepInfo": "Click to see some help(ish) info about this shit!"
+    },
     "notFound": "Damn! -The form wasn't found!",
     "success": {
       "title": "Thanks a lot!",
