@@ -74,9 +74,12 @@ defineExpose({
   form: formEl,
 })
 
-const fieldRendererState = computed<Record<string, unknown>>(
-  () => stepped.state as Record<string, unknown>,
-)
+const fieldRendererState = stepped.state as Record<string, unknown>
+
+function updateFieldState(name: string, value: unknown) {
+  fieldRendererState[name] = value
+}
+
 </script>
 
 <template>
@@ -136,7 +139,7 @@ const fieldRendererState = computed<Record<string, unknown>>(
           :field="field"
           :state="fieldRendererState"
           :i18n-prefix="`form.${form.id}.${stepped.currentStepId.value}.${field.name}.`"
-          @update:state="(name, value) => { fieldRendererState[name] = value }"
+          @update:state="updateFieldState"
         />
       </template>
       <template v-else>
