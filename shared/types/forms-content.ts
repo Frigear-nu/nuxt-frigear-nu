@@ -1,3 +1,5 @@
+import type { CollectionForm } from '#shared/schema/content-form'
+
 export type AlertColor = | 'error'
   | 'info'
   | 'success'
@@ -7,22 +9,15 @@ export type AlertColor = | 'error'
   | 'neutral'
   | 'warning'
 
-export type ResubmittableConfig = {
-  start?: string
-  fields: string[]
-  alert?: {
-    title: string
-    description: string
-    color?: AlertColor
-  }
-}
+export type ResubmittableConfig = Extract<
+  CollectionForm['resubmittable'],
+  Record<string, unknown>
+>
 
-export type FormContentDoc = {
-  path: string
-  title?: string
-  description?: string
-  resubmittable?: boolean | ResubmittableConfig
-}
+export type FormContentDoc = Pick<
+  CollectionForm,
+  'path' | 'title' | 'description' | 'resubmittable'
+>
 
 export type FormSubmissionResponse = {
   id?: string | number
