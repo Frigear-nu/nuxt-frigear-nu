@@ -34,24 +34,49 @@ const submit = () => {
 //   return errors
 // }
 
-const stepInformation = computed(() => {
-  console.log(stepped.currentStep.value)
-  if (!stepped.currentStep?.value?.hint) return undefined
+// const stepInformation = computed(() => {
+//   console.log(stepped.currentStep.value)
+//   if (!stepped.currentStep?.value?.hint) return undefined
 
-  const isContentObject = typeof stepped.currentStep.value.hint === 'object' && ('content' in stepped.currentStep.value.hint)
+//   const isContentObject = typeof stepped.currentStep.value.hint === 'object' && ('content' in stepped.currentStep.value.hint)
+
+//   return {
+//     content: !isContentObject
+//       ? stepped.currentStep.value.hint
+//       : stepped.currentStep.value.hint.content,
+//     icon: stepped.currentStep.value?.hint?.icon || 'i-lucide-info',
+//   }
+// })
+
+const stepInformation = computed(() => {
+  const step = stepped.currentStep.value
+  if (!step?.hint) return undefined
+
+  const hint = step.hint
+  const isContentObject = typeof hint === 'object' && hint !== null && 'content' in hint
 
   return {
-    content: !isContentObject
-      ? stepped.currentStep.value.hint
-      : stepped.currentStep.value.hint.content,
-    icon: stepped.currentStep.value?.hint?.icon || 'i-lucide-info',
+    content: !isContentObject ? hint : hint.content,
+    icon: isContentObject ? hint.icon ?? 'i-lucide-info' : 'i-lucide-info',
   }
+})
+
+const stepInformationContent = computed(() => {
+  if (!stepInformation.value?.content) {
+    return ''
+  }
+
+  return translatedProperty(stepInformation.value.content) ?? ''
 })
 
 defineExpose({
   stepped,
   form: formEl,
 })
+
+const fieldRendererState = computed<Record<string, unknown>>(
+  () => stepped.state as Record<string, unknown>,
+)
 </script>
 
 <template>
@@ -69,6 +94,7 @@ defineExpose({
       <UModal
         v-if="stepInformation"
         :title="$t('common.information')"
+        :description="$t('common.information')"
         :ui="{ footer: 'justify-end' }"
       >
         <UTooltip text="See help information about this step.">
@@ -82,7 +108,7 @@ defineExpose({
         </UTooltip>
         <template #body>
           <MDC
-            :value="translatedProperty(stepInformation.content)"
+            :value="stepInformationContent"
             unwrap
           />
         </template>
@@ -108,9 +134,9 @@ defineExpose({
           v-for="field in currentFields"
           :key="field.name"
           :field="field"
-          :state="stepped.state"
+          :state="fieldRendererState"
           :i18n-prefix="`form.${form.id}.${stepped.currentStepId.value}.${field.name}.`"
-          @update:state="(name, value) => { (stepped.state as Record<string, unknown>)[name] = value }"
+          @update:state="(name, value) => { fieldRendererState[name] = value }"
         />
       </template>
       <template v-else>
