@@ -323,63 +323,90 @@
           "placeholder": "Hej, vi er xxx, -og vi faldskærme af restplast som ..."
         },
         "organizationWebsite": {
-          "label": "Hjemmeside"
+          "label": "Hjemmeside",
+          "placeholder": "",
+          "description": ""
         },
         "organizationFacebook": {
-          "label": "Facebook"
+          "label": "Facebook",
+          "placeholder": "",
+          "description": ""
         },
         "organizationInstagram": {
-          "label": "Instagram"
+          "label": "Instagram",
+          "placeholder": "",
+          "description": ""
         },
         "organizationTikTok": {
-          "label": "TikTok"
+          "label": "TikTok",
+          "placeholder": "",
+          "description": ""
         },
         "organizationYouTube": {
-          "label": "YouTube"
+          "label": "YouTube",
+          "placeholder": "",
+          "description": ""
         },
         "organizationLinkedIn": {
-          "label": "LinkedIn"
+          "label": "LinkedIn",
+          "placeholder": "",
+          "description": ""
         }
       },
       "financialInfo": {
         "bankName": {
-          "label": "Banknavn"
+          "label": "Banknavn",
+          "placeholder": "",
+          "description": ""
         },
         "regNr": {
-          "label": "Reg. Nr."
+          "label": "Reg. Nr.",
+          "placeholder": "",
+          "description": ""
         },
         "accountNumber": {
-          "label": "Kontonummer"
+          "label": "Kontonummer",
+          "placeholder": "",
+          "description": ""
         },
         "annualBudget": {
           "label": "Årligt org. budget",
-          "description": "Jeres samlede budget for hele organisationen."
+          "description": "Jeres samlede budget for hele organisationen.",
+          "placeholder": ""
         },
         "ownContribution": {
           "label": "Eget bidrag",
-          "description": "Hvor meget tænker i selv at lægge af midler i projektet?"
+          "description": "Hvor meget tænker i selv at lægge af midler i projektet?",
+          "placeholder": ""
         },
         "paidStaffAmount": {
           "label": "Lønnede ansatte?",
-          "description": "Har jeres org. faste månedslønnede ansatte?"
+          "description": "Har jeres org. faste månedslønnede ansatte?",
+          "placeholder": ""
         },
         "financialPatrons": {
           "label": "Andre bidragsydere til projektet",
-          "description": "Er projektet yderligere støttet af midler fra andre?"
+          "description": "Er projektet yderligere støttet af midler fra andre?",
+          "placeholder": ""
         }
       },
       "branding": {
         "logo": {
-          "label": "Logo(er)"
+          "label": "Logo(er)",
+          "description": ""
         },
         "relevantImages": {
-          "label": "Relevante billeder"
+          "label": "Relevante billeder",
+          "description": ""
         },
         "threeLineOrgPitch": {
-          "label": "Jeres vildt fede projekt-pitch"
+          "label": "Jeres vildt fede projekt-pitch",
+          "placeholder": "",
+          "description": ""
         },
         "otherMedia": {
-          "label": "Andet materiale"
+          "label": "Andet materiale",
+          "description": ""
         }
       }
     }
