@@ -1,3 +1,7 @@
+// ---------------//
+// shared/form.ts //
+// ---------------//
+
 import type { ZodType } from 'zod/v4'
 import { z } from 'zod/v4'
 import type { FormStep, SteppedForm, FormFieldDef } from './types/form'

@@ -1,4 +1,7 @@
-// composables/useSteppedForm.ts
+// --------------------------------- //
+// app/composables/useSteppedForm.ts //
+// --------------------------------- //
+
 import type { UnionFormSteps, FormStep, SteppedForm } from '#shared/types/form'
 
 export const useSteppedForm = <const TSteps extends FormStep[]>(

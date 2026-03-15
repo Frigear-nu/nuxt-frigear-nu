@@ -1,3 +1,7 @@
+/* ------------------------------------------- */
+/* app/components/content/TypeWriterEffect.vue */
+/* ------------------------------------------- */
+
 <script setup lang="ts">
 import {
   h, Fragment, onBeforeUnmount, onMounted, ref, computed, useSlots, watch, defineComponent, resolveComponent,
