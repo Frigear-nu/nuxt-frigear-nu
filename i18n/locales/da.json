@@ -248,6 +248,11 @@
     "removedFromCart": "{title} stuff fjernet fra kurven."
   },
   "form": {
+    "success": {
+      "title": "Tak for sådan!",
+      "done": "Færdig!",
+      "sendAnother": "Send en mere"
+    },
     "application": {
       "title": "Projektstøtte ansøgning",
       "description": "Ansøg om Frigear midler til jeres nice projekter.",

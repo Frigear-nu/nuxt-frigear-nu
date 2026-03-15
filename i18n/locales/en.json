@@ -248,6 +248,11 @@
     "removedFromCart": "{title} stuff was removed."
   },
   "form": {
+    "success": {
+      "title": "Thanks a lot!",
+      "done": "Done!",
+      "sendAnother": "Send another"
+    },
     "application": {
       "title": "Funding Application",
       "description": "Request funding for your awesome projects.",
