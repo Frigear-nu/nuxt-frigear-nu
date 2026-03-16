@@ -148,6 +148,8 @@ function buildBaseSchema(
       return applyNumericConstraints(z.number(), min, max)
 
     case 'date':
+      return z.iso.date()
+
     case 'datetime':
       return z.iso.datetime()
 
