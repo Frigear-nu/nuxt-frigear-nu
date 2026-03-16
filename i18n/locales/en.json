@@ -268,7 +268,8 @@
   "cart": {
     "title": "Cart",
     "addedToCart": "{title} was added to your cart.",
-    "removedFromCart": "{title} stuff was removed."
+    "removedFromCart": "{title} stuff was removed.",
+    "continueToPayment": "Continue to payment"
   },
   "form": {
     "help": {
