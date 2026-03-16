@@ -1,30 +1,35 @@
 <script setup lang="ts">
-// FIXME: After sb migration this file can be deleted.
 const { currentUser, refresh } = useAuth()
+const requireVerifyEmail = Boolean(useRuntimeConfig().public?.auth?.verifyEmail)
+
+const handleRedirect = () => {
+  if (currentUser.value && !requireVerifyEmail) {
+    return navigateTo('/account')
+  }
+  else if (currentUser.value && requireVerifyEmail) {
+    return navigateTo('/auth/verify-email')
+  }
+}
 
 watchEffect(async () => {
-  if (currentUser.value) {
-    return navigateTo('/account')
-  }
-
+  handleRedirect()
   await refresh()
-
-  if (currentUser.value) {
-    return navigateTo('/account')
-  }
+  handleRedirect()
 })
 </script>
 
 <template>
-  <UContainer>
-    <UPageHeader :ui="{ title: 'flex flex-row' }">
+  <UContainer class="h-[calc(100vh-var(--ui-header-height))] flex items-center justify-center px-4 flex-col gap-4">
+    <UEmpty
+      :ui="{ title: 'flex flex-row items-center' }"
+    >
       <template #title>
         <UIcon
           name="i-lucide-refresh-ccw"
           class="animate-spin mr-4"
         />
-        <div>Waiting for login...</div>
+        <div>{{ $t('auth.confirm.title') }}</div>
       </template>
-    </UPageHeader>
+    </UEmpty>
   </UContainer>
 </template>

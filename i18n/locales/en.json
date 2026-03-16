@@ -2,7 +2,8 @@
   "common": {
     "or": "Or",
     "close": "Close",
-    "information": "Information"
+    "information": "Information",
+    "back": "Back"
   },
   "auth": {
     "signIn": "Sign In",
@@ -12,6 +13,9 @@
     "signedInAs": "Signed in as",
     "dontHaveAnAccount": "Don't have a Frigear account yet? ➜",
     "alreadyHaveAnAccount": "Already got a Frigear account? ➜",
+    "confirm": {
+      "title": "Checking..."
+    },
     "name": {
       "label": "Name",
       "placeholder": "John Doe"

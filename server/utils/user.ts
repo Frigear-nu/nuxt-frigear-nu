@@ -17,7 +17,7 @@ export const getDefaultRedirectForUser = async (
   if (!verifyEmail) {
     return continueLink
   }
-  return user?.emailVerifiedAt ? continueLink : '/auth/verify-email'
+  return user?.emailVerifiedAt ? continueLink : '/auth/confirm'
 }
 
 export const findUserByEmail = (email: Users['email']): Promise<Users | undefined> => {
