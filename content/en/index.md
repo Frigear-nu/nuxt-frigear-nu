@@ -10,10 +10,10 @@ seo:
 ---
 orientation: horizontal
 ---
-:nuxt-img{#index-hero-img .rounded-full .p-4 .dark:bg-neutral-800 .bg-neutral-200 .w-fit .md:max-w-md .mx-auto :height="auto" :width="380" alt="Frigear FGR logo" format="webp" quality="70" src="/logo-with-rf-bg.jpg"}
+:nuxt-img{.rounded-full.p-4.dark:bg-neutral-800.bg-neutral-200.w-fit.md:max-w-md.mx-auto.md:justify-self-end-safe.md:mr-12 :height="auto" :width="380" alt="Frigear FGR logo" format="webp" quality="70" src="/logo-with-rf-bg.jpg"}
 
 #title
-[{{ $doc.title }}]{#typewriter-title .fancy-text} :br :br
+[{{ $doc.title }}]{.fancy-text.text-7xl.md:text-8xl} :br :br
 
   :::typewriter-effect{.mt-0 .block .leading-tight .min-h-[2.4em] .sm:min-h-[1.1em] .text-wrap .sm:text-nowrap}
   Nonprofit
