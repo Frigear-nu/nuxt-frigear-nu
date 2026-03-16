@@ -1,4 +1,4 @@
-// app/composables/useSteppedForm.ts
+// composables/useSteppedForm.ts
 
 import type { UnionFormSteps, FormStep, SteppedForm } from '#shared/types/form'
 
