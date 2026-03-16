@@ -6,6 +6,10 @@ export default defineNuxtPlugin({
   dependsOn: ['i18n:plugin'],
   parallel: true,
   setup: (nuxtApp) => {
+    // Do not run this in SSr or prerendering (since it will rely on user input anyways)
+    if (import.meta.prerender || import.meta.server) {
+      return
+    }
     const { dateFormat } = useRuntimeConfig().public.zodI18n
     const i18n = nuxtApp.$i18n as {
       t: (key: string, values?: Record<string, unknown>) => string
