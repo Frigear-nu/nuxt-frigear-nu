@@ -212,7 +212,7 @@ const navigateToStripeDashboard = async () => {
           :variant="activeSubscription && activeSubscription.priceId === item.id ? 'subtle' : undefined"
           @click="onSelectMembership(item as PublicPrice)"
         >
-          {{ activeSubscription && activeSubscription.priceId === item.id ? $t('actions.membership.currentPlan') : $t('actions.select') }}
+          {{ activeSubscription && activeSubscription.priceId === item.id ? $t('common.current') : $t('actions.select') }}
         </UButton>
       </template>
     </MembershipTypes>

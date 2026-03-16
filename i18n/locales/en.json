@@ -3,7 +3,8 @@
     "or": "Or",
     "close": "Close",
     "information": "Information",
-    "back": "Back"
+    "back": "Back",
+    "current": "Current"
   },
   "auth": {
     "signIn": "Sign In",
