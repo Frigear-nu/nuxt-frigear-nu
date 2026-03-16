@@ -15,6 +15,7 @@ const emit = defineEmits<{
 const formEl = useTemplateRef('formEl')
 const stepped = useSteppedForm(props.form)
 const { translatedProperty } = useContent()
+const { t } = useSiteI18n()
 const onSubmit = stepped.createSubmitHandler(data => emit('submit', data))
 
 const currentFields = computed(() => {
@@ -90,17 +91,17 @@ function updateFieldState(name: string, value: unknown) {
         class="text-lg"
       >
         <MDC
-          :value="$t(stepped.currentStep.value.labelKey)"
+          :value="t(stepped.currentStep.value.labelKey)"
           unwrap
         />
       </h1>
       <UModal
         v-if="stepInformation"
-        :title="$t('common.information')"
-        :description="$t('common.information')"
+        :title="t('common.information')"
+        :description="t('common.information')"
         :ui="{ footer: 'justify-end' }"
       >
-        <UTooltip :text="$t('form.help.stepInfo')">
+        <UTooltip :text="t('form.help.stepInfo')">
           <sup>
             <UButton
               :icon="stepInformation.icon"
@@ -117,7 +118,7 @@ function updateFieldState(name: string, value: unknown) {
         </template>
         <template #footer="{ close }">
           <UButton
-            :label="$t('common.close')"
+            :label="t('common.close')"
             @click="close"
           />
         </template>
@@ -161,7 +162,7 @@ function updateFieldState(name: string, value: unknown) {
             variant="ghost"
             icon="i-lucide-arrow-left"
             type="button"
-            :label="$t('steppedForm.previous')"
+            :label="t('steppedForm.previous')"
             @click="stepped.goPrev"
           />
           <span v-else />
@@ -177,7 +178,7 @@ function updateFieldState(name: string, value: unknown) {
             type="submit"
             :loading="stepped.isSubmitting.value"
             :trailing-icon="stepped.isLastStep.value ? 'i-lucide-send' : 'i-lucide-arrow-right'"
-            :label="stepped.isLastStep.value ? $t('steppedForm.submit') : $t('steppedForm.next')"
+            :label="stepped.isLastStep.value ? t('steppedForm.submit') : t('steppedForm.next')"
           />
         </slot>
       </div>
