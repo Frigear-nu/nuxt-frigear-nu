@@ -14,7 +14,6 @@ import {
 import type {
   AlertColor,
   ResubmittableConfig,
-  FormContentDoc,
   FormSubmissionResponse,
 } from '#shared/types/forms-content'
 
@@ -40,9 +39,10 @@ const { translatedProperty } = useContent()
 
 const formId = computed(() => route.params.formId as string)
 
-const { data: form } = await useAsyncData<FormContentDoc | null>(() => `form:${kebabCase(route.path)}`, async () => {
-  return await queryCollection('forms').path(withLeadingSlash(toValue(formId))).first() as FormContentDoc | null
-})
+const { data: form } = await useAsyncData(
+  () => `form:${kebabCase(route.path)}`,
+  () => queryCollection('forms').path(withLeadingSlash(formId.value)).first(),
+)
 
 if (!form.value) {
   throw createError({
@@ -50,8 +50,6 @@ if (!form.value) {
     statusMessage: t('form.notFound'),
   })
 }
-
-const formDoc = computed<FormContentDoc>(() => form.value as FormContentDoc)
 
 const stepped = useTemplateRef<SteppedExpose>('stepped')
 const isLoading = computed(() => stepped.value?.stepped.isSubmitting.value ?? false)
@@ -61,11 +59,11 @@ const wasSubmitted = ref(false)
 // const description = computed(() => form.value?.description)
 
 const steppedForm = computed<GenericSteppedForm<FormStep[]>>(() => {
-  if (formDoc.value.path === '/project-application') {
+  if (form.value?.path === '/project-application') {
     return projectApplicationForm as GenericSteppedForm<FormStep[]>
   }
 
-  if (formDoc.value.path === '/board-member-application') {
+  if (form.value?.path === '/board-member-application') {
     return boardMemberApplicationForm as GenericSteppedForm<FormStep[]>
   }
 
@@ -77,9 +75,11 @@ const currentIndex = computed(() => stepped.value?.stepped.currentStepIndex.valu
 // const fileUploader = useUpload(`/api/forms/${form.value.path}`)
 
 const onCompleteProjectApplication = async (args: ProjectApplicationForm) => {
-  if (!form.value) {
+  const path = form.value?.path
+  if (!path) {
     return
   }
+
   const formData = new FormData()
 
   // Append non-file fields
@@ -96,7 +96,7 @@ const onCompleteProjectApplication = async (args: ProjectApplicationForm) => {
     }
   }
 
-  const submission = await $api<FormSubmissionResponse>(`/api/forms${formDoc.value.path}`, {
+  const submission = await $api<FormSubmissionResponse>(`/api/forms${path}`, {
     method: 'POST',
     body: formData,
     // Don't set Content-Type — the browser sets it automatically
@@ -129,16 +129,16 @@ const translatedAlert = computed(() => {
 })
 
 const resubmittableConfig = computed<ResubmittableConfig | null>(() => {
-  const resubmit = formDoc.value.resubmittable
+  const resubmit = form.value?.resubmittable
   return resubmit && typeof resubmit === 'object' ? resubmit : null
 })
 
 const translatedFormTitle = computed(() => {
-  return formDoc.value.title ? $t(formDoc.value.title) : ''
+  return form.value?.title ? t(form.value.title) : ''
 })
 
 const translatedFormDescription = computed(() => {
-  return formDoc.value.description ? $t(formDoc.value.description) : ''
+  return form.value?.description ? t(form.value.description) : ''
 })
 
 const resubmitForm = () => {
@@ -176,7 +176,7 @@ const resubmitForm = () => {
 
 const completedFormActions = computed<ButtonProps[]>(() => {
   const items: ButtonProps[] = [{
-    label: $t('form.success.done'),
+    label: t('form.success.done'),
     to: localePath('/funding'),
     icon: 'i-lucide-x',
     variant: 'ghost',
@@ -184,7 +184,7 @@ const completedFormActions = computed<ButtonProps[]>(() => {
 
   if (resubmittableConfig.value) {
     items.push({
-      label: $t('form.success.sendAnother'),
+      label: t('form.success.sendAnother'),
       icon: 'i-lucide-play',
       variant: 'subtle',
       onClick: resubmitForm,
@@ -207,67 +207,69 @@ const completedFormActions = computed<ButtonProps[]>(() => {
       </NuxtLink>
     </div>
     <div
-      v-if="formDoc.title || formDoc.description"
+      v-if="form && (form.title || form.description)"
       class="flex flex-col gap-1 text-center mb-2"
     >
       <div class="text-2xl font-bold">
         {{ translatedFormTitle }}
       </div>
       <div
-        v-if="formDoc.description && formDoc.description !== translatedFormDescription"
+        v-if="form.description && form.description !== translatedFormDescription"
         class="text-md text-toned"
       >
         {{ translatedFormDescription }}
       </div>
     </div>
-    <UPageCard
-      variant="outline"
-      class="gradient-linear-br-teal-purple max-w-full h-auto max-h-fit"
-    >
-      <div
-        v-if="steppedForm?.steps && steppedForm.steps.length > 1 && !wasSubmitted"
-        class="flex justify-center gap-1 mb-8"
+    <div class="gradient-linear-br-teal-purple">
+      <UPageCard
+        variant="outline"
+        class="bg-transparent max-w-full h-auto max-h-fit"
       >
         <div
-          v-for="(_, index) in steppedForm.steps"
-          :key="index"
-          class="flex flex-col items-center"
+          v-if="steppedForm?.steps && steppedForm.steps.length > 1 && !wasSubmitted"
+          class="flex justify-center gap-1 mb-8"
         >
           <div
-            :class="[
-              'size-6 text-center rounded-3xl',
-              index <= currentIndex ? 'bg-primary' : 'bg-neutral',
-              index === currentIndex ? 'ring-1': '',
-            ]"
+            v-for="(_, index) in steppedForm.steps"
+            :key="index"
+            class="flex flex-col items-center"
           >
-            {{ index + 1 }}
+            <div
+              :class="[
+                'size-6 text-center rounded-3xl',
+                index <= currentIndex ? 'bg-primary' : 'bg-neutral',
+                index === currentIndex ? 'ring-1': '',
+              ]"
+            >
+              {{ index + 1 }}
+            </div>
+            <!--          <UIcon -->
+            <!--            v-if="step.icon" -->
+            <!--            :name="step.icon" -->
+            <!--          /> -->
           </div>
-          <!--          <UIcon -->
-          <!--            v-if="step.icon" -->
-          <!--            :name="step.icon" -->
-          <!--          /> -->
         </div>
-      </div>
-      <UAlert
-        v-if="displayAlert"
-        v-bind="translatedAlert"
-        class="my-4"
-        variant="subtle"
-        close
-        @update:open="displayAlert = false"
-      />
-      <FormStepped
-        v-show="!wasSubmitted"
-        ref="stepped"
-        :form="steppedForm"
-        @submit="onComplete"
-      />
-      <UEmpty
-        v-show="wasSubmitted && !isLoading"
-        :title="$t('form.success.title')"
-        icon="i-lucide-check"
-        :actions="completedFormActions"
-      />
-    </UPageCard>
+        <UAlert
+          v-if="displayAlert"
+          v-bind="translatedAlert"
+          class="my-4"
+          variant="subtle"
+          close
+          @update:open="displayAlert = false"
+        />
+        <FormStepped
+          v-show="!wasSubmitted"
+          ref="stepped"
+          :form="steppedForm"
+          @submit="onComplete"
+        />
+        <UEmpty
+          v-show="wasSubmitted && !isLoading"
+          :title="t('form.success.title')"
+          icon="i-lucide-check"
+          :actions="completedFormActions"
+        />
+      </UPageCard>
+    </div>
   </div>
 </template>
