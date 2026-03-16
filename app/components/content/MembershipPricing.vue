@@ -77,7 +77,7 @@ const onSelectMembership = (price: PublicPrice) => {
         :variant="membershipPriceId === item.id ? 'subtle' : undefined"
         @click="onSelectMembership(item as PublicPrice)"
       >
-        {{ membershipPriceId === item.id ? 'Current' : 'Switch' }}
+        {{ membershipPriceId === item.id ? $t('common.current') : $t('actions.select') }}
       </UButton>
     </template>
   </MembershipTypes>
