@@ -14,11 +14,6 @@ export type ResubmittableConfig = Extract<
   Record<string, unknown>
 >
 
-export type FormContentDoc = Pick<
-  CollectionForm,
-  'path' | 'title' | 'description' | 'resubmittable'
->
-
 export type FormSubmissionResponse = {
   id?: string | number
 }
