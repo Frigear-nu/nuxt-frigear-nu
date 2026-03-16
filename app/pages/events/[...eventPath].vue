@@ -89,6 +89,7 @@ const onPurchase = async (input: { eventPath: string, payload: { ticketKey: stri
     navigateTo(checkoutSession.url, { external: true })
   }
   catch (err) {
+    // @ts-expect-error this is wrongly typed from the throw...
     toast.add(formatError(err))
   }
   finally {
@@ -142,7 +143,8 @@ const paymentActions = computed<ButtonProps[]>(() => {
 
 const { getEventRequirements } = useEventTicket()
 const eventRequirements = computed(() => {
-  return getEventRequirements(event.value || [])
+  if (!event.value) return []
+  return getEventRequirements(event.value)
 })
 
 const dateTimeLocale = computed(() => {
@@ -267,7 +269,7 @@ onMounted(() => {
             <div>
               <UFieldGroup v-if="startDate">
                 <UBadge
-                  variant="outline"
+                  variant="soft"
                   class="text-sm font-semibold"
                 >
                   {{ $t('events.detail.when') }}
@@ -347,7 +349,7 @@ onMounted(() => {
             <MDC
               v-slot="{ body, data }"
               class="text-muted"
-              :value="translatedProperty(event.body)"
+              :value="translatedProperty(event.body) as never"
             >
               <MDCRenderer
                 v-if="body"
