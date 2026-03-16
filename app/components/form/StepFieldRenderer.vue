@@ -236,8 +236,8 @@ const fieldProps = computed(() => {
       #hint
     >
       <UModal
-        :title="$t('common.information')"
-        :description="$t('common.information')"
+        :title="t('common.information')"
+        :description="t('common.information')"
         :ui="{ footer: 'justify-end' }"
       >
         <UButton
@@ -252,7 +252,7 @@ const fieldProps = computed(() => {
         </template>
         <template #footer="{ close }">
           <UButton
-            :label="$t('common.close')"
+            :label="t('common.close')"
             @click="close"
           />
         </template>
@@ -357,7 +357,7 @@ const fieldProps = computed(() => {
     >
       <template #actions="{ open }">
         <UButton
-          :label="$t('actions.selectFiles')"
+          :label="t('actions.selectFiles')"
           icon="i-lucide-upload"
           color="neutral"
           variant="outline"
@@ -368,7 +368,7 @@ const fieldProps = computed(() => {
       <template #files-bottom="{ removeFile, files }">
         <UButton
           v-if="Array.isArray(files) ? files.length > 0 : !!files"
-          :label="$t('actions.removeAllFiles')"
+          :label="t('actions.removeAllFiles')"
           color="neutral"
           @click="removeFile()"
         />
