@@ -315,7 +315,7 @@ const fieldProps = computed(() => {
       :disabled="field.disabled"
     >
       <template
-        v-if="field.label"
+        v-if="translated('label')"
         #label
       >
         <MDC
@@ -324,7 +324,7 @@ const fieldProps = computed(() => {
         />
       </template>
       <template
-        v-if="field.description"
+        v-if="translated('description')"
         #description
       >
         <MDC
