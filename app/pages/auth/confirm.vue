@@ -3,12 +3,16 @@ const { currentUser, refresh } = useAuth()
 const requireVerifyEmail = Boolean(useRuntimeConfig().public?.auth?.verifyEmail)
 
 const handleRedirect = () => {
-  if (currentUser.value && !requireVerifyEmail) {
-    return navigateTo('/account')
+  if (!currentUser.value) {
+    return
   }
-  else if (currentUser.value && requireVerifyEmail) {
+
+  //
+  if (requireVerifyEmail && !currentUser.value?.emailVerifiedAt) {
     return navigateTo('/auth/verify-email')
   }
+
+  return navigateTo('/account')
 }
 
 watchEffect(async () => {
