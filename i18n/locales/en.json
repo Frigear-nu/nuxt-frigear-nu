@@ -152,6 +152,10 @@
       "subscribe": {
         "title": "Get a membership",
         "description": "Subscribe to a membership to get started!"
+      },
+      "noMembership": {
+        "title": "Join the team today",
+        "description": "Set up your membership to get started!"
       }
     },
     "security": {

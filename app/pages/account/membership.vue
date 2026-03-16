@@ -6,6 +6,7 @@ import type { CartItem } from '#shared/types/shopping-cart'
 import { useMemberships } from '~/store/queries/membership'
 import { useStripeBillingPortalUrl, useSubscribeUser } from '~/store/mutations/user'
 import { format } from 'date-fns'
+import type { PricingPlanProps } from '@nuxt/ui'
 
 const toast = useToast()
 const { t, locale } = useSiteI18n()
@@ -47,7 +48,7 @@ const onSelectMembership = (price: PublicPrice) => {
 
 const membershipToSubscribe = computed(() => {
   if (!cartSubscribeItem.value) return undefined
-  return [...availableMemberships.value || []].find(m => m.id === cartSubscribeItem.value?.id)
+  return [...availableMemberships.value || []].find(m => m.id === cartSubscribeItem.value?.id) as unknown as CartItem
 })
 
 const subscribeDialogTitle = computed(() => {
@@ -188,8 +189,8 @@ const navigateToStripeDashboard = async () => {
       class="mb-4"
     >
       <UPageHero
-        title="Subscribe to a plan"
-        description="Subscribe to a plan to get started!"
+        :title="$t('account.membership.noMembership.title')"
+        :description="$t('account.membership.noMembership.description')"
         class="mt-0"
         :ui="{ title: 'fancy-text' }"
       />
@@ -212,7 +213,7 @@ const navigateToStripeDashboard = async () => {
           :variant="activeSubscription && activeSubscription.priceId === item.id ? 'subtle' : undefined"
           @click="onSelectMembership(item as PublicPrice)"
         >
-          {{ activeSubscription && activeSubscription.priceId === item.id ? 'Current' : 'Switch' }}
+          {{ activeSubscription && activeSubscription.priceId === item.id ? 'Current' : $t('actions.select') }}
         </UButton>
       </template>
     </MembershipTypes>
@@ -228,7 +229,7 @@ const navigateToStripeDashboard = async () => {
         <UPricingPlan
           v-if="membershipToSubscribe"
           v-bind="membershipToSubscribe"
-          :price="`${membershipToSubscribe.price / 100} DKK`"
+          :price="membershipToSubscribe && membershipToSubscribe.price ? `${membershipToSubscribe.price / 100} DKK` : undefined"
         />
         <div class="my-4">
           You will now be taken to stripe to confirm

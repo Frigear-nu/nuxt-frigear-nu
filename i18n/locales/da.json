@@ -152,6 +152,10 @@
       "subscribe": {
         "title": "Bliv medlem",
         "description": "Bliv medlem for at komme i gang!"
+      },
+      "noMembership": {
+        "title": "Bliv med på holdet i dag",
+        "description": "Bliv medlem for at komme i gang!"
       }
     },
     "security": {
