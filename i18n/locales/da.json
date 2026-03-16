@@ -16,6 +16,10 @@
     "confirm": {
       "title": "Checker..."
     },
+    "verifyEmail": {
+      "title": "Verificer din e-mail",
+      "description": "Vi har sendt dig en e-mail. Tjek din inbox eller spam."
+    },
     "name": {
       "label": "Navn",
       "placeholder": "Navn Navnesen"

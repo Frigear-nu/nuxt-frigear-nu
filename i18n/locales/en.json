@@ -16,6 +16,10 @@
     "confirm": {
       "title": "Checking..."
     },
+    "verifyEmail": {
+      "title": "Verify your e-mail",
+      "description": "We have sent you an e-mail. Check your inbox or spam."
+    },
     "name": {
       "label": "Name",
       "placeholder": "John Doe"
