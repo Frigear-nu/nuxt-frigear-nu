@@ -1,4 +1,5 @@
 import { ServerError } from '@nitrotool/errors'
+import { eq } from 'drizzle-orm'
 
 export default defineOAuthGoogleEventHandler({
   config: {
@@ -26,9 +27,9 @@ export default defineOAuthGoogleEventHandler({
     else {
       [dbUser] = await db
         .update(schema.users)
-        .set({
-          lastLoginAt: new Date(),
-        }).returning()
+        .set({ lastLoginAt: new Date() })
+        .where(eq(schema.users.id, dbUser.id))
+        .returning()
     }
 
     if (!dbUser) throw ServerError('Could find user.')
