@@ -1,7 +1,7 @@
 title: General Assembly 2026
 date: 2026-03-21
 # Idk, this is ISO UTC or something...
-start: 2026-03-21 14:00
+start: 2026-03-21 15:00
 end: 2026-03-21 23:00
 address:
   value: Ved Amagerbanen 13
@@ -13,8 +13,8 @@ name:
   da: Generalforsamling 2026 + afterparty
   en: General Assembly 2026 + afterparty
 description:
-  da: Generalforsamling + afterparty for Frigear medlemmer 2026
-  en: General Assembly + afterparty for Frigear members 2026
+  da: For awesome Frigear medlemmer ...
+  en: For aesome Frigear members ...
 # Replaces ${var_name} in the correct environment.
 variables:
   production:
@@ -32,56 +32,59 @@ variables:
 body:
   da: |
     ::callout{class="bg-primary/10 mt-0"}
-      **NB:** Om du er 🎯 scorer du de bedste billetter 🏆
+    **🐼 ᏀᎬᏁᎬᎡᎪᏞᎱᎾᎡᏚᎪᎷᏞᏆᏁᏀ ᎾᏀ ᎱᎬᏚᎢ 🐼** :br
     ::
     ::h2{.mt-0}
-    📆 Samling igen
+    𝗙𝗿𝗶𝗴𝗲𝗮𝗿 𝗶𝗻𝗱𝗸𝗮𝗹𝗱𝗲𝗿 𝘁𝗶𝗹 𝗚𝗙 𝗼𝗴 𝗽𝗮𝗿𝘁𝘆 𝗳𝗼𝗿 𝗺𝗲𝗱𝗹𝗲𝗺𝗺𝗲𝗿𝗻𝗲 . . . :br
     ::
-    Vi samles igen for at...
-    **Brug markdown her**... Om du ønsker...
-    
-    ### 🥓 Bacon ipsum
-    Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
-    hamburger ham hock.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    biltong pork chop.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    biltong pork chop.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    biltong pork chop.
+    **F𝘆𝗿 𝗱𝗮𝘁𝗲𝗻 𝗶 𝗸𝗮𝗹𝗲𝗻𝗱𝗲𝗿𝗲𝗻 💜 -𝗼𝗴 𝗱𝗲𝗹 💜**
+    ::span{.text-muted}
+    **𝗩𝗶 𝘀𝗸𝗮𝗹 𝗯𝗹𝗮𝗻𝗱𝘁 𝗮𝗻𝗱𝗲𝘁 . . .** :br :br
+    ::    
+    ##### :arrow_forward: Bᴇsʟᴜᴛᴛᴇ ʜᴠɪʟᴋᴇ ᴀᴡᴇsᴏᴍᴇ ғʀɪᴠɪʟʟɪɢᴅʀᴇᴠɴᴇ ᴘʀᴏᴊᴇᴋᴛᴇʀ ʙʟᴀɴᴅᴛ ᴀɴsøɢɴɪɴɢᴇʀɴᴇ sᴏᴍ sᴋᴀʟ ᴍᴏᴅᴛᴀɢᴇ ᴍɪᴅʟᴇʀ ғʀᴀ sɪᴅsᴛᴇ ᴀ̊ʀs Fʀɪɢᴇᴀʀ ᴏᴠᴇʀsᴋᴜᴅ.
+    ::span{.text-muted .font-bold}
+    📢 _H𝘷𝑜𝘳𝑑𝘢𝑛 𝑚𝘢𝑛 𝑎𝘯𝑠ø𝑔𝘦𝑟, 𝑠𝘦𝑛𝘥𝑒𝘴 𝘶𝑑 𝑡𝘪𝑙 𝑚𝘦𝑑𝘭𝑒𝘮𝑚𝘦𝑟 𝑜𝘨 𝘷𝑜𝘳𝑒𝘴 𝘚𝑜𝘔𝑒 𝑘𝘢𝑛𝘢𝑙𝘦𝑟 𝐴𝘚𝐴𝘗, -𝘴𝑎̊ ℎ𝘢𝑚𝘮𝑒𝘳 𝘥𝑒𝘯 𝘧𝑜𝘭𝑙𝘰𝑤 𝑘𝘯𝑎𝘱!_ :br :br
+    ::
+    ##### :arrow_forward: Bᴇʜᴀɴᴅʟᴇ ɪɴᴅᴋᴏᴍɴᴇ ғᴏʀsʟᴀɢ.
+    ::span{.text-muted .font-bold}
+    📢 _H𝘢𝘳 𝘥𝘶 𝘥𝘦𝘯 𝘧𝘦𝘥𝘦𝘴𝘵𝘦 𝘪𝘥𝘦 𝘵𝘪𝘭 𝘦𝘵 𝘪𝘯𝘵𝘦𝘳𝘯𝘵 𝘮𝘦𝘥𝘭𝘦𝘮𝘴𝘱𝘳𝘰𝘫𝘦𝘬𝘵 𝘥𝘶 𝘨𝘦𝘳𝘯𝘦 𝘷𝘪𝘭 𝘱𝘪𝘵𝘤𝘩𝘦, -𝘴𝘢̊ 𝘦𝘳 𝘥𝘦𝘵 𝘩𝘦𝘳!_ :br :br
+    ::
+    ##### :arrow_forward: Væʟɢᴇ ʙᴇsᴛʏʀᴇʟsᴇ, ᴏɢ sᴛʏʀᴇɢʀᴜᴘᴘᴇʀ.
+    ::span{.text-muted .font-bold}
+    📢 _H𝘢𝘳 𝘥𝘶 𝘥𝘦 𝘷𝘪𝘭𝘥𝘦 𝘣𝘦𝘴𝘵𝘺𝘳𝘦𝘭𝘴𝘦𝘴 𝘴𝘬𝘪𝘭𝘭𝘴 𝘰𝘨 ø𝘯𝘴𝘬𝘦𝘳 𝘢𝘵 𝘣𝘪𝘥𝘳𝘢𝘨𝘦 𝘮𝘦𝘥 𝘥𝘪𝘯 𝘷𝘪𝘥𝘦𝘯 𝘰𝘨 𝘵𝘪𝘥 𝘪 𝘦𝘯 𝘧𝘳𝘪𝘷𝘪𝘭𝘭𝘪𝘨-𝘥𝘳𝘦𝘷𝘦𝘵 𝘯𝘰𝘯𝘱𝘳𝘰𝘧𝘪𝘵 𝘧𝘰𝘳𝘦𝘯𝘪𝘯𝘨, -𝘴𝘢̊ 𝘳𝘪𝘷 𝘦𝘯 𝘢𝘯𝘴ø𝘨𝘯𝘪𝘯𝘨 𝘢𝘧𝘴𝘵𝘦𝘥. . ._ :br :br
+    ::
+    ##### :arrow_forward: Gᴏᴏᴅ-ᴊᴏʙ-ғɪᴠᴇ, -ʜᴏᴘᴘᴇ ᴛɪʟ ɴᴀᴊs DJ-ᴍᴜᴢɪᴋ, ᴅʀɪᴋᴋᴇ ᴅʀɪɴᴋs & ғᴀᴅøʟ, ᴏɢ ᴀʟᴛ ᴍᴜʟɪɢᴛ ᴀɴᴅᴇᴛ ɢᴀᴋᴋᴇᴛ ᴛɪʟ ᴇғᴛᴇʀғᴇsᴛᴇɴ.
+    ::span{.text-muted .font-bold}
+    📢 _Husk at fange billet tilmelding til mad og drikke, -eller om du bare deltager ..._  :br :br
+    ::
 
   en: |
+    ::callout{class="bg-primary/10 mt-0"}
+    **🐼 GENERAL ASSEMPLY & AFTERPARTY 🐼** :br
+    ::
     ::h2{.mt-0}
-    We meet again
+    𝗙𝗿𝗶𝗴𝗲𝗮𝗿 is calling members to the General Assembly . . . :br
     ::
-    We meet again to...
-    **Use markdown here**
-    
-    
-    ::callout{class="bg-primary/20"}
-    **Welcome!**
+    **Smack it in your calendar 💜 -and share 💜**
+    ::span{.text-muted}
+    **Among other things, we´re gonna . . .** :br :br
+    ::    
+    ##### :arrow_forward: Decide last yearts profit towards nonprofit volunteer driven projects.
+    ::span{.text-muted .font-bold}
+    📢 _How to apply can be found under the funding page!_ :br :br
     ::
-
-    ### Lorem ipsum
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
-    hamburger ham hock.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    biltong pork chop.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    biltong pork chop.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-
-
-    ### Bacon ipsum
-    Bacon ipsum dolor amet pork belly pork loin, pork chop bresaola
-    hamburger ham hock.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    biltong pork chop.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    biltong pork chop.
-    Beef ribs pork loin, pork chop bresaola hamburger ham hock
-    biltong pork chop.
+    ##### :arrow_forward: Have a look at incoming suggestions for the org. in general.
+    ::span{.text-muted .font-bold}
+    📢 _You got the most awesome-est idea brewing? THIS is where you pitch it!_ :br :br
+    ::
+    ##### :arrow_forward: Decide boardmembers and control groups.
+    ::span{.text-muted .font-bold}
+    📢 _You got what it takes, then throw us an application under the bboard page . . ._ :br :br
+    ::
+    ##### :arrow_forward: Gᴏᴏᴅ-ᴊᴏʙ-ғɪᴠᴇ, -Jump around to awesome DJ tunes and get a few drinks on.
+    ::span{.text-muted .font-bold}
+    📢 _Remember to catch your free attendence ticket, -and add food and drinks addon if you're feeling hungry at meetings ..._  :br :br
+    ::
 
 
 # Tickets and ticket products
