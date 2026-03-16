@@ -4,11 +4,11 @@ title: Bestyrelse
 cards:
   - title: Hvem er i bestyrelsen?
     icon: i-lucide-info
-    description: 100% offentlig bestyrelse.
+    description: 100% frivillig bestyrelse.
   - title: Hvordan kan jeg bidrage?
     icon: i-lucide-info
     description: Alle er velkomne til at bidrage.
-  - title: Hvordan kan jeg blive med?
+  - title: Hvordan kan jeg være med?
     icon: i-lucide-info
     description: Alle er velkomne til at blive med.
 ---
