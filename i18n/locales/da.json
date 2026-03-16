@@ -244,6 +244,9 @@
         "title": "Billetter",
         "view": "Se billetter",
         "free": "Gratis",
+        "goToCheckout": "Til betaling",
+        "signInToPurchase": "Log ind for at delta",
+        "atLeastOneProductRequired": "{addonTitle}-valg kræves.",
         "ticket":{
           "label": "Billet"
         },
