@@ -5,7 +5,7 @@ const { data: header } = await useSiteHeader()
 
 const appConfig = useAppConfig()
 const site = useSiteConfig()
-const { data: cartItems, hasAnyItems, isOpen: cartIsOpen } = useShoppingCart()
+const { data: cartItems, hasAnyItems, isOpen: cartIsOpen, checkout } = useShoppingCart()
 
 const { localePath, isEnabled, locales } = useSiteI18n()
 </script>
@@ -77,23 +77,25 @@ const { localePath, isEnabled, locales } = useSiteI18n()
   <USlideover
     v-model:open="cartIsOpen"
     :title="$t('cart.title')"
-    :ui="{ footer: 'justify-end' }"
+    :ui="{ footer: 'justify-between' }"
   >
     <template #body>
       <ShoppingCart class="h-full" />
     </template>
     <template #footer="{ close }">
       <UButton
-        label="Continue shopping"
+        :label="$t('common.close')"
         color="neutral"
         variant="outline"
+        icon="i-lucide-x"
         size="xl"
         @click="close"
       />
       <UButton
-        label="Continue to payment"
+        :label="$t('cart.continueToPayment')"
         color="neutral"
         size="xl"
+        @click="checkout"
       />
     </template>
   </USlideover>
