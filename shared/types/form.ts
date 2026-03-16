@@ -2,7 +2,7 @@
 import type { ZodType } from 'zod/v4'
 import type { SelectItem, RadioGroupItem, InputMenuItem } from '@nuxt/ui'
 
-export type TranslationValue = string | Record<'da' | 'en', string>
+type TranslationValue = string | Record<'da' | 'en', string>
 
 export type FormFieldMeta = {
   [key: string]: TranslationValue | string | boolean | undefined

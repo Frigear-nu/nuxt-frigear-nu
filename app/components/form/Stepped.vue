@@ -75,12 +75,6 @@ defineExpose({
   stepped,
   form: formEl,
 })
-
-const fieldRendererState = stepped.state as Record<string, unknown>
-
-function updateFieldState(name: string, value: unknown) {
-  fieldRendererState[name] = value
-}
 </script>
 
 <template>
@@ -98,7 +92,6 @@ function updateFieldState(name: string, value: unknown) {
       <UModal
         v-if="stepInformation"
         :title="t('common.information')"
-        :description="t('common.information')"
         :ui="{ footer: 'justify-end' }"
       >
         <UTooltip :text="t('form.help.stepInfo')">
@@ -138,9 +131,9 @@ function updateFieldState(name: string, value: unknown) {
           v-for="field in currentFields"
           :key="field.name"
           :field="field"
-          :state="fieldRendererState"
+          :state="stepped.state as never"
           :i18n-prefix="`form.${form.id}.${stepped.currentStepId.value}.${field.name}.`"
-          @update:state="updateFieldState"
+          @update:state="(name, value) => { (stepped.state as Record<string, unknown>)[name] = value }"
         />
       </template>
       <template v-else>
