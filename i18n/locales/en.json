@@ -75,6 +75,8 @@
     }
   },
   "actions": {
+    "selectFiles": "Select files",
+    "removeAllFiles": "Remove all files",
     "view": "Show",
     "backTo": "Back to",
     "save": "Save",
@@ -246,6 +248,15 @@
     "removedFromCart": "{title} stuff was removed."
   },
   "form": {
+    "help": {
+      "stepInfo": "Click to see some help(ish) info about this shit!"
+    },
+    "notFound": "Damn! -The form wasn't found!",
+    "success": {
+      "title": "Thanks a lot!",
+      "done": "Done!",
+      "sendAnother": "Send another"
+    },
     "application": {
       "title": "Funding Application",
       "description": "Request funding for your awesome projects.",

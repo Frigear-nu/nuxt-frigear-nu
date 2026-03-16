@@ -75,6 +75,8 @@
     }
   },
   "actions": {
+    "selectFiles": "Vælg filer",
+    "removeAllFiles": "Fjern alle filer",
     "view": "Vis",
     "backTo": "Tilbage til",
     "save": "Gem",
@@ -206,7 +208,15 @@
   },
   "events": {
     "upcoming": {
-      "title": "Kommende arrangementer"
+      "empty": {
+        "title": "Der er sku ik' lige nogen kommende events pt. -men tjek tilbage soon ..."
+      },
+      "title": "Kommende events",
+      "description": "Følg med her om future events i Frigear og Frigear Kulturværksted ..."
+    },
+    "past": {
+      "title": "Tidligere arrangementer",
+      "description": "Se tidligere Frigear events du gik glip ..."
     },
     "detail": {
       "when": "Hvornår?",
@@ -246,6 +256,16 @@
     "removedFromCart": "{title} stuff fjernet fra kurven."
   },
   "form": {
+    "schemaNotConfigured": "Formskema er ikke konfigureret.",
+    "help": {
+      "stepInfo": "Klik for lidt info-hjælp om det her shit!"
+    },
+    "notFound": "Form blev sku ik' fundet!",
+    "success": {
+      "title": "Tak sku da! -Den er modtaget.",
+      "done": "Færdig!",
+      "sendAnother": "Send en mere"
+    },
     "application": {
       "title": "Projektstøtte ansøgning",
       "description": "Ansøg om Frigear midler til jeres nice projekter.",
@@ -254,110 +274,159 @@
         "description": "Om dig, der smækker ansøgningen afsted",
         "fullName": {
           "label": "Fuldt navn",
-          "placeholder": "Hej, hva hedder du?"
+          "placeholder": "Hej, hva hedder du?",
+          "description": ""
         },
         "email": {
-          "label": "E-mail"
+          "label": "E-mail",
+          "placeholder": "megasnazzyme(at)some.lol",
+          "description": ""
         },
         "phone": {
-          "label": "Dit fonnummer."
+          "label": "Dit eget fonnummer",
+          "placeholder": "66666666",
+          "description": ""
         }
       },
       "organizationInfo": {
         "title": "Information om jeres organisation",
         "organizationName": {
           "label": "Organisationens navn",
-          "placeholder": "Mega lækkert org-navn."
+          "placeholder": "Mega lækkert org-navn her...",
+          "description": ""
         },
         "organizationNumber": {
-          "label": "CVR. Nr:"
+          "label": "CVR. Nr:",
+          "placeholder": "",
+          "description": ""
         },
         "organizationAddressStreet": {
-          "label": "Adresse"
+          "label": "Adresse",
+          "placeholder": "",
+          "description": ""
         },
         "organizationAddressCo": {
-          "label": "C/O eller Att:",
-          "description": "Evt. C/O adresse, eller Att: person."
+          "label": "C/O",
+          "description": "Evt. C/O, eller Att: person.",
+          "placeholder": "Att: Sorte Slyngel..."
         },
         "organizationAddressPostcode": {
-          "label": "Postnummer"
+          "label": "Postnummer",
+          "placeholder": "6666",
+          "description": ""
         },
         "organizationAddressCity": {
-          "label": "By"
+          "label": "By",
+          "placeholder": "Snævren By",
+          "description": ""
         },
         "accountableParties": {
-          "label": "Ansvarlige personer"
+          "label": "Ansvarlige personer",
+          "placeholder": "Søren Banjomus: banjo(at)mus.lol ... \nSorte Slyngel: ... \nAnden: ...",
+          "description": ""
         },
         "organizationEmail": {
-          "label": "E-mail"
+          "label": "E-mail",
+          "placeholder": "cool-name(at)hot-org.lol ...",
+          "description": ""
         },
         "organizationPhone": {
-          "label": "Fonnummer"
+          "label": "Fonnummer",
+          "placeholder": "42666642",
+          "description": ""
         }
       },
       "organizationAbout": {
         "organizationAbout": {
           "label": "Om jeres organisation",
-          "description": "Skriv lidt om jer og jeres organisations formål m.v."
+          "description": "Skriv lidt om jer og jeres organisations formål m.v.",
+          "placeholder": "Hej, vi er xxx, -og vi laver faldskærme af restplast som ..."
         },
         "organizationWebsite": {
-          "label": "Hjemmeside"
+          "label": "Hjemmeside",
+          "placeholder": "",
+          "description": ""
         },
         "organizationFacebook": {
-          "label": "Facebook"
+          "label": "Facebook",
+          "placeholder": "",
+          "description": ""
         },
         "organizationInstagram": {
-          "label": "Instagram"
+          "label": "Instagram",
+          "placeholder": "",
+          "description": ""
         },
         "organizationTikTok": {
-          "label": "TikTok"
+          "label": "TikTok",
+          "placeholder": "",
+          "description": ""
         },
         "organizationYouTube": {
-          "label": "YouTube"
+          "label": "YouTube",
+          "placeholder": "",
+          "description": ""
         },
         "organizationLinkedIn": {
-          "label": "LinkedIn"
+          "label": "LinkedIn",
+          "placeholder": "",
+          "description": ""
         }
       },
       "financialInfo": {
         "bankName": {
-          "label": "Banknavn"
+          "label": "Banknavn",
+          "placeholder": "",
+          "description": ""
         },
         "regNr": {
-          "label": "Reg. Nr."
+          "label": "Reg. Nr.",
+          "placeholder": "",
+          "description": ""
         },
         "accountNumber": {
-          "label": "Kontonummer"
+          "label": "Kontonummer",
+          "placeholder": "",
+          "description": ""
         },
         "annualBudget": {
           "label": "Årligt org. budget",
-          "description": "Jeres samlede budget for hele organisationen."
+          "description": "Jeres samlede budget for hele organisationen.",
+          "placeholder": ""
         },
         "ownContribution": {
           "label": "Eget bidrag",
-          "description": "Hvor meget tænker i selv at lægge af midler i projektet?"
+          "description": "Hvor meget tænker i selv at lægge af midler i projektet?",
+          "placeholder": ""
         },
         "paidStaffAmount": {
           "label": "Lønnede ansatte?",
-          "description": "Har jeres org. faste månedslønnede ansatte?"
+          "description": "Har jeres org. faste månedslønnede ansatte?",
+          "placeholder": "0"
         },
         "financialPatrons": {
           "label": "Andre bidragsydere til projektet",
-          "description": "Er projektet yderligere støttet af midler fra andre?"
+          "description": "Er projektet yderligere støttet af midler fra andre?",
+          "placeholder": "Ja, da . . . Min moster smider tusind dask . . "
         }
       },
       "branding": {
         "logo": {
-          "label": "Logo(er)"
+          "label": "Logo(er)",
+          "description": ""
         },
         "relevantImages": {
-          "label": "Relevante billeder"
+          "label": "Relevante billeder",
+          "description": ""
         },
         "threeLineOrgPitch": {
-          "label": "3-linjers projekt pitch"
+          "label": "Jeres vildt fede projekt-pitch",
+          "placeholder": "",
+          "description": ""
         },
         "otherMedia": {
-          "label": "Andet materiale"
+          "label": "Andet materiale",
+          "description": ""
         }
       }
     }
