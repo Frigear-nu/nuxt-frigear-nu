@@ -3,7 +3,8 @@
     "or": "Eller",
     "close": "Luk",
     "information": "Information",
-    "back": "Tilbage"
+    "back": "Tilbage",
+    "current": "Nuværende"
   },
   "auth": {
     "signIn": "Log ind",
