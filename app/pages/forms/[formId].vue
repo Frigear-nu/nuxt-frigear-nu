@@ -1,21 +1,15 @@
 // app/pages/forms[formId].vue
 <script setup lang="ts">
-import type { ButtonProps } from '@nuxt/ui'
+import type { ButtonProps, AlertProps } from '@nuxt/ui'
 import { kebabCase } from 'scule'
 import { withLeadingSlash } from 'ufo'
-import type { ProjectApplicationForm } from '#shared/schema/forms/applications'
 import type { FormStep, SteppedForm as GenericSteppedForm } from '#shared/types/form'
 import {
   projectApplicationForm,
   boardMemberApplicationForm,
   testApplicationForm,
 } from '#shared/schema/forms/applications'
-
-import type {
-  AlertColor,
-  ResubmittableConfig,
-  FormSubmissionResponse,
-} from '#shared/types/forms-content'
+import type { CollectionForm } from '#shared/schema/content-form'
 
 type SteppedExpose = {
   stepped: {
@@ -25,6 +19,11 @@ type SteppedExpose = {
     goToStep: (indexOrId: number | string) => void
   }
 }
+
+type ResubmittableConfig = Extract<
+  CollectionForm['resubmittable'],
+  Record<string, unknown>
+>
 
 definePageMeta({
   header: true,
@@ -39,10 +38,9 @@ const { translatedProperty } = useContent()
 
 const formId = computed(() => route.params.formId as string)
 
-const { data: form } = await useAsyncData(
-  () => `form:${kebabCase(route.path)}`,
-  () => queryCollection('forms').path(withLeadingSlash(formId.value)).first(),
-)
+const { data: form } = await useAsyncData(() => `form:${kebabCase(route.path)}`, async () => {
+  return queryCollection('forms').path(withLeadingSlash(toValue(formId))).first()
+})
 
 if (!form.value) {
   throw createError({
@@ -59,6 +57,7 @@ const wasSubmitted = ref(false)
 // const description = computed(() => form.value?.description)
 
 const steppedForm = computed<GenericSteppedForm<FormStep[]>>(() => {
+  // TODO: remove when schema is inferred from yaml.
   if (form.value?.path === '/project-application') {
     return projectApplicationForm as GenericSteppedForm<FormStep[]>
   }
@@ -74,7 +73,7 @@ const currentIndex = computed(() => stepped.value?.stepped.currentStepIndex.valu
 
 // const fileUploader = useUpload(`/api/forms/${form.value.path}`)
 
-const onCompleteProjectApplication = async (args: ProjectApplicationForm) => {
+const onComplete = async (args: Record<string, unknown>) => {
   const path = form.value?.path
   if (!path) {
     return
@@ -96,7 +95,7 @@ const onCompleteProjectApplication = async (args: ProjectApplicationForm) => {
     }
   }
 
-  const submission = await $api<FormSubmissionResponse>(`/api/forms${path}`, {
+  const submission = await $api<{ id?: string }>(`/api/forms${path}`, {
     method: 'POST',
     body: formData,
     // Don't set Content-Type — the browser sets it automatically
@@ -108,13 +107,9 @@ const onCompleteProjectApplication = async (args: ProjectApplicationForm) => {
   }
 }
 
-const onComplete = async (args: Record<string, unknown>) => {
-  await onCompleteProjectApplication(args as ProjectApplicationForm)
-}
-
 const displayAlert = ref(false)
 
-const alertToDisplay = ref<{ title: string, description: string, color?: AlertColor } | null>(null)
+const alertToDisplay = ref<AlertProps | null>(null)
 
 const translatedAlert = computed(() => {
   if (!alertToDisplay.value) {
@@ -128,11 +123,6 @@ const translatedAlert = computed(() => {
   }
 })
 
-const resubmittableConfig = computed<ResubmittableConfig | null>(() => {
-  const resubmit = form.value?.resubmittable
-  return resubmit && typeof resubmit === 'object' ? resubmit : null
-})
-
 const translatedFormTitle = computed(() => {
   return form.value?.title ? t(form.value.title) : ''
 })
@@ -142,13 +132,11 @@ const translatedFormDescription = computed(() => {
 })
 
 const resubmitForm = () => {
-  const resubmit = resubmittableConfig.value
+  const resubmit = form.value?.resubmittable as ResubmittableConfig | undefined
   stepped.value?.stepped.goToStep(resubmit?.start || 0)
 
   // get the keys to carry over
-  const keysToCarry = (resubmit?.fields ?? [])
-    .map((key: string) => key.split('.').pop() || '')
-    .filter(Boolean)
+  const keysToCarry = (resubmit?.fields || []).map(key => key.split('.').pop() || '').filter(Boolean)
 
   if (keysToCarry.length && stepped.value) {
     const allKeys = Object.keys(stepped.value.stepped.state)
@@ -160,7 +148,6 @@ const resubmitForm = () => {
     }
   }
 
-  // TODO: Show the green alert if any
   if (resubmit?.alert) {
     alertToDisplay.value = resubmit.alert
     displayAlert.value = true
@@ -182,7 +169,7 @@ const completedFormActions = computed<ButtonProps[]>(() => {
     variant: 'ghost',
   }]
 
-  if (resubmittableConfig.value) {
+  if (form.value && form.value.resubmittable) {
     items.push({
       label: t('form.success.sendAnother'),
       icon: 'i-lucide-play',

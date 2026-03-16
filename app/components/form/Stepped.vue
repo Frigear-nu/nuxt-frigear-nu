@@ -98,7 +98,6 @@ function updateFieldState(name: string, value: unknown) {
       <UModal
         v-if="stepInformation"
         :title="t('common.information')"
-        :description="t('common.information')"
         :ui="{ footer: 'justify-end' }"
       >
         <UTooltip :text="t('form.help.stepInfo')">
