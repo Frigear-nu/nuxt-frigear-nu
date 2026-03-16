@@ -68,6 +68,12 @@ export type DateField = BaseField & {
   maxValue?: string
 }
 
+export type DateTimeField = BaseField & {
+  type: 'datetime'
+  minValue?: string
+  maxValue?: string
+}
+
 export type FileField = BaseField & {
   type: 'file'
   meta?: FormFieldMeta & {
@@ -86,6 +92,7 @@ export type FormFieldDef
     | RadioField
     | CheckboxField
     | DateField
+    | DateTimeField
     | FileField
 
 export type FormStep<TSchema extends ZodType = ZodType> = {
