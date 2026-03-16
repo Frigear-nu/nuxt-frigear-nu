@@ -103,7 +103,7 @@
     },
     "membership": {
       "subscribe": "Bliv medlem",
-      "feeIncluded":"*Betalingsgebyrer er indeholdt i beløb"
+      "feeIncluded": "*Betalingsgebyrer er indeholdt i beløb"
     }
   },
   "account": {
@@ -244,7 +244,10 @@
         "title": "Billetter",
         "view": "Se billetter",
         "free": "Gratis",
-        "ticket":{
+        "goToCheckout": "Til betaling",
+        "signInToPurchase": "Log ind for at deltage",
+        "atLeastOneProductRequired": "{addonTitle}valg kræves.",
+        "ticket": {
           "label": "Billet"
         },
         "products": {
@@ -446,6 +449,35 @@
         "otherMedia": {
           "label": "Andet materiale",
           "description": ""
+        }
+      }
+    },
+    "board-member-application": {
+      "title": "Bli med i bestyrelsen",
+      "description": "",
+      "background": {
+        "label": "Kontakt information",
+        "description": "Om dig, der smækker ansøgningen afsted",
+        "fullName": {
+          "label": "Fuldt navn",
+          "placeholder": "Hej, hva hedder du?",
+          "description": ""
+        },
+        "phone": {
+          "label": "Dit eget fonnummer",
+          "placeholder": "66666666",
+          "description": ""
+        },
+        "background": {
+          "label": "Din bagrund.."
+        },
+        "email": {
+          "label": "E-mail",
+          "placeholder": "megasnazzyme(at)some.lol",
+          "description": ""
+        },
+        "attachments": {
+          "label": "Filer, CV..."
         }
       }
     }

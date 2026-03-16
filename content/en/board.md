@@ -4,7 +4,7 @@ title: Board
 cards:
   - title: Who is on the board?
     icon: i-lucide-info
-    description: 100% public board.
+    description: 100% volunteer board.
   - title: How can I contribute?
     icon: i-lucide-info
     description: Everyone is welcome to contribute.
@@ -59,7 +59,7 @@ trailingIcon: i-lucide-arrow-right
 variant: subtle
 class: mt-12
 ---
-Jump to the application form
+Jump to the board application form
 ::::
 :::
 ::
