@@ -156,6 +156,9 @@
       "noMembership": {
         "title": "Join the team today",
         "description": "Set up your membership to get started!"
+      },
+      "resubscribe": {
+        "title": "Resubscribe"
       }
     },
     "security": {

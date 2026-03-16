@@ -197,7 +197,7 @@ const navigateToStripeDashboard = async () => {
     </div>
     <UPageHeader
       v-if="activeSubscriptionWillBeCancelled"
-      title="Resubscribe with ease"
+      :title="$t('account.membership.resubscribe.title')"
     />
     <MembershipTypes
       :mode="$device.isDesktopOrTablet ? 'list' : 'tabs'"
