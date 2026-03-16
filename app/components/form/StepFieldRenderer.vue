@@ -1,16 +1,17 @@
 <!-- components/form/StepFieldRenderer.vue -->
 <script lang="ts" generic="TField extends FormFieldDef, TState extends Record<string, unknown>" setup>
-import { CalendarDate } from '@internationalized/date'
+import { CalendarDate, parseDateTime } from '@internationalized/date'
 import type {
-  FormFieldDef,
+  MarkdownValueField,
+  NumberField,
   TextareaField,
   SelectField,
   ComboboxField,
   RadioField,
-  FileField,
   DateField,
-  NumberField,
-  MarkdownValueField,
+  FormFieldDef,
+  DateTimeField,
+  FileField,
 } from '#shared/types/form'
 
 type ChoiceValue = string | number | boolean | bigint | null | undefined
@@ -124,6 +125,9 @@ const asFile = computed<FileField | null>(() =>
 const asDate = computed<DateField | null>(() =>
   props.field.type === 'date' ? props.field as DateField : null,
 )
+const asDateTime = computed<DateTimeField | null>(() =>
+  props.field.type === 'datetime' ? props.field as DateTimeField : null,
+)
 
 // TODO: Might want to provide options for number field, e.g "steps" "input" etc...
 const asNumber = computed<NumberField | null>(() =>
@@ -156,6 +160,20 @@ const dateModel = computed({
       if (val) {
         model.value = val.toString()
       }
+    }
+  },
+})
+
+const dateTimeModel = computed({
+  get: () => {
+    if (asDateTime.value && typeof model.value === 'string') {
+      return parseDateTime(model.value)
+    }
+    return undefined
+  },
+  set: (val) => {
+    if (asDateTime.value && val) {
+      model.value = val.toString()
     }
   },
 })
@@ -212,6 +230,7 @@ const fieldProps = computed(() => {
     = !isHiddenFormField
       && props.field.type !== 'radio'
       && props.field.type !== 'date'
+      && props.field.type !== 'datetime'
       && props.field.type !== 'file'
 
   return {
@@ -340,6 +359,16 @@ const fieldProps = computed(() => {
       :disabled="field.disabled"
       :min-value="asDate.minValue ? toCalendarDate(asDate.minValue) : undefined"
       :max-value="asDate.maxValue ? toCalendarDate(asDate.maxValue) : undefined"
+      class="w-full"
+    />
+
+    <UInputDate
+      v-else-if="asDateTime"
+      v-model="dateTimeModel"
+      :disabled="field.disabled"
+      :min-value="asDateTime.minValue ? parseDateTime(asDateTime.minValue) : undefined"
+      :max-value="asDateTime.maxValue ? parseDateTime(asDateTime.maxValue) : undefined"
+      granularity="minute"
       class="w-full"
     />
 
