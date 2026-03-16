@@ -2,7 +2,8 @@
   "common": {
     "or": "Eller",
     "close": "Luk",
-    "information": "Information"
+    "information": "Information",
+    "back": "Tilbage"
   },
   "auth": {
     "signIn": "Log ind",
@@ -12,6 +13,13 @@
     "signedInAs": "Logget ind som",
     "dontHaveAnAccount": "Har du ik' en Frigear konto endnu? ➜",
     "alreadyHaveAnAccount": "Har du allerede en Frigear konto? ➜",
+    "confirm": {
+      "title": "Checker..."
+    },
+    "verifyEmail": {
+      "title": "Verificer din e-mail",
+      "description": "Vi har sendt dig en e-mail. Tjek din inbox eller spam."
+    },
     "name": {
       "label": "Navn",
       "placeholder": "Navn Navnesen"
