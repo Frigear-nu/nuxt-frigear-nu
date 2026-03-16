@@ -1,4 +1,3 @@
-// @ts-expect-error This is not typed at root level.
 import { useRuntimeConfig } from '#imports'
 import * as Sentry from '@sentry/nuxt'
 
@@ -9,5 +8,4 @@ if (sentryDsn) {
 }
 else if (import.meta.dev) {
   console.info('Sentry DSN not found. Skipping Sentry initialization.')
-}
 }
