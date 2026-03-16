@@ -5,7 +5,9 @@ export default defineEventHandler(async (event) => {
 
   if (!name) throw createError({ status: 400, message: 'Missing name' })
 
-  await requireJwt(event)
+  if (!import.meta.dev) {
+    await requireJwt(event)
+  }
 
   return await runTask(name, {})
 })
