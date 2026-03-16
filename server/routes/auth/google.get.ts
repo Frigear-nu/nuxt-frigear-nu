@@ -1,4 +1,5 @@
 import { ServerError } from '@nitrotool/errors'
+import { eq } from 'drizzle-orm'
 
 export default defineOAuthGoogleEventHandler({
   config: {
@@ -19,7 +20,15 @@ export default defineOAuthGoogleEventHandler({
           avatarUrl: user?.picture,
           // user.email_verified could be false - TBA
           emailVerifiedAt: new Date(),
+          lastLoginAt: new Date(),
         })
+        .returning()
+    }
+    else {
+      [dbUser] = await db
+        .update(schema.users)
+        .set({ lastLoginAt: new Date() })
+        .where(eq(schema.users.id, dbUser.id))
         .returning()
     }
 

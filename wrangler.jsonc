@@ -30,9 +30,11 @@
   "routes": [
     {
       "custom_domain": true,
-      // TODO: 1. before production release we must remove current DNS for frigear.nu
-      // TODO: 2. make this frigear.nu for real production release
       "pattern": "nuxt.frigear.nu"
+    },
+    {
+      "custom_domain": true,
+      "pattern": "frigear.nu"
     }
   ],
   "assets": {

@@ -417,3 +417,39 @@ const sizingNodes = computed(() => {
     </span>
   </component>
 </template>
+<style>
+
+.typewriter-root {
+  position: relative;
+  display: block;
+  width: 100%;
+  line-height: 1.05;
+  text-wrap: auto;
+}
+
+.typewriter-sizer {
+  display: block;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.typewriter-live {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+@media (min-width: 640px) {
+  .typewriter-root,
+  .typewriter-sizer,
+  .typewriter-live {
+    white-space: nowrap;
+  }
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+</style>

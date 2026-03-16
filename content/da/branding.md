@@ -17,7 +17,7 @@ Frigear branding kit, PR og SoMe informationer.
   color: primary
   size: xl
   to: /projects
-  icon: i-lucide-music
+  icon: i-lucide-cog
   variant: subtle
   class: min-w-48
   ---
@@ -49,7 +49,7 @@ Brand materiale, logoer og SoMe kanaler
 #features
 :::u-page-card
 ---
-icon: i-lucide-tool
+icon: i-lucide-package-open
 class: object-cover object-top w-full h-full shadow-2xl ring ring-default
 ---
 

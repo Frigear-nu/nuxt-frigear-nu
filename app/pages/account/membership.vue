@@ -47,7 +47,7 @@ const onSelectMembership = (price: PublicPrice) => {
 
 const membershipToSubscribe = computed(() => {
   if (!cartSubscribeItem.value) return undefined
-  return [...availableMemberships.value || []].find(m => m.id === cartSubscribeItem.value?.id)
+  return [...availableMemberships.value || []].find(m => m.id === cartSubscribeItem.value?.id) as unknown as CartItem
 })
 
 const subscribeDialogTitle = computed(() => {
@@ -188,15 +188,15 @@ const navigateToStripeDashboard = async () => {
       class="mb-4"
     >
       <UPageHero
-        title="Subscribe to a plan"
-        description="Subscribe to a plan to get started!"
+        :title="$t('account.membership.noMembership.title')"
+        :description="$t('account.membership.noMembership.description')"
         class="mt-0"
         :ui="{ title: 'fancy-text' }"
       />
     </div>
     <UPageHeader
       v-if="activeSubscriptionWillBeCancelled"
-      title="Resubscribe with ease"
+      :title="$t('account.membership.resubscribe.title')"
     />
     <MembershipTypes
       :mode="$device.isDesktopOrTablet ? 'list' : 'tabs'"
@@ -212,7 +212,7 @@ const navigateToStripeDashboard = async () => {
           :variant="activeSubscription && activeSubscription.priceId === item.id ? 'subtle' : undefined"
           @click="onSelectMembership(item as PublicPrice)"
         >
-          {{ activeSubscription && activeSubscription.priceId === item.id ? 'Current' : 'Switch' }}
+          {{ activeSubscription && activeSubscription.priceId === item.id ? $t('common.current') : $t('actions.select') }}
         </UButton>
       </template>
     </MembershipTypes>
@@ -220,18 +220,24 @@ const navigateToStripeDashboard = async () => {
       v-model:open="displaySubscribeModal"
       :title="t(subscribeDialogTitle)"
       :description="subscribeDialogDescription"
+      :ui="{ footer: 'justify-end' }"
     >
       <template #body>
         <div class="text-muted my-4">
-          You will now subscribe to:
+          {{ $t('account.membership.subscribeTo') }}
         </div>
         <UPricingPlan
           v-if="membershipToSubscribe"
           v-bind="membershipToSubscribe"
-          :price="`${membershipToSubscribe.price / 100} DKK`"
+          :price="membershipToSubscribe && membershipToSubscribe.price ? `${membershipToSubscribe.price / 100} DKK` : undefined"
         />
-        <div class="my-4">
-          You will now be taken to stripe to confirm
+        <div class="my-4 text-muted">
+          <template v-if="activeSubscription">
+            {{ $t('account.membership.alreadyActiveDescription') }}
+          </template>
+          <template v-else>
+            {{ $t('account.membership.sendToStripe') }}
+          </template>
         </div>
       </template>
       <template #footer>
@@ -240,7 +246,7 @@ const navigateToStripeDashboard = async () => {
             :loading="isLoading"
             @click="onConfirmSubscription"
           >
-            Subscribe
+            {{ activeSubscription ? $t('account.membership.update.title') :$t('account.membership.subscribe.action') }}
           </UButton>
         </div>
       </template>

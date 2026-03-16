@@ -53,7 +53,12 @@ const ticketRadioCardItems = computed<RadioGroupItem[]>(() => {
 })
 
 const selectedTicket = computed(() => props.event.tickets[selectedTicketKey.value as keyof EventsCollectionItem['tickets']])
-const selectedTicketHasProducts = computed(() => selectedTicket.value?.products?.items?.length > 0)
+const selectedTicketHasProducts = computed(() => {
+  if (!selectedTicket.value) {
+    return false
+  }
+  return selectedTicket.value?.products?.items?.length > 0
+})
 const requiresAtLeastOneProduct = computed(() => selectedTicket.value?.products?.require === 'one_of')
 
 // Addons
@@ -125,6 +130,10 @@ const canPurchase = computed(() => {
   }
 
   return !!selectedTicketKey.value
+})
+
+const addonTitle = computed(() => {
+  return selectedTicket.value.products?.title ? translatedProperty(selectedTicket.value?.products.title) : $t('events.detail.tickets.products.label')
 })
 
 const onPurchase = () => {
@@ -233,9 +242,7 @@ const onPurchase = () => {
           <div
             class="text-lg"
           >
-            {{
-              selectedTicket.products?.title ? translatedProperty(selectedTicket?.products.title) : $t('events.detail.tickets.products.label')
-            }}
+            {{ addonTitle }}
             <small
               v-if="requiresAtLeastOneProduct"
               class="text-muted"
@@ -285,7 +292,9 @@ const onPurchase = () => {
         icon="i-lucide-alert-triangle"
         color="warning"
         class="mt-4"
-        description="You have to select at least one addon product to continue with this ticket."
+        :description="$t('events.detail.tickets.atLeastOneProductRequired', {
+          addonTitle: addonTitle,
+        })"
       />
     </div>
     <div>
@@ -303,7 +312,7 @@ const onPurchase = () => {
         :loading="isLoading"
         @click="onPurchase"
       >
-        Checkout
+        {{ $t('events.detail.tickets.goToCheckout') }}
       </UButton>
       <UButton
         v-else
@@ -311,7 +320,7 @@ const onPurchase = () => {
         :to="localePath(`/sign-in?redirect=${$route.fullPath}`)"
         class="w-full justify-center"
       >
-        Sign in to purchase tickets
+        {{ $t('events.detail.tickets.signInToPurchase') }}
       </UButton>
     </div>
   </div>
