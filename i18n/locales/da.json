@@ -145,13 +145,24 @@
       "renewsAutomaticallyAt": "Fornyes automagisk {date}",
       "cancel": "Annullér medlemskab",
       "changePaymentMethod": "Skift betalingsmetode",
+      "subscribeTo": "Du vil nu abonnére på:",
+      "alreadyActiveDescription": "Hvis du nedgraderer, vil dit nuværende abonnement løbe til næste forfaldsdato.\nHvis du opgraderer, vil du straks blive flyttet til den højere plan, og eventuel resterende kredit vil blive fratrukket, og du vil blive opkrævet med det samme.",
+      "sendToStripe": "Du vil nu sendes avsted til Stripe for betaling.",
       "update": {
         "title": "Skift medlemskab",
         "description": "Skift din medlemskabsplan."
       },
       "subscribe": {
         "title": "Bliv medlem",
+        "description": "Bliv medlem for at komme i gang!",
+        "action": "Abonnér"
+      },
+      "noMembership": {
+        "title": "Bliv med på holdet i dag",
         "description": "Bliv medlem for at komme i gang!"
+      },
+      "resubscribe": {
+        "title": "Abonnér igen"
       }
     },
     "security": {
