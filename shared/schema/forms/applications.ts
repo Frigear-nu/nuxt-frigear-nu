@@ -1,4 +1,4 @@
-// shared/schema/forms/applications.ts -->
+// shared/schema/forms/applications.ts
 
 import { z } from 'zod/v4'
 import type { UnionFormSteps } from '#shared/types/form'

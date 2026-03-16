@@ -1,4 +1,4 @@
-// shared/form.ts -->
+// shared/form.ts
 import { z } from 'zod/v4'
 import type { FormStep, SteppedForm, FormFieldDef } from './types/form'
 import { defu } from 'defu'

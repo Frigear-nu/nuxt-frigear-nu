@@ -256,6 +256,7 @@
     "removedFromCart": "{title} stuff fjernet fra kurven."
   },
   "form": {
+    "schemaNotConfigured": "Formskema er ikke konfigureret.",
     "help": {
       "stepInfo": "Klik for lidt info-hjælp om det her shit!"
     },

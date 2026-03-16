@@ -8,7 +8,7 @@ import type { FormStep, SteppedForm as GenericSteppedForm } from '#shared/types/
 import {
   projectApplicationForm,
   boardMemberApplicationForm,
-  testApplicationForm,
+  // testApplicationForm, <-- removed fallback to this -until real test content path is introduced for testing.
 } from '#shared/schema/forms/applications'
 
 import type {
@@ -67,7 +67,10 @@ const steppedForm = computed<GenericSteppedForm<FormStep[]>>(() => {
     return boardMemberApplicationForm as GenericSteppedForm<FormStep[]>
   }
 
-  return testApplicationForm as GenericSteppedForm<FormStep[]>
+  throw createError({
+    statusCode: 500,
+    statusMessage: t('form.schemaNotConfigured'),
+  })
 })
 
 const currentIndex = computed(() => stepped.value?.stepped.currentStepIndex.value ?? 0)

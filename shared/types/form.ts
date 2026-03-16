@@ -1,3 +1,4 @@
+// shared/types/form.ts
 import type { ZodType } from 'zod/v4'
 import type { SelectItem, RadioGroupItem, InputMenuItem } from '@nuxt/ui'
 
