@@ -49,6 +49,14 @@ const _useShoppingCart = () => {
     return data.value.find(i => i.id === id)
   }
 
+  const checkout = async () => {
+    // check if this is memberships or events:
+    // would probably be best to have a "unified" checkout method in the future,
+    // since everything is just stripe ids.
+    isOpen.value = false
+    return navigateTo('/account/membership')
+  }
+
   return {
     isOpen,
     data: readonly(data),
@@ -59,6 +67,7 @@ const _useShoppingCart = () => {
     addToCart,
     updateCartItem,
     removeFromCart,
+    checkout,
   }
 }
 

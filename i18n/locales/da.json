@@ -276,7 +276,8 @@
   "cart": {
     "title": "Kurv",
     "addedToCart": "{title} stuff lagt i kurven.",
-    "removedFromCart": "{title} stuff fjernet fra kurven."
+    "removedFromCart": "{title} stuff fjernet fra kurven.",
+    "continueToPayment": "Til betaling"
   },
   "form": {
     "schemaNotConfigured": "Formskema er ikke konfigureret.",
