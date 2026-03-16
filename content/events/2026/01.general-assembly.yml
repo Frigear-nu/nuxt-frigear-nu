@@ -1,7 +1,8 @@
 title: General Assembly 2026
-date: 2026-03-15
-start: 2026-03-15 15:00
-end: 2026-03-16 00:00
+date: 2026-03-21
+# Idk, this is ISO UTC or something...
+start: 2026-03-21 14:00
+end: 2026-03-22 23:00
 address:
   value: Ved Amagerbanen 13
   link: "https://www.google.com/maps/place/Ved+Amagerbanen+13,+2300+K%C3%B8benhavn/@55.6679328,12.6218006,829m/data=!3m2!1e3!4b1!4m6!3m5!1s0x4653acc981b5d573:0x1e92a0fe2608b662!8m2!3d55.6679328!4d12.6243755!16s%2Fg%2F11bw42xwjt"
