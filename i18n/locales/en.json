@@ -145,13 +145,17 @@
       "renewsAutomaticallyAt": "Renews automatically on {date}",
       "cancel": "Cancel membership",
       "changePaymentMethod": "Change payment method",
+      "subscribeTo": "You will now subscribe to:",
+      "alreadyActiveDescription": "If you downgrade, the subscription you have will run to the next due date.\n            If you upgrade, you will be moved to the higher plan immediately, and any remaining credit will be discounted and you will be charged immediately.",
+      "sendToStripe": "You will now be taken to stripe to confirm.",
       "update": {
         "title": "Update subscription",
         "description": "Change your subscription plan."
       },
       "subscribe": {
         "title": "Get a membership",
-        "description": "Subscribe to a membership to get started!"
+        "description": "Subscribe to a membership to get started!",
+        "action": "Subscribe"
       },
       "noMembership": {
         "title": "Join the team today",

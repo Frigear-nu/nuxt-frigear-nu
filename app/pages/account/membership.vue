@@ -221,18 +221,24 @@ const navigateToStripeDashboard = async () => {
       v-model:open="displaySubscribeModal"
       :title="t(subscribeDialogTitle)"
       :description="subscribeDialogDescription"
+      :ui="{ footer: 'justify-end' }"
     >
       <template #body>
         <div class="text-muted my-4">
-          You will now subscribe to:
+          {{ $t('account.membership.subscribeTo') }}
         </div>
         <UPricingPlan
           v-if="membershipToSubscribe"
           v-bind="membershipToSubscribe"
           :price="membershipToSubscribe && membershipToSubscribe.price ? `${membershipToSubscribe.price / 100} DKK` : undefined"
         />
-        <div class="my-4">
-          You will now be taken to stripe to confirm
+        <div class="my-4 text-muted">
+          <template v-if="activeSubscription">
+            {{ $t('account.membership.alreadyActiveDescription') }}
+          </template>
+          <template v-else>
+            {{ $t('account.membership.sendToStripe') }}
+          </template>
         </div>
       </template>
       <template #footer>
@@ -241,7 +247,7 @@ const navigateToStripeDashboard = async () => {
             :loading="isLoading"
             @click="onConfirmSubscription"
           >
-            Subscribe
+            {{ activeSubscription ? $t('account.membership.update.title') :$t('account.membership.subscribe.action') }}
           </UButton>
         </div>
       </template>
