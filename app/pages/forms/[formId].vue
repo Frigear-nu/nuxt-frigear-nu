@@ -8,8 +8,9 @@ import type { FormStep, SteppedForm as GenericSteppedForm } from '#shared/types/
 import {
   projectApplicationForm,
   boardMemberApplicationForm,
-  // testApplicationForm, <-- removed fallback to this -until real test content path is introduced for testing.
 } from '#shared/schema/forms/applications'
+import { projectApplicationForm as testApplicationForm,
+} from '#shared/schema/forms/test'
 
 import type {
   AlertColor,
@@ -67,6 +68,9 @@ const steppedForm = computed<GenericSteppedForm<FormStep[]>>(() => {
     return boardMemberApplicationForm as GenericSteppedForm<FormStep[]>
   }
 
+  if (form.value?.path === '/test') {
+    return testApplicationForm as GenericSteppedForm<FormStep[]>
+  }
   throw createError({
     statusCode: 500,
     statusMessage: t('form.schemaNotConfigured'),
