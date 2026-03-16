@@ -50,7 +50,7 @@ if (!form.value) {
 }
 
 const stepped = useTemplateRef<SteppedExpose>('stepped')
-const isLoading = computed(() => stepped.value?.stepped.isSubmitting.value ?? false)
+const isLoading = computed(() => stepped.value?.stepped?.isSubmitting?.value)
 const wasSubmitted = ref(false)
 
 // const title = computed(() => form.value?.title)
