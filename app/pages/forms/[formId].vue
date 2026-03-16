@@ -44,8 +44,8 @@ const { data: form } = await useAsyncData(() => `form:${kebabCase(route.path)}`,
 
 if (!form.value) {
   throw createError({
-    statusCode: 404,
-    statusMessage: t('form.notFound'),
+    status: 404,
+    message: t('form.notFound'),
   })
 }
 
