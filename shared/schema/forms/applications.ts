@@ -32,7 +32,7 @@ Sådan ansøger du om Frigear projektstøtte :money_with_wings:
 
 #description
 Hvis dit projekt har flere dele der kan støttes med forskellige budgetter for at komme i luften, kan i udfylde formularen for det samlede projekt først – og til sidst vil du have mulighed for at vælge at ansøge om delelementer af projektet. :br :br
- *_Det gør det nemmere for vores medlemmer at støtte med en andel hvis det fulde beløb ikke kan akommoderes._
+ *_Det gør det nemmere for vores medlemmer at støtte med en andel hvis det fulde beløb ikke kan akkommoderes._
  
 ::accordion
 ---
@@ -99,7 +99,7 @@ ui:
       icon: 'i-lucide-book-text',
       labelKey: 'form.application.contactInfo.label',
       hint: {
-        da: 'Dette er for personlige detaljer om dig som sender ansøgningen.',
+        da: 'Det her er for detaljer om dig som sender ansøgningen.',
         en: 'This step is for personal details about the person submitting the application.',
       },
       schema: z.object({
@@ -154,7 +154,7 @@ ui:
         organizationAbout: z.string().meta({
           hint: {
             en: 'Write some awesome stuff about your organization that will intrique our members to support you.',
-            da: 'Skriv noget mega fedt om jeres organisation her, så vores medlemmer får lyst til netop at støtte jeres formål.',
+            da: 'Skriv noget mega fedt om jeres organisation her, så vores medlemmer får lyst til at støtte netop jeres formål.',
           },
           type: 'textarea',
         }),

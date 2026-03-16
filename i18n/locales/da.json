@@ -208,7 +208,15 @@
   },
   "events": {
     "upcoming": {
-      "title": "Kommende arrangementer"
+      "empty": {
+        "title": "Der er sku ik' lige nogen kommende events pt. -men tjek tilbage soon ..."
+      },
+      "title": "Kommende events",
+      "description": "Følg med her om future events i Frigear og Frigear Kulturværksted ..."
+    },
+    "past": {
+      "title": "Tidligere arrangementer",
+      "description": "Se tidligere Frigear events du gik glip ..."
     },
     "detail": {
       "when": "Hvornår?",
@@ -253,7 +261,7 @@
     },
     "notFound": "Form blev sku ik' fundet!",
     "success": {
-      "title": "Tak for sådan!",
+      "title": "Tak sku da! -Den er modtaget.",
       "done": "Færdig!",
       "sendAnother": "Send en mere"
     },
@@ -297,9 +305,9 @@
           "description": ""
         },
         "organizationAddressCo": {
-          "label": "C/O eller Att:",
+          "label": "C/O",
           "description": "Evt. C/O, eller Att: person.",
-          "placeholder": "C/O Sorte Slyngel..."
+          "placeholder": "Att: Sorte Slyngel..."
         },
         "organizationAddressPostcode": {
           "label": "Postnummer",
@@ -331,7 +339,7 @@
         "organizationAbout": {
           "label": "Om jeres organisation",
           "description": "Skriv lidt om jer og jeres organisations formål m.v.",
-          "placeholder": "Hej, vi er xxx, -og vi faldskærme af restplast som ..."
+          "placeholder": "Hej, vi er xxx, -og vi laver faldskærme af restplast som ..."
         },
         "organizationWebsite": {
           "label": "Hjemmeside",
@@ -393,12 +401,12 @@
         "paidStaffAmount": {
           "label": "Lønnede ansatte?",
           "description": "Har jeres org. faste månedslønnede ansatte?",
-          "placeholder": ""
+          "placeholder": "0"
         },
         "financialPatrons": {
           "label": "Andre bidragsydere til projektet",
           "description": "Er projektet yderligere støttet af midler fra andre?",
-          "placeholder": ""
+          "placeholder": "Ja, da . . . Min moster smider tusind dask . . "
         }
       },
       "branding": {
