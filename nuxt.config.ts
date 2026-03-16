@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@pinia/colada-nuxt',
     './modules/scs-i18n',
+    '@sentry/nuxt/module',
     ...(import.meta.dev ? ['nuxt-component-meta'] : []),
     ...(import.meta.test ? ['@nuxt/test-utils/module'] : []),
   ],
@@ -103,6 +104,12 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    public: {
+      sentry: {
+        dsn: '', // empty locally..
+        tracesSampleRate: 1.0,
+      },
+    },
     jwtSecret: 'some-string-longer-than-32-chars-to-issue-jwt',
     stripeWebhookSecret: '',
     mail: {
