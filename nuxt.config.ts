@@ -95,6 +95,7 @@ export default defineNuxtConfig({
     public: {
       sentry: {
         dsn: '', // empty locally..
+        tracesSampleRate: 1.0,
       },
     },
     jwtSecret: 'some-string-longer-than-32-chars-to-issue-jwt',
