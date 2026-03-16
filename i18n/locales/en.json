@@ -392,6 +392,33 @@
           "label": "Other media files"
         }
       }
+    },
+    "board-member-application": {
+      "title": "Join the board",
+      "description": "",
+      "background": {
+        "label": "Contact info",
+        "description": "About you who is applying",
+        "fullName": {
+          "label": "Full name",
+          "placeholder": "Hey, what's your name?",
+          "description": ""
+        },
+        "background": {
+          "label": "Background"
+        },
+        "email": {
+          "label": "E-mail",
+          "placeholder": "megasnazzyme(at)some.lol",
+          "description": ""
+        },
+        "phone": {
+          "label": "Phone"
+        },
+        "attachments": {
+          "label": "Files, CV..."
+        }
+      }
     }
   },
   "steppedForm": {
