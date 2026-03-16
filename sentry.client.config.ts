@@ -2,11 +2,12 @@
 import { useRuntimeConfig } from '#imports'
 import * as Sentry from '@sentry/nuxt'
 
-if (!useRuntimeConfig().public?.sentry?.dsn) {
-  console.log('Sentry DSN not found. Skipping Sentry initialization.')
+const sentryDsn = useRuntimeConfig().public?.sentry?.dsn
+
+if (sentryDsn) {
+  Sentry.init({ dsn: sentryDsn })
 }
-else {
-  Sentry.init({
-    dsn: useRuntimeConfig().public.sentry.dsn,
-  })
+else if (import.meta.dev) {
+  console.info('Sentry DSN not found. Skipping Sentry initialization.')
+}
 }
