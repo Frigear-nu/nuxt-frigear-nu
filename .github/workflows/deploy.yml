@@ -47,6 +47,9 @@ env:
   NUXT_OAUTH_GOOGLE_CLIENT_ID: ${{ vars.NUXT_OAUTH_GOOGLE_CLIENT_ID }}
   NUXT_OAUTH_GOOGLE_CLIENT_SECRET: ${{ secrets.NUXT_OAUTH_GOOGLE_CLIENT_SECRET }}
 
+  # Sentry
+  NUXT_PUBLIC_SENTRY_DSN: ${{ secrets.NUXT_PUBLIC_SENTRY_DSN }}
+
 jobs:
   ci:
     name: CI (lint + test)
