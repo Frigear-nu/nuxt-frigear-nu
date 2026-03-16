@@ -1,5 +1,5 @@
 /* ------------------------------------------- */
-/* app/components/content/TypeWriterEffect.vue */
+/* app/components/content/TypewriterEffect.vue */
 /* ------------------------------------------- */
 
 <script setup lang="ts">

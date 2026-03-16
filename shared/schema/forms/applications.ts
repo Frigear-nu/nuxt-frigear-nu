@@ -130,7 +130,7 @@ ui:
         organizationAddressCo: z.string().optional().meta({
           hint: {
             en: 'If mailbox doesn´t hold the org. name',
-            da: 'Hvis jeres org. navn ikke frmgår af postkassen.',
+            da: 'Hvis jeres org. navn ikke fremgår af postkassen.',
           },
         }),
         organizationAddressPostcode: z.string().meta({

@@ -214,7 +214,7 @@ const completedFormActions = computed<ButtonProps[]>(() => {
         {{ translatedFormTitle }}
       </div>
       <div
-        v-if="form.description && form.description !== translatedFormDescription"
+        v-if="translatedFormDescription"
         class="text-md text-toned"
       >
         {{ translatedFormDescription }}

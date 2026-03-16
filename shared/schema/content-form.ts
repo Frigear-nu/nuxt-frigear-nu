@@ -186,6 +186,12 @@ export function formFromCollectionContent(content: CollectionForm) {
     steps: content.form.steps.map((step: ContentStep) => ({
       id: step.id,
       icon: step.icon,
+      hint: typeof step.info === 'string'
+        ? step.info
+        : {
+            content: step.info.content,
+            icon: step.info.icon,
+          },
       schema: z.object(
         Object.fromEntries(
           step.fields.map((field: ContentField) => [field.name, fieldSchemaFromRules(field)]),
