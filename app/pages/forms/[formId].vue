@@ -1,21 +1,37 @@
+// app/pages/forms[formId].vue
 <script setup lang="ts">
-import type { ButtonProps } from '@nuxt/ui'
+import type { ButtonProps, AlertProps } from '@nuxt/ui'
 import { kebabCase } from 'scule'
 import { withLeadingSlash } from 'ufo'
-import type { ProjectApplicationForm } from '#shared/schema/forms/applications'
+import type { FormStep, SteppedForm as GenericSteppedForm } from '#shared/types/form'
 import {
   projectApplicationForm,
   boardMemberApplicationForm,
   testApplicationForm,
 } from '#shared/schema/forms/applications'
+import type { CollectionForm } from '#shared/schema/content-form'
+
+type SteppedExpose = {
+  stepped: {
+    isSubmitting: { value: boolean }
+    currentStepIndex: { value: number }
+    state: Record<string, unknown>
+    goToStep: (indexOrId: number | string) => void
+  }
+}
+
+type ResubmittableConfig = Extract<
+  CollectionForm['resubmittable'],
+  Record<string, unknown>
+>
 
 definePageMeta({
-  // header: false,
+  header: true,
   layout: 'form',
-  footer: false,
+  footer: true,
 })
 
-const { localePath } = useSiteI18n()
+const { localePath, t } = useSiteI18n()
 const route = useRoute()
 const { $api } = useNuxtApp()
 const { translatedProperty } = useContent()
@@ -29,41 +45,40 @@ const { data: form } = await useAsyncData(() => `form:${kebabCase(route.path)}`,
 if (!form.value) {
   throw createError({
     status: 404,
-    message: 'Form not found',
+    message: t('form.notFound'),
   })
 }
 
-const stepped = useTemplateRef('stepped')
-const isLoading = computed(() => stepped.value?.stepped.isSubmitting.value)
+const stepped = useTemplateRef<SteppedExpose>('stepped')
+const isLoading = computed(() => stepped.value?.stepped?.isSubmitting?.value)
 const wasSubmitted = ref(false)
 
 // const title = computed(() => form.value?.title)
 // const description = computed(() => form.value?.description)
 
-const steppedForm = computed(() => {
-  if (!form.value) {
-    return undefined
+const steppedForm = computed<GenericSteppedForm<FormStep[]>>(() => {
+  // TODO: remove when schema is inferred from yaml.
+  if (form.value?.path === '/project-application') {
+    return projectApplicationForm as GenericSteppedForm<FormStep[]>
   }
 
-  if (form.value.path === '/project-application') {
-    return projectApplicationForm
+  if (form.value?.path === '/board-member-application') {
+    return boardMemberApplicationForm as GenericSteppedForm<FormStep[]>
   }
 
-  if (form.value.path === '/board-member-application') {
-    return boardMemberApplicationForm
-  }
-
-  return testApplicationForm
+  return testApplicationForm as GenericSteppedForm<FormStep[]>
 })
 
-const currentIndex = computed(() => stepped.value?.stepped.currentStepIndex.value)
+const currentIndex = computed(() => stepped.value?.stepped.currentStepIndex.value ?? 0)
 
 // const fileUploader = useUpload(`/api/forms/${form.value.path}`)
 
-const onComplete = async (args: ProjectApplicationForm) => {
-  if (!form.value) {
+const onComplete = async (args: Record<string, unknown>) => {
+  const path = form.value?.path
+  if (!path) {
     return
   }
+
   const formData = new FormData()
 
   // Append non-file fields
@@ -80,7 +95,7 @@ const onComplete = async (args: ProjectApplicationForm) => {
     }
   }
 
-  const submission = await $api(`/api/forms${form.value.path}`, {
+  const submission = await $api<{ id?: string }>(`/api/forms${path}`, {
     method: 'POST',
     body: formData,
     // Don't set Content-Type — the browser sets it automatically
@@ -93,7 +108,9 @@ const onComplete = async (args: ProjectApplicationForm) => {
 }
 
 const displayAlert = ref(false)
-const alertToDisplay = ref<{ title: string, description: string, color?: string } | null>(null)
+
+const alertToDisplay = ref<AlertProps | null>(null)
+
 const translatedAlert = computed(() => {
   if (!alertToDisplay.value) {
     return null
@@ -106,14 +123,22 @@ const translatedAlert = computed(() => {
   }
 })
 
+const translatedFormTitle = computed(() => {
+  return form.value?.title ? t(form.value.title) : ''
+})
+
+const translatedFormDescription = computed(() => {
+  return form.value?.description ? t(form.value.description) : ''
+})
+
 const resubmitForm = () => {
-  const resubmit = form.value?.resubmittable
-  stepped.value.stepped.goToStep(resubmit?.start || 0)
+  const resubmit = form.value?.resubmittable as ResubmittableConfig | undefined
+  stepped.value?.stepped.goToStep(resubmit?.start || 0)
 
   // get the keys to carry over
   const keysToCarry = (resubmit?.fields || []).map(key => key.split('.').pop() || '').filter(Boolean)
 
-  if (keysToCarry.length) {
+  if (keysToCarry.length && stepped.value) {
     const allKeys = Object.keys(stepped.value.stepped.state)
     for (const key of allKeys) {
       if (!keysToCarry.includes(key)) {
@@ -123,8 +148,7 @@ const resubmitForm = () => {
     }
   }
 
-  // TODO: Show the green alert if any
-  if (resubmit && resubmit.alert) {
+  if (resubmit?.alert) {
     alertToDisplay.value = resubmit.alert
     displayAlert.value = true
 
@@ -138,13 +162,18 @@ const resubmitForm = () => {
 }
 
 const completedFormActions = computed<ButtonProps[]>(() => {
-  const items: ButtonProps[] = [{ label: 'Back home', to: localePath('/'), icon: 'i-lucide-arrow-left' }]
+  const items: ButtonProps[] = [{
+    label: t('form.success.done'),
+    to: localePath('/funding'),
+    icon: 'i-lucide-x',
+    variant: 'ghost',
+  }]
 
   if (form.value && form.value.resubmittable) {
-    // check what steps and data
     items.push({
-      label: 'Submit another',
+      label: t('form.success.sendAnother'),
       icon: 'i-lucide-play',
+      variant: 'subtle',
       onClick: resubmitForm,
     })
   }
@@ -157,74 +186,77 @@ const completedFormActions = computed<ButtonProps[]>(() => {
   <div class="flex flex-col gap-4">
     <div class="flex justify-center">
       <NuxtLink to="/">
-        <NuxtImg
-          src="/icon-192.png"
-          class="size-14 rounded-full"
+        <UAvatar
+          src="/images/branding/logos/circular/frigear-bullhorn-icon-18a841-l-green-darkgreen-shadow-1500x1500-circle-friendly.png"
+          size="xl"
+          class=""
         />
       </NuxtLink>
     </div>
     <div
-      v-if="form.title || form.description"
+      v-if="form && (form.title || form.description)"
       class="flex flex-col gap-1 text-center mb-2"
     >
       <div class="text-2xl font-bold">
-        {{ $t(form.title) }}
+        {{ translatedFormTitle }}
       </div>
       <div
-        v-if="form.description && form.description !== $t(form.description)"
-        class="text-md text-muted"
+        v-if="translatedFormDescription"
+        class="text-md text-toned"
       >
-        {{ $t(form.description) }}
+        {{ translatedFormDescription }}
       </div>
     </div>
-    <UCard
-      variant="subtle"
-      class="dark:bg-neutral-950"
-    >
-      <div
-        v-if="steppedForm?.steps && steppedForm.steps.length > 1 && !wasSubmitted"
-        class="flex justify-center gap-1 mb-8"
+    <div class="gradient-linear-br-teal-purple">
+      <UPageCard
+        variant="outline"
+        class="bg-transparent max-w-full h-auto max-h-fit"
       >
         <div
-          v-for="(_, index) in steppedForm.steps"
-          :key="index"
-          class="flex flex-col items-center"
+          v-if="steppedForm?.steps && steppedForm.steps.length > 1 && !wasSubmitted"
+          class="flex justify-center gap-1 mb-8"
         >
           <div
-            :class="[
-              'size-6 text-center rounded-3xl',
-              index <= currentIndex ? 'bg-primary' : 'bg-neutral',
-              index === currentIndex ? 'ring-1': '',
-            ]"
+            v-for="(_, index) in steppedForm.steps"
+            :key="index"
+            class="flex flex-col items-center"
           >
-            {{ index + 1 }}
+            <div
+              :class="[
+                'size-6 text-center rounded-3xl',
+                index <= currentIndex ? 'bg-primary' : 'bg-neutral',
+                index === currentIndex ? 'ring-1': '',
+              ]"
+            >
+              {{ index + 1 }}
+            </div>
+            <!--          <UIcon -->
+            <!--            v-if="step.icon" -->
+            <!--            :name="step.icon" -->
+            <!--          /> -->
           </div>
-          <!--          <UIcon -->
-          <!--            v-if="step.icon" -->
-          <!--            :name="step.icon" -->
-          <!--          /> -->
         </div>
-      </div>
-      <UAlert
-        v-if="displayAlert"
-        v-bind="translatedAlert"
-        class="my-4"
-        variant="subtle"
-        close
-        @update:open="displayAlert = false"
-      />
-      <FormStepped
-        v-show="!wasSubmitted"
-        ref="stepped"
-        :form="steppedForm"
-        @submit="onComplete"
-      />
-      <UEmpty
-        v-show="wasSubmitted && !isLoading"
-        title="Thanks!"
-        icon="i-lucide-check"
-        :actions="completedFormActions"
-      />
-    </UCard>
+        <UAlert
+          v-if="displayAlert"
+          v-bind="translatedAlert"
+          class="my-4"
+          variant="subtle"
+          close
+          @update:open="displayAlert = false"
+        />
+        <FormStepped
+          v-show="!wasSubmitted"
+          ref="stepped"
+          :form="steppedForm"
+          @submit="onComplete"
+        />
+        <UEmpty
+          v-show="wasSubmitted && !isLoading"
+          :title="t('form.success.title')"
+          icon="i-lucide-check"
+          :actions="completedFormActions"
+        />
+      </UPageCard>
+    </div>
   </div>
 </template>

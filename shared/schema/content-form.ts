@@ -1,5 +1,4 @@
 import { z } from 'zod/v4'
-import type { FormsCollectionItem } from '@nuxt/content'
 import { defineSteppedForm } from '../form'
 
 export const FieldTypeSchema = z.enum([
@@ -149,6 +148,8 @@ function buildBaseSchema(
       return applyNumericConstraints(z.number(), min, max)
 
     case 'date':
+      return z.iso.date()
+
     case 'datetime':
       return z.iso.datetime()
 
@@ -181,15 +182,21 @@ function applyNumericConstraints(n: z.ZodNumber, min?: number, max?: number) {
   return n
 }
 
-export function formFromCollectionContent(content: FormsCollectionItem) {
+export function formFromCollectionContent(content: CollectionForm) {
   return defineSteppedForm({
     id: content.name,
-    steps: content.form.steps.map(step => ({
+    steps: content.form.steps.map((step: ContentStep) => ({
       id: step.id,
       icon: step.icon,
+      hint: typeof step.info === 'string'
+        ? step.info
+        : {
+            content: step.info.content,
+            icon: step.info.icon,
+          },
       schema: z.object(
         Object.fromEntries(
-          step.fields.map(field => [field.name, fieldSchemaFromRules(field)]),
+          step.fields.map((field: ContentField) => [field.name, fieldSchemaFromRules(field)]),
         ),
       ),
     })),

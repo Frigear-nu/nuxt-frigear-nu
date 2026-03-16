@@ -27,7 +27,7 @@ const pastEvents = computed(() => {
         class="flex flex-col gap-8"
       >
         <UPageHeader
-          :title="$t('events.upcoming.title')"
+          :title="t('events.upcoming.title')"
           :description="useEmptyOrTranslated('events.upcoming.description')"
         />
         <UPageGrid v-if="upcomingEvents.length">
@@ -39,7 +39,7 @@ const pastEvents = computed(() => {
         </UPageGrid>
         <UEmpty
           v-else
-          :title="$t('events.upcoming.empty.title')"
+          :title="t('events.upcoming.empty.title')"
           :description="useEmptyOrTranslated('events.upcoming.empty.description')"
         />
       </section>
@@ -48,7 +48,7 @@ const pastEvents = computed(() => {
         class="flex flex-col gap-8"
       >
         <UPageHeader
-          :title="$t('events.past.title')"
+          :title="t('events.past.title')"
           :description="useEmptyOrTranslated('events.past.description')"
         />
         <UPageGrid>

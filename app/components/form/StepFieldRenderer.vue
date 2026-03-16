@@ -1,7 +1,20 @@
-<!-- components/StepFieldRenderer.vue -->
+<!-- components/form/StepFieldRenderer.vue -->
 <script lang="ts" generic="TField extends FormFieldDef, TState extends Record<string, unknown>" setup>
-import { CalendarDate } from '@internationalized/date'
-import type { FormFieldDef } from '#shared/types/form'
+import { CalendarDate, parseDateTime } from '@internationalized/date'
+import type {
+  MarkdownValueField,
+  NumberField,
+  TextareaField,
+  SelectField,
+  ComboboxField,
+  RadioField,
+  DateField,
+  FormFieldDef,
+  DateTimeField,
+  FileField,
+} from '#shared/types/form'
+
+type ChoiceValue = string | number | boolean | bigint | null | undefined
 
 const props = withDefaults(defineProps<{
   field: TField
@@ -23,9 +36,61 @@ const model = computed({
   set: (val: unknown) => emit('update:state', props.field.name, val),
 })
 
-const asMarkdownValue = computed(() => {
+const textModel = computed<string | undefined>({
+  get: () => typeof model.value === 'string' ? model.value : undefined,
+  set: (val) => { model.value = val },
+})
+
+const choiceModel = computed<ChoiceValue>({
+  get: () => {
+    const value = model.value
+
+    if (
+      value == null
+      || typeof value === 'string'
+      || typeof value === 'number'
+      || typeof value === 'boolean'
+      || typeof value === 'bigint'
+    ) {
+      return value
+    }
+
+    return undefined
+  },
+  set: (val) => { model.value = val },
+})
+
+const checkboxModel = computed<boolean | 'indeterminate' | undefined>({
+  get: () => {
+    return typeof model.value === 'boolean' || model.value === 'indeterminate'
+      ? model.value
+      : undefined
+  },
+  set: (val) => { model.value = val },
+})
+
+const fileModel = computed<File | File[] | null | undefined>({
+  get: () => {
+    const value = model.value
+    return value == null || value instanceof File || Array.isArray(value)
+      ? value
+      : undefined
+  },
+  set: (val) => { model.value = val },
+})
+
+const numberModel = computed<number | null | undefined>({
+  get: () => {
+    return typeof model.value === 'number' || model.value == null
+      ? model.value as number | null | undefined
+      : undefined
+  },
+  set: (val) => { model.value = val },
+})
+
+const asMarkdownValue = computed<MarkdownValueField | null>(() => {
   return props.field.type === 'markdown-value'
-    ? props.field
+    ? props.field as MarkdownValueField
     : null
 })
 
@@ -42,29 +107,40 @@ const { data: parsedMarkdown } = await useAsyncData(
 )
 
 // Narrow helpers for typed template access
-const asSelect = computed(() =>
-  props.field.type === 'select' ? props.field : null,
+const asSelect = computed<SelectField | null>(() =>
+  props.field.type === 'select' ? props.field as SelectField : null,
 )
-const asCombobox = computed(() =>
-  props.field.type === 'combobox' ? props.field : null,
+const asCombobox = computed<ComboboxField | null>(() =>
+  props.field.type === 'combobox' ? props.field as ComboboxField : null,
 )
-const asRadio = computed(() =>
-  props.field.type === 'radio' ? props.field : null,
+const asRadio = computed<RadioField | null>(() =>
+  props.field.type === 'radio' ? props.field as RadioField : null,
 )
-const asTextarea = computed(() =>
-  props.field.type === 'textarea' ? props.field : null,
+const asTextarea = computed<TextareaField | null>(() =>
+  props.field.type === 'textarea' ? props.field as TextareaField : null,
 )
-const asFile = computed(() =>
-  props.field.type === 'file' ? props.field : null,
+const asFile = computed<FileField | null>(() =>
+  props.field.type === 'file' ? props.field as FileField : null,
 )
-const asDate = computed(() =>
-  props.field.type === 'date' ? props.field : null,
+const asDate = computed<DateField | null>(() =>
+  props.field.type === 'date' ? props.field as DateField : null,
+)
+const asDateTime = computed<DateTimeField | null>(() =>
+  props.field.type === 'datetime' ? props.field as DateTimeField : null,
 )
 
 // TODO: Might want to provide options for number field, e.g "steps" "input" etc...
-const asNumber = computed(() =>
-  props.field.type === 'number' ? props.field : null,
+const asNumber = computed<NumberField | null>(() =>
+  props.field.type === 'number' ? props.field as NumberField : null,
 )
+
+const textareaRows = computed(() => asTextarea.value?.rows ?? 4)
+
+const selectOptions = computed(() => asSelect.value?.options ?? [])
+
+const comboboxOptions = computed(() => asCombobox.value?.options ?? [])
+
+const radioOptions = computed(() => asRadio.value?.options ?? [])
 
 function toCalendarDate(iso?: string) {
   if (!iso) return undefined
@@ -84,6 +160,20 @@ const dateModel = computed({
       if (val) {
         model.value = val.toString()
       }
+    }
+  },
+})
+
+const dateTimeModel = computed({
+  get: () => {
+    if (asDateTime.value && typeof model.value === 'string') {
+      return parseDateTime(model.value)
+    }
+    return undefined
+  },
+  set: (val) => {
+    if (asDateTime.value && val) {
+      model.value = val.toString()
     }
   },
 })
@@ -112,6 +202,16 @@ const translated = (property: string) => {
   return undefined
 }
 
+const translatedOrEmpty = (property: string) => translated(property) ?? ''
+
+const fieldHintText = computed(() => {
+  if (!props.field.meta?.hint) {
+    return ''
+  }
+
+  return translatedProperty(props.field.meta.hint) ?? ''
+})
+
 const hiddenFormFieldTypes: FormFieldDef['type'][] = ['checkbox', 'markdown-value']
 const formFieldProps = computed(() => {
   const withLabel = !hiddenFormFieldTypes.includes(props.field.type)
@@ -128,11 +228,13 @@ const fieldProps = computed(() => {
   const isHiddenFormField = hiddenFormFieldTypes.includes(props.field.type)
   const withPlaceholder
     = !isHiddenFormField
-      && !toValue(asRadio)
-      && !toValue(asDate)
-      && !toValue(asFile)
+      && props.field.type !== 'radio'
+      && props.field.type !== 'date'
+      && props.field.type !== 'datetime'
+      && props.field.type !== 'file'
 
   return {
+    name: props.field.name,
     placeholder: withPlaceholder ? translated('placeholder') : undefined,
     label: !isHiddenFormField ? translated('label') : undefined,
     description: !isHiddenFormField ? translated('description') : undefined,
@@ -153,7 +255,8 @@ const fieldProps = computed(() => {
       #hint
     >
       <UModal
-        :title="$t('common.information')"
+        :title="t('common.information')"
+        :description="t('common.information')"
         :ui="{ footer: 'justify-end' }"
       >
         <UButton
@@ -161,14 +264,14 @@ const fieldProps = computed(() => {
           icon="i-lucide-info"
           variant="link"
           color="neutral"
-          :title="translatedProperty(field.meta.hint)"
+          :title="fieldHintText"
         />
         <template #body>
-          {{ translatedProperty(field.meta.hint) }}
+          {{ fieldHintText }}
         </template>
         <template #footer="{ close }">
           <UButton
-            :label="$t('common.close')"
+            :label="t('common.close')"
             @click="close"
           />
         </template>
@@ -182,7 +285,7 @@ const fieldProps = computed(() => {
     </div>
     <UInput
       v-else-if="field.type === 'text' || field.type === 'email' || field.type === 'password'"
-      v-model="model"
+      v-model="textModel"
       :type="field.type"
       v-bind="fieldProps"
       :disabled="field.disabled"
@@ -191,17 +294,17 @@ const fieldProps = computed(() => {
 
     <UTextarea
       v-else-if="asTextarea"
-      v-model="model"
+      v-model="textModel"
       v-bind="fieldProps"
       :disabled="field.disabled"
-      :rows="asTextarea.rows ?? 4"
+      :rows="textareaRows"
       class="w-full"
     />
 
     <USelect
       v-else-if="asSelect"
-      v-model="model"
-      :items="asSelect.options"
+      v-model="choiceModel"
+      :items="selectOptions"
       v-bind="fieldProps"
       :disabled="field.disabled"
       class="w-full"
@@ -209,8 +312,8 @@ const fieldProps = computed(() => {
 
     <UInputMenu
       v-else-if="asCombobox"
-      v-model="model"
-      :items="asCombobox.options"
+      v-model="choiceModel"
+      :items="comboboxOptions"
       v-bind="fieldProps"
       :disabled="field.disabled"
       class="w-full"
@@ -218,33 +321,33 @@ const fieldProps = computed(() => {
 
     <URadioGroup
       v-else-if="asRadio"
-      v-model="model"
-      :items="asRadio.options"
+      v-model="choiceModel"
+      :items="radioOptions"
       :disabled="field.disabled"
     />
 
     <UCheckbox
       v-else-if="field.type === 'checkbox'"
-      v-model="model"
+      v-model="checkboxModel"
       v-bind="fieldProps"
       :required="field.required"
       :disabled="field.disabled"
     >
       <template
-        v-if="field.label"
+        v-if="translated('label')"
         #label
       >
         <MDC
-          :value="translated('label')"
+          :value="translatedOrEmpty('label')"
           unwrap
         />
       </template>
       <template
-        v-if="field.description"
+        v-if="translated('description')"
         #description
       >
         <MDC
-          :value="translated('description')"
+          :value="translatedOrEmpty('description')"
           unwrap
         />
       </template>
@@ -254,15 +357,24 @@ const fieldProps = computed(() => {
       v-else-if="asDate"
       v-model="dateModel"
       :disabled="field.disabled"
-      v-bind="fieldProps"
       :min-value="asDate.minValue ? toCalendarDate(asDate.minValue) : undefined"
       :max-value="asDate.maxValue ? toCalendarDate(asDate.maxValue) : undefined"
       class="w-full"
     />
 
+    <UInputDate
+      v-else-if="asDateTime"
+      v-model="dateTimeModel"
+      :disabled="field.disabled"
+      :min-value="asDateTime.minValue ? parseDateTime(asDateTime.minValue) : undefined"
+      :max-value="asDateTime.maxValue ? parseDateTime(asDateTime.maxValue) : undefined"
+      granularity="minute"
+      class="w-full"
+    />
+
     <UFileUpload
       v-else-if="asFile"
-      v-model="model"
+      v-model="fileModel"
       type="file"
       v-bind="fieldProps"
       :accept="asFile?.meta?.accept || undefined"
@@ -274,7 +386,7 @@ const fieldProps = computed(() => {
     >
       <template #actions="{ open }">
         <UButton
-          label="Select files"
+          :label="t('actions.selectFiles')"
           icon="i-lucide-upload"
           color="neutral"
           variant="outline"
@@ -284,8 +396,8 @@ const fieldProps = computed(() => {
 
       <template #files-bottom="{ removeFile, files }">
         <UButton
-          v-if="files?.length"
-          label="Remove all files"
+          v-if="Array.isArray(files) ? files.length > 0 : !!files"
+          :label="t('actions.removeAllFiles')"
           color="neutral"
           @click="removeFile()"
         />
@@ -294,7 +406,7 @@ const fieldProps = computed(() => {
 
     <UInputNumber
       v-else-if="asNumber"
-      v-model="model"
+      v-model="numberModel"
       v-bind="fieldProps"
       :disabled="field.disabled"
       class="w-full"

@@ -2,7 +2,8 @@
   "common": {
     "or": "Or",
     "close": "Close",
-    "information": "Information"
+    "information": "Information",
+    "back": "Back"
   },
   "auth": {
     "signIn": "Sign In",
@@ -12,6 +13,13 @@
     "signedInAs": "Signed in as",
     "dontHaveAnAccount": "Don't have a Frigear account yet? ➜",
     "alreadyHaveAnAccount": "Already got a Frigear account? ➜",
+    "confirm": {
+      "title": "Checking..."
+    },
+    "verifyEmail": {
+      "title": "Verify your e-mail",
+      "description": "We have sent you an e-mail. Check your inbox or spam."
+    },
     "name": {
       "label": "Name",
       "placeholder": "John Doe"
@@ -75,6 +83,8 @@
     }
   },
   "actions": {
+    "selectFiles": "Select files",
+    "removeAllFiles": "Remove all files",
     "view": "Show",
     "backTo": "Back to",
     "save": "Save",
@@ -135,13 +145,24 @@
       "renewsAutomaticallyAt": "Renews automatically on {date}",
       "cancel": "Cancel membership",
       "changePaymentMethod": "Change payment method",
+      "subscribeTo": "You will now subscribe to:",
+      "alreadyActiveDescription": "If you downgrade, the subscription you have will run to the next due date.\n            If you upgrade, you will be moved to the higher plan immediately, and any remaining credit will be discounted and you will be charged immediately.",
+      "sendToStripe": "You will now be taken to stripe to confirm.",
       "update": {
         "title": "Update subscription",
         "description": "Change your subscription plan."
       },
       "subscribe": {
         "title": "Get a membership",
-        "description": "Subscribe to a membership to get started!"
+        "description": "Subscribe to a membership to get started!",
+        "action": "Subscribe"
+      },
+      "noMembership": {
+        "title": "Join the team today",
+        "description": "Set up your membership to get started!"
+      },
+      "resubscribe": {
+        "title": "Resubscribe"
       }
     },
     "security": {
@@ -246,6 +267,15 @@
     "removedFromCart": "{title} stuff was removed."
   },
   "form": {
+    "help": {
+      "stepInfo": "Click to see some help(ish) info about this shit!"
+    },
+    "notFound": "Damn! -The form wasn't found!",
+    "success": {
+      "title": "Thanks a lot!",
+      "done": "Done!",
+      "sendAnother": "Send another"
+    },
     "application": {
       "title": "Funding Application",
       "description": "Request funding for your awesome projects.",

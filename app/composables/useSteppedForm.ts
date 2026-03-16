@@ -35,13 +35,18 @@ export const useSteppedForm = <const TSteps extends FormStep[]>(
 
       isSubmitting.value = true
       try {
+        if (import.meta.dev) {
+          await new Promise(resolve => setTimeout(resolve, 500))
+        }
         const { data: parsed, success } = await step.schema.safeParseAsync(state)
         if (!success) return
 
         Object.assign(state, parsed)
 
         if (isLastStep.value) {
-          // await new Promise(resolve => setTimeout(resolve, 2500))
+          if (import.meta.dev) {
+            await new Promise(resolve => setTimeout(resolve, 1500))
+          }
           await onComplete(state as UnionSteps)
         }
         else {

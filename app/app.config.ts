@@ -24,8 +24,13 @@ export default defineAppConfig({
     },
     colors: {
       primary: 'violet',
-      neutral: 'neutral',
       secondary: 'indigo',
+      tertiary: 'amber',
+      info: 'teal',
+      neutral: 'slate',
+      success: 'green',
+      warning: 'amber',
+      error: 'orange',
     },
     collapsible: {
       slots: {
