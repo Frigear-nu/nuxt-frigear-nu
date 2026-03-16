@@ -19,8 +19,16 @@ export default defineOAuthGoogleEventHandler({
           avatarUrl: user?.picture,
           // user.email_verified could be false - TBA
           emailVerifiedAt: new Date(),
+          lastLoginAt: new Date(),
         })
         .returning()
+    }
+    else {
+      [dbUser] = await db
+        .update(schema.users)
+        .set({
+          lastLoginAt: new Date(),
+        }).returning()
     }
 
     if (!dbUser) throw ServerError('Could find user.')
