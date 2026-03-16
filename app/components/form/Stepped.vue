@@ -75,12 +75,6 @@ defineExpose({
   stepped,
   form: formEl,
 })
-
-const fieldRendererState = stepped.state as Record<string, unknown>
-
-function updateFieldState(name: string, value: unknown) {
-  fieldRendererState[name] = value
-}
 </script>
 
 <template>
@@ -137,9 +131,9 @@ function updateFieldState(name: string, value: unknown) {
           v-for="field in currentFields"
           :key="field.name"
           :field="field"
-          :state="fieldRendererState"
+          :state="stepped.state as never"
           :i18n-prefix="`form.${form.id}.${stepped.currentStepId.value}.${field.name}.`"
-          @update:state="updateFieldState"
+          @update:state="(name, value) => { (stepped.state as Record<string, unknown>)[name] = value }"
         />
       </template>
       <template v-else>
