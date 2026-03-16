@@ -6,7 +6,6 @@ import type { CartItem } from '#shared/types/shopping-cart'
 import { useMemberships } from '~/store/queries/membership'
 import { useStripeBillingPortalUrl, useSubscribeUser } from '~/store/mutations/user'
 import { format } from 'date-fns'
-import type { PricingPlanProps } from '@nuxt/ui'
 
 const toast = useToast()
 const { t, locale } = useSiteI18n()
