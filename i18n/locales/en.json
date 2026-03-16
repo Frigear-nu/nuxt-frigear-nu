@@ -236,6 +236,9 @@
         "title": "Tickets",
         "free": "Free",
         "view": "Show tickets",
+        "goToCheckout": "Go to checkout",
+        "signInToPurchase": "Sign in to purchase tickets",
+        "atLeastOneProductRequired": "{addonTitle} is required.",
         "ticket": {
           "label": "Ticket"
         },
