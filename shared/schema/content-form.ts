@@ -42,6 +42,8 @@ const variables = z.union([
   z.record(z.string(), z.string()),
 ])
 
+const translated = z.string().or(z.record(z.string(), z.string()))
+
 export const CollectionFormSchema = z.object({
   name: z.string(),
   title: z.string().optional(),
@@ -55,6 +57,7 @@ export const CollectionFormSchema = z.object({
     z.object({
       channel: z.literal('email'),
       destination: z.array(z.string()),
+      markdown: translated.optional(),
     }),
     z.object({
       channel: z.literal('webhook'),

@@ -7,18 +7,22 @@ import type { BlobObject } from '@nuxthub/core/blob'
 import { replaceVariables } from '#shared/template'
 import type { SteppedForm } from '#shared/types/form'
 import { objectPick } from '@vueuse/core'
+import { z } from 'zod/v4'
 
 export default defineEventHandler(async (event) => {
   const { mail: { from, to: defaultToEmail } } = useRuntimeConfig(event)
-  const formPath = getRouterParam(event, 'formPath')
 
-  if (!formPath) throw createError({ statusCode: 404 })
+  const { formPath } = await getValidatedRouterParams(event, z.object({
+    formPath: z.string(),
+  }).parse)
+
+  const fullFormPath = withLeadingSlash(formPath)
 
   const form = await queryCollection(event, 'forms')
-    .path(withLeadingSlash(formPath))
+    .path(fullFormPath)
     .first()
 
-  if (!form) throw createError({ statusCode: 404 })
+  if (!form) throw createError({ status: 404, message: `Form "${fullFormPath}" not found` })
 
   const submissionId = `form_sub_${createSafeId()}`
 
@@ -32,15 +36,19 @@ export default defineEventHandler(async (event) => {
 
   if (!definedForm) {
     throw createError({
-      statusCode: 500,
+      status: 500,
       message: `Form ${form.name} is not defined`,
     })
   }
+
+  // TODO: We should be able to save a step as well - so there should be a function for:
+  //  - setFormSubmissionStep()
+  //  or - appendFormSubmission()
   // TODO: Load schema from the form file.
   const formSchema = deriveSchemaFromSteppedForm(definedForm as SteppedForm<never>)
   const parts = await readMultipartFormData(event)
 
-  if (!parts) throw createError({ statusCode: 400, message: 'Invalid form data' })
+  if (!parts) throw createError({ status: 400, message: 'Invalid form data' })
 
   // Reconstruct the body object from FormData parts
   const rawBody: Record<string, unknown> = {}
@@ -51,6 +59,7 @@ export default defineEventHandler(async (event) => {
 
     if (part.filename !== undefined) {
       // It's a file — convert the Buffer to a File object
+      // @ts-expect-error Not properly typed.
       const file = new File([part.data], part.filename, {
         type: part.type ?? 'application/octet-stream',
       })
@@ -75,7 +84,7 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  // Now validate with your schema
+  // validate...
   const body = formSchema.parse(rawBody)
 
   const files: BlobObject[] = []
@@ -85,6 +94,7 @@ export default defineEventHandler(async (event) => {
     const items = Array.isArray(value) ? value : [value]
 
     for (const item of items) {
+      // upload file to storage
       if (item?.constructor?.name === 'File' || item instanceof File) {
         const uploadedFile = await blob.put((item as File).name, item, {
           prefix: `forms/submissions/${submissionId}/${key}/`,
@@ -122,6 +132,13 @@ export default defineEventHandler(async (event) => {
       deliveredAt: new Date(),
     })
     .returning()
+
+  if (!storedSubmission) {
+    throw createError({
+      status: 500,
+      message: 'Could not store submission',
+    })
+  }
 
   // Handle deliveries
   // TODO: This should probably be done in a queue/task
@@ -173,6 +190,8 @@ export default defineEventHandler(async (event) => {
           })
         }))
       }
+
+      throw new Error(`Unsupported delivery: ${JSON.stringify(delivery)}`)
     }))
   }
 

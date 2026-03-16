@@ -5,6 +5,7 @@ import { ServerError, UnauthenticatedError } from '@nitrotool/errors'
 import { addMinutes } from 'date-fns'
 import { withQuery } from 'ufo'
 import { db, schema } from '@nuxthub/db'
+import type { Users } from '@nuxthub/db/schema'
 
 export const createSafeId = () => createId()
 
