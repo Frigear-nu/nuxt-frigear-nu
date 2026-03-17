@@ -174,8 +174,13 @@ const onCloseDisplayQrCode = () => {
       :title="$t('account.tickets.ticket')"
       :ui="{ footer: 'justify-end' }"
     >
-      <template #body>
-        {{ selectedTicket }}
+      <template
+        v-if="selectedTicket"
+        #body
+      >
+        <ClientOnly>
+          <LazyQrcode :value="`urn:frigear:ticket:${selectedTicket?.id || 'NONE'}`" />
+        </ClientOnly>
       </template>
       <template #footer>
         <UButton
