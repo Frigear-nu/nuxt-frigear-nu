@@ -227,6 +227,11 @@ export default defineNuxtConfig({
     authToken: process.env.NUXT_SENTRY_AUTH_TOKEN!,
     org: 'not-in-use-in-bugsink',
     project: 'not-in-use-in-bugsink',
+    sourceMapsUploadOptions: {
+      url: process.env.NUXT_SENTRY_URL,
+      enabled: !!process.env.NUXT_SENTRY_AUTH_TOKEN && !!process.env.NUXT_SENTRY_URL,
+      authToken: process.env.NUXT_SENTRY_AUTH_TOKEN!,
+    },
   },
 
   stripe: {
