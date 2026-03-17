@@ -1,4 +1,5 @@
 import vue from '@vitejs/plugin-vue'
+import { getGitBranch } from 'simple-content-site/utils/git'
 
 export default defineNuxtConfig({
   extends: ['simple-content-site'],
@@ -230,6 +231,12 @@ export default defineNuxtConfig({
       url: process.env.NUXT_SENTRY_URL,
       enabled: !!process.env.NUXT_SENTRY_AUTH_TOKEN && !!process.env.NUXT_SENTRY_URL,
       authToken: process.env.NUXT_SENTRY_AUTH_TOKEN!,
+    },
+    release: {
+      name: getGitBranch(),
+      create: false,
+      finalize: false,
+      inject: true,
     },
   },
 
