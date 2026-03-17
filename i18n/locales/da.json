@@ -134,7 +134,14 @@
     },
     "tickets": {
       "title": "Billetter",
-      "description": "Se dine billetter og betalinger."
+      "description": "Se dine billetter og betalinger.",
+      "ticket": "Billet",
+      "status": {
+        "paid": "Betalt",
+        "cancelled": "Annulleret",
+        "pending": "Afventer",
+        "abandoned": "Opgivet"
+      }
     },
     "membership": {
       "title": "Medlemskab",

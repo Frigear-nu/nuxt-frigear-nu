@@ -134,7 +134,14 @@
     },
     "tickets": {
       "title": "Tickets",
-      "description": "See your event tickets and payments."
+      "description": "See your event tickets and payments.",
+      "ticket": "Ticket",
+      "status": {
+        "paid": "Paid",
+        "cancelled": "Cancelled",
+        "pending": "Pending",
+        "abandoned": "Abandoned"
+      }
     },
     "membership": {
       "title": "Membership",

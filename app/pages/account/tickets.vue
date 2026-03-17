@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useUserEventTickets } from '~/store/queries/user'
 import type { ButtonProps } from '@nuxt/ui'
+import { upperFirst } from 'scule'
 
 const { data: tickets } = await useUserEventTickets()
+const { t } = useSiteI18n()
 const { translatedProperty } = useContent()
 
 const ticketBadgeIcon = (status: string) => {
@@ -24,6 +26,21 @@ const ticketBadgeColor = (status: string) => {
       return 'error'
     default:
       return 'warning'
+  }
+}
+
+const ticketStatusLabel = (status: string) => {
+  switch (status) {
+    case 'paid':
+      return t('account.tickets.status.paid')
+    case 'cancelled':
+      return t('account.tickets.status.cancelled')
+    case 'pending':
+      return t('account.tickets.status.pending')
+    case 'abandoned':
+      return t('account.tickets.status.abandoned')
+    default:
+      return upperFirst(status)
   }
 }
 
@@ -63,7 +80,7 @@ const ticketBadgeButton = (status: string): ButtonProps | undefined => {
                   ticket.status === 'paid' ? 'uppercase' : 'capitalize',
                 ]"
               >
-                {{ ticket.status }}
+                {{ ticketStatusLabel(ticket.status) }}
               </UBadge>
               <UButton
                 v-if="ticketBadgeButton(ticket.status)"
@@ -75,7 +92,7 @@ const ticketBadgeButton = (status: string): ButtonProps | undefined => {
           <div>
             <div class="text-md font-semibold">
               <UBadge variant="outline">
-                <b>Ticket:</b> {{ translatedProperty(ticket.event.tickets[ticket.ticketKey].name) }}
+                <b>{{ $t('account.tickets.ticket') }}:</b> {{ translatedProperty(ticket.event.tickets[ticket.ticketKey as never].name) }}
               </UBadge>
             </div>
           </div>
