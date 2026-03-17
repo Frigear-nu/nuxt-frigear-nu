@@ -4,6 +4,7 @@ export default defineNitroPlugin((nitroApp) => {
   nitroApp.hooks.hook('robots:robots-txt', (ctx) => {
     const hostName = getRequestHost(ctx.e)
     if (!hostName.startsWith('localhost') || hostName.startsWith('staging')) {
+      ctx.robotsTxt += `\n#host=${hostName}\n`
       return
     }
 
