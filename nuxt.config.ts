@@ -156,6 +156,8 @@ export default defineNuxtConfig({
     '/api/auth/**': { prerender: false },
   },
 
+  sourcemap: { client: 'hidden' },
+
   compatibilityDate: '2025-12-11',
 
   nitro: {
