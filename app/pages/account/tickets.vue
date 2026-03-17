@@ -6,6 +6,10 @@ import { upperFirst } from 'scule'
 const { data: tickets } = await useUserEventTickets()
 const { t } = useSiteI18n()
 const { translatedProperty } = useContent()
+const toast = useToast()
+
+const selectedTicket = ref<typeof tickets.value[number] | undefined>(undefined)
+const displayQrCode = ref(false)
 
 const ticketBadgeIcon = (status: string) => {
   switch (status) {
@@ -44,60 +48,140 @@ const ticketStatusLabel = (status: string) => {
   }
 }
 
-const ticketBadgeButton = (status: string): ButtonProps | undefined => {
-  if (status !== 'pending') {
-    return undefined
+const loadingMap = reactive<Record<string, boolean>>({})
+
+const onPayNow = async (userTicketId: string) => {
+  loadingMap[userTicketId] = true
+  try {
+    const response = await $fetch<{ message: string } | { url: string }>(`/api/account/events/tickets/${userTicketId}/pay`, {
+      method: 'POST',
+    })
+
+    if (!response) {
+      throw createError({
+        status: 400,
+        message: 'Failed to pay ticket',
+      })
+    }
+
+    if (response?.message) {
+      toast.add({
+        title: 'Message:',
+        description: response.message,
+      })
+    }
+
+    if (!response.url) {
+      throw createError({
+        status: 400,
+        message: 'Failed to pay ticket',
+      })
+    }
+
+    return navigateTo(response.url, { external: true })
   }
-  return {
-    label: 'Pay now',
-    color: ticketBadgeColor(status),
-    trailingIcon: 'i-lucide-external-link',
-    to: '/some-payment-url',
-    // or:
-    // onClick: () => 'create-payment-url-or-redirect-to-session'
+  finally {
+    loadingMap[userTicketId] = false
   }
+}
+
+const onClickDisplayQrCode = (ticket: typeof tickets.value[number]) => {
+  selectedTicket.value = ticket
+  displayQrCode.value = true
+}
+
+const onCloseDisplayQrCode = () => {
+  displayQrCode.value = false
+  selectedTicket.value = undefined
 }
 </script>
 
 <template>
-  <UPageGrid class="grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-    <NuxtLink
-      v-for="ticket in tickets"
-      :key="ticket.id"
-      :to="ticket.eventPath"
-    >
-      <UCard>
-        <div class="flex flex-col gap-2">
-          <div class="flex justify-between">
-            <div class="text-xl font-bold">{{ translatedProperty(ticket.event?.name) }}</div>
-            <UFieldGroup>
-              <UBadge
-                :color="ticketBadgeColor(ticket.status)"
-                :variant="ticket.status === 'paid' ? 'subtle' : 'subtle'"
-                :icon="ticketBadgeIcon(ticket.status)"
-                :class="[
-                  'font-extrabold',
-                  ticket.status === 'paid' ? 'uppercase' : 'capitalize',
-                ]"
-              >
-                {{ ticketStatusLabel(ticket.status) }}
-              </UBadge>
-              <UButton
-                v-if="ticketBadgeButton(ticket.status)"
-                v-bind="ticketBadgeButton(ticket.status)"
-              />
-            </UFieldGroup>
-          </div>
+  <div>
+    <UPageGrid class="grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+      <UPageCard
+        v-for="ticket in tickets"
+        :key="ticket.id"
 
-          <div>
-            <div class="text-md font-semibold">
-              <UBadge variant="outline">
-                <b>{{ $t('account.tickets.ticket') }}:</b> {{ translatedProperty(ticket.event.tickets[ticket.ticketKey as never].name) }}
-              </UBadge>
-            </div>
-          </div>
-        </div>
-      </UCard>
-    </NuxtLink>
-  </UPageGrid>
+        :ui="{
+          header: 'flex items-start justify-between gap-2',
+          body: 'flex-col gap-2',
+          footer: 'flex flex-col md:flex-row gap-4',
+        }"
+      >
+        <!-- TOP ROW: Event Name (left) + Status Badge (right) -->
+        <template #header>
+          <span class="text-xl font-bold">{{ translatedProperty(ticket.event?.name) }}</span>
+
+          <UBadge
+            :color="ticketBadgeColor(ticket.status)"
+            variant="subtle"
+            :icon="ticketBadgeIcon(ticket.status)"
+            size="lg"
+            :ui="{ base: 'shrink-0' }"
+            :class="[ticket.status === 'paid' ? 'uppercase' : 'capitalize', 'font-extrabold']"
+          >
+            {{ ticketStatusLabel(ticket.status) }}
+          </UBadge>
+        </template>
+
+        <!-- MIDDLE: Description text -->
+        <template #body>
+          <p class="text-sm text-gray-500 line-clamp-2">
+            {{ translatedProperty(ticket.event?.description) }}
+          </p>
+          <UBadge
+            variant="soft"
+            :ui="{ base: 'shrink-0' }"
+          >
+            <b>{{ $t('account.tickets.ticket') }}:</b> {{ translatedProperty(ticket.event.tickets[ticket.ticketKey as never].name) }}
+          </UBadge>
+        </template>
+
+        <!-- BOTTOM ROW: Type badge (left) + Price/Qty + Pay button (right) -->
+        <template #footer>
+          <UButton
+            v-if="ticket.status === 'pending'"
+            :label="$t('account.tickets.payNow')"
+            :color="ticketBadgeColor(ticket.status)"
+            trailing-icon="i-lucide-external-link"
+            :loading="loadingMap[ticket.id]"
+            :disabled="loadingMap[ticket.id]"
+            class="justify-between"
+            @click="onPayNow(ticket.id)"
+          />
+
+          <UButton
+            v-if="ticket.status === 'paid'"
+            :color="ticketBadgeColor(ticket.status)"
+            trailing-icon="i-lucide-barcode"
+            :label="$t('account.tickets.viewQrCode')"
+            class="justify-between"
+            @click="onClickDisplayQrCode(ticket)"
+          />
+          <UButton
+            :to="ticket.eventPath"
+            trailing-icon="i-lucide-arrow-right"
+            :label="$t('account.tickets.goToEvent')"
+            class="justify-between"
+          />
+        </template>
+      </UPageCard>
+    </UPageGrid>
+    <UModal
+      v-model:open="displayQrCode"
+      :title="$t('account.tickets.ticket')"
+      :ui="{ footer: 'justify-end' }"
+    >
+      <template #body>
+        {{ selectedTicket }}
+      </template>
+      <template #footer>
+        <UButton
+          :label="$t('common.close')"
+          @click="onCloseDisplayQrCode"
+        />
+      </template>
+    </UModal>
+  </div>
 </template>

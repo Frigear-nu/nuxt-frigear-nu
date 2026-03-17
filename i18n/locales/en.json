@@ -136,6 +136,9 @@
       "title": "Tickets",
       "description": "See your event tickets and payments.",
       "ticket": "Ticket",
+      "payNow": "Pay now",
+      "viewQrCode": "View QR code",
+      "goToEvent": "Go to event",
       "status": {
         "paid": "Paid",
         "cancelled": "Cancelled",

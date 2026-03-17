@@ -136,6 +136,9 @@
       "title": "Billetter",
       "description": "Se dine billetter og betalinger.",
       "ticket": "Billet",
+      "payNow": "Betal nu",
+      "viewQrCode": "Se QR-kode",
+      "goToEvent": "Til event",
       "status": {
         "paid": "Betalt",
         "cancelled": "Annulleret",
