@@ -16,7 +16,7 @@ importers:
         version: 1.0.4
       '@nitrotool/jwt':
         specifier: ^1.0.4
-        version: 1.0.4(@azure/identity@4.13.0)(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(better-sqlite3@12.6.0))(h3@1.15.5)(magicast@0.5.1)(rolldown@1.0.0-beta.57)
+        version: 1.0.4(@azure/identity@4.13.0)(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(better-sqlite3@12.6.0))(h3@1.15.8)(magicast@0.5.1)(rolldown@1.0.0-beta.57)
       '@nuxthub/core':
         specifier: ^0.10.6
         version: 0.10.6(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(better-sqlite3@12.6.0)))(ioredis@5.9.2)(magicast@0.5.1)(synckit@0.11.12)(typescript@5.9.3)(vue-tsc@3.2.2(typescript@5.9.3))
@@ -69,11 +69,11 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3
       h3:
-        specifier: 1.15.5
-        version: 1.15.5
+        specifier: ^1.15.8
+        version: 1.15.8
       h3-zod:
         specifier: ^0.5.3
-        version: 0.5.3(h3@1.15.5)(zod@3.25.76)
+        version: 0.5.3(h3@1.15.8)(zod@3.25.76)
       minimatch:
         specifier: ^10.1.1
         version: 10.1.1
@@ -83,6 +83,9 @@ importers:
       nuxt-auth-utils:
         specifier: 0.5.28
         version: 0.5.28(magicast@0.5.1)
+      nuxt-qrcode:
+        specifier: ^0.4.8
+        version: 0.4.8(@types/emscripten@1.41.5)(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3))
       nuxt-studio:
         specifier: ^1.3.1
         version: 1.3.1(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(better-sqlite3@12.6.0)))(ioredis@5.9.2)(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3))
@@ -91,7 +94,7 @@ importers:
         version: 1.12.1(magicast@0.5.1)
       simple-content-site:
         specifier: https://pkg.pr.new/simple-content-site@46
-        version: https://pkg.pr.new/simple-content-site@46(46bba7b577081d71544938eafb74eb81)
+        version: https://pkg.pr.new/simple-content-site@46(176c5b85fc6f3675654e0e9e1b7ad76d)
       zod:
         specifier: ^3.25.76
         version: 3.25.76
@@ -4100,6 +4103,12 @@ packages:
   '@types/deep-eql@4.0.2':
     resolution: {integrity: sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==}
 
+  '@types/dom-webcodecs@0.1.18':
+    resolution: {integrity: sha512-vAvE8C9DGWR+tkb19xyjk1TSUlJ7RUzzp4a9Anu7mwBT+fpyePWK1UxmH14tMO5zHmrnrRIMg5NutnnDztLxgg==}
+
+  '@types/emscripten@1.41.5':
+    resolution: {integrity: sha512-cMQm7pxu6BxtHyqJ7mQZ2kXWV5SLmugybFdHCBbJ5eHzOo6VhBckEgAT3//rP5FwPHNPeEiq4SmQ5ucBwsOo4Q==}
+
   '@types/escape-html@1.0.4':
     resolution: {integrity: sha512-qZ72SFTgUAZ5a7Tj6kf2SHLetiH5S6f8G5frB2SPQ3EyF02kxdyBFf4Tz4banE3xCgGnKgWLt//a6VuYHKYJTg==}
 
@@ -4637,6 +4646,11 @@ packages:
   '@vueuse/core@12.8.2':
     resolution: {integrity: sha512-HbvCmZdzAu3VGi/pWYm5Ut+Kd9mn1ZHnn4L5G8kOQTPs/IwIAmJoBrmYk2ckLArgMXZj0AW3n5CAejLUO+PhdQ==}
 
+  '@vueuse/core@13.9.0':
+    resolution: {integrity: sha512-ts3regBQyURfCE2BcytLqzm8+MmLlo5Ln/KLoxDVcsZ2gzIwVNnQpQOL/UKV8alUqjSZOlpFZcRNsLRqj+OzyA==}
+    peerDependencies:
+      vue: ^3.5.0
+
   '@vueuse/core@14.1.0':
     resolution: {integrity: sha512-rgBinKs07hAYyPF834mDTigH7BtPqvZ3Pryuzt1SD/lg5wEcWqvwzXXYGEDb2/cP0Sj5zSvHl3WkmMELr5kfWw==}
     peerDependencies:
@@ -4695,6 +4709,9 @@ packages:
   '@vueuse/metadata@12.8.2':
     resolution: {integrity: sha512-rAyLGEuoBJ/Il5AmFHiziCPdQzRt88VxR+Y/A/QhJ1EWtWqPBBAxTAFaSkviwEuOEZNtW8pvkPgoCZQ+HxqW1A==}
 
+  '@vueuse/metadata@13.9.0':
+    resolution: {integrity: sha512-1AFRvuiGphfF7yWixZa0KwjYH8ulyjDCC0aFgrGRz8+P4kvDFSdXLVfTk5xAN9wEuD1J6z4/myMoYbnHoX07zg==}
+
   '@vueuse/metadata@14.1.0':
     resolution: {integrity: sha512-7hK4g015rWn2PhKcZ99NyT+ZD9sbwm7SGvp7k+k+rKGWnLjS/oQozoIZzWfCewSUeBmnJkIb+CNr7Zc/EyRnnA==}
 
@@ -4706,6 +4723,11 @@ packages:
 
   '@vueuse/shared@12.8.2':
     resolution: {integrity: sha512-dznP38YzxZoNloI0qpEfpkms8knDtaoQ6Y/sfS0L7Yki4zh40LFHEhur0odJC6xTHG5dxWVPiUWBXn+wCG2s5w==}
+
+  '@vueuse/shared@13.9.0':
+    resolution: {integrity: sha512-e89uuTLMh0U5cZ9iDpEI2senqPGfbPRTHM/0AaQkcxnpqjkZqDYP8rpfm7edOz8s+pOCOROEy1PIveSW8+fL5g==}
+    peerDependencies:
+      vue: ^3.5.0
 
   '@vueuse/shared@14.1.0':
     resolution: {integrity: sha512-EcKxtYvn6gx1F8z9J5/rsg3+lTQnvOruQd8fUecW99DCK04BkWD7z5KQ/wTAx+DazyoEE9dJt/zV8OIEQbM6kw==}
@@ -4880,6 +4902,12 @@ packages:
   balanced-match@4.0.4:
     resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
     engines: {node: 18 || 20 || >=22}
+
+  barcode-detector@2.2.2:
+    resolution: {integrity: sha512-JcSekql+EV93evfzF9zBr+Y6aRfkR+QFvgyzbwQ0dbymZXoAI9+WgT7H1E429f+3RKNncHz2CW98VQtaaKpmfQ==}
+
+  barcode-detector@3.1.1:
+    resolution: {integrity: sha512-ghWlEAV93ZCUniO7Co3ih/01XPm+U30CV+NoPbO6Chj5lZzHydDAqKlrBEd+37TkoR+QTH3tnnwd8k8epGTfIg==}
 
   bare-events@2.8.2:
     resolution: {integrity: sha512-riJjyv1/mHLIPX4RwiK+oW9/4c3TEUeORHKefKAKnZ5kyslbN+HXowtbaVEqt4IMUB7OXlfixcs6gsFeo/jhiQ==}
@@ -6252,8 +6280,8 @@ packages:
       h3: ^1.6.0
       zod: ^3.21.0
 
-  h3@1.15.5:
-    resolution: {integrity: sha512-xEyq3rSl+dhGX2Lm0+eFQIAzlDN6Fs0EcC4f7BNUmzaRX/PTzeuM+Tr2lHB8FoXggsQIeXLj8EDVgs5ywxyxmg==}
+  h3@1.15.8:
+    resolution: {integrity: sha512-iOH6Vl8mGd9nNfu9C0IZ+GuOAfJHcyf3VriQxWaSWIB76Fg4BnFuk4cxBxjmQSSxJS664+pgjP6e7VBnUzFfcg==}
 
   h3@2.0.1-rc.11:
     resolution: {integrity: sha512-2myzjCqy32c1As9TjZW9fNZXtLqNedjFSrdFy2AjFBQQ3LzrnGoDdFDYfC0tV2e4vcyfJ2Sfo/F6NQhO2Ly/Mw==}
@@ -7395,6 +7423,9 @@ packages:
       '@unhead/vue': ^2.0.5
       unstorage: ^1.15.0
 
+  nuxt-qrcode@0.4.8:
+    resolution: {integrity: sha512-m489cF5NtXbZ2P3s2euuKEQ2iClmNwFtXQU8B9H5RqdSpMrM+MRci9eHp+OE8IlTCXQBb4TEUZXApzz8xk91Tw==}
+
   nuxt-resend@0.0.2:
     resolution: {integrity: sha512-WLNPTEqpiiY+QNa5jDiJPhnJl19SLOahixk9NILRKrge8+cH7TSw4A5kOEQkSP60EcrO063I3BKLqzP1+ByCyw==}
 
@@ -8323,6 +8354,9 @@ packages:
   scule@1.3.0:
     resolution: {integrity: sha512-6FtHJEvt+pVMIB9IBY+IcCJ6Z5f1iQnytgyfKMhDKgmzYG+TeH/wx1y3l27rshSbLiSanrR9ffZDrEsmjlQF2g==}
 
+  sdp@3.2.1:
+    resolution: {integrity: sha512-lwsAIzOPlH8/7IIjjz3K0zYBk7aBVVcvjMwt3M4fLxpjMYyy7i3I97SLHebgn4YBjirkzfp3RvRDWSKsh/+WFw==}
+
   secure-json-parse@4.1.0:
     resolution: {integrity: sha512-l4KnYfEyqYJxDwlNVyRfO2E4NTHfMKAWdUuA8J0yve2Dz/E/PdBepY03RvyJpssIpRFwJoCD55wA+mEDs6ByWA==}
 
@@ -8820,6 +8854,10 @@ packages:
     resolution: {integrity: sha512-xxCJm+Bckc6kQBknN7i9fnP/xobQRsRQxR01CztFkp/h++yfVxUUcmMgfR2HttJx/dpWjS9ubVuyspJv24Q9DA==}
     engines: {node: '>=20'}
 
+  type-fest@5.4.4:
+    resolution: {integrity: sha512-JnTrzGu+zPV3aXIUhnyWJj4z/wigMsdYajGLIYakqyOW1nPllzXEJee0QQbHj+CTIQtXGlAjuK0UY+2xTyjVAw==}
+    engines: {node: '>=20'}
+
   type-level-regexp@0.1.17:
     resolution: {integrity: sha512-wTk4DH3cxwk196uGLK/E9pE45aLfeKJacKmcEgEOA/q5dnPGNxXt0cfYdFxb57L+sEpf1oJH4Dnx/pnRcku9jg==}
 
@@ -9280,6 +9318,10 @@ packages:
     peerDependencies:
       vue: ^3.0.0
 
+  vue-qrcode-reader@5.7.3:
+    resolution: {integrity: sha512-iSGko42FsEvdHyizBMBs/X+HMO9Z5ONDxjW+mQdoraOR5emRNedmjC5SEJdYzGz8ZP5ME3lwB4iHy3S7MOt5Qw==}
+    engines: {node: '>=18.0.0'}
+
   vue-router@4.6.4:
     resolution: {integrity: sha512-Hz9q5sa33Yhduglwz6g9skT8OBPii+4bFn88w6J+J4MfEo4KRRpmiNG/hHHkdbRFlLBOqxN8y8gf2Fb0MTUgVg==}
     peerDependencies:
@@ -9317,6 +9359,10 @@ packages:
 
   webpack-virtual-modules@0.6.2:
     resolution: {integrity: sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ==}
+
+  webrtc-adapter@8.2.3:
+    resolution: {integrity: sha512-gnmRz++suzmvxtp3ehQts6s2JtAGPuDPjA1F3a9ckNpG1kYdYuHWYpazoAnL9FS5/B21tKlhkorbdCXat0+4xQ==}
+    engines: {node: '>=6.0.0', npm: '>=3.10.0'}
 
   whatwg-mimetype@3.0.0:
     resolution: {integrity: sha512-nt+N2dzIutVRxARx1nghPKGv1xHikU7HKdfafKkLNLindmPU/ch3U31NOCGGA/dmPcmb1VlofO0vnKAcsm0o/Q==}
@@ -9521,6 +9567,14 @@ packages:
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
+
+  zxing-wasm@1.1.3:
+    resolution: {integrity: sha512-MYm9k/5YVs4ZOTIFwlRjfFKD0crhefgbnt1+6TEpmKUDFp3E2uwqGSKwQOd2hOIsta/7Usq4hnpNRYTLoljnfA==}
+
+  zxing-wasm@3.0.1:
+    resolution: {integrity: sha512-3CLj6iaGkpqPWXAB4pIWkFOR63MwqGekpMzaROFKto4dFowiPmLlC56KoMoOSXzqOCOpI5DAvMdB8ku2va6fUg==}
+    peerDependencies:
+      '@types/emscripten': '>=1.39.6'
 
 snapshots:
 
@@ -10453,7 +10507,7 @@ snapshots:
       chokidar: 4.0.3
       esbuild: 0.27.2
       eslint: 9.39.2(jiti@2.6.1)
-      h3: 1.15.5
+      h3: 1.15.8
       tinyglobby: 0.2.15
       ws: 8.19.0
     transitivePeerDependencies:
@@ -10994,16 +11048,16 @@ snapshots:
 
   '@nitrotool/errors@1.0.4':
     dependencies:
-      h3: 1.15.5
+      h3: 1.15.8
 
-  '@nitrotool/jwt@1.0.4(@azure/identity@4.13.0)(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(better-sqlite3@12.6.0))(h3@1.15.5)(magicast@0.5.1)(rolldown@1.0.0-beta.57)':
+  '@nitrotool/jwt@1.0.4(@azure/identity@4.13.0)(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(better-sqlite3@12.6.0))(h3@1.15.8)(magicast@0.5.1)(rolldown@1.0.0-beta.57)':
     dependencies:
       '@nitrotool/errors': 1.0.4
       '@nuxt/kit': 4.4.2(magicast@0.5.1)
       '@nuxt/schema': 4.3.1
       '@tsndr/cloudflare-worker-jwt': 3.2.1
       consola: 3.4.2
-      h3: 1.15.5
+      h3: 1.15.8
       nitropack: 2.13.1(@azure/identity@4.13.0)(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(better-sqlite3@12.6.0))(rolldown@1.0.0-beta.57)
       pathe: 2.0.3
     transitivePeerDependencies:
@@ -11296,7 +11350,7 @@ snapshots:
       esbuild: 0.25.12
       fontaine: 0.7.0
       fontless: 0.1.0(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(better-sqlite3@12.6.0)))(ioredis@5.9.2)(vite@7.3.1(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
-      h3: 1.15.5
+      h3: 1.15.8
       jiti: 2.6.1
       magic-regexp: 0.10.0
       magic-string: 0.30.21
@@ -11358,7 +11412,7 @@ snapshots:
       '@nuxt/kit': 4.3.1(magicast@0.5.1)
       consola: 3.4.2
       defu: 6.1.4
-      h3: 1.15.5
+      h3: 1.15.8
       image-meta: 0.2.2
       knitwork: 1.3.0
       ohash: 2.0.11
@@ -11503,7 +11557,7 @@ snapshots:
       errx: 0.1.0
       escape-string-regexp: 5.0.0
       exsolve: 1.0.8
-      h3: 1.15.5
+      h3: 1.15.8
       impound: 1.0.0
       klona: 2.0.6
       mocked-exports: 0.1.1
@@ -11601,7 +11655,7 @@ snapshots:
       exsolve: 1.0.8
       fake-indexeddb: 6.2.5
       get-port-please: 3.2.0
-      h3: 1.15.5
+      h3: 1.15.8
       h3-next: h3@2.0.1-rc.11
       local-pkg: 1.1.2
       magic-string: 0.30.21
@@ -11818,7 +11872,7 @@ snapshots:
       defu: 6.1.4
       execa: 9.6.1
       get-port-please: 3.2.0
-      h3: 1.15.5
+      h3: 1.15.8
       hookable: 6.0.1
       mime: 4.1.0
       nypm: 0.6.4
@@ -11892,7 +11946,7 @@ snapshots:
       '@vue/compiler-sfc': 3.5.27
       defu: 6.1.4
       devalue: 5.6.2
-      h3: 1.15.5
+      h3: 1.15.8
       knitwork: 1.3.0
       magic-string: 0.30.21
       mlly: 1.8.0
@@ -11986,13 +12040,13 @@ snapshots:
       - magicast
       - supports-color
 
-  '@nuxtjs/robots@5.6.7(h3@1.15.5)(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3))(zod@4.3.6)':
+  '@nuxtjs/robots@5.6.7(h3@1.15.8)(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3))(zod@4.3.6)':
     dependencies:
       '@fingerprintjs/botd': 2.0.0
       '@nuxt/kit': 4.3.1(magicast@0.5.1)
       consola: 3.4.2
       defu: 6.1.4
-      nuxt-site-config: 3.2.14(h3@1.15.5)(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3))
+      nuxt-site-config: 3.2.14(h3@1.15.8)(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3))
       pathe: 2.0.3
       pkg-types: 2.3.0
       sirv: 3.0.2
@@ -13709,6 +13763,10 @@ snapshots:
 
   '@types/deep-eql@4.0.2': {}
 
+  '@types/dom-webcodecs@0.1.18': {}
+
+  '@types/emscripten@1.41.5': {}
+
   '@types/escape-html@1.0.4': {}
 
   '@types/estree@1.0.8': {}
@@ -14380,6 +14438,13 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
+  '@vueuse/core@13.9.0(vue@3.5.27(typescript@5.9.3))':
+    dependencies:
+      '@types/web-bluetooth': 0.0.21
+      '@vueuse/metadata': 13.9.0
+      '@vueuse/shared': 13.9.0(vue@3.5.27(typescript@5.9.3))
+      vue: 3.5.27(typescript@5.9.3)
+
   '@vueuse/core@14.1.0(vue@3.5.27(typescript@5.9.3))':
     dependencies:
       '@types/web-bluetooth': 0.0.21
@@ -14407,6 +14472,8 @@ snapshots:
 
   '@vueuse/metadata@12.8.2': {}
 
+  '@vueuse/metadata@13.9.0': {}
+
   '@vueuse/metadata@14.1.0': {}
 
   '@vueuse/metadata@14.2.1': {}
@@ -14423,6 +14490,10 @@ snapshots:
       vue: 3.5.27(typescript@5.9.3)
     transitivePeerDependencies:
       - typescript
+
+  '@vueuse/shared@13.9.0(vue@3.5.27(typescript@5.9.3))':
+    dependencies:
+      vue: 3.5.27(typescript@5.9.3)
 
   '@vueuse/shared@14.1.0(vue@3.5.27(typescript@5.9.3))':
     dependencies:
@@ -14604,6 +14675,17 @@ snapshots:
   balanced-match@1.0.2: {}
 
   balanced-match@4.0.4: {}
+
+  barcode-detector@2.2.2:
+    dependencies:
+      '@types/dom-webcodecs': 0.1.18
+      zxing-wasm: 1.1.3
+
+  barcode-detector@3.1.1(@types/emscripten@1.41.5):
+    dependencies:
+      zxing-wasm: 3.0.1(@types/emscripten@1.41.5)
+    transitivePeerDependencies:
+      - '@types/emscripten'
 
   bare-events@2.8.2: {}
 
@@ -16023,12 +16105,12 @@ snapshots:
     dependencies:
       duplexer: 0.1.2
 
-  h3-zod@0.5.3(h3@1.15.5)(zod@3.25.76):
+  h3-zod@0.5.3(h3@1.15.8)(zod@3.25.76):
     dependencies:
-      h3: 1.15.5
+      h3: 1.15.8
       zod: 3.25.76
 
-  h3@1.15.5:
+  h3@1.15.8:
     dependencies:
       cookie-es: 1.2.2
       crossws: 0.3.5
@@ -16355,7 +16437,7 @@ snapshots:
       defu: 6.1.4
       destr: 2.0.5
       etag: 1.8.1
-      h3: 1.15.5
+      h3: 1.15.8
       image-meta: 0.2.2
       listhen: 1.9.0
       ofetch: 1.5.1
@@ -16829,7 +16911,7 @@ snapshots:
       crossws: 0.3.5
       defu: 6.1.4
       get-port-please: 3.2.0
-      h3: 1.15.5
+      h3: 1.15.8
       http-shutdown: 1.2.2
       jiti: 2.6.1
       mlly: 1.8.0
@@ -17432,7 +17514,7 @@ snapshots:
       exsolve: 1.0.8
       globby: 16.1.0
       gzip-size: 7.0.0
-      h3: 1.15.5
+      h3: 1.15.8
       hookable: 5.5.3
       httpxy: 0.1.7
       ioredis: 5.9.2
@@ -17568,7 +17650,7 @@ snapshots:
       '@adonisjs/hash': 9.1.1
       '@nuxt/kit': 4.3.1(magicast@0.5.1)
       defu: 6.1.4
-      h3: 1.15.5
+      h3: 1.15.8
       hookable: 6.0.1
       jose: 6.1.3
       ofetch: 1.5.1
@@ -17609,7 +17691,7 @@ snapshots:
 
   nuxt-define@1.0.0: {}
 
-  nuxt-og-image@5.1.13(@unhead/vue@2.1.2(vue@3.5.27(typescript@5.9.3)))(h3@1.15.5)(magicast@0.5.1)(unstorage@1.17.4(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(better-sqlite3@12.6.0)))(ioredis@5.9.2))(vite@7.3.1(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.27(typescript@5.9.3)):
+  nuxt-og-image@5.1.13(@unhead/vue@2.1.2(vue@3.5.27(typescript@5.9.3)))(h3@1.15.8)(magicast@0.5.1)(unstorage@1.17.4(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(better-sqlite3@12.6.0)))(ioredis@5.9.2))(vite@7.3.1(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.27(typescript@5.9.3)):
     dependencies:
       '@nuxt/devtools-kit': 3.1.1(magicast@0.5.1)(vite@7.3.1(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))
       '@nuxt/kit': 4.3.1(magicast@0.5.1)
@@ -17625,7 +17707,7 @@ snapshots:
       image-size: 2.0.2
       magic-string: 0.30.21
       mocked-exports: 0.1.1
-      nuxt-site-config: 3.2.14(h3@1.15.5)(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3))
+      nuxt-site-config: 3.2.14(h3@1.15.8)(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3))
       nypm: 0.6.4
       ofetch: 1.5.1
       ohash: 2.0.11
@@ -17650,6 +17732,19 @@ snapshots:
       - vite
       - vue
 
+  nuxt-qrcode@0.4.8(@types/emscripten@1.41.5)(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3)):
+    dependencies:
+      '@nuxt/kit': 4.4.2(magicast@0.5.1)
+      '@vueuse/core': 13.9.0(vue@3.5.27(typescript@5.9.3))
+      barcode-detector: 3.1.1(@types/emscripten@1.41.5)
+      defu: 6.1.4
+      uqr: 0.1.2
+      vue-qrcode-reader: 5.7.3
+    transitivePeerDependencies:
+      - '@types/emscripten'
+      - magicast
+      - vue
+
   nuxt-resend@0.0.2(magicast@0.5.1):
     dependencies:
       '@nuxt/kit': 3.21.1(magicast@0.5.1)
@@ -17669,10 +17764,10 @@ snapshots:
       - magicast
       - vue
 
-  nuxt-site-config@3.2.14(h3@1.15.5)(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3)):
+  nuxt-site-config@3.2.14(h3@1.15.8)(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3)):
     dependencies:
       '@nuxt/kit': 4.4.2(magicast@0.5.1)
-      h3: 1.15.5
+      h3: 1.15.8
       nuxt-site-config-kit: 3.2.14(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3))
       pathe: 2.0.3
       pkg-types: 2.3.0
@@ -17756,7 +17851,7 @@ snapshots:
       errx: 0.1.0
       escape-string-regexp: 5.0.0
       exsolve: 1.0.8
-      h3: 1.15.5
+      h3: 1.15.8
       hookable: 5.5.3
       ignore: 7.0.5
       impound: 1.0.0
@@ -19005,6 +19100,8 @@ snapshots:
 
   scule@1.3.0: {}
 
+  sdp@3.2.1: {}
+
   secure-json-parse@4.1.0: {}
 
   selderee@0.11.0:
@@ -19164,7 +19261,7 @@ snapshots:
 
   simple-concat@1.0.1: {}
 
-  simple-content-site@https://pkg.pr.new/simple-content-site@46(46bba7b577081d71544938eafb74eb81):
+  simple-content-site@https://pkg.pr.new/simple-content-site@46(176c5b85fc6f3675654e0e9e1b7ad76d):
     dependencies:
       '@iconify-json/lucide': 1.2.90
       '@iconify-json/simple-icons': 1.2.68
@@ -19175,7 +19272,7 @@ snapshots:
       '@nuxt/ui': 4.4.0(794b703f32fc0b26bc71f9f3f9ef7c8b)
       '@nuxtjs/i18n': 10.2.1(@azure/identity@4.13.0)(@vue/compiler-dom@3.5.27)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(better-sqlite3@12.6.0)))(eslint@9.39.2(jiti@2.6.1))(ioredis@5.9.2)(magicast@0.5.1)(rollup@4.55.2)(vue@3.5.27(typescript@5.9.3))
       '@nuxtjs/mdc': 0.20.1(magicast@0.5.1)
-      '@nuxtjs/robots': 5.6.7(h3@1.15.5)(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3))(zod@4.3.6)
+      '@nuxtjs/robots': 5.6.7(h3@1.15.8)(magicast@0.5.1)(vue@3.5.27(typescript@5.9.3))(zod@4.3.6)
       '@vueuse/core': 14.2.1(vue@3.5.27(typescript@5.9.3))
       better-sqlite3: 12.6.0
       defu: 6.1.4
@@ -19184,7 +19281,7 @@ snapshots:
       minimark: 0.2.0
       motion-v: 1.10.2(@vueuse/core@14.2.1(vue@3.5.27(typescript@5.9.3)))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(vue@3.5.27(typescript@5.9.3))
       nuxt: 4.3.0(@azure/identity@4.13.0)(@libsql/client@0.17.0)(@parcel/watcher@2.5.1)(@types/node@24.10.8)(@vue/compiler-sfc@3.5.27)(better-sqlite3@12.6.0)(cac@6.7.14)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(better-sqlite3@12.6.0)))(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(better-sqlite3@12.6.0))(eslint@9.39.2(jiti@2.6.1))(ioredis@5.9.2)(lightningcss@1.30.2)(magicast@0.5.1)(optionator@0.9.4)(rolldown@1.0.0-beta.57)(rollup@4.55.2)(terser@5.44.1)(tsx@4.21.0)(typescript@5.9.3)(vite@7.3.1(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vue-tsc@3.2.2(typescript@5.9.3))(yaml@2.8.2)
-      nuxt-og-image: 5.1.13(@unhead/vue@2.1.2(vue@3.5.27(typescript@5.9.3)))(h3@1.15.5)(magicast@0.5.1)(unstorage@1.17.4(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(better-sqlite3@12.6.0)))(ioredis@5.9.2))(vite@7.3.1(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.27(typescript@5.9.3))
+      nuxt-og-image: 5.1.13(@unhead/vue@2.1.2(vue@3.5.27(typescript@5.9.3)))(h3@1.15.8)(magicast@0.5.1)(unstorage@1.17.4(@azure/identity@4.13.0)(db0@0.3.4(@libsql/client@0.17.0)(better-sqlite3@12.6.0)(drizzle-orm@0.45.1(@cloudflare/workers-types@4.20260131.0)(@libsql/client@0.17.0)(@opentelemetry/api@1.9.0)(@types/better-sqlite3@7.6.13)(@types/pg@8.15.6)(better-sqlite3@12.6.0)))(ioredis@5.9.2))(vite@7.3.1(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.27(typescript@5.9.3))
       pkg-types: 2.3.0
       scule: 1.3.0
       tailwindcss: 4.1.18
@@ -19637,6 +19734,10 @@ snapshots:
     dependencies:
       tagged-tag: 1.0.0
 
+  type-fest@5.4.4:
+    dependencies:
+      tagged-tag: 1.0.0
+
   type-level-regexp@0.1.17: {}
 
   typed-array-buffer@1.0.3:
@@ -19895,7 +19996,7 @@ snapshots:
       anymatch: 3.1.3
       chokidar: 5.0.0
       destr: 2.0.5
-      h3: 1.15.5
+      h3: 1.15.8
       lru-cache: 11.2.5
       node-fetch-native: 1.6.7
       ofetch: 1.5.1
@@ -20160,6 +20261,11 @@ snapshots:
       '@vue/devtools-api': 6.6.4
       vue: 3.5.27(typescript@5.9.3)
 
+  vue-qrcode-reader@5.7.3:
+    dependencies:
+      barcode-detector: 2.2.2
+      webrtc-adapter: 8.2.3
+
   vue-router@4.6.4(vue@3.5.27(typescript@5.9.3)):
     dependencies:
       '@vue/devtools-api': 6.6.4
@@ -20194,6 +20300,10 @@ snapshots:
   webidl-conversions@3.0.1: {}
 
   webpack-virtual-modules@0.6.2: {}
+
+  webrtc-adapter@8.2.3:
+    dependencies:
+      sdp: 3.2.1
 
   whatwg-mimetype@3.0.0: {}
 
@@ -20379,3 +20489,12 @@ snapshots:
   zod@4.3.6: {}
 
   zwitch@2.0.4: {}
+
+  zxing-wasm@1.1.3:
+    dependencies:
+      '@types/emscripten': 1.41.5
+
+  zxing-wasm@3.0.1(@types/emscripten@1.41.5):
+    dependencies:
+      '@types/emscripten': 1.41.5
+      type-fest: 5.4.4

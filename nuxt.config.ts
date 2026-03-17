@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@pinia/colada-nuxt',
     './modules/scs-i18n',
+    'nuxt-qrcode',
     '@sentry/nuxt/module',
     ...(import.meta.dev ? ['nuxt-component-meta'] : []),
     ...(import.meta.test ? ['@nuxt/test-utils/module'] : []),
