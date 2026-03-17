@@ -109,7 +109,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // ensure we update the tickets checkout session id in case it has changed
-  if (ticket.checkoutSessionId && ticket.checkoutSessionId !== checkoutSession.id) {
+  if (!ticket.checkoutSessionId || ticket.checkoutSessionId !== checkoutSession.id) {
     const [newTicket] = await db
       .update(schema.userEventTickets)
       .set({
