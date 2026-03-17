@@ -69,7 +69,6 @@ export default defineNuxtConfig({
 
   site: {
     name: 'Frigear.nu',
-    url: 'http://localhost:3000',
   },
 
   colorMode: {
