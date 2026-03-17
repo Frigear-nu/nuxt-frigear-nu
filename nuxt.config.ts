@@ -229,7 +229,8 @@ export default defineNuxtConfig({
     project: 'not-in-use-in-bugsink',
     sourceMapsUploadOptions: {
       url: process.env.NUXT_SENTRY_URL,
-      enabled: !!process.env.NUXT_SENTRY_AUTH_TOKEN && !!process.env.NUXT_SENTRY_URL,
+      // enabled: !!process.env.NUXT_SENTRY_AUTH_TOKEN && !!process.env.NUXT_SENTRY_URL,
+      enabled: false,
       authToken: process.env.NUXT_SENTRY_AUTH_TOKEN!,
     },
     release: {
