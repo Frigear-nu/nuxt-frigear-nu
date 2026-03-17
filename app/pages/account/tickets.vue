@@ -135,7 +135,7 @@ const onCloseDisplayQrCode = () => {
             variant="soft"
             :ui="{ base: 'shrink-0' }"
           >
-            <b>{{ $t('account.tickets.ticket') }}:</b> {{ translatedProperty(ticket.event.tickets[ticket.ticketKey as never].name) }}
+            <b>{{ $t('account.tickets.ticket') }}:</b> {{ translatedProperty(ticket.event.tickets[ticket.ticketKey as never]?.name || 'N/A') }}
           </UBadge>
         </template>
 
