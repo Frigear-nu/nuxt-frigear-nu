@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useUserEventTickets } from '~/store/queries/user'
-import type { ButtonProps } from '@nuxt/ui'
 import { upperFirst } from 'scule'
 
 const { data: tickets } = await useUserEventTickets()
@@ -8,6 +7,7 @@ const { t } = useSiteI18n()
 const { translatedProperty } = useContent()
 const toast = useToast()
 
+// @ts-expect-error not typed...
 const selectedTicket = ref<typeof tickets.value[number] | undefined>(undefined)
 const displayQrCode = ref(false)
 
@@ -69,6 +69,7 @@ const onPayNow = async (userTicketId: string) => {
         title: 'Message:',
         description: response.message,
       })
+      return
     }
 
     if (!response.url) {
