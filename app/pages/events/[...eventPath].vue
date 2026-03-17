@@ -103,7 +103,7 @@ const searchParams = useUrlSearchParams<{ payment?: 'success' | 'cancel' }>()
 
 const checkPurchaseStatus = async () => {
   // Give Stripe's webhook a moment to process before polling
-  await new Promise(resolve => setTimeout(resolve, 1500))
+  await new Promise(resolve => setTimeout(resolve, 10000))
 
   await refetchUserTickets()
   const userTicketsV = toValue(userTickets)
@@ -135,7 +135,13 @@ const paymentActions = computed<ButtonProps[]>(() => {
   }
 
   if (checkPaymentResult.value === 'cancel') {
-    // TODO: Show try again button with deep link to stripe checkout?
+    return [{
+      label: t('account.tickets.payNow'),
+      to: localePath('/account/tickets'),
+      variant: 'subtle',
+      color: 'neutral',
+      trailingIcon: 'i-lucide-arrow-right',
+    }]
   }
 
   return []

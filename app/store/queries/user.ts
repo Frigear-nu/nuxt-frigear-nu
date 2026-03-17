@@ -29,9 +29,7 @@ export const useUserEventTickets = () => {
   return useQuery({
     key: () => USER_KEYS.eventTickets,
     query: () => {
-      console.log('GET /api/account/event-tickets')
-      // return $fetch('/api/account/event-tickets', { method: 'GET', headers: useRequestHeaders(['cookie']) })
-      return $api('/api/account/event-tickets')
+      return $api('/api/account/events/tickets')
     },
     placeholderData: () => [],
     enabled: () => import.meta.client && loggedIn.value,
