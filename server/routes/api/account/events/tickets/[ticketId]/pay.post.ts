@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     ticketId: z.string(),
   }).parse)
 
-  let ticket = await db.query.userEventTickets.findFirst({
+  const ticket = await db.query.userEventTickets.findFirst({
     where: (ticket, { eq, and }) => {
       return and(eq(ticket.id, ticketId), eq(ticket.userId, userId))
     },
@@ -47,7 +47,6 @@ export default defineEventHandler(async (event) => {
   }
 
   const stripe = useTaskStripe()
-
   const lineItems = ticket.priceIds?.map(price => ({ price, quantity: 1 })) || []
 
   // if there are no items, AND not priceId, we will simply mark it as paid...
@@ -108,24 +107,13 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // ensure we update the tickets checkout session id in case it has changed
   if (!ticket.checkoutSessionId || ticket.checkoutSessionId !== checkoutSession.id) {
-    const [newTicket] = await db
+    await db
       .update(schema.userEventTickets)
       .set({
         checkoutSessionId: checkoutSession.id,
       })
-      .where(eq(schema.userEventTickets.id, ticketId))
-      .returning()
-
-    if (!newTicket) {
-      throw createError({
-        status: 500,
-        message: 'Could not update ticket checkout session id',
-      })
-    }
-    // the updated ticket...
-    ticket = newTicket
+      .where(eq(schema.userEventTickets.id, ticket.id))
   }
 
   if (!checkoutSession.url) {
