@@ -52,10 +52,15 @@ export default defineEventHandler(async (event) => {
 
   // if there are no items, AND not priceId, we will simply mark it as paid...
   if (lineItems.length === 0) {
-    await db.update(schema.userEventTickets).set({
-      status: 'paid',
-      paidAt: new Date(),
-    }).where(eq(schema.userEventTickets.id, ticketId))
+    await db
+      .update(schema.userEventTickets)
+      .set({
+        status: 'paid',
+        paidAt: new Date(),
+      })
+      .where(eq(schema.userEventTickets.id, ticketId))
+
+    //
     return {
       message: 'Ticket marked as paid',
     }
