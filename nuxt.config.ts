@@ -224,9 +224,8 @@ export default defineNuxtConfig({
   },
   sentry: {
     authToken: process.env.NUXT_SENTRY_AUTH_TOKEN!,
-    org: 'frigear',
-    project: process.env.NUXT_SENTRY_PROJECT || 'frigear.nu',
-    sentryUrl: process.env.NUXT_SENTRY_URL!,
+    org: 'not-in-use-in-bugsink',
+    project: 'not-in-use-in-bugsink',
   },
 
   stripe: {
