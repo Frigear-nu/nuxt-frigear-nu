@@ -54,6 +54,7 @@ export default defineEventHandler(async (event) => {
   if (lineItems.length === 0) {
     await db.update(schema.userEventTickets).set({
       status: 'paid',
+      paidAt: new Date(),
     }).where(eq(schema.userEventTickets.id, ticketId))
     return {
       message: 'Ticket marked as paid',
@@ -63,6 +64,7 @@ export default defineEventHandler(async (event) => {
   const returnUrl = withBaseUrl(dbEvent.path)
 
   const createCheckoutSession = async () => await stripe.checkout.sessions.create({
+    mode: 'payment',
     customer: stripeCustomer.id,
     line_items: lineItems,
     success_url: withQuery(returnUrl, { payment: 'success' }),
