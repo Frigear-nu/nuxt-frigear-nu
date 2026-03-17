@@ -49,6 +49,9 @@ env:
 
   # Sentry
   NUXT_PUBLIC_SENTRY_DSN: ${{ secrets.NUXT_PUBLIC_SENTRY_DSN }}
+  NUXT_SENTRY_URL: ${{ vars.NUXT_SENTRY_URL }}
+  NUXT_SENTRY_PROJECT: ${{ vars.NUXT_SENTRY_PROJECT }}
+  NUXT_SENTRY_AUTH_TOKEN: ${{ secrets.NUXT_SENTRY_AUTH_TOKEN }}
 
 jobs:
   ci:
@@ -103,6 +106,15 @@ jobs:
         run: npx wrangler d1 migrations apply staging-frigear-nu --remote
       - name: Deploy to staging
         run: pnpm cf:deploy-staging
+      - name: Upload source maps to Bugsink
+        run: |
+          pnpm sentry-cli --url $NUXT_SENTRY_URL sourcemaps inject .output
+          pnpm sentry-cli --url $NUXT_SENTRY_URL sourcemaps \
+            --org bugsinkhasnoorgs \
+            --project ignoredfornow \
+            upload .output
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.NUXT_SENTRY_AUTH_TOKEN }}
 
   deploy-production:
     needs: ci
@@ -129,3 +141,12 @@ jobs:
         run: npx wrangler d1 migrations apply frigear-nu --remote
       - name: Deploy to production
         run: pnpm cf:deploy
+      - name: Upload source maps to Bugsink
+        run: |
+          pnpm sentry-cli --url $NUXT_SENTRY_URL sourcemaps inject .output
+          pnpm sentry-cli --url $NUXT_SENTRY_URL sourcemaps \
+            --org bugsinkhasnoorgs \
+            --project ignoredfornow \
+            upload .output
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.NUXT_SENTRY_AUTH_TOKEN }}

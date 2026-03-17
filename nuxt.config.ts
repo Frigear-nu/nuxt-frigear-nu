@@ -1,4 +1,5 @@
 import vue from '@vitejs/plugin-vue'
+import { getGitBranch } from 'simple-content-site/utils/git'
 
 export default defineNuxtConfig({
   extends: ['simple-content-site'],
@@ -18,6 +19,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@pinia/colada-nuxt',
     './modules/scs-i18n',
+    'nuxt-qrcode',
     '@sentry/nuxt/module',
     ...(import.meta.dev ? ['nuxt-component-meta'] : []),
     ...(import.meta.test ? ['@nuxt/test-utils/module'] : []),
@@ -154,6 +156,8 @@ export default defineNuxtConfig({
     '/api/auth/**': { prerender: false },
   },
 
+  sourcemap: { client: 'hidden' },
+
   compatibilityDate: '2025-12-11',
 
   nitro: {
@@ -220,6 +224,23 @@ export default defineNuxtConfig({
 
   resend: {
     apiKey: process.env.NUXT_RESEND_API_KEY!,
+  },
+  sentry: {
+    authToken: process.env.NUXT_SENTRY_AUTH_TOKEN!,
+    org: 'not-in-use-in-bugsink',
+    project: 'not-in-use-in-bugsink',
+    sourceMapsUploadOptions: {
+      url: process.env.NUXT_SENTRY_URL,
+      // enabled: !!process.env.NUXT_SENTRY_AUTH_TOKEN && !!process.env.NUXT_SENTRY_URL,
+      enabled: false,
+      authToken: process.env.NUXT_SENTRY_AUTH_TOKEN!,
+    },
+    release: {
+      name: getGitBranch(),
+      create: false,
+      finalize: false,
+      inject: true,
+    },
   },
 
   stripe: {
