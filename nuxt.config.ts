@@ -68,6 +68,7 @@ export default defineNuxtConfig({
 
   site: {
     name: 'Frigear.nu',
+    url: 'http://localhost:3000',
   },
 
   colorMode: {
@@ -220,6 +221,12 @@ export default defineNuxtConfig({
 
   resend: {
     apiKey: process.env.NUXT_RESEND_API_KEY!,
+  },
+  sentry: {
+    authToken: process.env.NUXT_SENTRY_AUTH_TOKEN!,
+    org: 'frigear',
+    project: process.env.NUXT_SENTRY_PROJECT || 'frigear.nu',
+    sentryUrl: process.env.NUXT_SENTRY_URL!,
   },
 
   stripe: {

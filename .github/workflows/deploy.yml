@@ -49,6 +49,9 @@ env:
 
   # Sentry
   NUXT_PUBLIC_SENTRY_DSN: ${{ secrets.NUXT_PUBLIC_SENTRY_DSN }}
+  NUXT_SENTRY_URL: ${{ vars.NUXT_SENTRY_URL }}
+  NUXT_SENTRY_PROJECT: ${{ vars.NUXT_SENTRY_PROJECT }}
+  NUXT_SENTRY_AUTH_TOKEN: ${{ secrets.NUXT_SENTRY_AUTH_TOKEN }}
 
 jobs:
   ci:
