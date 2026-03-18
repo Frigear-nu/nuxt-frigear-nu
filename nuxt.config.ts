@@ -207,13 +207,13 @@ export default defineNuxtConfig({
     },
     blob: true,
   },
-  hooks: {
-    // Workaround: @nuxt/fonts leaves zombie esbuild process when prerendering...
-    // https://github.com/nuxt/nuxt/issues/33987
-    close: (nuxt) => {
-      if (!nuxt.options._prepare) process.exit(0)
-    },
-  },
+  // hooks: {
+  //   // Workaround: @nuxt/fonts leaves zombie esbuild process when prerendering...
+  //   // https://github.com/nuxt/nuxt/issues/33987
+  //   close: (nuxt) => {
+  //     if (!nuxt.options._prepare) process.exit(0)
+  //   },
+  // },
 
   i18n: {
     defaultLocale: 'da',

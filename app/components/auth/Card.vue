@@ -63,22 +63,23 @@ const signIn = async (email: string, password: string) => {
 }
 
 const signUp = async (email: string, password: string, meta?: { name?: string }) => {
-  const createdUser = await signUpWithPassword(email, password, meta).catch((error) => {
+  try {
+    const createdUser = await signUpWithPassword(email, password, meta)
+
+    if (!createdUser) throw new Error('Could not create user.')
+
+    // @ts-expect-error This is not typed
+    if (!createdUser.emailConfirmedAt) {
+      toast.add(formatSuccess('auth.email.sent.title', 'auth.email.sent.description'))
+      emailWasDispatched.value = true
+      return
+    }
+
+    return navigateTo('/account')
+  }
+  catch (error) {
     if (error) toast.add(formatError(error))
-  })
-
-  if (!createdUser) {
-    throw new Error('Could not create user.')
   }
-
-  // @ts-expect-error This is not typed
-  if (!createdUser.emailConfirmedAt) {
-    toast.add(formatSuccess('Check your mail for a confirmation email'))
-    emailWasDispatched.value = true
-    return
-  }
-
-  return navigateTo('/account')
 }
 
 async function onSubmit(payload: FormSubmitEvent<SignInWithPasswordSchema | SignUpWithPasswordSchema>) {
