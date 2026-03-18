@@ -502,6 +502,18 @@
       "description": "Jeg accepterer Frigear [betingelserne](https://frigear.nu/legal/terms) & [privatlivspolitik](https://frigear.nu/legal/gdpr)."
     }
   },
+  "errors": {
+    "label": "Fejl",
+    "auth": {
+      "signIn": {
+        "noPassword": "Du har ik' oprettet en adgangskode. Nulstil din adgangskode, eller log ind med et magic link.",
+        "failed": "Login mislykkedes. Er du sikker på, at du har en konto, eller at dette er den korrekte adgangskode?"
+      },
+      "signUp": {
+        "failed": "Kunne ik' opprette konto, ka' det være en eksisterende konto med denne e-mail?"
+      }
+    }
+  },
   "zodI18n": {
     "errors": {
       "custom": "Ugyldig værdi",

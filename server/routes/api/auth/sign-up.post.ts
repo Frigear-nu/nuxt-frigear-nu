@@ -18,6 +18,7 @@ export default defineEventHandler(async (event) => {
 
   if (!signUp) throw createError({ statusCode: 400, message: 'Signup is disabled.' })
 
+  // TODO: Add rate-limiting here... and throw the .failed error
   const { name, email, password, redirect } = await useValidatedBody(event, signUpWithPasswordSchema)
 
   const existingUser = await findUserByEmail(email)
@@ -34,7 +35,7 @@ export default defineEventHandler(async (event) => {
     })
     .returning()
 
-  if (!createdUser) throw ServerError('errors.auth.signUp.failedCreate')
+  if (!createdUser) throw ServerError('errors.auth.signUp.failed')
 
   let verifyUrl: string | undefined
 
