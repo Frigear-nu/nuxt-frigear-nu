@@ -207,6 +207,21 @@ export default defineNuxtConfig({
     },
     blob: true,
   },
+
+  vite: {
+    optimizeDeps: {
+      include: [
+        'date-fns',
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+        'zod/v4',
+        '@vueuse/core',
+        'zod',
+        '@internationalized/date',
+      ],
+    },
+  },
+
   // hooks: {
   //   // Workaround: @nuxt/fonts leaves zombie esbuild process when prerendering...
   //   // https://github.com/nuxt/nuxt/issues/33987
