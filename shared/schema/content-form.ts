@@ -33,6 +33,7 @@ export const ContentStepSchema = z.object({
 })
 
 // TODO: Combine many of the simple schema composites.
+const translated = z.string().or(z.record(z.string(), z.string()))
 const environment = z.enum(['production', 'staging', 'development'])
 const variables = z.union([
   z.record(
@@ -40,6 +41,21 @@ const variables = z.union([
     z.record(z.string(), z.string()),
   ),
   z.record(z.string(), z.string()),
+])
+
+const delivery = z.union([
+  z.object({
+    channel: z.literal('email'),
+    destination: z.array(z.string()),
+    subject: translated.optional(),
+    body: translated.optional(),
+  }),
+  z.object({
+    channel: z.literal('webhook'),
+    destination: z.array(z.string()),
+    method: z.enum(['POST', 'PUT', 'PATCH', 'DELETE']).optional(),
+    headers: z.record(z.string(), z.string()).optional(),
+  }),
 ])
 
 export const CollectionFormSchema = z.object({
@@ -51,18 +67,7 @@ export const CollectionFormSchema = z.object({
     steps: z.array(ContentStepSchema),
   }),
   variables: variables.optional(),
-  delivery: z.array(z.union([
-    z.object({
-      channel: z.literal('email'),
-      destination: z.array(z.string()),
-    }),
-    z.object({
-      channel: z.literal('webhook'),
-      destination: z.array(z.string()),
-      method: z.enum(['POST', 'PUT', 'PATCH', 'DELETE']).optional(),
-      headers: z.record(z.string(), z.string()).optional(),
-    }),
-  ])),
+  delivery: z.array(delivery),
   resubmittable: z.union([
     z.boolean(),
     z.object({
@@ -75,6 +80,7 @@ export const CollectionFormSchema = z.object({
       }).optional(),
     }),
   ]).optional(),
+  receipts: z.array(delivery).default([]),
 })
 
 export type CollectionForm = z.infer<typeof CollectionFormSchema>

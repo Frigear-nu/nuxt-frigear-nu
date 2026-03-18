@@ -4,12 +4,10 @@ import { deriveSchemaFromSteppedForm } from '#shared/form'
 import { blob } from '@nuxthub/blob'
 import { db, schema } from '@nuxthub/db'
 import type { BlobObject } from '@nuxthub/core/blob'
-import { replaceVariables } from '#shared/template'
 import type { SteppedForm } from '#shared/types/form'
 import { objectPick } from '@vueuse/core'
 
 export default defineEventHandler(async (event) => {
-  const { mail: { from, to: defaultToEmail } } = useRuntimeConfig(event)
   const formPath = getRouterParam(event, 'formPath')
 
   if (!formPath) throw createError({ statusCode: 404 })
@@ -51,6 +49,7 @@ export default defineEventHandler(async (event) => {
 
     if (part.filename !== undefined) {
       // It's a file — convert the Buffer to a File object
+      // @ts-expect-error This is not typed...
       const file = new File([part.data], part.filename, {
         type: part.type ?? 'application/octet-stream',
       })
@@ -123,58 +122,14 @@ export default defineEventHandler(async (event) => {
     })
     .returning()
 
+  if (!storedSubmission) {
+    throw createError({ status: 500, message: 'Could not store submission' })
+  }
+
   // Handle deliveries
   // TODO: This should probably be done in a queue/task
-  if (form.delivery && form.delivery.length > 0) {
-    const contactEmails = {
-      ...Object.fromEntries(
-        Object.entries(useRuntimeConfig(event).contact || {})
-          .map(([key, value]) => {
-            return [`contact.${key}`, value]
-          }),
-      ),
-      'contact.default': defaultToEmail,
-    }
-    const replaceTemplateVars = (destination: string) => {
-      return replaceVariables(destination, {
-        ...contactEmails,
-      })
-    }
-    await Promise.all(form.delivery.map(async (delivery) => {
-      // Email delivery
-      if (delivery.channel === 'email') {
-        const destinations = delivery.destination.map(replaceTemplateVars)
-        if (import.meta.dev) {
-          console.log(`Sending email to ${destinations} with payload:`, payload)
-          return
-        }
-        // TODO: Styling & attachments
-        return sendEmail(event, {
-          from,
-          to: destinations,
-          subject: `New submission in ${form.title}`,
-          text: JSON.stringify(payload),
-        })
-      }
-
-      // Webhook delivery
-      if (delivery.channel === 'webhook') {
-        const headers = Object.fromEntries(
-          Object.entries(delivery?.headers || {})
-            .map(([key, value]) => {
-              return [key, replaceTemplateVars(value)]
-            }),
-        )
-        return Promise.all(delivery.destination.map(async (destination) => {
-          return $fetch(replaceTemplateVars(destination), {
-            method: delivery?.method || 'POST',
-            body: payload,
-            headers,
-          })
-        }))
-      }
-    }))
-  }
+  await deliverFormSubmission(event, form, payload)
+  await deliverFormSubmissionReceipt(event, form, payload)
 
   return objectPick(storedSubmission, ['id', 'data', 'files', 'createdAt'])
 })
