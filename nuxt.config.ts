@@ -184,7 +184,7 @@ export default defineNuxtConfig({
       retry: 1,
       routes: [
         '/',
-        '/membership',
+        // '/membership',
         '/funding',
         '/info',
         '/events',
