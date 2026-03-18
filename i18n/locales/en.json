@@ -438,7 +438,7 @@
     "next": "Continue",
     "submit": "Submit",
     "acceptTerms": {
-      "description": "I accept Frigear [Terms & Conditions](https://frigear.nu/legal/terms) & [Privacy Policy](https://frigear.nu/legal/gdpr)."
+      "description": "I accept Frigear [Terms & Conditions](https://frigear.nu/legal/terms){'{'}target='_BLANK'{'}'} & [Privacy Policy](https://frigear.nu/legal/gdpr){'{'}target='_BLANK'{'}'}."
     }
   },
   "errors": {

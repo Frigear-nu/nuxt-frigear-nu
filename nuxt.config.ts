@@ -178,6 +178,26 @@ export default defineNuxtConfig({
         'auth:clear-expired-magic-links',
       ],
     },
+    // TODO: This is to be addressed in a future PR.
+    // prerender: {
+    //   crawlLinks: false,
+    //   failOnError: false,
+    //   retry: 1,
+    //   routes: [
+    //     '/',
+    //     // '/membership',
+    //     '/funding',
+    //     '/info',
+    //     '/events',
+    //     '/branding',
+    //   ],
+    //   ignore: [
+    //     '/sign-in',
+    //     '/auth/*',
+    //     '/account/**',
+    //     '/legal/*',
+    //   ],
+    // },
   },
 
   hub: {
@@ -187,6 +207,13 @@ export default defineNuxtConfig({
     },
     blob: true,
   },
+  // hooks: {
+  //   // Workaround: @nuxt/fonts leaves zombie esbuild process when prerendering...
+  //   // https://github.com/nuxt/nuxt/issues/33987
+  //   close: (nuxt) => {
+  //     if (!nuxt.options._prepare) process.exit(0)
+  //   },
+  // },
 
   i18n: {
     defaultLocale: 'da',
