@@ -178,25 +178,26 @@ export default defineNuxtConfig({
         'auth:clear-expired-magic-links',
       ],
     },
-    prerender: {
-      crawlLinks: false,
-      failOnError: false,
-      retry: 1,
-      routes: [
-        '/',
-        // '/membership',
-        '/funding',
-        '/info',
-        '/events',
-        '/branding',
-      ],
-      ignore: [
-        '/sign-in',
-        '/auth/*',
-        '/account/**',
-        '/legal/*',
-      ],
-    },
+    // TODO: This is to be addressed in a future PR.
+    // prerender: {
+    //   crawlLinks: false,
+    //   failOnError: false,
+    //   retry: 1,
+    //   routes: [
+    //     '/',
+    //     // '/membership',
+    //     '/funding',
+    //     '/info',
+    //     '/events',
+    //     '/branding',
+    //   ],
+    //   ignore: [
+    //     '/sign-in',
+    //     '/auth/*',
+    //     '/account/**',
+    //     '/legal/*',
+    //   ],
+    // },
   },
 
   hub: {
