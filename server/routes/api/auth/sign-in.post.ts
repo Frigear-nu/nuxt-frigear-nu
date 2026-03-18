@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   if (!matchedUser) throw UnauthenticatedError('errors.auth.signIn.failed')
 
   // This means the user A: has never logged in before, or B: has signed up with magic link
-  if (!matchedUser.passwordHash) throw UnauthenticatedError('errors.auth.signIn.noPassword')
+  if (!matchedUser.passwordHash || matchedUser.passwordHash.startsWith('cus_')) throw UnauthenticatedError('errors.auth.signIn.noPassword')
 
   if (!await verifyPassword(matchedUser.passwordHash, password)) {
     throw UnauthenticatedError('errors.auth.signIn.failed')
