@@ -13,6 +13,7 @@ const authForm = useTemplateRef('authForm')
 const displayMagicLinkModal = ref(false)
 const displayForgotPasswordModal = ref(false)
 const emailWasDispatched = ref(false)
+const { formatError, formatSuccess } = useFormattedToast()
 const { fields: signInFields, signUpFields, buildProviders } = useAuthForm()
 const {
   signInWithPassword,
@@ -45,23 +46,25 @@ const providers = buildProviders((provider) => {
       // case 'github':
       return signInWithProvider(provider)
     default:
-      toast.add(formatToastError(new Error(`Provider '${provider}', is not implemented.`)))
+      toast.add(formatError(new Error(`Provider '${provider}', is not implemented.`)))
   }
 })
 
 const signIn = async (email: string, password: string) => {
-  const signedInUser = await signInWithPassword(email, password).catch((error) => {
-    if (error) toast.add(formatToastError(error))
-  })
-  if (!signedInUser) throw createError('Could not load user.')
-
-  // todo: not sure if this redirect is correct.
-  return navigateTo('/account')
+  try {
+    const signedInUser = await signInWithPassword(email, password)
+    if (!signedInUser) throw createError('Could not load user.')
+    // todo: not sure if this redirect is correct.
+    return navigateTo('/account')
+  }
+  catch (error) {
+    if (error) toast.add(formatError(error))
+  }
 }
 
 const signUp = async (email: string, password: string, meta?: { name?: string }) => {
   const createdUser = await signUpWithPassword(email, password, meta).catch((error) => {
-    if (error) toast.add(formatToastError(error))
+    if (error) toast.add(formatError(error))
   })
 
   if (!createdUser) {
@@ -70,7 +73,7 @@ const signUp = async (email: string, password: string, meta?: { name?: string })
 
   // @ts-expect-error This is not typed
   if (!createdUser.emailConfirmedAt) {
-    toast.add(formatToastSuccess('Check your mail for a confirmation email'))
+    toast.add(formatSuccess('Check your mail for a confirmation email'))
     emailWasDispatched.value = true
     return
   }
@@ -89,16 +92,16 @@ function onMagicLinkDispatched(email: string) {
   emailField.value = email
   displayMagicLinkModal.value = false
   emailWasDispatched.value = true
-  toast.add(formatToastSuccess('Yay!', 'Check your email for a link, it might be in your spam folder.'))
+  toast.add(formatSuccess('Yay!', 'Check your email for a link, it might be in your spam folder.'))
 }
 
 function onMagicLinkError(err: Error) {
-  toast.add(formatToastError(err))
+  toast.add(formatError(err))
   displayMagicLinkModal.value = false
 }
 
 function onMagicLinkDevelopment(magicLink: unknown) {
-  toast.add(formatToastSuccess('Check the terminal for Magic Link 👨‍💻'))
+  toast.add(formatSuccess('Check the terminal for Magic Link 👨‍💻'))
   if (import.meta.dev) console.log({ magicLink })
   displayMagicLinkModal.value = false
   if (!emailWasDispatched.value) emailWasDispatched.value = true
@@ -108,18 +111,18 @@ function onPasswordResetDispatched(email: string) {
   emailField.value = email
   displayForgotPasswordModal.value = false
   emailWasDispatched.value = true
-  toast.add(formatToastSuccess('Mail away!', 'If you have an account, we\'ll send you an e-mail.'))
+  toast.add(formatSuccess('Mail away!', 'If you have an account, we\'ll send you an e-mail.'))
 }
 
 function onPasswordResetDevelopment(pwReset: unknown) {
-  toast.add(formatToastSuccess('Check the terminal for Link 👨‍💻'))
+  toast.add(formatSuccess('Check the terminal for Link 👨‍💻'))
   if (import.meta.dev) console.log({ pwReset })
   displayForgotPasswordModal.value = false
   if (!emailWasDispatched.value) emailWasDispatched.value = true
 }
 
 function onPasswordResetError(err: Error) {
-  toast.add(formatToastError(err))
+  toast.add(formatError(err))
   displayForgotPasswordModal.value = false
 }
 </script>

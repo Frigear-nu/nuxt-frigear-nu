@@ -12,6 +12,10 @@ export const useFormattedToast = () => {
       const msg = String(error.data.message)
       overrides.description = msg.includes('.') && !msg.endsWith('.') ? t(msg) : msg
     }
+
+    if (!overrides.title) {
+      overrides.title = t('errors.label')
+    }
     return formatToastError(error as never, overrides)
   }
 
