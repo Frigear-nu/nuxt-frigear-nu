@@ -30,6 +30,8 @@ export const userEventTickets = sqliteTable('user_event_tickets', {
   updatedAt: integer('updated_at', { mode: 'timestamp' }).$onUpdateFn(() => new Date()),
 })
 
+export type DBUserEventTicket = typeof userEventTickets.$inferSelect
+
 export const userEventTicketsRelations = relations(userEventTickets, ({ one }) => ({
   user: one(users, {
     fields: [userEventTickets.userId],
