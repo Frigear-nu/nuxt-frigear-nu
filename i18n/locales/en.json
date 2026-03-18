@@ -441,6 +441,18 @@
       "description": "I accept Frigear [Terms & Conditions](https://frigear.nu/legal/terms) & [Privacy Policy](https://frigear.nu/legal/gdpr)."
     }
   },
+  "errors": {
+    "label": "Error",
+    "auth": {
+      "signIn": {
+        "noPassword": "You have not set a password, please reset your password or sign in with magic link.",
+        "failed": "Sign in failed, are you sure you have an account or this is the correct password?"
+      },
+      "signUp": {
+        "failed": "Sign up failed, are you sure you don't have an account with this e-mail?"
+      }
+    }
+  },
   "zodI18n": {
     "errors": {
       "too_big": {
