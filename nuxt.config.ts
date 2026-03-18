@@ -138,8 +138,6 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/sign-in': { prerender: false },
-    '/account': { prerender: false },
     '/account/**': { prerender: false },
     '/admin/**': { prerender: false },
     // Static Redirects
@@ -150,10 +148,6 @@ export default defineNuxtConfig({
     '/signin/forgot_password': { redirect: { to: '/forgot-password', statusCode: 301 } },
     '/signin/signup': { redirect: { to: '/sign-in?mode=up', statusCode: 301 } },
     '/pricing': { redirect: { to: '/membership', statusCode: 301 } },
-
-    // API
-    '/api/_auth/**': { prerender: false },
-    '/api/auth/**': { prerender: false },
   },
 
   sourcemap: { client: 'hidden' },
@@ -164,6 +158,20 @@ export default defineNuxtConfig({
     experimental: {
       tasks: true,
       asyncContext: true,
+    },
+    prerender: {
+      failOnError: true,
+      routes: [
+        '/',
+        '/branding',
+        '/funding',
+        '/info',
+        '/membership',
+      ],
+      ignore: [
+        '/api/_auth/**',
+        '/api/auth/**',
+      ],
     },
     unenv: {
       external: ['node:async_hooks'],
