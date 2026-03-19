@@ -178,26 +178,6 @@ export default defineNuxtConfig({
         'auth:clear-expired-magic-links',
       ],
     },
-    // TODO: This is to be addressed in a future PR.
-    // prerender: {
-    //   crawlLinks: false,
-    //   failOnError: false,
-    //   retry: 1,
-    //   routes: [
-    //     '/',
-    //     // '/membership',
-    //     '/funding',
-    //     '/info',
-    //     '/events',
-    //     '/branding',
-    //   ],
-    //   ignore: [
-    //     '/sign-in',
-    //     '/auth/*',
-    //     '/account/**',
-    //     '/legal/*',
-    //   ],
-    // },
   },
 
   hub: {
@@ -207,14 +187,6 @@ export default defineNuxtConfig({
     },
     blob: true,
   },
-  // hooks: {
-  //   // Workaround: @nuxt/fonts leaves zombie esbuild process when prerendering...
-  //   // https://github.com/nuxt/nuxt/issues/33987
-  //   close: (nuxt) => {
-  //     if (!nuxt.options._prepare) process.exit(0)
-  //   },
-  // },
-
   i18n: {
     defaultLocale: 'da',
     strategy: 'prefix_except_default',
@@ -265,30 +237,18 @@ export default defineNuxtConfig({
     apiKey: process.env.NUXT_RESEND_API_KEY!,
   },
   sentry: {
-    authToken: process.env.NUXT_SENTRY_AUTH_TOKEN!,
+    authToken: process.env.NUXT_SENTRY_AUTH_TOKEN || process.env.SENTRY_AUTH_TOKEN || '',
     org: 'not-in-use-in-bugsink',
     project: 'not-in-use-in-bugsink',
-    sourceMapsUploadOptions: {
-      url: process.env.NUXT_SENTRY_URL,
-      // enabled: !!process.env.NUXT_SENTRY_AUTH_TOKEN && !!process.env.NUXT_SENTRY_URL,
-      enabled: false,
-      authToken: process.env.NUXT_SENTRY_AUTH_TOKEN!,
-    },
-    release: {
-      name: getGitBranch(),
-      create: false,
-      finalize: false,
-      inject: true,
-    },
-    sourcemaps: {
-      // As you're enabling client source maps, you probably want to delete them after they're uploaded to Sentry.
-      // Set the appropriate glob pattern for your output folder - some glob examples below:
-      filesToDeleteAfterUpload: [
-        './**/*.map',
-        '.*/**/public/**/*.map',
-        '.output/**/public/**/*.map',
-      ],
-    },
+    // sourceMapsUploadOptions: {
+    //   enabled: false, // keep disabled, CI handles upload
+    // },
+    // release: {
+    //   name: getGitBranch(),
+    //   create: false,
+    //   finalize: false,
+    //   inject: true, // keep true so debug IDs get injected at build time
+    // },
   },
 
   stripe: {
