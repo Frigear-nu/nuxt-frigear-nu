@@ -2,10 +2,12 @@
 import type { PageCollections } from '@nuxt/content'
 import type { Locale } from 'vue-i18n'
 import * as nuxtUiLocales from '@nuxt/ui/locale'
+import * as Sentry from '@sentry/nuxt'
 
 const { seo } = useAppConfig()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useSiteI18n()
+const { user, loggedIn } = useUserSession()
 
 const lang = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.code || 'en')
 const dir = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.dir || 'ltr')
@@ -56,6 +58,15 @@ const { data: files } = useLazyAsyncData(`search_${collectionName.value}`, () =>
 })
 
 provide('navigation', navigation)
+
+watch(user, (newValue) => {
+  if (!newValue) {
+    Sentry.setUser(null)
+    return
+  }
+
+  Sentry.setUser({ id: newValue.id })
+})
 </script>
 
 <template>
