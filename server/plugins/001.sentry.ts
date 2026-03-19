@@ -1,13 +1,13 @@
 import { sentryCloudflareNitroPlugin } from '@sentry/nuxt/module/plugins'
 
-export default defineNitroPlugin((nitroApp) => {
+export default defineNitroPlugin(sentryCloudflareNitroPlugin(() => {
   if (!useRuntimeConfig().public.sentry.dsn) {
     console.warn('Sentry DSN not found, skipping Sentry plugin.')
-    return
+    return { enabled: false }
   }
 
-  return sentryCloudflareNitroPlugin({
+  return {
     dsn: useRuntimeConfig().public.sentry.dsn,
     tracesSampleRate: useRuntimeConfig().public.sentry?.tracesSampleRate || 1.0,
-  })(nitroApp)
-})
+  }
+}))
