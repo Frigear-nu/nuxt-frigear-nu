@@ -7,7 +7,7 @@ import * as Sentry from '@sentry/nuxt'
 const { seo } = useAppConfig()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useSiteI18n()
-const { user, loggedIn } = useUserSession()
+const { user } = useUserSession()
 
 const lang = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.code || 'en')
 const dir = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.dir || 'ltr')
