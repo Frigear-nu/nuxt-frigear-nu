@@ -30,7 +30,7 @@ export default defineAppConfig({
       neutral: 'slate',
       success: 'green',
       warning: 'amber',
-      error: 'orange',
+      error: 'red',
     },
     collapsible: {
       slots: {
