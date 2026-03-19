@@ -50,14 +50,14 @@ export default defineNuxtConfig({
         binding: 'BLOB',
       },
     },
-    // image: {
-    //   provider: 'cloudflare',
-    //   quality: 80,
-    //   format: ['webp', 'avif', 'jpeg', 'jpg', 'png', 'gif'],
-    //   cloudflare: {
-    //     baseURL: process.env.CLOUDFLARE_IMAGE_BASE_URL,
-    //   },
-    // },
+    image: {
+      provider: 'cloudflare',
+      quality: 80,
+      format: ['webp', 'avif', 'jpeg', 'jpg', 'png', 'gif'],
+      cloudflare: {
+        baseURL: process.env.CLOUDFLARE_IMAGE_BASE_URL,
+      },
+    },
   },
 
   devtools: {
