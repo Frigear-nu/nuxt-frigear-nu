@@ -15,7 +15,7 @@ const $emits = defineEmits<{
   (e: 'select', price: PublicPrice): void
 }>()
 
-const { data: availableMemberships } = useMemberships()
+const { data: availableMemberships } = await useMemberships()
 
 const { t, locale } = useSiteI18n()
 
@@ -33,8 +33,8 @@ const subscriptions = computed<(PricingPlanProps & { interval: string, id: strin
       billingCycle,
       interval,
       id: price.id,
-      title: price?.[`title_${locale.value}` as keyof typeof price] || price.title,
-      description: price?.[`description_${locale.value}` as keyof typeof price] || price.description,
+      title: (price?.[`title_${locale.value}` as keyof typeof price] || price.title) as string | undefined,
+      description: (price?.[`description_${locale.value}` as keyof typeof price] || price.description) as string | undefined,
       price: `${price.price / 100} ${price.currency.toUpperCase()}`,
       terms: t('payment.membership.feeIncluded'),
       ui: {
