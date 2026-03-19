@@ -1,5 +1,5 @@
 import vue from '@vitejs/plugin-vue'
-import { getGitBranch } from 'simple-content-site/utils/git'
+// import { getGitBranch } from 'simple-content-site/utils/git'
 
 export default defineNuxtConfig({
   extends: ['simple-content-site'],
