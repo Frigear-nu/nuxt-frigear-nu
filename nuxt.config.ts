@@ -1,5 +1,5 @@
 import vue from '@vitejs/plugin-vue'
-// import { getGitBranch } from 'simple-content-site/utils/git'
+import { getGitBranch } from 'simple-content-site/utils/git'
 
 export default defineNuxtConfig({
   extends: ['simple-content-site'],
@@ -241,15 +241,17 @@ export default defineNuxtConfig({
     org: 'not-in-use-in-bugsink',
     project: 'not-in-use-in-bugsink',
     sentryUrl: process.env.NUXT_SENTRY_URL!,
-    // sourceMapsUploadOptions: {
-    //   enabled: false, // keep disabled, CI handles upload
-    // },
-    // release: {
-    //   name: getGitBranch(),
-    //   create: false,
-    //   finalize: false,
-    //   inject: true, // keep true so debug IDs get injected at build time
-    // },
+    sourceMapsUploadOptions: {
+      url: process.env.NUXT_SENTRY_URL,
+      enabled: !!process.env.NUXT_SENTRY_AUTH_TOKEN && !!process.env.NUXT_SENTRY_URL,
+      authToken: process.env.NUXT_SENTRY_AUTH_TOKEN || process.env.SENTRY_AUTH_TOKEN || '',
+    },
+    release: {
+      name: getGitBranch(),
+      create: false,
+      finalize: false,
+      inject: true, // keep true so debug IDs get injected at build time
+    },
   },
 
   stripe: {
