@@ -240,6 +240,18 @@ export default defineNuxtConfig({
           width: 128,
         },
       },
+      contain: {
+        modifiers: {
+          format: 'webp',
+          fit: 'contain',
+        },
+      },
+      cover: {
+        modifiers: {
+          format: 'webp',
+          fit: 'cover',
+        },
+      },
     },
   },
 
