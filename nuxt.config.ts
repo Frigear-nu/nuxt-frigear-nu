@@ -280,6 +280,15 @@ export default defineNuxtConfig({
       finalize: false,
       inject: true,
     },
+    sourcemaps: {
+      // As you're enabling client source maps, you probably want to delete them after they're uploaded to Sentry.
+      // Set the appropriate glob pattern for your output folder - some glob examples below:
+      filesToDeleteAfterUpload: [
+        './**/*.map',
+        '.*/**/public/**/*.map',
+        '.output/**/public/**/*.map',
+      ],
+    },
   },
 
   stripe: {
