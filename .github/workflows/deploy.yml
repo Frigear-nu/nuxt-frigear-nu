@@ -49,8 +49,11 @@ env:
 
   # Sentry
   NUXT_PUBLIC_SENTRY_DSN: ${{ secrets.NUXT_PUBLIC_SENTRY_DSN }}
+  SENTRY_DSN: ${{ secrets.NUXT_PUBLIC_SENTRY_DSN }}
+#  This is not used with bootleg sentry (bugsink)
   NUXT_SENTRY_URL: ${{ vars.NUXT_SENTRY_URL }}
-  NUXT_SENTRY_PROJECT: ${{ vars.NUXT_SENTRY_PROJECT }}
+#  NUXT_SENTRY_PROJECT: ${{ vars.NUXT_SENTRY_PROJECT }}
+  SENTRY_AUTH_TOKEN: ${{ secrets.NUXT_SENTRY_AUTH_TOKEN }}
   NUXT_SENTRY_AUTH_TOKEN: ${{ secrets.NUXT_SENTRY_AUTH_TOKEN }}
 
 jobs:
@@ -106,15 +109,21 @@ jobs:
         run: npx wrangler d1 migrations apply staging-frigear-nu --remote
       - name: Deploy to staging
         run: pnpm cf:deploy-staging
-      - name: Upload source maps to Bugsink
-        run: |
-          pnpm sentry-cli --url $NUXT_SENTRY_URL sourcemaps inject .output
-          pnpm sentry-cli --url $NUXT_SENTRY_URL sourcemaps \
-            --org bugsinkhasnoorgs \
-            --project ignoredfornow \
-            upload .output
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.NUXT_SENTRY_AUTH_TOKEN }}
+#      - name: Upload source maps to Bugsink
+#        run: |
+#          # Inject debug IDs into the actual output files
+#          pnpm sentry-cli --url $NUXT_SENTRY_URL sourcemaps inject .output/public/_nuxt
+#
+#          # Upload — target the specific client output directory
+#          pnpm sentry-cli --url $NUXT_SENTRY_URL sourcemaps \
+#            --org bugsinkhasnoorgs \
+#            --project ignoredfornow \
+#            upload .output/public/_nuxt
+#
+#          # Delete map files after upload so they're not publicly served
+#          find .output/public/_nuxt -name "*.map" -delete
+#        env:
+#          SENTRY_AUTH_TOKEN: ${{ secrets.NUXT_SENTRY_AUTH_TOKEN }}
 
   deploy-production:
     needs: ci
@@ -141,12 +150,18 @@ jobs:
         run: npx wrangler d1 migrations apply frigear-nu --remote
       - name: Deploy to production
         run: pnpm cf:deploy
-      - name: Upload source maps to Bugsink
-        run: |
-          pnpm sentry-cli --url $NUXT_SENTRY_URL sourcemaps inject .output
-          pnpm sentry-cli --url $NUXT_SENTRY_URL sourcemaps \
-            --org bugsinkhasnoorgs \
-            --project ignoredfornow \
-            upload .output
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.NUXT_SENTRY_AUTH_TOKEN }}
+#      - name: Upload source maps to Bugsink
+#        run: |
+#          # Inject debug IDs into the actual output files
+#          pnpm sentry-cli --url $NUXT_SENTRY_URL sourcemaps inject .output/public/_nuxt
+#
+#          # Upload — target the specific client output directory
+#          pnpm sentry-cli --url $NUXT_SENTRY_URL sourcemaps \
+#            --org bugsinkhasnoorgs \
+#            --project ignoredfornow \
+#            upload .output/public/_nuxt
+#
+#          # Delete map files after upload so they're not publicly served
+#          find .output/public/_nuxt -name "*.map" -delete
+#        env:
+#          SENTRY_AUTH_TOKEN: ${{ secrets.NUXT_SENTRY_AUTH_TOKEN }}
