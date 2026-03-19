@@ -240,6 +240,7 @@ export default defineNuxtConfig({
     authToken: process.env.NUXT_SENTRY_AUTH_TOKEN || process.env.SENTRY_AUTH_TOKEN || '',
     org: 'not-in-use-in-bugsink',
     project: 'not-in-use-in-bugsink',
+    sentryUrl: process.env.NUXT_SENTRY_URL!,
     // sourceMapsUploadOptions: {
     //   enabled: false, // keep disabled, CI handles upload
     // },
