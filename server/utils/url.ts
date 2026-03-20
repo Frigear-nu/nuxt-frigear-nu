@@ -1,11 +1,24 @@
 export const withBaseUrl = (path?: string) => {
-  const { protocol, hostname, port } = getRequestURL(useEvent())
-  return `${protocol}//${hostname}${port ? `:${port}` : ''}${path ?? ''}`
+  const url = getRequestURL(useEvent())
+  if (!path) return url.origin
+
+  const [pathname, query] = path.split('?')
+  url.pathname = pathname || url.pathname
+
+  if (query) {
+    const newParams = new URLSearchParams(query)
+    newParams.forEach((value, key) => url.searchParams.set(key, value))
+  }
+
+  return url.toString()
 }
+
 export const isInternalUrl = (url: string) => {
   if (url.startsWith('http')) return false
 
-  if (!url.startsWith('/')) return false
+  if (!url.startsWith('/') || url.startsWith('//')) {
+    return false
+  }
 
   return true
 }

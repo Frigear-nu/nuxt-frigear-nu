@@ -91,10 +91,12 @@ body:
 defaultTicket: default
 requirements:
   - type: membership # the only supported type of requirement for now
-    title:
-      da: Kun for medlemmer
-      en: Members only
     method: any # this is the default value
+    title:
+      da: Medlemmer
+      en: Members
+    icon: i-lucide-user-star
+    color: warning
 tickets:
   # We cna have a free ticket, (arbitrary how many type you want to add.)
   default:

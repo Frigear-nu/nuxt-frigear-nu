@@ -65,6 +65,9 @@
       "new": {
         "label": "New password"
       },
+      "confirm": {
+        "label": "Bekræft nytt kodeord"
+      },
       "current": {
         "label": "Current password"
       }

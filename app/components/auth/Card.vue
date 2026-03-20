@@ -7,6 +7,7 @@ import {
 } from '#shared/schema/auth'
 import type { AuthFormField, FormSubmitEvent } from '@nuxt/ui'
 
+const route = useRoute()
 const toast = useToast()
 const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
 const authForm = useTemplateRef('authForm')
@@ -37,6 +38,17 @@ const fields = computed<AuthFormField[]>((): AuthFormField[] => {
   return toValue(signUpFields)
 })
 
+const redirectTo = computed<string | undefined>(() => {
+  const redirect = route.query.redirect as string | undefined
+  if (!redirect) return undefined
+
+  if (!redirect || !redirect.startsWith('/') || redirect.startsWith('//')) {
+    return undefined
+  }
+
+  return redirect
+})
+
 const providers = buildProviders((provider) => {
   switch (provider) {
     case 'link':
@@ -52,7 +64,7 @@ const providers = buildProviders((provider) => {
 
 const signIn = async (email: string, password: string) => {
   try {
-    const signedInUser = await signInWithPassword(email, password)
+    const signedInUser = await signInWithPassword(email, password, toValue(redirectTo))
     if (!signedInUser) throw createError('Could not load user.')
     // todo: not sure if this redirect is correct.
     return navigateTo('/account')
@@ -64,7 +76,7 @@ const signIn = async (email: string, password: string) => {
 
 const signUp = async (email: string, password: string, meta?: { name?: string }) => {
   try {
-    const createdUser = await signUpWithPassword(email, password, meta)
+    const createdUser = await signUpWithPassword(email, password, { ...meta, redirect: toValue(redirectTo) })
 
     if (!createdUser) throw new Error('Could not create user.')
 
