@@ -2,10 +2,12 @@
 import type { ButtonProps } from '@nuxt/ui'
 import type { NuxtLinkProps } from '#app'
 import { useAuth, useSiteI18n } from '#imports'
+import { allows } from 'nuxt-authorization/utils'
+import { isAdmin } from '#shared/abilities/admin'
 
 const route = useRoute()
 const { t, localePath } = useSiteI18n()
-const { signOut } = useAuth()
+const { signOut, currentUser } = useAuth()
 const { clearCart } = useShoppingCart()
 
 const onSignOut = async () => {
@@ -20,19 +22,31 @@ const onSignOut = async () => {
   await navigateTo(localePath('/'))
 }
 
-const items = computed<ButtonProps[]>(() => ([
-  {
-    label: t('auth.dashboard'),
-    to: localePath('/account'),
-    icon: 'i-lucide-layout-dashboard',
-  },
-  {
-    label: t('auth.signOut'),
-    icon: 'i-lucide-log-out',
-    to: '#',
-    onClick: onSignOut,
-  },
-]))
+const { data: items } = await useAsyncData('account-menu-items', async () => {
+  const baseItems: ButtonProps[] = [
+    {
+      label: t('auth.dashboard'),
+      to: localePath('/account'),
+      icon: 'i-lucide-layout-dashboard',
+    },
+    {
+      label: t('auth.signOut'),
+      icon: 'i-lucide-log-out',
+      to: '#',
+      onClick: onSignOut,
+    },
+  ]
+
+  if (await allows(isAdmin, currentUser.value)) {
+    baseItems.unshift({
+      label: 'Admin',
+      to: localePath('/admin'),
+      icon: 'i-lucide-shield-question-mark',
+    })
+  }
+
+  return baseItems
+})
 </script>
 
 <template>
