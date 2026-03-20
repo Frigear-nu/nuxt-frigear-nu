@@ -6,10 +6,10 @@ export const useCustomAuth = () => {
 
   const currentUser = computed(() => session.value?.user)
 
-  const sendMagicLink = async (email: string) => {
+  const sendMagicLink = async (email: string, redirect?: string) => {
     const result = await $fetch(`/api/auth/magic-link`, {
       method: 'POST',
-      body: { email },
+      body: { email, redirect },
     })
     if (!result) throw new Error('Could not send magic link.')
 
@@ -37,18 +37,18 @@ export const useCustomAuth = () => {
     }
   }
 
-  const signInWithPassword = async (email: string, password: string) => {
+  const signInWithPassword = async (email: string, password: string, redirect?: string) => {
     await $fetch('/api/auth/sign-in', {
       method: 'POST',
-      body: { email, password },
+      body: { email, password, redirect },
     })
     await refreshSession()
     return true
   }
-  const signUpWithPassword = async (name: string, email: string, password: string) => {
+  const signUpWithPassword = async (name: string, email: string, password: string, redirect?: string) => {
     return $fetch('/api/auth/sign-up', {
       method: 'POST',
-      body: { name, email, password },
+      body: { name, email, password, redirect },
     })
   }
 
