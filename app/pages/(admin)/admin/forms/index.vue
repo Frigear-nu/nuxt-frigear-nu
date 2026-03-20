@@ -7,13 +7,16 @@ const [{ data: forms }] = await Promise.all([
 <template>
   <div>
     <UContainer class="flex flex-col gap-8">
-      <UPageHeader title="Forms" />
+      <UPageHeader
+        title="Forms"
+        :links="[{ label: 'Admin', to: $localePath('/admin'), icon: 'i-lucide-home' }]"
+      />
       <UPageGrid v-if="forms && forms.length">
         <UPageCard
           v-for="form in forms"
           :key="form.id"
           :title="form.name"
-          :description="form.description"
+          :description="form.title && $t(form.title)"
           :to="`/admin/forms${form.path}`"
         />
       </UPageGrid>
