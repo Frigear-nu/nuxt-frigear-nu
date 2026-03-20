@@ -1,7 +1,6 @@
 import { CollectionFormSchema } from './shared/schema/content-form'
 import { defineCollection, defineContentConfig, property } from '@nuxt/content'
 import { z } from 'zod/v4'
-import { useAppConfig } from '#imports'
 
 // const membership = z.enum(['annual', 'quarterly', 'monthly', 'free']).or(z.string())
 const translated = z.string().or(z.record(z.string(), z.string()))
