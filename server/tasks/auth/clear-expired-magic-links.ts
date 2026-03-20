@@ -6,7 +6,7 @@ export default defineTask({
     await db.delete(schema.magicLinks)
       .where(and(
         lte(schema.magicLinks.expiresAt, new Date()),
-        lte(schema.magicLinks.usedAt, subDays(new Date(), 2)),
+        lte(schema.magicLinks.expiresAt, subDays(new Date(), 2)),
       ))
 
     return { result: true }
