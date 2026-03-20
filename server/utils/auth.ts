@@ -5,7 +5,7 @@ import { ServerError, UnauthenticatedError } from '@nitrotool/errors'
 import { addMinutes } from 'date-fns'
 import { withQuery } from 'ufo'
 import { db, schema } from '@nuxthub/db'
-import type { MagicLinks } from '@nuxthub/db/schema'
+import type { MagicLinks, Users } from '@nuxthub/db/schema'
 
 export const createSafeId = () => createId()
 
@@ -27,6 +27,7 @@ export const mapUserToSession = async (user: Users) => {
     id: user.id,
     name: user.name,
     email: user.email,
+    role: user.role,
     emailVerifiedAt: user.emailVerifiedAt,
     avatarUrl: user.avatarUrl,
     // Supabase: these will at some point go away.
