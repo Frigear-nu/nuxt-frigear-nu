@@ -17,10 +17,10 @@ export const useAuth = () => {
     return !!currentUser.value
   })
 
-  const signInWithMagicLink = async (email: string) => {
+  const signInWithMagicLink = async (email: string, redirect?: string) => {
     switch (authMode.value) {
       case 'custom':
-        return customAuth.sendMagicLink(email)
+        return customAuth.sendMagicLink(email, redirect)
       default:
         throw new Error(`Auth mode ${authMode.value} not supported.`)
     }
@@ -39,18 +39,18 @@ export const useAuth = () => {
     }
   }
 
-  const signInWithPassword = async (email: string, password: string) => {
+  const signInWithPassword = async (email: string, password: string, redirect?: string) => {
     switch (authMode.value) {
       case 'custom':
-        return customAuth.signInWithPassword(email, password)
+        return customAuth.signInWithPassword(email, password, redirect)
       default:
         throw new Error(`Auth mode ${authMode.value} not supported.`)
     }
   }
-  const signUpWithPassword = async (email: string, password: string, meta?: { name?: string }) => {
+  const signUpWithPassword = async (email: string, password: string, meta?: { name?: string, redirect?: string }) => {
     switch (authMode.value) {
       case 'custom':
-        return customAuth.signUpWithPassword(meta?.name || email, email, password)
+        return customAuth.signUpWithPassword(meta?.name || email, email, password, meta?.redirect)
       default:
         throw new Error(`Auth mode ${authMode.value} not supported.`)
     }
