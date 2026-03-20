@@ -1,5 +1,5 @@
 import { CollectionFormSchema } from './shared/schema/content-form'
-import { defineCollection, defineContentConfig } from '@nuxt/content'
+import { defineCollection, defineContentConfig, property } from '@nuxt/content'
 import { z } from 'zod/v4'
 
 // const membership = z.enum(['annual', 'quarterly', 'monthly', 'free']).or(z.string())
@@ -11,17 +11,33 @@ const image = z.union([
   }),
   z.string(),
 ])
+const color = z.enum([
+  'primary',
+  'secondary',
+  'tertiary',
+  'info',
+  'neutral',
+  'success',
+  'warning',
+  'error',
+])
+
+const icon = property(z.string()).editor({ input: 'icon' })
 
 const requirement = z.union([
   z.object({
     type: z.literal('membership'),
     method: z.literal('any').default('any'),
+    icon: icon.optional(),
+    color: color.optional(),
     title: translated,
   }),
   z.object({
     type: z.literal('membership'),
     method: z.literal('one_of'),
     priceIds: z.array(z.string()),
+    icon: icon.optional(),
+    color: color.optional(),
     title: translated,
   }),
 ])

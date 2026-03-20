@@ -1,8 +1,4 @@
 <script lang="ts" setup>
-definePageMeta({
-  header: false,
-})
-
 const { user } = useUserSession()
 
 watch(user, () => {
