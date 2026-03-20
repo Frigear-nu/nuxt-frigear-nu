@@ -3,7 +3,7 @@ import type { PageCardProps } from '@nuxt/ui'
 import { useSiteI18n } from '#imports'
 
 const { t, localePath } = useSiteI18n()
-const { isLoggedIn, currentUser } = useAuth()
+const { currentUser } = useAuth()
 
 const cards = computed<PageCardProps[]>(() => [
   {

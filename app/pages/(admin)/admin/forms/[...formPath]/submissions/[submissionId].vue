@@ -1,3 +1,5 @@
 <template>
-  THE FORM SUBMISSION
+  <div>
+    THE FORM SUBMISSION
+  </div>
 </template>
