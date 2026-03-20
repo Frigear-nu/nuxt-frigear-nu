@@ -2,13 +2,59 @@
 import type { ButtonProps, PageCardProps } from '@nuxt/ui'
 import { useSiteI18n } from '#imports'
 import { useUserMemberships } from '~/store/queries/user'
+import { isAdmin } from '#shared/abilities/admin'
+import { allows } from 'nuxt-authorization/utils'
 
 const { t, localePath } = useSiteI18n()
-const { isLoggedIn } = useAuth()
+const { isLoggedIn, currentUser } = useAuth()
 const { data: userMemberships } = useUserMemberships({ isEnabled: isLoggedIn })
 const { data: cartItems, hasAnyItems: hasAnyCartItems } = useShoppingCart()
 
-// Membership
+const { data: cards } = await useAsyncData('account-navigation', async () => {
+  const baseTiles: PageCardProps[] = [
+    {
+      title: t('account.tickets.title'),
+      description: t('account.tickets.description'),
+      icon: 'i-lucide-tickets',
+      to: localePath('/account/tickets'),
+      variant: 'subtle',
+    },
+    {
+      title: t('account.membership.title'),
+      description: t('account.membership.description'),
+      icon: 'i-lucide-credit-card',
+      to: localePath('/account/membership'),
+      variant: 'subtle',
+    },
+    {
+      title: t('account.profile.title'),
+      description: t('account.profile.description'),
+      icon: 'i-lucide-user-round-pen',
+      to: localePath('/account/profile'),
+      variant: 'subtle',
+    },
+    {
+      title: t('account.security.title'),
+      description: t('account.security.description'),
+      icon: 'i-lucide-shield-user',
+      to: localePath('/account/security'),
+      variant: 'subtle',
+    },
+  ]
+
+  if (await allows(isAdmin, currentUser.value)) {
+    baseTiles.unshift({
+      title: 'Admin Area',
+      description: 'Since it seems you\'ve got special skills, you can have this cookie.',
+      icon: 'i-lucide-shield-question-mark',
+      to: localePath('/admin'),
+      variant: 'subtle',
+    })
+  }
+
+  return baseTiles
+})
+
 const membershipActions = ref<ButtonProps[]>([
   {
     label: 'Continue setup',
@@ -19,37 +65,6 @@ const membershipActions = ref<ButtonProps[]>([
     },
   },
 ])
-
-const cards = computed<PageCardProps[]>(() => ([
-  {
-    title: t('account.tickets.title'),
-    description: t('account.tickets.description'),
-    icon: 'i-lucide-tickets',
-    to: localePath('/account/tickets'),
-    variant: 'subtle',
-  },
-  {
-    title: t('account.membership.title'),
-    description: t('account.membership.description'),
-    icon: 'i-lucide-credit-card',
-    to: localePath('/account/membership'),
-    variant: 'subtle',
-  },
-  {
-    title: t('account.profile.title'),
-    description: t('account.profile.description'),
-    icon: 'i-lucide-user-round-pen',
-    to: localePath('/account/profile'),
-    variant: 'subtle',
-  },
-  {
-    title: t('account.security.title'),
-    description: t('account.security.description'),
-    icon: 'i-lucide-shield-user',
-    to: localePath('/account/security'),
-    variant: 'subtle',
-  },
-]))
 </script>
 
 <template>
