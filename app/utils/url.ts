@@ -1,7 +1,7 @@
 export const withBaseUrl = (path?: string) => {
   const url = useRequestURL()
 
-  if (!path) return url.origin // ← just origin when no path given
+  if (!path) return url.origin
 
   const [pathname, query] = path.split('?')
   url.pathname = pathname || url.pathname
