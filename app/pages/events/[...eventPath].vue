@@ -334,17 +334,17 @@ onMounted(() => {
                 </UFieldGroup>
               </NuxtLink>
             </div>
-          </div>
-          <div>
-            <UBadge
-              v-for="(req, index) in eventRequirements"
-              :key="index"
-              trailing-icon="i-lucide-triangle-alert"
-              color="warning"
-              variant="subtle"
-            >
-              {{ translatedProperty(req.title || req.type) }}
-            </UBadge>
+            <div>
+              <UBadge
+                v-for="(req, index) in eventRequirements"
+                :key="index"
+                :trailing-icon="req?.icon || 'i-lucide-triangle-alert'"
+                :color="req?.color || 'warning'"
+                variant="soft"
+              >
+                {{ translatedProperty(req.title || req.type) }}
+              </UBadge>
+            </div>
           </div>
           <div class="flex md:hidden mt-4">
             <UButton

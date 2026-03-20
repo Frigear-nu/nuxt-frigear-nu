@@ -1,16 +1,27 @@
 import type { EventsCollectionItem } from '@nuxt/content'
 
+type Requirement = EventsCollectionItem['tickets'][string]['requirements'][number]
+
+type CheckResult = {
+  requirement: Requirement
+  pass: boolean
+}
+
 export const checkTicketRequirements = (
   ticket: EventsCollectionItem['tickets'][string],
   userMemberships: { priceId: string }[],
 ) => {
   const checks = [...ticket?.requirements || []].map((requirement: EventsCollectionItem['tickets'][string]['requirements'][number]) => {
     if (requirement.type === 'membership') {
-      return checkTicketMembershipRequirement(requirement, userMemberships)
+      const { pass } = checkTicketMembershipRequirement(requirement, userMemberships)
+      return {
+        requirement,
+        pass,
+      }
     }
 
     return {
-      ...requirement,
+      requirement,
       pass: true,
     }
   })
@@ -26,11 +37,11 @@ export const checkTicketRequirements = (
 }
 
 export const checkTicketMembershipRequirement = (
-  requirement: EventsCollectionItem['tickets'][string]['requirements'][number],
+  requirement: Requirement,
   userMemberships: { priceId: string }[],
-) => {
+): CheckResult => {
   return {
-    ...requirement,
+    requirement,
     pass: userMemberships.some((m) => {
       if (requirement.method === 'any') {
         return userMemberships.length > 0
@@ -43,4 +54,8 @@ export const checkTicketMembershipRequirement = (
       return true
     }),
   }
+}
+
+export const getEventRequirementIcon = () => {
+
 }
