@@ -6,7 +6,7 @@ export default defineTask({
     await db.delete(schema.passwordResets)
       .where(and(
         lte(schema.passwordResets.expiresAt, new Date()),
-        lte(schema.passwordResets.usedAt, subDays(new Date(), 2)),
+        lte(schema.passwordResets.expiresAt, subDays(new Date(), 2)),
       ))
 
     return { result: true }
