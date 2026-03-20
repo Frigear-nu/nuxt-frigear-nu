@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const createNameSchema = () => z.string().min(2).max(255)
 
-export const createEmailSchema = () => z.string().trim().email()
+export const createEmailSchema = () => z.string().trim().email().toLowerCase()
 
 export const createPhoneSchema = () => z
   .preprocess(
