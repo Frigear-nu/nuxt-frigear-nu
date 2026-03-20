@@ -1,7 +1,9 @@
 import { useValidatedBody } from 'h3-zod'
 import { signInWithPasswordSchema } from '#shared/schema/auth'
-import { UnauthenticatedError } from '@nitrotool/errors'
+import { ServerError, UnauthenticatedError } from '@nitrotool/errors'
 import type { Users } from '@nuxthub/db/schema'
+import { db, schema } from '@nuxthub/db'
+import { eq } from 'drizzle-orm'
 
 export default defineEventHandler(async (event) => {
   const { user } = await getUserSession(event)
@@ -11,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
   const { email, password, redirect } = await useValidatedBody(event, signInWithPasswordSchema)
 
-  const matchedUser = await findUserByEmail(email)
+  let matchedUser = await findUserByEmail(email)
 
   if (!matchedUser) throw UnauthenticatedError('errors.auth.signIn.failed')
 
@@ -23,6 +25,17 @@ export default defineEventHandler(async (event) => {
 
   if (!await verifyPassword(matchedUser.passwordHash, password)) {
     throw UnauthenticatedError('errors.auth.signIn.failed')
+  }
+
+  // Ensures we track last login...
+  [matchedUser] = await db
+    .update(schema.users)
+    .set({ lastLoginAt: new Date() })
+    .where(eq(schema.users.id, matchedUser.id))
+    .returning()
+
+  if (!matchedUser) {
+    throw ServerError('Failed to set lastLoginAt. Please try again later.')
   }
 
   await ensureStripeCustomer(matchedUser)

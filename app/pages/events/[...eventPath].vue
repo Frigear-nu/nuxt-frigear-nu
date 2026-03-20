@@ -334,17 +334,26 @@ onMounted(() => {
                 </UFieldGroup>
               </NuxtLink>
             </div>
+            <div>
+              <UBadge
+                v-for="(req, index) in eventRequirements"
+                :key="index"
+                :trailing-icon="req?.icon || 'i-lucide-triangle-alert'"
+                :color="req?.color || 'warning'"
+                variant="soft"
+              >
+                {{ translatedProperty(req.title || req.type) }}
+              </UBadge>
+            </div>
           </div>
-          <div>
-            <UBadge
-              v-for="(req, index) in eventRequirements"
-              :key="index"
-              trailing-icon="i-lucide-triangle-alert"
-              color="warning"
-              variant="subtle"
-            >
-              {{ translatedProperty(req.title || req.type) }}
-            </UBadge>
+          <div class="flex md:hidden mt-4">
+            <UButton
+              href="#tickets"
+              size="lg"
+              color="neutral"
+              trailing-icon="i-lucide-ticket"
+              :label="$t('events.detail.tickets.view')"
+            />
           </div>
         </div>
       </UPageHeader>
@@ -368,6 +377,7 @@ onMounted(() => {
 
           <div
             v-if="hasAnyTickets"
+            id="tickets"
             class="w-full md:w-1/2 lg:w-1/3 flex flex-col gap-4"
           >
             <h2 class="text-2xl font-bold block lg:hidden">

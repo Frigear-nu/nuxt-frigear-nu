@@ -33,6 +33,7 @@ export default defineOAuthGoogleEventHandler({
     }
 
     if (!dbUser) throw ServerError('Could find user.')
+    await ensureStripeCustomer(dbUser)
 
     return authenticateUser(event, dbUser, await getDefaultRedirectForUser(event, dbUser))
   },

@@ -15,6 +15,7 @@ const $emits = defineEmits<{
   (e: 'development', magicLink: unknown): void
 }>()
 
+const route = useRoute()
 const { signInWithMagicLink, signUpWithMagicLink } = useAuth()
 const form = useTemplateRef('form')
 const emailValue = defineModel<string | undefined>('email')
@@ -36,6 +37,17 @@ watch(emailValue, (em) => {
   state.email = em
 })
 
+const redirectTo = computed<string | undefined>(() => {
+  const redirect = route.query.redirect as string | undefined
+  if (!redirect) return undefined
+
+  if (!redirect || !redirect.startsWith('/') || redirect.startsWith('//')) {
+    return undefined
+  }
+
+  return redirect
+})
+
 const handleMagicLink = (email: string, magicLink: { local?: boolean } | unknown) => {
   if (import.meta.dev) console.log({ magicLink })
   if (magicLink && typeof magicLink === 'object' && 'local' in magicLink && magicLink?.local) {
@@ -49,14 +61,14 @@ async function onSignIn(payload: FormSubmitEvent<SignInWithMagicLinkSchema>) {
   const email = payload.data.email
   $emits('loading')
 
-  const magicLink = await signInWithMagicLink(email)
+  const magicLink = await signInWithMagicLink(email, toValue(redirectTo))
   handleMagicLink(email, magicLink)
 }
 
 async function onSignUp(payload: FormSubmitEvent<SignUpWithMagicLinkSchema>) {
   const { name, email } = payload.data
   $emits('loading')
-  const magicLink = await signUpWithMagicLink({ name, email })
+  const magicLink = await signUpWithMagicLink({ name, email, redirect: toValue(redirectTo) })
   handleMagicLink(email, magicLink)
 }
 

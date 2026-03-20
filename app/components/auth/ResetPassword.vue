@@ -6,7 +6,7 @@ import { useAuth, useToast, useSiteI18n } from '#imports'
 
 const searchParams = useUrlSearchParams<{ code?: string }>('history')
 onMounted(() => {
-  if (!searchParams.token) {
+  if (!searchParams.code) {
     throw createError({
       statusCode: 404,
     })
