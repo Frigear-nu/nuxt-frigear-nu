@@ -10,7 +10,7 @@ const cards = computed<PageCardProps[]>(() => [
     title: 'Events',
     description: 'See all events, and their participants etc.',
     icon: 'i-lucide-calendars',
-    to: localePath('/admin/event'),
+    to: localePath('/admin/events'),
     variant: 'subtle',
   },
   {

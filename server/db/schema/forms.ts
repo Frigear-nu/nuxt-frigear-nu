@@ -17,3 +17,5 @@ export const formSubmissions = sqliteTable('form_submissions', {
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
   updatedAt: integer('updated_at', { mode: 'timestamp' }).$onUpdateFn(() => new Date()),
 })
+
+export type FormSubmission = typeof formSubmissions.$inferSelect
