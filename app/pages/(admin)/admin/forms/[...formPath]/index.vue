@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type { PageCardProps } from '@nuxt/ui'
 
+import useFormAsAdmin from '~/composables/admin/useFormAsAdmin'
 import { withLeadingSlash } from 'ufo'
 import { upperFirst } from 'scule'
-import useFormAsAdmin from '~/composables/admin/useFormAsAdmin'
 
 const { localePath } = useSiteI18n()
 const { data: form } = await useFormAsAdmin()
