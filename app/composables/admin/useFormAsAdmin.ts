@@ -1,5 +1,6 @@
 import type { FormCollectionItem } from '@nuxt/content'
 import { withLeadingSlash } from 'ufo'
+import { NotFoundError } from '@nitrotool/errors'
 
 const useFormAsAdmin = () => {
   const route = useRoute()
@@ -9,13 +10,12 @@ const useFormAsAdmin = () => {
     const form = await queryCollection('forms').path(withLeadingSlash(toValue(formPath))).first()
 
     if (!form) {
-      throw createError({
-        status: 404,
-        message: 'Form not found',
-      })
+      throw NotFoundError()
     }
 
     return form
+  }, {
+    watch: [formPath, () => route.fullPath],
   })
 }
 
