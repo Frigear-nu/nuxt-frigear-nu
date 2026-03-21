@@ -85,7 +85,7 @@ const headerLinks = computed<ButtonProps[]>(() => {
               :key="`${step.id}:${field.name}`"
             >
               <div
-                v-if="index < 12"
+                v-if="index < 12 && submission.data[field.name] !== undefined"
                 class="flex flex-col gap-2 break-all"
               >
                 <div class="text-md font-bold">
