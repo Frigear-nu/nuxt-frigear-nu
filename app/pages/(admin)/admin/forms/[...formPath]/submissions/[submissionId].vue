@@ -95,7 +95,10 @@ const headerLinks = computed<ButtonProps[]>(() => {
                   <div v-if="['text'].includes(field.type)">
                     {{ submission.data[field.name] }}
                   </div>
-                  <div v-else-if="field.type === 'textarea'">
+                  <div
+                    v-else-if="field.type === 'textarea'"
+                    class="whitespace-pre-wrap"
+                  >
                     {{ submission.data[field.name] }}
                   </div>
                   <div
