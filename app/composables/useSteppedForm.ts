@@ -10,6 +10,7 @@ export const useSteppedForm = <const TSteps extends FormStep[]>(
 
   const currentStepIndex = ref(0)
 
+  const allSteps = computed(() => form.steps)
   const currentStep = computed(() => form.steps[currentStepIndex.value])
   const currentStepId = computed(() => currentStep.value?.id)
   const isFirstStep = computed(() => currentStepIndex.value === 0)
@@ -60,6 +61,7 @@ export const useSteppedForm = <const TSteps extends FormStep[]>(
   }
 
   return {
+    allSteps,
     state,
     isSubmitting,
     currentStep,
