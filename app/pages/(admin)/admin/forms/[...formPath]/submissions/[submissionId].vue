@@ -73,26 +73,33 @@ const headerLinks = computed<ButtonProps[]>(() => {
         v-for="(step) in filteredSteps"
         :key="step.id"
         :title="step.labelKey ? $t(step.labelKey) : step.id"
+        :ui="{ title: 'text-xl' }"
       >
         <UPageList>
-          <div class="grid grid-cols-2 gap-4">
+          <div
+            v-if="submission && submission.data"
+            class="grid grid-cols-2 gap-4"
+          >
             <template
               v-for="(field, index) in deriveFieldsFromSchema(step.schema)"
               :key="`${step.id}:${field.name}`"
             >
               <div
-                v-if="index < 12"
-                class="flex flex-col gap-2"
+                v-if="index < 12 && submission.data[field.name] !== undefined"
+                class="flex flex-col gap-2 break-all"
               >
                 <div class="text-md font-bold">
                   {{ translatedFieldLabel(step.id, field.name) }}
                 </div>
-                <div>
+                <div class="border border-muted rounded-lg p-1">
                   <div v-if="['text'].includes(field.type)">
                     {{ submission.data[field.name] }}
                   </div>
-                  <div v-else-if="field.type === 'textarea'">
-                    <pre>{{ submission.data[field.name] }}</pre>
+                  <div
+                    v-else-if="field.type === 'textarea'"
+                    class="whitespace-pre-wrap"
+                  >
+                    {{ submission.data[field.name] }}
                   </div>
                   <div
                     v-else-if="field.type === 'number'"
