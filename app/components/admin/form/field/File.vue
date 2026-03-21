@@ -31,7 +31,7 @@ const detectType = (contentType: string) => {
 }
 
 const getMediaUrl = (path: string) => {
-  return withBaseUrl(`/api/forms/media${withLeadingSlash(path)}`)
+  return `/api/forms/media${withLeadingSlash(path)}`
 }
 
 const files = computed<BlobObject[]>(() => {
@@ -47,14 +47,28 @@ const files = computed<BlobObject[]>(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
+  <div
+    v-if="files && files.length > 0"
+    class="flex flex-col gap-2"
+  >
     <div
       v-for="media in files"
       :key="media.pathname"
     >
       <div v-if="media.type === 'image'">
         {{ media.pathname.split('/').pop() }}
-        <ProseImg :src="media.url" />
+        <UModal>
+          <img
+            :src="media.url"
+            alt="Image"
+          >
+          <template #body>
+            <img
+              :src="media.url"
+              alt="Image"
+            >
+          </template>
+        </UModal>
       </div>
       <div v-else-if="media.type === 'video'">
         <UModal>
@@ -69,15 +83,15 @@ const files = computed<BlobObject[]>(() => {
           </template>
         </UModal>
       </div>
-      <div v-else>
-        <UButton
-          icon="i-lucide-download"
-          :href="media.url"
-          download
-        >
-          <pre>{{ media.pathname.split('/').pop() }}</pre>
-        </UButton>
-      </div>
+      <UButton
+        icon="i-lucide-download"
+        :href="media.url"
+        size="sm"
+        variant="subtle"
+        download
+      >
+        <pre>{{ media.pathname.split('/').pop() }}</pre>
+      </UButton>
     </div>
   </div>
 </template>
