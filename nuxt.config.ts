@@ -187,6 +187,20 @@ export default defineNuxtConfig({
     },
     blob: true,
   },
+  vite: {
+    optimizeDeps: {
+      include: [
+        'date-fns',
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+        'zod/v4',
+        '@vueuse/core',
+        'zod',
+        '@internationalized/date',
+        'nuxt-authorization/utils',
+      ],
+    },
+  },
   i18n: {
     defaultLocale: 'da',
     strategy: 'prefix_except_default',
