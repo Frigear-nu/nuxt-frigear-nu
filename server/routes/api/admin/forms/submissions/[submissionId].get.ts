@@ -1,11 +1,11 @@
 import { authorize } from 'nuxt-authorization/utils'
-import { isAdmin } from '#shared/abilities/admin'
 import { db } from '@nuxthub/db'
 import { ClientError, NotFoundError } from '@nitrotool/errors'
+import { canViewFormSubmissions } from '#shared/abilities/forms'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
-  await authorize(isAdmin, user)
+  await authorize(canViewFormSubmissions, user)
 
   const submissionId = getRouterParam(event, 'submissionId')
 
