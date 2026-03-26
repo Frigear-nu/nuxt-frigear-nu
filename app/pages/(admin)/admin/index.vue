@@ -7,11 +7,11 @@ import { computedAsync } from '@vueuse/core'
 import { upperFirst } from 'scule'
 
 const { t, localePath } = useSiteI18n()
-const { currentUser } = useAuth()
+const { currentUser, currentUserRole } = useAuth()
 
 const pageHeaderDescription = computed(() => {
-  if (!currentUser.value) return undefined
-  return `Role: ${upperFirst(currentUser.value.role)}`
+  if (!currentUserRole.value) return undefined
+  return `Role: ${upperFirst(currentUserRole.value)}`
 })
 
 const cards = computedAsync<PageCardProps[]>(async () => {
