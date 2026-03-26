@@ -41,6 +41,7 @@ export default defineNuxtConfig({
         ],
       },
       prerender: {
+        routes: [],
         ignore: ['/da', '/en'],
         failOnError: false, // todo: this should be investigated.
         crawlLinks: false,
