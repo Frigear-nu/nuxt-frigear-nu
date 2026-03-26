@@ -1,12 +1,12 @@
-import { isAdmin } from '#shared/abilities/admin'
 import { authorize } from 'nuxt-authorization/utils'
 import { withLeadingSlash, withoutLeadingSlash } from 'ufo'
 import { NotFoundError } from '@nitrotool/errors'
 import { db } from '@nuxthub/db'
+import { canViewForms } from '#shared/abilities/forms'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
-  await authorize(isAdmin, user)
+  await authorize(canViewForms, user)
 
   const formPath = getRouterParam(event, 'formPath')
 

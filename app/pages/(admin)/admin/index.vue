@@ -1,33 +1,50 @@
 <script setup lang="ts">
 import type { PageCardProps } from '@nuxt/ui'
 import { useSiteI18n } from '#imports'
+import { allows } from 'nuxt-authorization/utils'
+import { canViewForms } from '#shared/abilities/forms'
+import { computedAsync } from '@vueuse/core'
+import { upperFirst } from 'scule'
 
 const { t, localePath } = useSiteI18n()
 const { currentUser } = useAuth()
 
-const cards = computed<PageCardProps[]>(() => [
-  {
-    title: 'Events',
-    description: 'See all events, and their participants etc.',
-    icon: 'i-lucide-calendars',
-    to: localePath('/admin/events'),
-    variant: 'subtle',
-  },
-  {
-    title: 'Forms',
-    description: 'See all forms available, and their submissions.',
-    icon: 'i-lucide-form',
-    to: localePath('/admin/forms'),
-    variant: 'subtle',
-  },
-])
+const pageHeaderDescription = computed(() => {
+  if (!currentUser.value) return undefined
+  return `Role: ${upperFirst(currentUser.value.role)}`
+})
+
+const cards = computedAsync<PageCardProps[]>(async () => {
+  const items: PageCardProps[] = [
+    {
+      title: 'Events',
+      description: 'See all events, and their participants etc.',
+      icon: 'i-lucide-calendars',
+      to: localePath('/admin/events'),
+      variant: 'subtle',
+    },
+  ]
+
+  if (currentUser.value && await allows(canViewForms, currentUser.value)) {
+    items.push({
+      title: 'Forms',
+      description: 'See all forms available, and their submissions.',
+      icon: 'i-lucide-form',
+      to: localePath('/admin/forms'),
+      variant: 'subtle',
+    })
+  }
+
+  return items
+})
 </script>
 
 <template>
   <div>
     <UContainer>
       <UPageHeader
-        title="Admin"
+        title="Admin Area"
+        :description="pageHeaderDescription"
       >
         <template #links>
           <div

@@ -3,7 +3,9 @@ import type { ButtonProps } from '@nuxt/ui'
 import type { NuxtLinkProps } from '#app'
 import { useAuth, useSiteI18n } from '#imports'
 import { allows } from 'nuxt-authorization/utils'
-import { isAdmin } from '#shared/abilities/admin'
+import { canViewAdminArea } from '#shared/abilities/admin'
+import { computedAsync } from '@vueuse/core'
+import { upperFirst } from 'scule'
 
 const route = useRoute()
 const { t, localePath } = useSiteI18n()
@@ -22,7 +24,7 @@ const onSignOut = async () => {
   await navigateTo(localePath('/'))
 }
 
-const { data: items } = await useAsyncData('account-menu-items', async () => {
+const items = computedAsync<ButtonProps[]>(async () => {
   const baseItems: ButtonProps[] = [
     {
       label: t('auth.dashboard'),
@@ -37,9 +39,9 @@ const { data: items } = await useAsyncData('account-menu-items', async () => {
     },
   ]
 
-  if (await allows(isAdmin, currentUser.value)) {
+  if (currentUser.value && await allows(canViewAdminArea, currentUser.value)) {
     baseItems.unshift({
-      label: 'Admin',
+      label: `${upperFirst(currentUser.value.role)} Area`,
       to: localePath('/admin'),
       icon: 'i-lucide-shield-question-mark',
     })

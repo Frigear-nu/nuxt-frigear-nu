@@ -68,7 +68,10 @@ const headerLinks = computed<ButtonProps[]>(() => {
       :title="submissionId"
       :links="headerLinks"
     />
-    <UPageList class="gap-4">
+    <UPageList
+      v-if="form && submission && submission.data"
+      class="gap-4"
+    >
       <UPageCard
         v-for="(step) in filteredSteps"
         :key="step.id"
