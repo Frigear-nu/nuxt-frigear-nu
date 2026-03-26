@@ -16,6 +16,17 @@ export default defineConfig({
           name: 'e2e',
           include: ['test/e2e/*.{test,spec}.ts'],
           environment: 'node',
+          environmentOptions: {
+            nuxt: {
+              overrides: {
+                vite: {
+                  build: {
+                    sourcemap: false,
+                  },
+                },
+              },
+            },
+          },
         },
       },
       await defineVitestProject({
@@ -26,5 +37,8 @@ export default defineConfig({
         },
       }),
     ],
+  },
+  build: {
+    sourcemap: false,
   },
 })

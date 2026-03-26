@@ -21,11 +21,14 @@ export default defineNuxtConfig({
     './modules/scs-i18n',
     'nuxt-qrcode',
     '@sentry/nuxt/module',
+    '@nuxt/test-utils/module',
     ...(import.meta.dev ? ['nuxt-component-meta'] : []),
-    ...(import.meta.test ? ['@nuxt/test-utils/module'] : []),
   ],
 
   $production: {
+    build: {
+      transpile: ['simple-content-site'],
+    },
     nitro: {
       scheduledTasks: {
         // at minute 0 every 2 hours
@@ -57,6 +60,43 @@ export default defineNuxtConfig({
       cloudflare: {
         baseURL: process.env.CLOUDFLARE_IMAGE_BASE_URL,
       },
+    },
+  },
+  $test: {
+    sourcemap: false,
+    nitro: {
+      rollupConfig: {
+        plugins: [], // override to remove vue() during tests
+      },
+      prerender: {
+        crawlLinks: false,
+        routes: [],
+        ignore: ['/'],
+      },
+    },
+    vite: {
+      build: {
+        sourcemap: false,
+      },
+      optimizeDeps: {
+        exclude: ['simple-content-site'],
+      },
+      plugins: [
+        {
+          name: 'fix-sourcemap-conflict',
+          enforce: 'pre',
+          transform(code, id) {
+            // Strip inline sourcemaps from the conflicting module
+            // so Rollup doesn't see two competing maps
+            if (id.includes('simple-content-site')) {
+              return {
+                code: code.replace(/\/\/# sourceMappingURL=.*$/m, ''),
+                map: null,
+              }
+            }
+          },
+        },
+      ],
     },
   },
 
@@ -266,16 +306,17 @@ export default defineNuxtConfig({
     },
   },
 
-  studio: {
-    dev: false,
-    repository: {
-      provider: 'github',
-      owner: 'Frigear-nu',
-      repo: 'nuxt-frigear-nu',
-      branch: process.env.STUDIO_GITHUB_BRANCH_NAME || 'main',
-      private: false,
-    },
-  },
+  studio: false,
+  // studio: {
+  //   dev: false,
+  //   repository: {
+  //     provider: 'github',
+  //     owner: 'Frigear-nu',
+  //     repo: 'nuxt-frigear-nu',
+  //     branch: process.env.STUDIO_GITHUB_BRANCH_NAME || 'main',
+  //     private: false,
+  //   },
+  // },
 
   zodI18n: {
     localeCodesMapping: {
