@@ -12,7 +12,25 @@ orientation: horizontal
 ---
 <!-- :nuxt-img{.rounded-full .p-4 .dark:bg-neutral-800 .bg-neutral-200 .w-fit .md:max-w-md.md:justify-self-end-safe.md:mr-12 :height="auto" :width="380" alt="Frigear FGR logo" format="webp" quality="70" src="/logo-with-rf-bg.jpg"} -->
 
-::hero-image-carousel{.md:justify-self-end-safe .md:mr-12 :images='[{"src":"/images/carousels/home/fgr-frontgear-2025-1.png","alt":"Frigear frivillige på festival"},{"src":"/images/carousels/home/fgr-frontgear-2025-2.png","alt":"Frigear bar og fællesskab"},{"src":"/images/carousels/home/fgr-frontgear-2025-3.png","alt":"Frigear event stemning"},{"src":"/images/carousels/home/fgr-frontgear-2025-4.png","alt":"Frigear projekt og kultur"}]'}
+::hero-image-carousel
+---
+class: md:justify-self-end-safe
+images:
+  - src: /images/carousels/home/arena-toilet.png
+    alt: Frigear frivillige på festivalområdet
+  - src: /images/carousels/home/container-lift-office-2.png
+    alt: Frigear container og kontorområde
+  - src: /images/carousels/home/fgr-frontgear-2025-3.png
+    alt: Frigear eventstemning 2025
+  - src: /images/carousels/home/fgr-frontgear-2025-5.png
+    alt: Frigear frivillige i frontgear 2025
+  - src: /images/carousels/home/fgr-frontgear-spots-2025-1.png
+    alt: Frigear spotområde 2025
+  - src: /images/carousels/home/fgr-sunset-from-tower.jpg
+    alt: Udsigt over festivalen ved solnedgang
+  - src: /images/carousels/home/jeppek-frigear-grill.png
+    alt: Frigear hygge ved grillen
+---
 ::
 
 #title
