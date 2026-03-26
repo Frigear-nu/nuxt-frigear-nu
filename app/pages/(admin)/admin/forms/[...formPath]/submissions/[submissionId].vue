@@ -13,12 +13,12 @@ import { deriveFieldsFromSchema } from '#shared/form'
 const route = useRoute()
 const { $api } = useNuxtApp()
 const { t } = useSiteI18n()
-const submissionId = computed(() => route.params.submissionId)
+const submissionId = computed(() => route.params.submissionId as string)
 const [{ data: form }, { data: submission }] = await Promise.all([
   useFormAsAdmin(),
   useAsyncData(() => `admin:forms:${route.path}:submission:${route.params.submissionId}`, async () => {
     return $api(`/api/admin/forms/submissions/${route.params.submissionId}`)
-  }, {watch: []}),
+  }, { watch: [submissionId, () => route.path] }),
 ])
 
 const steppedForm = computed<GenericSteppedForm<FormStep[]>>(() => {
