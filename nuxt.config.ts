@@ -40,6 +40,11 @@ export default defineNuxtConfig({
           'stripe:sync:subscriptions',
         ],
       },
+      prerender: {
+        routes: ['/'],
+        ignore: ['/da', '/en'],
+        failOnError: false, // todo: this should be investigated.
+      },
     },
 
     hub: {
