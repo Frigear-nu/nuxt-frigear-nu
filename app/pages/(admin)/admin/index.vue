@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PageCardProps } from '@nuxt/ui'
 import { useSiteI18n } from '#imports'
-import { allows, authorize } from 'nuxt-authorization/utils'
+import { allows } from 'nuxt-authorization/utils'
 import { canViewForms } from '#shared/abilities/forms'
 import { computedAsync } from '@vueuse/core'
 import { upperFirst } from 'scule'

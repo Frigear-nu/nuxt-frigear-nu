@@ -3,7 +3,7 @@ import type { ButtonProps } from '@nuxt/ui'
 import type { NuxtLinkProps } from '#app'
 import { useAuth, useSiteI18n } from '#imports'
 import { allows } from 'nuxt-authorization/utils'
-import { canViewAdminArea, isAdmin } from '#shared/abilities/admin'
+import { canViewAdminArea } from '#shared/abilities/admin'
 import { computedAsync } from '@vueuse/core'
 import { upperFirst } from 'scule'
 
