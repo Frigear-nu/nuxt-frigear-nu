@@ -1,0 +1,15 @@
+import { defineAbility } from 'nuxt-authorization/utils'
+import type { Users } from '@nuxthub/db/schema'
+
+const allowedRoles: Users['role'][] = ['admin', 'manager']
+export const canViewForms = defineAbility((user: Users) => {
+  return allowedRoles.includes(user.role)
+})
+
+export const canViewFormSubmissions = defineAbility((user: Users) => {
+  return allowedRoles.includes(user.role)
+})
+
+export const canDeleteFormSubmissions = defineAbility((user: Users) => {
+  return allowedRoles.includes(user.role)
+})

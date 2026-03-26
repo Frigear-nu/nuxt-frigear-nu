@@ -2,15 +2,17 @@
 import type { ButtonProps, PageCardProps } from '@nuxt/ui'
 import { useSiteI18n } from '#imports'
 import { useUserMemberships } from '~/store/queries/user'
-import { isAdmin } from '#shared/abilities/admin'
+import { canViewAdminArea } from '#shared/abilities/admin'
 import { allows } from 'nuxt-authorization/utils'
+import { computedAsync } from '@vueuse/core'
+import { upperFirst } from 'scule'
 
 const { t, localePath } = useSiteI18n()
 const { isLoggedIn, currentUser } = useAuth()
 const { data: userMemberships } = useUserMemberships({ isEnabled: isLoggedIn })
 const { data: cartItems, hasAnyItems: hasAnyCartItems } = useShoppingCart()
 
-const { data: cards } = await useAsyncData('account-navigation', async () => {
+const cards = computedAsync<PageCardProps[]>(async () => {
   const baseTiles: PageCardProps[] = [
     {
       title: t('account.tickets.title'),
@@ -42,9 +44,9 @@ const { data: cards } = await useAsyncData('account-navigation', async () => {
     },
   ]
 
-  if (await allows(isAdmin, currentUser.value)) {
+  if (currentUser.value && await allows(canViewAdminArea, currentUser.value)) {
     baseTiles.unshift({
-      title: 'Admin Area',
+      title: `${upperFirst(currentUser.value.role)} Area`,
       description: 'Since it seems you\'ve got special skills, you can have this cookie.',
       icon: 'i-lucide-shield-question-mark',
       to: localePath('/admin'),
