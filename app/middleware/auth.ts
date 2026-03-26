@@ -16,7 +16,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return
   }
 
-  if (isAdminRoute) {
+  if (user.value && isAdminRoute) {
     // TODO: Phase out static admin flags
     const admins = useRuntimeConfig()?.acl?.admins?.split(',') ?? []
     const isAdmin = loggedIn.value && !!user.value?.email && admins.includes(user.value.email)
@@ -25,6 +25,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
       return
     }
   }
+
+  //
   return navigateTo({
     path: '/sign-in',
     query: { redirect: to.path },
