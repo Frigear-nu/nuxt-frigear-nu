@@ -47,7 +47,7 @@ const cards = computedAsync<PageCardProps[]>(async () => {
   if (currentUser.value && await allows(canViewAdminArea, currentUser.value)) {
     baseTiles.unshift({
       title: `${upperFirst(currentUser.value.role)} Area`,
-      description: 'Since it seems you\'ve got special skills, you can have this cookie.',
+      description: `Since you've got special ${currentUser.value.role || ''} skills, you can have this cookie 🍪`,
       icon: 'i-lucide-shield-question-mark',
       to: localePath('/admin'),
       variant: 'subtle',
