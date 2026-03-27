@@ -67,6 +67,7 @@ export default defineNuxtConfig({
 
   $test: {
     studio: false,
+    sourcemap: false,
   },
 
   devtools: {
