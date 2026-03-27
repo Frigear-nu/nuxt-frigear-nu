@@ -19,6 +19,7 @@
     "db:reset": "pnpm run db:drop-all && pnpm run db:migrate",
     "test:nuxt": "npx vitest --project nuxt",
     "test:unit": "npx vitest --project unit",
+    "test:e2e": "npx vitest --project e2e",
     "test:watch": "npx vitest --watch",
     "test": "npx vitest"
   },
