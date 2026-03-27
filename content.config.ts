@@ -80,6 +80,9 @@ export default defineContentConfig({
         defaultTicket: z.string().optional(),
         requirements: z.array(requirement).optional(),
         variables: variables.optional(),
+        ticketConfig: z.object({
+          cutoffDate: z.date().optional(),
+        }).optional(),
         tickets: z.record(z.enum(['default']).or(z.string()), z.object({
           name: translated,
           description: translated.optional(),

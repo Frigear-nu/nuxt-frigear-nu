@@ -107,7 +107,7 @@
     },
     "membership": {
       "subscribe": "Become member",
-      "feeIncluded":"*Payment fees are included in amount"
+      "feeIncluded": "*Payment fees are included in amount"
     }
   },
   "account": {
@@ -274,7 +274,8 @@
             "title": "Payment canceled!",
             "description": "Your payment was canceled. You can try again."
           }
-        }
+        },
+        "salesEnded": "Ticket sales have ended for this event."
       }
     }
   },

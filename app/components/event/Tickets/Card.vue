@@ -120,12 +120,21 @@ router.afterEach((to, from) => {
   }
 })
 
+const ticketSalesEnded = computed(() => {
+  const cutoffDate = props.event.ticketConfig?.cutoffDate ?? props.event.end ?? props.event.start
+  return !!cutoffDate && new Date() > new Date(cutoffDate)
+})
+
 const canPurchase = computed(() => {
   if (requiresAtLeastOneProduct.value && !selectedProductAddons.value) {
     return false
   }
 
   if (selectedTicket.value && selectedTicket.value?.requirements?.length > 0 && !ticketRequirementCheck.value.success) {
+    return false
+  }
+
+  if (ticketSalesEnded.value) {
     return false
   }
 
@@ -301,8 +310,15 @@ const onPurchase = () => {
       <USeparator />
     </div>
     <div class="flex flex-col gap-2">
+      <UAlert
+        v-if="ticketSalesEnded"
+        :variant="$colorMode.value === 'dark' ? 'outline' : 'subtle'"
+        icon="i-lucide-calendar-x"
+        color="error"
+        :description="$t('events.detail.tickets.salesEnded')"
+      />
       <UButton
-        v-if="loggedIn"
+        v-if="loggedIn && !ticketSalesEnded"
         type="button"
         trailing-icon="i-lucide-shopping-cart"
         class="w-full justify-center"
@@ -315,7 +331,7 @@ const onPurchase = () => {
         {{ $t('events.detail.tickets.goToCheckout') }}
       </UButton>
       <UButton
-        v-else
+        v-else-if="!ticketSalesEnded"
         trailing-icon="i-lucide-arrow-right"
         :to="localePath(`/sign-in?redirect=${$route.fullPath}`)"
         class="w-full justify-center"

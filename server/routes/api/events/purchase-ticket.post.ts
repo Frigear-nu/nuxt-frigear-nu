@@ -40,6 +40,16 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  // Check that the ticket cutoff date has not passed.
+  // The cutoff defaults to the event end date, then falls back to the start date.
+  const cutoffDate = dbEvent.ticketConfig?.cutoffDate ?? dbEvent.end ?? dbEvent.start
+  if (cutoffDate && new Date() > new Date(cutoffDate)) {
+    throw createError({
+      status: 400,
+      message: 'Ticket sales have ended for this event',
+    })
+  }
+
   const userWithStripeCustomers = await db.query.users.findFirst({
     where: (users, { eq }) => eq(users.id, userId),
     with: {
