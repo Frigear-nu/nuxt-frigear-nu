@@ -35,30 +35,18 @@ const headerLinks = computed<ButtonProps[]>(() => [
   },
 ])
 
-const submissionCardRefs = ref<(HTMLElement | null)[]>([])
-const setSubmissionRef = (el: ComponentPublicInstance | HTMLElement | null, index: number) => {
-  submissionCardRefs.value[index] = el
-    ? ((el as ComponentPublicInstance).$el ?? (el as HTMLElement))
-    : null
+const submissionContentRefs = ref<(InstanceType<typeof AdminFormSubmissionContent> | null)[]>([])
+const setSubmissionRef = (el: ComponentPublicInstance | null, index: number) => {
+  submissionContentRefs.value[index] = el as InstanceType<typeof AdminFormSubmissionContent> | null
 }
 
 const exportAllAsPdf = async () => {
   if (!submissions.value?.length) return
   for (const [index, submission] of submissions.value.entries()) {
-    const element = submissionCardRefs.value[index]
-    if (!element) continue
-    await exportToPDF(`submission-${submission.id}.pdf`, element)
+    const el = submissionContentRefs.value[index]?.$el
+    if (!el) continue
+    await exportToPDF(`submission-${submission.id}.pdf`, el)
   }
-}
-
-const getPreview = (submission: typeof submissions.value[0]) => {
-  if (submission.data && typeof submission.data === 'object') {
-    const { files: _, ...data } = submission.data
-    return Object.values(data).map(v => typeof v === 'object' ? JSON.stringify(v) : v)
-      .slice(0, 3)
-  }
-
-  return []
 }
 </script>
 
@@ -72,21 +60,15 @@ const getPreview = (submission: typeof submissions.value[0]) => {
       <UPageCard
         v-for="(submission, index) in submissions"
         :key="submission.id"
-        :ref="(el) => setSubmissionRef(el, index)"
         :title="submission.id"
         :to="`/admin/forms${withLeadingSlash(form.path)}/submissions/${submission.id}`"
       >
-        <template #description>
-          <b>Preview:</b><br>
-          <div class="flex flex-col gap-0">
-            <div
-              v-for="item in getPreview(submission)"
-              :key="item"
-            >
-              {{ item }}
-            </div>
-          </div>
-        </template>
+        <AdminFormSubmissionContent
+          v-if="form"
+          :ref="(el) => setSubmissionRef(el as ComponentPublicInstance | null, index)"
+          :form="form"
+          :submission="submission"
+        />
       </UPageCard>
     </UPageList>
   </UContainer>
