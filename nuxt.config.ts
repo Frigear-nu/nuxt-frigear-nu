@@ -258,6 +258,12 @@ export default defineNuxtConfig({
   resend: {
     apiKey: process.env.NUXT_RESEND_API_KEY!,
   },
+
+  scs: {
+    experimental: {
+      prerender: false,
+    },
+  },
   sentry: {
     authToken: process.env.NUXT_SENTRY_AUTH_TOKEN || process.env.SENTRY_AUTH_TOKEN || '',
     org: 'not-in-use-in-bugsink',
