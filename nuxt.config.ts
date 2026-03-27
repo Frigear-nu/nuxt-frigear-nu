@@ -67,6 +67,14 @@ export default defineNuxtConfig({
 
   $test: {
     runtimeConfig: {
+      content: {
+        integrityCheck: true,
+      },
+      hub: {
+        db: {
+          applyMigrationsDuringBuild: false,
+        },
+      },
       session: {
         password: 'test-session-password-that-is-at-least-32-chars!!',
       },
