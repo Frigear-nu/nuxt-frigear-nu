@@ -68,6 +68,13 @@ export default defineNuxtConfig({
 
   $test: {
     studio: false,
+    nitro: {
+      prerender: {
+        routes: [],
+        failOnError: false,
+        crawlLinks: false,
+      },
+    },
   },
 
   devtools: {
