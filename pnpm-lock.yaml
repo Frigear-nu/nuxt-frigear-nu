@@ -114,8 +114,8 @@ importers:
         specifier: ^0.26.0
         version: 0.26.0
       simple-content-site:
-        specifier: https://pkg.pr.new/simple-content-site@54
-        version: https://pkg.pr.new/simple-content-site@54(61d58191fef13bea896dca3b06115e20)
+        specifier: ^3.1.4
+        version: 3.1.4(ead44aae1da29a7425c2e0f4e830f745)
       zod:
         specifier: ^3.25.76
         version: 3.25.76
@@ -8497,11 +8497,9 @@ packages:
   simple-concat@1.0.1:
     resolution: {integrity: sha512-cSFtAPtRhljv69IK0hTVZQ+OfE9nePi/rtJmw5UjHeVyVroEqJXP1sFztKUy1qU+xvz3u/sfYJLa947b7nAN2Q==}
 
-  simple-content-site@https://pkg.pr.new/simple-content-site@54:
-    resolution: {tarball: https://pkg.pr.new/simple-content-site@54}
-    version: 3.1.3
+  simple-content-site@3.1.4:
+    resolution: {integrity: sha512-KsceRC+ZNApPw4J19RHgOhkcJN1vKBsINPFI3xKDlpg1ublPzR82cqT0nINe3ZkohP/ZR2uAIRGJpqQy265t/A==}
     peerDependencies:
-      '@vue/runtime-core': ^3.5.0
       nuxt: 4.x
 
   simple-get@4.0.1:
@@ -19516,7 +19514,7 @@ snapshots:
 
   simple-concat@1.0.1: {}
 
-  simple-content-site@https://pkg.pr.new/simple-content-site@54(61d58191fef13bea896dca3b06115e20):
+  simple-content-site@3.1.4(ead44aae1da29a7425c2e0f4e830f745):
     dependencies:
       '@iconify-json/lucide': 1.2.90
       '@iconify-json/simple-icons': 1.2.68
@@ -19532,7 +19530,6 @@ snapshots:
       '@resvg/resvg-wasm': 2.6.2
       '@takumi-rs/core': 0.73.1
       '@takumi-rs/wasm': 0.73.1
-      '@vue/runtime-core': 3.5.31
       '@vueuse/core': 14.2.1(vue@3.5.31(typescript@5.9.3))
       defu: 6.1.4
       exsolve: 1.0.8
@@ -19547,6 +19544,7 @@ snapshots:
       scule: 1.3.0
       tailwindcss: 4.2.2
       ufo: 1.6.3
+      vue: 3.5.31(typescript@5.9.3)
       zod: 4.3.6
       zod-to-json-schema: 3.25.1(zod@4.3.6)
     transitivePeerDependencies:
@@ -19614,7 +19612,6 @@ snapshots:
       - utf-8-validate
       - valibot
       - vite
-      - vue
       - vue-router
       - yjs
       - yup
