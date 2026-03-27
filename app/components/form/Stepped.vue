@@ -9,7 +9,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  submit: [data: UnionFormSteps<TSteps>]
+  'submit': [data: UnionFormSteps<TSteps>]
   'step-complete': [stepId: string, data: Partial<UnionFormSteps<TSteps>>, completedSteps: number]
 }>()
 
