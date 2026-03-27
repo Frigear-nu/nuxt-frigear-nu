@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ComponentPublicInstance } from 'vue'
 import type { ButtonProps } from '@nuxt/ui'
 import useFormAsAdmin from '~/composables/admin/useFormAsAdmin'
 import { withLeadingSlash } from 'ufo'
@@ -34,10 +35,19 @@ const headerLinks = computed<ButtonProps[]>(() => [
   },
 ])
 
-const submissionsContentRef = ref<HTMLElement | null>(null)
-const exportAllAsPdf = () => {
-  if (submissionsContentRef.value) {
-    exportToPDF(`${form.value?.name ?? 'submissions'}-all.pdf`, submissionsContentRef.value)
+const submissionCardRefs = ref<(HTMLElement | null)[]>([])
+const setSubmissionRef = (el: ComponentPublicInstance | HTMLElement | null, index: number) => {
+  submissionCardRefs.value[index] = el
+    ? ((el as ComponentPublicInstance).$el ?? (el as HTMLElement))
+    : null
+}
+
+const exportAllAsPdf = async () => {
+  if (!submissions.value?.length) return
+  for (const [index, submission] of submissions.value.entries()) {
+    const element = submissionCardRefs.value[index]
+    if (!element) continue
+    await exportToPDF(`submission-${submission.id}.pdf`, element)
   }
 }
 
@@ -58,10 +68,11 @@ const getPreview = (submission: typeof submissions.value[0]) => {
       :title="headerTitle"
       :links="headerLinks"
     />
-    <UPageList ref="submissionsContentRef">
+    <UPageList>
       <UPageCard
-        v-for="submission in submissions"
+        v-for="(submission, index) in submissions"
         :key="submission.id"
+        :ref="(el) => setSubmissionRef(el, index)"
         :title="submission.id"
         :to="`/admin/forms${withLeadingSlash(form.path)}/submissions/${submission.id}`"
       >
