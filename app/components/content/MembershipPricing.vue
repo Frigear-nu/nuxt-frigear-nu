@@ -2,7 +2,22 @@
 import type { PublicPrice } from '#shared/types/membership'
 import { useUserMemberships } from '~/store/queries/user'
 
-const { locale } = useSiteI18n()
+const { locales, defaultLocale } = useSiteI18n()
+
+const buildTranslatedField = (price: PublicPrice, field: 'title' | 'description'): string | Record<string, string> | undefined => {
+  const result: Record<string, string> = {}
+  for (const loc of locales.value) {
+    const key = loc.code === defaultLocale.value
+      ? field
+      : `${field}_${loc.code}`
+    const value = price[key as keyof PublicPrice] as string | null | undefined
+    if (value) result[loc.code] = value
+  }
+  const keys = Object.keys(result)
+  if (keys.length === 0) return undefined
+  if (keys.length === 1) return result[keys[0]!]
+  return result
+}
 const { loggedIn } = useUserSession()
 const { clearCart, addToCart } = useShoppingCart()
 const fetchUserMemberships = ref(false)
@@ -48,11 +63,10 @@ const onSelectMembership = (price: PublicPrice) => {
     qty: 1,
     maxQty: 1,
     id: price.id,
+    type: 'membership',
     price: price.price,
-    // @ts-expect-error This is not typed
-    title: price?.[`title_${locale.value}`] || price.title,
-    // @ts-expect-error This is not typed
-    description: price?.[`description_${locale.value}`] || price.description || undefined,
+    title: buildTranslatedField(price, 'title') || price.title,
+    description: buildTranslatedField(price, 'description') || price.description || undefined,
   })
 
   //
