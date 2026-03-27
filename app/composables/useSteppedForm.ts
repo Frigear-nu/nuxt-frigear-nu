@@ -29,7 +29,10 @@ export const useSteppedForm = <const TSteps extends FormStep[]>(
   const goNext = () => goToStep(currentStepIndex.value + 1)
   const goPrev = () => goToStep(currentStepIndex.value - 1)
 
-  const createSubmitHandler = (onComplete: (data: UnionSteps) => Promise<void> | void) => {
+  const createSubmitHandler = (
+    onComplete: (data: UnionSteps) => Promise<void> | void,
+    onStepSave?: (stepId: string, data: Partial<UnionSteps>, completedSteps: number) => Promise<void> | void,
+  ) => {
     return async () => {
       const step = currentStep.value
       if (!step?.schema) return
@@ -51,6 +54,9 @@ export const useSteppedForm = <const TSteps extends FormStep[]>(
           await onComplete(state as UnionSteps)
         }
         else {
+          if (onStepSave) {
+            await onStepSave(currentStepId.value!, state as Partial<UnionSteps>, currentStepIndex.value + 1)
+          }
           goNext()
         }
       }

@@ -3,6 +3,7 @@
 import type { ButtonProps, AlertProps } from '@nuxt/ui'
 import { kebabCase } from 'scule'
 import { withLeadingSlash } from 'ufo'
+import { useLocalStorage } from '@vueuse/core'
 import type { FormStep, SteppedForm as GenericSteppedForm } from '#shared/types/form'
 import {
   projectApplicationForm,
@@ -53,6 +54,32 @@ const stepped = useTemplateRef<SteppedExpose>('stepped')
 const isLoading = computed(() => stepped.value?.stepped?.isSubmitting?.value)
 const wasSubmitted = ref(false)
 
+// Persist the draft submission ID in localStorage, keyed by form path
+const draftSubmissionId = useLocalStorage<string | null>(
+  `form_draft:${form.value.path}`,
+  null,
+)
+
+// Restore draft state on mount if a draft submission ID is stored
+onMounted(async () => {
+  const draftId = draftSubmissionId.value
+  if (!draftId || !stepped.value) return
+
+  try {
+    const draft = await $api<{ id: string, data: Record<string, unknown>, completedSteps: number }>(
+      `/api/forms/submissions/${draftId}`,
+    )
+    if (draft && stepped.value) {
+      Object.assign(stepped.value.stepped.state, draft.data)
+      stepped.value.stepped.goToStep(draft.completedSteps)
+    }
+  }
+  catch {
+    // Draft not found or already submitted — clear the stale reference
+    draftSubmissionId.value = null
+  }
+})
+
 // const title = computed(() => form.value?.title)
 // const description = computed(() => form.value?.description)
 
@@ -72,6 +99,39 @@ const steppedForm = computed<GenericSteppedForm<FormStep[]>>(() => {
 const currentIndex = computed(() => stepped.value?.stepped.currentStepIndex.value ?? 0)
 
 // const fileUploader = useUpload(`/api/forms/${form.value.path}`)
+
+// Save each completed intermediate step as a draft in the DB
+const onStepSave = async (_stepId: string, data: Record<string, unknown>, completedSteps: number) => {
+  const path = form.value?.path
+  if (!path) return
+
+  // Exclude File objects — they cannot be JSON-serialised for draft storage
+  const serialisableData = Object.fromEntries(
+    Object.entries(data).filter(([, v]) => {
+      if (v instanceof File) return false
+      if (Array.isArray(v) && v.length > 0 && v[0] instanceof File) return false
+      return true
+    }),
+  )
+
+  try {
+    const result = await $api<{ id: string }>(`/api/forms${path}`, {
+      method: 'PUT',
+      body: {
+        submissionId: draftSubmissionId.value ?? undefined,
+        data: serialisableData,
+        completedSteps,
+      },
+    })
+
+    if (result?.id) {
+      draftSubmissionId.value = result.id
+    }
+  }
+  catch {
+    // Draft save failed — the form continues to advance; progress is not persisted
+  }
+}
 
 const onComplete = async (args: Record<string, unknown>) => {
   const path = form.value?.path
@@ -103,6 +163,7 @@ const onComplete = async (args: Record<string, unknown>) => {
   })
 
   if (submission && submission.id) {
+    draftSubmissionId.value = null
     wasSubmitted.value = true
   }
 }
@@ -249,6 +310,7 @@ const completedFormActions = computed<ButtonProps[]>(() => {
           ref="stepped"
           :form="steppedForm"
           @submit="onComplete"
+          @step-complete="onStepSave"
         />
         <UEmpty
           v-show="wasSubmitted && !isLoading"

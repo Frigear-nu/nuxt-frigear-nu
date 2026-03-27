@@ -19,8 +19,11 @@ export default defineEventHandler(async (event) => {
   }
 
   const submissions = await db.query.formSubmissions.findMany({
-    where: (formSubmissions, { eq }) => {
-      return eq(formSubmissions.path, withoutLeadingSlash(form.path))
+    where: (formSubmissions, { eq, and }) => {
+      return and(
+        eq(formSubmissions.path, withoutLeadingSlash(form.path)),
+        eq(formSubmissions.status, 'submitted'),
+      )
     },
   })
 

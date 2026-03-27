@@ -10,6 +10,8 @@ type FormSubmissionFile = Omit<BlobObject, 'uploadedAt'> & { uploadedAt: number 
 export const formSubmissions = sqliteTable('form_submissions', {
   id: text('id').primaryKey().$defaultFn(() => createDomainId('form_sub_')),
   path: text('path').notNull(), // references the form path (from content/forms/**)
+  status: text('status', { enum: ['draft', 'submitted'] }).notNull().default('submitted'),
+  completedSteps: integer('completed_steps').notNull().default(0),
   data: text('data', { mode: 'json' }).notNull().$type<{ [key: string]: unknown }>(),
   files: text('files', { mode: 'json' }).notNull().$type<FormSubmissionFile[]>(),
   delivery: text('delivery', { mode: 'json' }).notNull().$type<CollectionForm['delivery']>().default([]),

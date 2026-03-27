@@ -10,13 +10,17 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   submit: [data: UnionFormSteps<TSteps>]
+  'step-complete': [stepId: string, data: Partial<UnionFormSteps<TSteps>>, completedSteps: number]
 }>()
 
 const formEl = useTemplateRef('formEl')
 const stepped = useSteppedForm(props.form)
 const { translatedProperty } = useContent()
 const { t } = useSiteI18n()
-const onSubmit = stepped.createSubmitHandler(data => emit('submit', data))
+const onSubmit = stepped.createSubmitHandler(
+  data => emit('submit', data),
+  (stepId, data, completedSteps) => emit('step-complete', stepId, data as Partial<UnionFormSteps<TSteps>>, completedSteps),
+)
 
 const currentFields = computed(() => {
   const step = stepped.currentStep.value
