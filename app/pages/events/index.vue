@@ -41,6 +41,22 @@ const pastEvents = computed(() => {
   <div>
     <UContainer>
       <section
+        v-if="ongoingEvents.length"
+        class="flex flex-col gap-8"
+      >
+        <UPageHeader
+          :title="t('events.ongoing.title')"
+          :description="useEmptyOrTranslated('events.ongoing.description')"
+        />
+        <UPageGrid>
+          <EventCard
+            v-for="event in ongoingEvents"
+            :key="event.id"
+            :event="event"
+          />
+        </UPageGrid>
+      </section>
+      <section
         class="flex flex-col gap-8"
       >
         <UPageHeader
@@ -59,22 +75,6 @@ const pastEvents = computed(() => {
           :title="t('events.upcoming.empty.title')"
           :description="useEmptyOrTranslated('events.upcoming.empty.description')"
         />
-      </section>
-      <section
-        v-if="ongoingEvents.length"
-        class="flex flex-col gap-8"
-      >
-        <UPageHeader
-          :title="t('events.ongoing.title')"
-          :description="useEmptyOrTranslated('events.ongoing.description')"
-        />
-        <UPageGrid>
-          <EventCard
-            v-for="event in ongoingEvents"
-            :key="event.id"
-            :event="event"
-          />
-        </UPageGrid>
       </section>
       <section
         v-if="pastEvents.length"
