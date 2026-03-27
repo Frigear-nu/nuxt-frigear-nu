@@ -4,6 +4,7 @@ import type { EventsCollectionItem } from '@nuxt/content'
 import { useLocalStorage } from '@vueuse/core'
 import { useUserMemberships } from '~/store/queries/user'
 import { checkTicketRequirements } from '#shared/events/requirements'
+import { isTicketSalesEnded } from '#shared/events/cutoff'
 
 const props = defineProps<{
   event: EventsCollectionItem
@@ -120,10 +121,7 @@ router.afterEach((to, from) => {
   }
 })
 
-const ticketSalesEnded = computed(() => {
-  const cutoffDate = props.event.ticketConfig?.cutoffDate ?? props.event.end ?? props.event.start
-  return !!cutoffDate && new Date() > new Date(cutoffDate)
-})
+const ticketSalesEnded = computed(() => isTicketSalesEnded(props.event))
 
 const canPurchase = computed(() => {
   if (requiresAtLeastOneProduct.value && !selectedProductAddons.value) {
