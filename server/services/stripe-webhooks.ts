@@ -5,6 +5,14 @@ import type { H3Event } from 'h3'
 import { fromUnixTime } from 'date-fns'
 import { useServerStripe } from '#stripe/server'
 import { db, schema } from '@nuxthub/db'
+import { postToSlack } from '#server/utils/slack'
+
+// Zero-decimal currencies should not be divided by 100 when formatting amounts
+// See: https://stripe.com/docs/currencies#zero-decimal
+const ZERO_DECIMAL_CURRENCIES = new Set([
+  'bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw', 'mga',
+  'pyg', 'rwf', 'ugx', 'vnd', 'vuv', 'xaf', 'xof', 'xpf',
+])
 
 const debugPayment = (...args: unknown[]) => {
   if (!import.meta.dev) {
@@ -16,6 +24,7 @@ const debugPayment = (...args: unknown[]) => {
 
 export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.Event) => {
   const stripe = useServerStripe(event)
+  const { slackPaymentsWebhookUrl } = useRuntimeConfig(event)
 
   switch (stripeEvent.type) {
     case 'product.created':
@@ -35,6 +44,9 @@ export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.E
     case 'customer.created':
     case 'customer.updated':
       await upsertStripeCustomer(stripeEvent.data.object)
+      if (slackPaymentsWebhookUrl && stripeEvent.type === 'customer.created') {
+        await onCustomerCreated(slackPaymentsWebhookUrl, stripeEvent.data.object)
+      }
       break
     case 'customer.deleted':
       await deleteStripeCustomer(stripeEvent.data.object)
@@ -60,6 +72,12 @@ export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.E
       await onCheckoutCompleted(stripeEvent.data.object)
       break
       // This might be for a ticket, so let's make sure tickets are marked as paid
+
+    case 'payment_intent.payment_failed':
+      if (slackPaymentsWebhookUrl) {
+        await onPaymentFailed(slackPaymentsWebhookUrl, stripeEvent.data.object)
+      }
+      break
 
     default:
       return { status: 200 }
@@ -305,4 +323,68 @@ export const onCheckoutCompleted = async (checkout: Stripe.Checkout.Session) => 
         console.log('Unknown checkout status', checkout.status)
     }
   }
+}
+
+export const onPaymentFailed = async (webhookUrl: string, paymentIntent: Stripe.PaymentIntent) => {
+  const currency = paymentIntent.currency.toUpperCase()
+  const divisor = ZERO_DECIMAL_CURRENCIES.has(paymentIntent.currency.toLowerCase()) ? 1 : 100
+  const amount = (paymentIntent.amount / divisor).toFixed(divisor === 1 ? 0 : 2)
+  const customer = typeof paymentIntent.customer === 'string'
+    ? paymentIntent.customer
+    : paymentIntent.customer?.id ?? 'unknown'
+  const description = paymentIntent.description ?? paymentIntent.metadata?.description ?? ''
+  const failureMessage = paymentIntent.last_payment_error?.message ?? 'unknown reason'
+
+  const text = description
+    ? `:x: *Payment failed:* A payment of ${amount} ${currency} for _${description}_ (customer: ${customer}) failed — ${failureMessage}`
+    : `:x: *Payment failed:* A payment of ${amount} ${currency} from customer ${customer} failed — ${failureMessage}`
+
+  await postToSlack(webhookUrl, {
+    blocks: [
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text,
+        },
+      },
+      {
+        type: 'section',
+        fields: [
+          { type: 'mrkdwn', text: `*Amount:*\n${amount} ${currency}` },
+          { type: 'mrkdwn', text: `*Customer:*\n${customer}` },
+          { type: 'mrkdwn', text: `*Reason:*\n${failureMessage}` },
+          { type: 'mrkdwn', text: `*Payment Intent:*\n${paymentIntent.id}` },
+        ],
+      },
+    ],
+    text,
+  })
+}
+
+export const onCustomerCreated = async (webhookUrl: string, customer: Stripe.Customer) => {
+  const name = customer.name ?? 'unknown'
+  const email = customer.email ?? 'unknown'
+  const text = `:bust_in_silhouette: *New customer:* ${name} (${email})`
+
+  await postToSlack(webhookUrl, {
+    blocks: [
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text,
+        },
+      },
+      {
+        type: 'section',
+        fields: [
+          { type: 'mrkdwn', text: `*Name:*\n${name}` },
+          { type: 'mrkdwn', text: `*Email:*\n${email}` },
+          { type: 'mrkdwn', text: `*Customer ID:*\n${customer.id}` },
+        ],
+      },
+    ],
+    text,
+  })
 }
