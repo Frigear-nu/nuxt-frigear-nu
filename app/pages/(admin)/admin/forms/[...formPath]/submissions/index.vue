@@ -25,7 +25,16 @@ const headerLinks = computed<ButtonProps[]>(() => [
     label: 'Start a new submission',
     to: `/forms${withLeadingSlash(form.value.path)}`,
   },
+  {
+    label: 'Export all as PDF',
+    icon: 'i-lucide-file-down',
+    color: 'neutral',
+    variant: 'outline',
+    onClick: exportAllAsPdf,
+  },
 ])
+
+const exportAllAsPdf = () => window.print()
 
 const getPreview = (submission: typeof submissions.value[0]) => {
   if (submission.data && typeof submission.data === 'object') {
@@ -39,10 +48,13 @@ const getPreview = (submission: typeof submissions.value[0]) => {
 </script>
 
 <template>
-  <UContainer>
+  <UContainer class="print:max-w-none print:p-0">
     <UPageHeader
       :title="headerTitle"
       :links="headerLinks"
+      :ui="{
+        links: 'print:hidden',
+      }"
     />
     <UPageList>
       <UPageCard
@@ -50,6 +62,7 @@ const getPreview = (submission: typeof submissions.value[0]) => {
         :key="submission.id"
         :title="submission.id"
         :to="`/admin/forms${withLeadingSlash(form.path)}/submissions/${submission.id}`"
+        :ui="{ title: 'print:break-all' }"
       >
         <template #description>
           <b>Preview:</b><br>

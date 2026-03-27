@@ -58,17 +58,21 @@ const translatedFieldLabel = (stepId: string, fieldName: string) => {
 const headerLinks = computed<ButtonProps[]>(() => {
   return [
     { label: 'Back', to: `/admin/forms${form.value?.path}/submissions` },
+    { label: 'Export as PDF', icon: 'i-lucide-file-down', color: 'neutral', variant: 'outline', onClick: exportAsPdf },
   ]
 })
+
+const exportAsPdf = () => window.print()
 </script>
 
 <template>
-  <UContainer>
+  <UContainer class="print:max-w-none print:p-0">
     <UPageHeader
       :title="submissionId"
       :links="headerLinks"
       :ui="{
         title: 'truncate',
+        links: 'print:hidden',
       }"
     />
     <UPageList
