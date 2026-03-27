@@ -62,21 +62,26 @@ const headerLinks = computed<ButtonProps[]>(() => {
   ]
 })
 
-const exportAsPdf = () => window.print()
+const submissionContentRef = ref<HTMLElement | null>(null)
+const exportAsPdf = () => {
+  if (submissionContentRef.value) {
+    exportToPDF(`submission-${submissionId.value}.pdf`, submissionContentRef.value)
+  }
+}
 </script>
 
 <template>
-  <UContainer class="print:max-w-none print:p-0">
+  <UContainer>
     <UPageHeader
       :title="submissionId"
       :links="headerLinks"
       :ui="{
         title: 'truncate',
-        links: 'print:hidden',
       }"
     />
     <UPageList
       v-if="form && submission && submission.data"
+      ref="submissionContentRef"
       class="gap-4"
     >
       <UPageCard

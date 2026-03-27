@@ -21,6 +21,7 @@ export default defineNuxtConfig({
     './modules/scs-i18n',
     'nuxt-qrcode',
     '@sentry/nuxt/module',
+    '@sidebase/nuxt-pdf',
     ...(import.meta.dev ? ['nuxt-component-meta'] : []),
     ...(import.meta.test ? ['@nuxt/test-utils/module'] : []),
   ],

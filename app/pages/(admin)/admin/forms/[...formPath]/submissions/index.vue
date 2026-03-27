@@ -34,7 +34,12 @@ const headerLinks = computed<ButtonProps[]>(() => [
   },
 ])
 
-const exportAllAsPdf = () => window.print()
+const submissionsContentRef = ref<HTMLElement | null>(null)
+const exportAllAsPdf = () => {
+  if (submissionsContentRef.value) {
+    exportToPDF(`${form.value?.name ?? 'submissions'}-all.pdf`, submissionsContentRef.value)
+  }
+}
 
 const getPreview = (submission: typeof submissions.value[0]) => {
   if (submission.data && typeof submission.data === 'object') {
@@ -48,21 +53,17 @@ const getPreview = (submission: typeof submissions.value[0]) => {
 </script>
 
 <template>
-  <UContainer class="print:max-w-none print:p-0">
+  <UContainer>
     <UPageHeader
       :title="headerTitle"
       :links="headerLinks"
-      :ui="{
-        links: 'print:hidden',
-      }"
     />
-    <UPageList>
+    <UPageList ref="submissionsContentRef">
       <UPageCard
         v-for="submission in submissions"
         :key="submission.id"
         :title="submission.id"
         :to="`/admin/forms${withLeadingSlash(form.path)}/submissions/${submission.id}`"
-        :ui="{ title: 'print:break-all' }"
       >
         <template #description>
           <b>Preview:</b><br>

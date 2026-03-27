@@ -61,6 +61,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@sidebase/nuxt-pdf": "^1.0.0-alpha.0",
     "@nuxt/eslint": "^1.12.1",
     "@nuxt/eslint-config": "^1.12.1",
     "@nuxt/kit": "^4.4.2",
