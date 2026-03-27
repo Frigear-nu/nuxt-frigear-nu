@@ -10,7 +10,7 @@ seo:
 ---
 orientation: horizontal
 ---
-:nuxt-img{.rounded-full .p-4 .dark:bg-neutral-800 .bg-neutral-200 .w-fit .md:max-w-md.md:justify-self-end-safe.md:mr-12 :height="auto" :width="380" alt="Frigear FGR logo" format="webp" quality="70" src="/logo-with-rf-bg.jpg"}
+:nuxt-img{.rounded-full .p-4 .dark:bg-neutral-800 .bg-neutral-200 .w-fit .md:max-w-md.md:justify-self-end-safe.md:mr-12 :height="380" :width="380" alt="Frigear FGR logo" format="webp" quality="70" src="/logo-with-rf-bg.jpg"}
 
 #title
 [{{ $doc.title }}]{.fancy-text.text-7xl.md:text-8xl} :br :br
