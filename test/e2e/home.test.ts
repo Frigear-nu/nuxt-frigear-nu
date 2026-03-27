@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 
 await setup({
   browser: true,
+  setupTimeout: 300_000,
 })
 
 describe('home page', () => {

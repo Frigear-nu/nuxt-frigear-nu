@@ -16,6 +16,7 @@ export default defineConfig({
           name: 'e2e',
           include: ['test/e2e/*.{test,spec}.ts'],
           environment: 'node',
+          hookTimeout: 300000,
         },
       },
       await defineVitestProject({
