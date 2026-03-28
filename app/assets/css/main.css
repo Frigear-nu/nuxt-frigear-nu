@@ -3,17 +3,129 @@
 
 @source "../../../content/**/*";
 
-
 /**
  * Content below is ONLY for advanced color linears that cannot be done in the file it is used in
  **/
-.fancy-text {
-    @apply bg-linear-to-r from-blue-700 via-25% via-secondary-800 to-purple-600 bg-clip-text text-transparent;
+@utility fancy-text {
+  @apply bg-linear-to-r from-blue-700 via-25% via-secondary-800 to-purple-600 bg-clip-text text-transparent;
 }
 
-.gradient-linear-br-teal-purple {
-    @apply bg-linear-to-br from-teal-200/90 via-purple-200/50 to-transparent;
-    @variant dark {
-        @apply bg-linear-to-br from-cyan-700/20  via-25%  via-lime-600/10 to-45% to-transparent;
-    }
+@utility gradient-linear-br-teal-purple {
+  @apply bg-linear-to-br from-teal-200/90 via-purple-200/50 to-transparent;
+
+  @variant dark {
+    @apply bg-linear-to-br from-cyan-700/20 via-25% via-lime-600/10 to-45% to-transparent;
+  }
+}
+
+@utility hero-carousel-frame-fancy {
+  @apply relative rounded-full p-3.75 backdrop-blur-[20px];
+
+  box-shadow:
+    0 22px 45px -18px rgba(23, 2, 33, 0.71),
+    0 0 0 1px rgb(255 255 255 / 0.06),
+    0 20px 40px rgba(0, 0, 0, 0.4);
+
+  background:
+    linear-gradient(
+      135deg,
+      transparent 0%,
+      rgba(29, 79, 216, 0.473) 40%,
+      rgba(26, 14, 162, 0.258) 50%,
+      rgba(146, 51, 234, 0.256) 60%,
+      transparent 100%
+    );
+
+  @variant dark {
+    background:
+      linear-gradient(
+        135deg,
+        transparent 0%,
+        rgb(34 211 238 / 0.72) 40%,
+        rgb(59 130 246 / 0.16) 50%,
+        rgb(132 204 22 / 0.72) 60%,
+        transparent 100%
+      );
+  }
+}
+
+@utility hero-carousel-surface {
+  @apply relative overflow-hidden rounded-full;
+
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.04) 27%,
+      rgba(255, 255, 255, 0) 55%,
+      rgba(0, 0, 0, 0.06) 100%
+    );
+
+  box-shadow:
+    inset 0 -10px 25px rgba(50, 4, 61, 0.604);
+
+  @variant dark {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(55, 4, 59, 0.05),
+        rgba(12, 27, 72, 0.015)
+      );
+
+    box-shadow:
+      inset 0 0 0 1px rgba(58, 3, 63, 0.342),
+      inset 0 10px 30px rgba(3, 33, 61, 0.237);
+  }
+}
+
+.hero-carousel-surface::before {
+  content: "FRIGEAR";
+  @apply pointer-events-none absolute inset-0;
+  border-radius: inherit;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.14),
+      rgba(255, 255, 255, 0) 58%
+    );
+
+  mix-blend-mode: overlay;
+}
+
+@utility hero-carousel-glass {
+  background:
+    radial-gradient(
+      circle at 28% 18%,
+      rgba(186, 7, 231, 0.22) 0%,
+      rgba(18, 174, 236, 0.08) 16%,
+      transparent 44%
+    ),
+    linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.14) 0%,
+      rgb(255 255 255 / 0.34) 32%,
+      transparent 56%,
+      rgb(0 0 0 / 0.04) 100%
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 -20px 40px rgb(0 0 0 / 0.08);
+}
+
+@utility hero-carousel-arrow {
+  @apply z-30 grid size-10 min-h-10 min-w-10 place-items-center rounded-full text-white backdrop-blur;
+
+  background: rgba(15, 23, 42, 0.5);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition:
+    transform 150ms ease,
+    background-color 150ms ease;
+}
+
+.hero-carousel-arrow:hover {
+  @apply scale-[1.06];
+  background: rgba(30, 9, 57, 0.46);
 }

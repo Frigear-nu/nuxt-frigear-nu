@@ -78,5 +78,5 @@
   "peerDependencies": {
     "h3": "^1.15.8"
   },
-  "packageManager": "pnpm@10.33.0"
+  "packageManager": "pnpm@10.19.0"
 }
