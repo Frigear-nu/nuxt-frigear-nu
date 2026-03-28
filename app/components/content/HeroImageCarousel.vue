@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import * as Sentry from '@sentry/nuxt'
 import { useRoute } from '#imports'
+import { computed, reactive, ref } from 'vue'
 
 type HeroCarouselImage = {
   src: string
@@ -113,11 +114,66 @@ const handleImageError = (src: string) => {
   }
 }
 
-const arrowButtonProps = {
+const stageRef = ref<HTMLElement | null>(null)
+
+const tilt = reactive({
+  rotateX: 0,
+  rotateY: 0,
+  auraX: 50,
+  auraY: 42,
+})
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value))
+}
+
+function onStagePointerMove(event: PointerEvent): void {
+  if (event.pointerType === 'touch') {
+    return
+  }
+
+  const element = stageRef.value
+
+  if (!element) {
+    return
+  }
+
+  const rect = element.getBoundingClientRect()
+  const px = (event.clientX - rect.left) / rect.width
+  const py = (event.clientY - rect.top) / rect.height
+
+  tilt.rotateY = clamp((px - 0.5) * 8, -4, 4)
+  tilt.rotateX = clamp((0.5 - py) * 8, -4, 4)
+  tilt.auraX = clamp(px * 100, 18, 82)
+  tilt.auraY = clamp(py * 100, 18, 82)
+}
+
+function resetStageMotion(): void {
+  tilt.rotateX = 0
+  tilt.rotateY = 0
+  tilt.auraX = 50
+  tilt.auraY = 42
+}
+
+const heroStageStyle = computed<Record<string, string>>(() => ({
+  '--hero-rotate-x': `${tilt.rotateX}deg`,
+  '--hero-rotate-y': `${tilt.rotateY}deg`,
+  '--hero-aura-x': `${tilt.auraX}%`,
+  '--hero-aura-y': `${tilt.auraY}%`,
+}))
+
+const prevButtonProps = {
   size: 'md',
-  color: 'secondary',
+  color: 'neutral',
   variant: 'link',
-  class: 'hero-carousel-arrow ',
+  class: 'hero-carousel-arrow hero-carousel-arrow-left',
+} as const
+
+const nextButtonProps = {
+  size: 'md',
+  color: 'neutral',
+  variant: 'link',
+  class: 'hero-carousel-arrow hero-carousel-arrow-right',
 } as const
 
 const overlayClasses = computed(() => [
@@ -128,8 +184,8 @@ const overlayClasses = computed(() => [
 const carouselUi = {
   item: 'basis-full',
   controls: 'pointer-events-none absolute inset-0 z-20',
-  prev: 'pointer-events-auto absolute start-2 top-1/2 -translate-y-1/2',
-  next: 'pointer-events-auto absolute end-2 top-1/2 -translate-y-1/2',
+  prev: 'pointer-events-auto',
+  next: 'pointer-events-auto',
   dots: 'absolute inset-x-0 bottom-4',
 } as const
 </script>
@@ -139,73 +195,87 @@ const carouselUi = {
     class="mx-auto w-full md:mx-0"
     :class="maxWidthClass"
   >
-    <div :class="frameClass">
-      <UCarousel
-        v-if="activeImages.length"
-        v-slot="{ item }"
-        :items="activeImages"
-        :loop="carouselLoop"
-        :dots="carouselDots"
-        :arrows="carouselArrows"
-        :autoplay="carouselAutoplay"
-        :fade="fade"
-        :prev="arrowButtonProps"
-        :next="arrowButtonProps"
-        :prev-icon="prevIcon"
-        :next-icon="nextIcon"
-        :ui="carouselUi"
-        class="relative w-full"
-        :aria-label="ariaLabel"
-      >
-        <div :class="surfaceClass">
-          <NuxtImg
-            v-if="!failedImages[item.src]"
-            :src="item.src"
-            :alt="item.alt"
-            :width="width"
-            :height="height"
-            :format="format"
-            :densities="densities"
-            :quality="quality"
-            :sizes="sizes"
-            :loading="item.src === firstImageSrc ? 'eager' : 'lazy'"
-            class="block aspect-square w-full object-cover"
-            @error="handleImageError(item.src)"
-          />
+    <div
+      ref="stageRef"
+      class="hero-carousel-stage"
+      :style="heroStageStyle"
+      @pointermove="onStagePointerMove"
+      @pointerleave="resetStageMotion"
+    >
+      <div
+        class="hero-carousel-aura"
+        aria-hidden="true"
+      />
 
-          <div
-            v-else
-            class="absolute inset-0 bg-neutral-300 dark:bg-neutral-700 flex items-center justify-center rounded-full"
-            role="img"
-            :aria-label="`Failed to load: ${item.alt || 'image'}`"
-          >
-            <div class="flex flex-col items-center gap-2">
-              <svg
-                class="w-8 h-8 text-neutral-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-              <p class="text-xs text-neutral-600 dark:text-neutral-400 text-center">
-                Image failed to load
-              </p>
+      <div :class="frameClass">
+        <UCarousel
+          v-if="activeImages.length"
+          v-slot="{ item }"
+          :items="activeImages"
+          :loop="carouselLoop"
+          :dots="carouselDots"
+          :arrows="carouselArrows"
+          :autoplay="carouselAutoplay"
+          :fade="fade"
+          :prev="prevButtonProps"
+          :next="nextButtonProps"
+          :prev-icon="prevIcon"
+          :next-icon="nextIcon"
+          :ui="carouselUi"
+          class="relative w-full"
+          :aria-label="ariaLabel"
+        >
+          <div :class="surfaceClass">
+            <NuxtImg
+              v-if="!failedImages[item.src]"
+              :src="item.src"
+              :alt="item.alt"
+              :width="width"
+              :height="height"
+              :format="format"
+              :densities="densities"
+              :quality="quality"
+              :sizes="sizes"
+              :loading="item.src === firstImageSrc ? 'eager' : 'lazy'"
+              class="hero-carousel-media"
+              @error="handleImageError(item.src)"
+            />
+
+            <div
+              v-else
+              class="absolute inset-0 flex items-center justify-center rounded-full bg-neutral-300 dark:bg-neutral-700"
+              role="img"
+              :aria-label="`Failed to load: ${item.alt || 'image'}`"
+            >
+              <div class="flex flex-col items-center gap-2">
+                <svg
+                  class="h-8 w-8 text-neutral-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+
+                <p class="text-center text-xs text-neutral-600 dark:text-neutral-400">
+                  Image failed to load
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div
-            v-if="overlay"
-            class="pointer-events-none absolute inset-0"
-            :class="overlayClasses"
-          />
-        </div>
-      </UCarousel>
+            <div
+              v-if="overlay"
+              class="pointer-events-none absolute inset-0"
+              :class="overlayClasses"
+            />
+          </div>
+        </UCarousel>
+      </div>
     </div>
   </div>
 </template>
