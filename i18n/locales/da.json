@@ -286,7 +286,8 @@
             "title": "Betalingen er annulleret",
             "description": "Betalingen blev annuleret, men prøv lige igen, eller kontakt support."
           }
-        }
+        },
+        "salesEnded": "Billetsalget til dette event er afsluttet."
       }
     }
   },

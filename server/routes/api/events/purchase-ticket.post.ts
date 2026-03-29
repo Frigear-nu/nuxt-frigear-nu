@@ -2,6 +2,7 @@ import { db } from '@nuxthub/db'
 import { eventPurchaseTicketsSchema } from '#shared/schema/events'
 import { withQuery } from 'ufo'
 import { checkTicketRequirements } from '#shared/events/requirements'
+import { isTicketSalesEnded } from '#shared/events/cutoff'
 
 const isStripeProductOrPriceId = (id: string) => id.startsWith('prod_') || id.startsWith('price_')
 
@@ -37,6 +38,15 @@ export default defineEventHandler(async (event) => {
     throw createError({
       status: 404,
       message: 'Ticket not found',
+    })
+  }
+
+  // Check that the ticket cutoff date has not passed.
+  // The cutoff defaults to the event end date, then falls back to the start date.
+  if (isTicketSalesEnded(dbEvent)) {
+    throw createError({
+      status: 400,
+      message: 'Ticket sales have ended for this event',
     })
   }
 
