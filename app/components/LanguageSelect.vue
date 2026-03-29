@@ -60,7 +60,7 @@ function getFlagUrl(locale: string): string {
           <img
             :src="getFlagUrl(locale)"
             :alt="localeObj.name"
-            class="size-5 object-cover rounded-full"
+            class="size-5 object-cover rounded-full ring-1 ring-black/10"
           >
         </template>
       </UButton>
@@ -82,7 +82,7 @@ function getFlagUrl(locale: string): string {
               <img
                 :src="getFlagUrl(localeItem.code)"
                 :alt="localeItem.name"
-                class="size-5 object-cover rounded-full"
+                class="size-5 object-cover rounded-full ring-1 ring-black/10"
               >
             </NuxtLink>
           </li>
