@@ -88,5 +88,7 @@ watch(user, (newValue) => {
         :navigation="navigation"
       />
     </ClientOnly>
+
+    <AppChat />
   </UApp>
 </template>
