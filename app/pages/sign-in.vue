@@ -1,27 +1,21 @@
 <script lang="ts" setup>
-import { useUrlSearchParams } from '@vueuse/core'
-
 definePageMeta({
   header: false,
   layout: 'auth',
 })
 
-const params = useUrlSearchParams<{
-  mode?: 'up' | 'in'
-}>('history')
+const route = useRoute()
+const { localePath } = useSiteI18n()
 
-const mode = computed<'up' | 'in'>({
-  get: () => {
-    if (!params.mode) return 'in'
-    return params.mode === 'up' ? 'up' : 'in'
-  },
-  set: (v) => {
-    if (v === 'in') params.mode = undefined
-    else params.mode = v
-  },
+// Backward compatibility: redirect ?mode=up to the dedicated sign-up page
+onMounted(() => {
+  if (route.query.mode === 'up') {
+    const query = route.query.redirect ? { redirect: route.query.redirect } : undefined
+    navigateTo(localePath('/sign-up'), { replace: true, query })
+  }
 })
 </script>
 
 <template>
-  <AuthCard v-model:mode="mode" />
+  <AuthCard mode="in" />
 </template>

@@ -133,7 +133,8 @@
       "avatar": {
         "label": "Avatar",
         "description": "JPG, GIF eller PNG. 1MB Max."
-      }
+      },
+      "save": "Gem profil"
     },
     "tickets": {
       "title": "Billetter",
@@ -246,6 +247,9 @@
       },
       "title": "Kommende events",
       "description": "Følg med her om future events i Frigear og Frigear Kulturværksted ..."
+    },
+    "ongoing": {
+      "title": "Igangværende events"
     },
     "past": {
       "title": "Tidligere arrangementer",
