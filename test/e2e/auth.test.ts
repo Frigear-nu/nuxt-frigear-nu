@@ -8,6 +8,24 @@
 import { describe, expect, it } from 'vitest'
 import { createPage } from '@nuxt/test-utils/e2e'
 
+describe('Site header on auth pages', () => {
+  it('renders the site header on /sign-in', async () => {
+    const page = await createPage('/sign-in')
+    await page.locator('input[autocomplete="email"]').waitFor()
+    const header = page.locator('header')
+    expect(await header.isVisible()).toBe(true)
+    await page.close()
+  })
+
+  it('renders the site header on /sign-up', async () => {
+    const page = await createPage('/sign-up')
+    await page.locator('input[autocomplete="name"]').waitFor()
+    const header = page.locator('header')
+    expect(await header.isVisible()).toBe(true)
+    await page.close()
+  })
+})
+
 describe('Sign In page (/sign-in)', () => {
   it('renders the email input with type="email"', async () => {
     const page = await createPage('/sign-in')
