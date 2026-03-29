@@ -1,0 +1,10 @@
+# All images inside public/images/ – store via Git LFS
+public/images/**/*.png filter=lfs diff=lfs merge=lfs -text
+public/images/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+public/images/**/*.JPG filter=lfs diff=lfs merge=lfs -text
+public/images/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+
+# Root-level logos – store via Git LFS
+public/logo.png filter=lfs diff=lfs merge=lfs -text
+public/logo-dark.png filter=lfs diff=lfs merge=lfs -text
+public/logo-with-rf-bg.jpg filter=lfs diff=lfs merge=lfs -text
