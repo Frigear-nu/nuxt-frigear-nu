@@ -244,6 +244,9 @@
     "upcoming": {
       "title": "Upcoming events"
     },
+    "ongoing": {
+      "title": "Ongoing events"
+    },
     "detail": {
       "when": "When?",
       "where": "Where?",
