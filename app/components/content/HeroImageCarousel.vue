@@ -317,7 +317,14 @@ const carouselUi = {
   --hcf-purple: 124 58 237;
   --hcf-teal:   20 184 166;
 
-  @apply relative isolate rounded-full p-3.5 sm:p-3.75;
+  position: relative;
+  isolation: isolate;
+  border-radius: 9999px;
+  padding: 0.875rem; /* p-3.5 */
+
+  @media (min-width: 640px) {
+    padding: 0.9375rem; /* sm:p-3.75 */
+  }
 
   transform-style: preserve-3d;
   transform:
@@ -410,7 +417,9 @@ const carouselUi = {
 }
 
 .hero-carousel-surface {
-  @apply relative overflow-hidden rounded-full;
+  position: relative;
+  overflow: hidden;
+  border-radius: 9999px;
   backdrop-filter: blur(18px) saturate(1.18);
   background:
     linear-gradient(
@@ -507,7 +516,10 @@ const carouselUi = {
 }
 
 .hero-carousel-media {
-  @apply block aspect-square w-full object-cover;
+  display: block;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  object-fit: cover;
   transform: scale(1.015);
   will-change: transform;
 }
