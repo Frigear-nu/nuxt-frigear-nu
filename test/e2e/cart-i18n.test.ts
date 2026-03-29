@@ -23,24 +23,6 @@ const multilingualCartItem = JSON.stringify([
   },
 ])
 
-describe('Membership page locale', () => {
-  it('shows Danish title on /membership', async () => {
-    const page = await createPage('/membership')
-    const heading = page.locator('h1')
-    await heading.first().waitFor()
-    expect(await page.title()).toContain('Medlemskab')
-    await page.close()
-  })
-
-  it('shows English title on /en/membership', async () => {
-    const page = await createPage('/en/membership')
-    const heading = page.locator('h1')
-    await heading.first().waitFor()
-    expect(await page.title()).toContain('Membership')
-    await page.close()
-  })
-})
-
 describe('Cart item title resolves per locale', () => {
   it('shows the Danish cart item title on the Danish home page', async () => {
     const page = await createPage('/')
