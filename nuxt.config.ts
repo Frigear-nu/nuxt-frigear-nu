@@ -66,6 +66,33 @@ export default defineNuxtConfig({
   },
 
   $test: {
+    runtimeConfig: {
+      session: {
+        password: 'test-session-password-that-is-at-least-32-chars!!',
+      },
+    },
+    sourcemap: false,
+    nitro: {
+      prerender: {
+        failOnError: false,
+      },
+    },
+    hub: {
+      db: {
+        applyMigrationsDuringBuild: false,
+        dialect: 'sqlite',
+        casing: 'snake_case',
+      },
+    },
+    fonts: {
+      providers: {
+        bunny: false,
+        fontshare: false,
+        fontsource: false,
+        google: false,
+        googleicons: false,
+      },
+    },
     studio: false,
   },
 
