@@ -5,6 +5,7 @@ import { allows } from 'nuxt-authorization/utils'
 import { canViewForms } from '#shared/abilities/forms'
 import { computedAsync } from '@vueuse/core'
 import { upperFirst } from 'scule'
+import { canListUsers } from '#shared/abilities/admin/users'
 
 const { t, localePath } = useSiteI18n()
 const { currentUser, currentUserRole } = useAuth()
@@ -25,14 +26,26 @@ const cards = computedAsync<PageCardProps[]>(async () => {
     },
   ]
 
-  if (currentUser.value && await allows(canViewForms, currentUser.value)) {
-    items.push({
-      title: 'Forms',
-      description: 'See all forms available, and their submissions.',
-      icon: 'i-lucide-form',
-      to: localePath('/admin/forms'),
-      variant: 'subtle',
-    })
+  if (currentUser.value) {
+    if (await allows(canViewForms, currentUser.value)) {
+      items.push({
+        title: 'Forms',
+        description: 'See all forms available, and their submissions.',
+        icon: 'i-lucide-form',
+        to: localePath('/admin/forms'),
+        variant: 'subtle',
+      })
+    }
+
+    if (await allows(canListUsers, currentUser.value)) {
+      items.unshift({
+        title: 'Users',
+        description: 'List & view all users',
+        icon: 'i-lucide-user',
+        to: localePath('/admin/users'),
+        variant: 'subtle',
+      })
+    }
   }
 
   return items
