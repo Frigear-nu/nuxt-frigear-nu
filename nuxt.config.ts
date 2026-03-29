@@ -40,6 +40,11 @@ export default defineNuxtConfig({
           'stripe:sync:subscriptions',
         ],
       },
+      prerender: {
+        routes: ['/', '/en'],
+        failOnError: false, // todo: this should be investigated.
+        crawlLinks: false,
+      },
     },
 
     hub: {
@@ -58,6 +63,10 @@ export default defineNuxtConfig({
         baseURL: process.env.CLOUDFLARE_IMAGE_BASE_URL,
       },
     },
+  },
+
+  $test: {
+    studio: false,
   },
 
   devtools: {
@@ -187,6 +196,20 @@ export default defineNuxtConfig({
     },
     blob: true,
   },
+  vite: {
+    optimizeDeps: {
+      include: [
+        'date-fns',
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+        'zod/v4',
+        '@vueuse/core',
+        'zod',
+        '@internationalized/date',
+        'nuxt-authorization/utils',
+      ],
+    },
+  },
   i18n: {
     defaultLocale: 'da',
     strategy: 'prefix_except_default',
@@ -228,13 +251,17 @@ export default defineNuxtConfig({
   },
 
   ogImage: {
-    zeroRuntime: true,
-    // @ts-expect-error Not sure why this is not typed: https://nuxtseo.com/docs/og-image/guides/emojis
     emojiStrategy: 'fetch',
   },
 
   resend: {
     apiKey: process.env.NUXT_RESEND_API_KEY!,
+  },
+
+  scs: {
+    experimental: {
+      prerender: false,
+    },
   },
   sentry: {
     authToken: process.env.NUXT_SENTRY_AUTH_TOKEN || process.env.SENTRY_AUTH_TOKEN || '',

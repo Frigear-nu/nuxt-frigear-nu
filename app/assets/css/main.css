@@ -80,7 +80,7 @@
 }
 
 @utility hero-carousel-frame-fancy {
-  @apply relative isolate rounded-full p-[14px] sm:p-[15px];
+  @apply relative isolate rounded-full p-3.5 sm:p-3.75;
 
   transform-style: preserve-3d;
   transform:

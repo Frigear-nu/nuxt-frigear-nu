@@ -13,16 +13,49 @@ const useEmptyOrTranslated = (key: string) => {
 }
 
 const upcomingEvents = computed(() => {
-  return events.value.filter(event => new Date(event.date) > new Date())
+  const now = new Date()
+  return events.value.filter((event) => {
+    const startDate = new Date(event.start || event.date)
+    return startDate > now
+  })
+})
+const ongoingEvents = computed(() => {
+  const now = new Date()
+  return events.value.filter((event) => {
+    const startDate = new Date(event.start || event.date)
+    const endDate = event.end ? new Date(event.end) : null
+    return startDate <= now && endDate !== null && endDate > now
+  })
 })
 const pastEvents = computed(() => {
-  return events.value.filter(event => new Date(event.date) <= new Date())
+  const now = new Date()
+  return events.value.filter((event) => {
+    const startDate = new Date(event.start || event.date)
+    const endDate = event.end ? new Date(event.end) : null
+    return endDate ? endDate <= now : startDate <= now
+  })
 })
 </script>
 
 <template>
   <div>
     <UContainer>
+      <section
+        v-if="ongoingEvents.length"
+        class="flex flex-col gap-8"
+      >
+        <UPageHeader
+          :title="t('events.ongoing.title')"
+          :description="useEmptyOrTranslated('events.ongoing.description')"
+        />
+        <UPageGrid>
+          <EventCard
+            v-for="event in ongoingEvents"
+            :key="event.id"
+            :event="event"
+          />
+        </UPageGrid>
+      </section>
       <section
         class="flex flex-col gap-8"
       >
