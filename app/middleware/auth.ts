@@ -26,12 +26,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
     }
   }
 
-  // Admin routes throw a 403 error instead of redirecting so the admin panel
-  // remains opaque to users who are not authorised to view it.
-  if (isAdminRoute) {
-    return abortNavigation(createError({ statusCode: 403, statusMessage: 'Forbidden' }))
-  }
-
   return navigateTo({
     path: '/sign-in',
     query: { redirect: to.path },
