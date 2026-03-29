@@ -72,7 +72,7 @@ watch(user, (newValue) => {
 })
 
 onMounted(async () => {
-  if (isAccepted.value) {}
+  if (isAccepted.value) {
     return
   }
 
