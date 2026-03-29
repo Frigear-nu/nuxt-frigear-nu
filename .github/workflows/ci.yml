@@ -37,6 +37,8 @@ jobs:
 
   test:
     runs-on: ubuntu-22.04
+    env:
+      NITRO_PRESET: node-server
     steps:
       - uses: actions/checkout@v4
 
