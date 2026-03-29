@@ -12,4 +12,5 @@ export const USER_KEYS = {
 
 export const ADMIN_KEYS = {
   users: [...ROOT_KEYS.admin, 'users'],
+  user: (id: number) => [...ROOT_KEYS.admin, 'users', id],
 }
