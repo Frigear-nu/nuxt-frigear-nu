@@ -5,6 +5,7 @@ import * as nuxtUiLocales from '@nuxt/ui/locale'
 import * as Sentry from '@sentry/nuxt'
 
 const { seo } = useAppConfig()
+const { isAccepted } = useCookieConsent()
 const site = useSiteConfig()
 const { locale, locales, isEnabled, switchLocalePath } = useSiteI18n()
 const { user } = useUserSession()
@@ -12,6 +13,8 @@ const { user } = useUserSession()
 const lang = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.code || 'en')
 const dir = computed(() => nuxtUiLocales[locale.value as keyof typeof nuxtUiLocales]?.dir || 'ltr')
 const collectionName = computed(() => isEnabled.value ? `pages_${locale.value}` : 'pages')
+
+const showCookieConsent = ref(false)
 
 useHead({
   meta: [
@@ -66,6 +69,14 @@ watch(user, (newValue) => {
   }
 
   Sentry.setUser({ id: newValue.id })
+})
+
+onMounted(async () => {
+  if (isAccepted.value) {}
+    return
+  }
+
+  showCookieConsent.value = true
 })
 </script>
 
