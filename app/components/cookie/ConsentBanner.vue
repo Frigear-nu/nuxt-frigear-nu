@@ -12,7 +12,7 @@ const open = computed(() => !hasResponded.value)
     :modal="false"
     :close="false"
     :ui="{
-      content: 'h-[15vh] min-h-24',
+      content: 'h-[15vh] min-h-24 max-w-[92vw] mx-auto rounded-t-2xl border border-default',
       body: 'flex items-center justify-between gap-4 sm:flex-row flex-col',
     }"
     data-testid="cookie-consent-banner"
