@@ -15,6 +15,7 @@ const open = computed(() => !hasResponded.value)
       content: 'h-[15vh] min-h-24',
       body: 'flex items-center justify-between gap-4 sm:flex-row flex-col',
     }"
+    data-testid="cookie-consent-banner"
   >
     <template #body>
       <p class="text-sm text-muted">
