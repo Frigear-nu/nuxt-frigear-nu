@@ -33,11 +33,17 @@ logs
 *.0x
 _tmp*
 
-#VSC
+# VSC
 .history
 .wrangler
+
+# 51x415
+.aias*
 
 # We do not allow any more supabase stuff <3
 supabase/
 # Sentry Config File
 .env.sentry-build-plugin
+
+# Test results
+test-results/
