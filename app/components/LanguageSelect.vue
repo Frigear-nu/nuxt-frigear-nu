@@ -40,7 +40,7 @@ function getFlagUrl(locale: string): string {
   const baseLanguage = locale.split('-')[0]?.toLowerCase() || locale
   const countryCode = languageToCountry[baseLanguage] || locale.replace(/^.*-/, '').slice(0, 2)
 
-  return `https://flagcdn.com/24x18/${countryCode.toLowerCase()}.png`
+  return `https://flagcdn.com/w20/${countryCode.toLowerCase()}.png`
 }
 </script>
 
@@ -60,7 +60,7 @@ function getFlagUrl(locale: string): string {
           <img
             :src="getFlagUrl(locale)"
             :alt="localeObj.name"
-            class="w-5 h-4 object-cover rounded-sm"
+            class="size-5 object-cover rounded-full"
           >
         </template>
       </UButton>
@@ -82,7 +82,7 @@ function getFlagUrl(locale: string): string {
               <img
                 :src="getFlagUrl(localeItem.code)"
                 :alt="localeItem.name"
-                class="w-5 h-4 object-cover rounded-sm"
+                class="size-5 object-cover rounded-full"
               >
             </NuxtLink>
           </li>
