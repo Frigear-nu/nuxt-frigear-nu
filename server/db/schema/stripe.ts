@@ -13,8 +13,8 @@ export const stripeProducts = sqliteTable('stripe_products', {
   taxCodeId: text('tax_code_id'),
 })
 
-export type StripeProducts = typeof stripeProducts.$inferSelect
-export type NewStripeProducts = typeof stripeProducts.$inferInsert
+export type StripeProduct = typeof stripeProducts.$inferSelect
+export type NewStripeProduct = typeof stripeProducts.$inferInsert
 
 // Stripe relations
 export const stripeProductsRelations = relations(stripeProducts, ({ many }) => ({
@@ -39,8 +39,8 @@ export const stripePrices = sqliteTable('stripe_prices', {
   metadata: text({ mode: 'json' }).$type<{ title?: string, title_en?: string, description?: string, description_en?: string, [key: string]: string | undefined }>(),
 })
 
-export type StripePrices = typeof stripePrices.$inferSelect
-export type NewStripePrices = typeof stripePrices.$inferInsert
+export type StripePrice = typeof stripePrices.$inferSelect
+export type NewStripePrice = typeof stripePrices.$inferInsert
 
 export const stripePricesRelations = relations(stripePrices, ({ one, many }) => ({
   product: one(stripeProducts, {
@@ -71,8 +71,8 @@ export const stripeSubscriptions = sqliteTable('stripe_subscriptions', {
   endedAt: integer('ended_at', { mode: 'timestamp' }),
 })
 
-export type StripeSubscriptions = typeof stripeSubscriptions.$inferSelect
-export type NewStripeSubscriptions = typeof stripeSubscriptions.$inferInsert
+export type StripeSubscription = typeof stripeSubscriptions.$inferSelect
+export type NewStripeSubscription = typeof stripeSubscriptions.$inferInsert
 
 export const stripeSubscriptionsRelations = relations(stripeSubscriptions, ({ one }) => ({
   customer: one(stripeCustomers, {
@@ -113,8 +113,8 @@ export const stripeCustomers = sqliteTable('stripe_customers', {
   }
 })
 
-export type StripeCustomers = typeof stripeCustomers.$inferSelect
-export type NewStripeCustomers = typeof stripeCustomers.$inferInsert
+export type StripeCustomer = typeof stripeCustomers.$inferSelect
+export type NewStripeCustomer = typeof stripeCustomers.$inferInsert
 
 export const stripeCustomersRelations = relations(stripeCustomers, ({ one, many }) => ({
   user: one(users, {

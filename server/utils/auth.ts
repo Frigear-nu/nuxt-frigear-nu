@@ -5,11 +5,11 @@ import { ServerError, UnauthenticatedError } from '@nitrotool/errors'
 import { addMinutes } from 'date-fns'
 import { withQuery } from 'ufo'
 import { db, schema } from '@nuxthub/db'
-import type { MagicLinks, Users } from '@nuxthub/db/schema'
+import type { MagicLink, User } from '@nuxthub/db/schema'
 
 export const createSafeId = () => createId()
 
-export const authenticateUser = async (event: H3Event, user: Users, redirect?: string) => {
+export const authenticateUser = async (event: H3Event, user: User, redirect?: string) => {
   await setUserSession(event, {
     user: await mapUserToSession(user),
     loggedInAt: Date.now(),
@@ -22,7 +22,7 @@ export const authenticateUser = async (event: H3Event, user: Users, redirect?: s
   return sendRedirect(event, redirect || '/')
 }
 
-export const mapUserToSession = async (user: Users) => {
+export const mapUserToSession = async (user: User) => {
   return ({
     id: user.id,
     name: user.name,
@@ -37,7 +37,7 @@ export const mapUserToSession = async (user: Users) => {
   })
 }
 
-export const mapUserToJwt = (user: Users): ExtendableJwtPayload => ({
+export const mapUserToJwt = (user: User): ExtendableJwtPayload => ({
   sub: `${user.id}`,
 // todo: investigate what we need here.
 })
@@ -78,10 +78,10 @@ export const requireUser = async (event: H3Event) => {
 }
 
 export const createMagicLinkForUser = async ({ userId, expiresAt, redirectUrl, code}: {
-  userId: MagicLinks['userId']
-  redirectUrl?: MagicLinks['redirectUrl']
-  expiresAt?: MagicLinks['expiresAt']
-  code?: MagicLinks['code']
+  userId: MagicLink['userId']
+  redirectUrl?: MagicLink['redirectUrl']
+  expiresAt?: MagicLink['expiresAt']
+  code?: MagicLink['code']
 }) => {
   code ||= createSafeId()
   expiresAt ||= addMinutes(new Date(), 120)

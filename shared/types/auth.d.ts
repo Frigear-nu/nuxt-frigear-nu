@@ -1,7 +1,7 @@
-import type { Users } from '@nuxthub/db/schema'
+import type { User } from '@nuxthub/db/schema'
 import type { ExtendableJwtPayload } from '@nitrotool/jwt/core'
 
-type SessionUser = Pick<Users, 'id' | 'name' | 'email' | 'role' | 'avatarUrl' | 'emailVerifiedAt'>
+type SessionUser = Pick<User, 'id' | 'name' | 'email' | 'role' | 'avatarUrl' | 'emailVerifiedAt'>
 
 declare module '#auth-utils' {
   interface User extends SessionUser {
