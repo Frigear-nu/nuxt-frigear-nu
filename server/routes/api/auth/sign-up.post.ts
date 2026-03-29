@@ -2,7 +2,7 @@ import { db, schema } from '@nuxthub/db'
 import { signUpWithPasswordSchema } from '#shared/schema/auth'
 import { useValidatedBody } from 'h3-zod'
 import { ClientError, ServerError } from '@nitrotool/errors'
-import type { Users } from '@nuxthub/db/schema'
+import type { User } from '@nuxthub/db/schema'
 import WelcomeToFrigearEmail from '#shared/emails/auth/WelcomeToFrigearEmail.vue'
 
 export default defineEventHandler(async (event) => {
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
   const { user } = await getUserSession(event)
 
   if (user) {
-    return sendRedirect(event, await getDefaultRedirectForUser(event, user as Users))
+    return sendRedirect(event, await getDefaultRedirectForUser(event, user as User))
   }
 
   if (!signUp) throw createError({ statusCode: 400, message: 'Signup is disabled.' })

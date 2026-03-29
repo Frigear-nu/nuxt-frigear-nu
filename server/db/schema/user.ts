@@ -22,8 +22,8 @@ export const users = sqliteTable('users', {
   createdAt: integer('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
 })
 
-export type Users = typeof users.$inferSelect
-export type NewUsers = typeof users.$inferInsert
+export type User = typeof users.$inferSelect
+export type NewUser = typeof users.$inferInsert
 
 // User relations
 export const usersRelations = relations(users, ({ many }) => ({
@@ -41,8 +41,8 @@ export const sessions = sqliteTable('sessions', {
   expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
 })
 
-export type Sessions = typeof sessions.$inferSelect
-export type NewSessions = typeof sessions.$inferInsert
+export type Session = typeof sessions.$inferSelect
+export type NewSession = typeof sessions.$inferInsert
 
 export const magicLinks = sqliteTable('magic_links', {
   id: integer('id').primaryKey({ autoIncrement: true }),
@@ -53,8 +53,8 @@ export const magicLinks = sqliteTable('magic_links', {
   usedAt: integer('used_at', { mode: 'timestamp' }),
 })
 
-export type MagicLinks = typeof magicLinks.$inferSelect
-export type NewMagicLinks = typeof magicLinks.$inferInsert
+export type MagicLink = typeof magicLinks.$inferSelect
+export type NewMagicLink = typeof magicLinks.$inferInsert
 
 export const magicLinksRelations = relations(magicLinks, ({ one }) => ({
   user: one(users, {
@@ -71,8 +71,8 @@ export const passwordResets = sqliteTable('password_resets', {
   usedAt: integer('used_at', { mode: 'timestamp' }),
 })
 
-export type PasswordResets = typeof passwordResets.$inferSelect
-export type NewPasswordResets = typeof passwordResets.$inferInsert
+export type PasswordReset = typeof passwordResets.$inferSelect
+export type NewPasswordReset = typeof passwordResets.$inferInsert
 
 export const passwordResetsRelations = relations(passwordResets, ({ one }) => ({
   user: one(users, {
@@ -93,8 +93,8 @@ export const oauthApps = sqliteTable('oauth_apps', {
   updatedAt: integer('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
 })
 
-export type OauthApps = typeof oauthApps.$inferSelect
-export type NewOauthApps = typeof oauthApps.$inferInsert
+export type OauthApp = typeof oauthApps.$inferSelect
+export type NewOauthApp = typeof oauthApps.$inferInsert
 
 export const oauthAppsRelations = relations(oauthApps, ({ one }) => ({
   user: one(users, {
@@ -113,8 +113,8 @@ export const passkeys = sqliteTable('passkeys', {
   lastUsedAt: integer('last_used_at'),
 })
 
-export type Passkeys = typeof passkeys.$inferSelect
-export type NewPasskeys = typeof passkeys.$inferInsert
+export type Passkey = typeof passkeys.$inferSelect
+export type NewPasskey = typeof passkeys.$inferInsert
 
 export const passkeysRelations = relations(passkeys, ({ one }) => ({
   user: one(users, {
