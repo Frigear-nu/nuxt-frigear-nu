@@ -41,6 +41,7 @@ jobs:
       contents: read
       actions: read
       checks: write
+      pull-requests: write
     env:
       NITRO_PRESET: node-server
     steps:
@@ -67,9 +68,7 @@ jobs:
         run: pnpm test
 
       - name: Publish Test Results
-        uses: dorny/test-reporter@v3
+        uses: EnricoMi/publish-unit-test-result-action@v2
         if: ${{ !cancelled() }}
         with:
-          name: Test Results
-          path: test-results/junit.xml
-          reporter: java-junit
+          files: test-results/junit.xml
