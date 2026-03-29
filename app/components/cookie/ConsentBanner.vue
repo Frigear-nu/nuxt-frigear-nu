@@ -18,21 +18,18 @@ watch(scrolledDown, (isDown) => {
 <template>
   <!-- FAB bubble (collapsed when scrolled) -->
   <Transition name="cookie-fab">
-    <span
+    <button
       v-if="open && collapsed"
-      class="fixed bottom-4 right-4 z-50"
+      class="fixed bottom-4 left-4 z-50 flex size-14 items-center justify-center rounded-full border border-default bg-(--ui-bg) shadow-lg ring-0 hover:opacity-90 focus:outline-none"
+      :aria-label="$t('cookieConsent.expand')"
+      data-testid="cookie-consent-fab"
+      @click="isManuallyExpanded = true"
     >
-      <UButton
-        class="size-14 rounded-full shadow-lg"
-        icon="i-lucide-cookie"
-        size="xl"
-        variant="soft"
-        color="primary"
-        :aria-label="$t('cookieConsent.expand')"
-        data-testid="cookie-consent-fab"
-        @click="isManuallyExpanded = true"
+      <UIcon
+        name="i-lucide-cookie"
+        class="size-7 text-primary"
       />
-    </span>
+    </button>
   </Transition>
 
   <!-- Full expanded banner -->
