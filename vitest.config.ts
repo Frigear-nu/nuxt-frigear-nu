@@ -3,7 +3,12 @@ import { defineVitestProject } from '@nuxt/test-utils/config'
 
 export default defineConfig({
   test: {
-    reporter: ['verbose'],
+    reporters: process.env.GITHUB_ACTIONS
+      ? ['verbose', 'github-actions', 'junit']
+      : ['verbose'],
+    outputFile: {
+      junit: './test-results/junit.xml',
+    },
     projects: [
       {
         test: {
