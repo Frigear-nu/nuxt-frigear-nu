@@ -150,6 +150,7 @@ export default defineNuxtConfig({
     },
     jwtSecret: 'some-string-longer-than-32-chars-to-issue-jwt',
     stripeWebhookSecret: '',
+    slackPaymentsWebhookUrl: '',
     mail: {
       from: '',
       to: '',
