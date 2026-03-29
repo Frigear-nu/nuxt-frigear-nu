@@ -463,6 +463,7 @@
   "cookieConsent": {
     "description": "We use cookies to improve your experience. By continuing, you accept our use of cookies.",
     "accept": "Accept",
+    "expand": "Show cookie consent",
     "reject": "Reject"
   },
   "zodI18n": {
