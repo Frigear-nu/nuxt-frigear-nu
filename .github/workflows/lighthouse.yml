@@ -19,10 +19,14 @@ jobs:
       url: ${{ inputs.url || github.event.deployment_status.environment_url }}
     if: github.event.deployment_status.state == 'success' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
 
       - name: Audit URLs using Lighthouse
+        id: lighthouse
         uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12
         with:
           urls: ${{ inputs.url || github.event.deployment_status.environment_url }}
@@ -30,3 +34,68 @@ jobs:
           temporaryPublicStorage: true
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+      - name: Comment Lighthouse results on PR
+        uses: actions/github-script@v7
+        if: steps.lighthouse.outputs.manifest != ''
+        with:
+          script: |
+            const manifest = JSON.parse(${{ toJson(steps.lighthouse.outputs.manifest) }});
+            const links = JSON.parse(${{ toJson(steps.lighthouse.outputs.links) }});
+
+            const formatScore = (score) => {
+              const pct = Math.round(score * 100);
+              const emoji = pct >= 90 ? '🟢' : pct >= 50 ? '🟠' : '🔴';
+              return `${emoji} ${pct}`;
+            };
+
+            const rows = manifest.map((result) => {
+              const { url, summary } = result;
+              const reportUrl = links[url] || '';
+              const reportLink = reportUrl ? `[📄 Report](${reportUrl})` : '—';
+              return `| ${url} | ${formatScore(summary.performance)} | ${formatScore(summary.accessibility)} | ${formatScore(summary['best-practices'])} | ${formatScore(summary.seo)} | ${reportLink} |`;
+            });
+
+            const body = [
+              '## ⚡ Lighthouse Report',
+              '',
+              '| URL | Performance | Accessibility | Best Practices | SEO | Report |',
+              '|-----|:-----------:|:-------------:|:--------------:|:---:|--------|',
+              ...rows,
+            ].join('\n');
+
+            // Only comment on PRs when we have a deployment SHA to look up.
+            // workflow_dispatch runs without a deployment have no associated PR to comment on.
+            const sha = context.payload.deployment?.sha;
+            if (!sha) return;
+
+            const prs = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: sha,
+            });
+
+            for (const pr of prs.data) {
+              const { data: comments } = await github.rest.issues.listComments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+              });
+
+              const existing = comments.find(c => c.body?.startsWith('## ⚡ Lighthouse Report'));
+              if (existing) {
+                await github.rest.issues.updateComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: existing.id,
+                  body,
+                });
+              } else {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: pr.number,
+                  body,
+                });
+              }
+            }
