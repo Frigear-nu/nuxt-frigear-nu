@@ -9,7 +9,9 @@ import type { AuthFormField, FormSubmitEvent } from '@nuxt/ui'
 
 const route = useRoute()
 const toast = useToast()
-const mode = defineModel<'in' | 'up'>('mode', { default: 'in' })
+const { localePath } = useSiteI18n()
+const props = withDefaults(defineProps<{ mode?: 'in' | 'up' }>(), { mode: 'in' })
+const mode = computed(() => props.mode)
 const authForm = useTemplateRef('authForm')
 const displayMagicLinkModal = ref(false)
 const displayForgotPasswordModal = ref(false)
@@ -138,6 +140,12 @@ function onPasswordResetError(err: Error) {
   toast.add(formatError(err))
   displayForgotPasswordModal.value = false
 }
+
+function navigateToOtherMode() {
+  const target = mode.value === 'up' ? '/sign-in' : '/sign-up'
+  const query = toValue(redirectTo) ? { redirect: toValue(redirectTo) } : undefined
+  navigateTo({ path: localePath(target), query })
+}
 </script>
 
 <template>
@@ -167,7 +175,7 @@ function onPasswordResetError(err: Error) {
         {{ mode === 'up' ? $t('auth.alreadyHaveAnAccount') : $t('auth.dontHaveAnAccount') }}
         <ULink
           class="text-primary font-medium"
-          @click="mode = mode === 'up' ? 'in' : 'up'"
+          @click="navigateToOtherMode"
         >
           {{ mode === 'in' ? $t('auth.signUp') : $t('auth.signIn') }}
         </ULink>.
@@ -188,7 +196,7 @@ function onPasswordResetError(err: Error) {
     <AuthMagicLinkModal
       v-model:open="displayMagicLinkModal"
       v-model:email="emailField"
-      v-model:mode="mode"
+      :mode="mode"
       @error="onMagicLinkError"
       @success="onMagicLinkDispatched"
       @development="onMagicLinkDevelopment"
@@ -218,7 +226,7 @@ function onPasswordResetError(err: Error) {
         variant="subtle"
         class="flex-1 justify-center"
         :ui="{ base: 'gap-4' }"
-        @click="mode = mode === 'up' ? 'in' : 'up'"
+        @click="navigateToOtherMode"
       >
         {{ mode === 'in' ? $t('auth.signUp') : $t('auth.signIn') }}
       </UButton>

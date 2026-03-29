@@ -87,6 +87,7 @@ watch(user, (newValue) => {
         :files="files"
         :navigation="navigation"
       />
+      <LazyCookieConsentBanner />
     </ClientOnly>
   </UApp>
 </template>

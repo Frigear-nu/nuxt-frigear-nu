@@ -10,7 +10,54 @@ seo:
 ---
 orientation: horizontal
 ---
-:nuxt-img{.rounded-full .p-4 .dark:bg-neutral-800 .bg-neutral-200 .w-fit .md:max-w-md.md:justify-self-end-safe.md:mr-12 :height="auto" :width="380" alt="Frigear FGR logo" format="webp" quality="70" src="/logo-with-rf-bg.jpg"}
+
+::hero-image-carousel
+---
+class: md:justify-self-center-safe
+sizes: "90vw md:460px"
+autoplayDelay: 3000
+showArrows: true
+showDots: false
+overlay: true
+overlayClass: "bg-gradient-to-t from-black/18 via-transparent to-primary/8"
+maxWidthClass: "max-w-115"
+frameClass: "hero-carousel-frame-fancy"
+surfaceClass: "hero-carousel-surface"
+images:
+  - src: /images/carousels/home/arena-toilet.png
+    alt: Koncert på Arena set fra Frigear backstage område
+  - src: /images/carousels/home/tower-build-1.JPG
+    alt: Frigear frivillige bygger Frigear lystårnet
+  - src: /images/carousels/home/container-lift-office-1.png
+    alt: Frigear's bagråde container bli'r sat op
+  - src: /images/carousels/home/baggear-drill.png
+    alt: Frigear bagområde - der bli'r gravet huller
+  - src: /images/carousels/home/container-lift-office-2.png
+    alt: Frigear container og kontorområde
+  - src: /images/carousels/home/fgr-frontgear-2025-3.png
+    alt: Frigear eventstemning 2025
+  - src: /images/carousels/home/baggear-unicorn-chill.png
+    alt: Frigear eventstemning 2025
+  - src: /images/carousels/home/fgr-frontgear-2025-2.png
+    alt: Frigear eventstemning 2025
+  - src: /images/carousels/home/mud-concert-arena.png
+    alt: Frigear eventstemning ved Arena 2025
+  - src: /images/carousels/home/fgr-frontgear-2025-5.png
+    alt: Frigear frivillige i frontgear 2025
+  - src: /images/carousels/home/roskilde-beer-armband-sun.png
+    alt: Frigear stemning med armbånd og øl ved orange scene
+  - src: /images/carousels/home/fgr-frontgear-2025-6.png
+    alt: Frigear frivillige i frontgear 2025
+  - src: /images/carousels/home/fgr-frontgear-spots-2025-1.png
+    alt: Frigear spot over baren i frontgear
+  - src: /images/carousels/home/fgr-sunset-from-tower.jpg
+    alt: Udsigt over Roskilde festivalen, Arena scenen ved solnedgang
+  - src: /images/carousels/home/safety-first.png
+    alt: Frigear arbejdere i sikkerhedsudstyr
+  - src: /images/carousels/home/jeppek-frigear-grill.png
+    alt: Frigear hygge ved grillen
+---
+::
 
 #title
 [{{ $doc.title }}]{.fancy-text.text-7xl.md:text-8xl} :br :br

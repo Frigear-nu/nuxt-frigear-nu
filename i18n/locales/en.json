@@ -133,7 +133,8 @@
       "avatar": {
         "label": "Avatar",
         "description": "JPG, GIF or PNG. 1MB Max."
-      }
+      },
+      "save": "Save profile"
     },
     "tickets": {
       "title": "Tickets",
@@ -242,6 +243,9 @@
   "events": {
     "upcoming": {
       "title": "Upcoming events"
+    },
+    "ongoing": {
+      "title": "Ongoing events"
     },
     "detail": {
       "when": "When?",
@@ -456,6 +460,12 @@
         "failed": "Sign up failed, are you sure you don't have an account with this e-mail?"
       }
     }
+  },
+  "cookieConsent": {
+    "description": "We use cookies to improve your experience. By continuing, you accept our use of cookies.",
+    "accept": "Accept",
+    "expand": "Show cookie consent",
+    "reject": "Reject"
   },
   "zodI18n": {
     "errors": {

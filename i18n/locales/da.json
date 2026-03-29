@@ -133,7 +133,8 @@
       "avatar": {
         "label": "Avatar",
         "description": "JPG, GIF eller PNG. 1MB Max."
-      }
+      },
+      "save": "Gem profil"
     },
     "tickets": {
       "title": "Billetter",
@@ -246,6 +247,9 @@
       },
       "title": "Kommende events",
       "description": "Følg med her om future events i Frigear og Frigear Kulturværksted ..."
+    },
+    "ongoing": {
+      "title": "Igangværende events"
     },
     "past": {
       "title": "Tidligere arrangementer",
@@ -517,6 +521,12 @@
         "failed": "Kunne ik' opprette konto, ka' det være en eksisterende konto med denne e-mail?"
       }
     }
+  },
+  "cookieConsent": {
+    "description": "Vi bruger cookies for at forbedre din oplevelse. Ved at fortsætte accepterer du vores brug af cookies.",
+    "accept": "Acceptér",
+    "expand": "Vis cookie-samtykke",
+    "reject": "Afvis"
   },
   "zodI18n": {
     "errors": {
