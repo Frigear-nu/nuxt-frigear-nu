@@ -60,7 +60,7 @@ function getFlagUrl(locale: string): string {
           <img
             :src="getFlagUrl(locale)"
             :alt="localeObj.name"
-            class="size-5 object-cover rounded-full ring-1 ring-black/10"
+            class="size-5 object-cover rounded-full ring-1 ring-black/10 border border-gray-500"
           >
         </template>
       </UButton>
