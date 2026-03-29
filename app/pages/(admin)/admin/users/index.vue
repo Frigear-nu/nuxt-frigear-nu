@@ -1,17 +1,7 @@
 <script setup lang="ts">
 import { useAdminListUsers, useAdminGetUser } from '~/store/queries/admin/users'
 import type { TableColumn, TableRow } from '@nuxt/ui'
-
-type User = {
-  id: number
-  name: string
-  email: string
-  role: string
-  avatarUrl: string | null
-  emailVerifiedAt: Date | null
-  lastLoginAt: Date | null
-  createdAt: Date | null
-}
+import type { Users } from '@nuxthub/db/schema'
 
 const { data: users } = await useAdminListUsers()
 
@@ -23,11 +13,11 @@ const isSlideoverOpen = computed({
 
 const { data: selectedUser } = useAdminGetUser(selectedUserId)
 
-function openUser(row: TableRow<User>) {
+function openUser(row: TableRow<Users>) {
   selectedUserId.value = row.original.id
 }
 
-const columns: TableColumn<User>[] = [
+const columns: TableColumn<Users>[] = [
   { accessorKey: 'name', header: 'Name' },
   { accessorKey: 'email', header: 'Email' },
   { accessorKey: 'role', header: 'Role' },
