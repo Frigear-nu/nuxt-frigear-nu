@@ -1,0 +1,105 @@
+name: CI Checks
+
+on:
+  workflow_call:
+
+env:
+  NODE_OPTIONS: --max-old-space-size=8192
+
+jobs:
+  lint:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    env:
+      STUDIO_GITHUB_CLIENT_SECRET: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
+      STUDIO_GITHUB_CLIENT_ID: ${{ vars.STUDIO_GITHUB_CLIENT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.19.0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.6
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint
+        run: pnpm lint
+
+  test-unit:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.19.0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.6
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Unit tests
+        run: pnpm test:unit
+
+  test-integration:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+    env:
+      NITRO_PRESET: node-server
+      STUDIO_GITHUB_CLIENT_SECRET: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
+      STUDIO_GITHUB_CLIENT_ID: ${{ vars.STUDIO_GITHUB_CLIENT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.19.0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.6
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: pnpm exec playwright install-deps chromium
+
+      - name: Nuxt tests
+        run: pnpm test:nuxt
+
+      - name: E2e tests
+        run: pnpm test:e2e
