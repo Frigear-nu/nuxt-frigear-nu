@@ -63,7 +63,7 @@ jobs:
     name: CI (lint + test)
     runs-on: ubuntu-22.04
     env:
-      NITRO_PRESET: ${{ vars.NITRO_PRESET }}
+      NITRO_PRESET: node-server
       STUDIO_GITHUB_CLIENT_SECRET: ${{ secrets.STUDIO_GITHUB_CLIENT_SECRET }}
       STUDIO_GITHUB_CLIENT_ID: ${{ vars.STUDIO_GITHUB_CLIENT_ID }}
     steps:

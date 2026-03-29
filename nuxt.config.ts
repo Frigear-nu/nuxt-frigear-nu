@@ -73,6 +73,7 @@ export default defineNuxtConfig({
     },
     sourcemap: false,
     nitro: {
+      preset: 'node-server',
       prerender: {
         failOnError: false,
       },
