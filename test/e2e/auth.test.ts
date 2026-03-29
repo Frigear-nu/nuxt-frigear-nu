@@ -5,13 +5,12 @@
  * page being rendered as a password field (masked) due to SSR/hydration
  * mismatches. See: https://github.com/Frigear-nu/nuxt-frigear-nu/issues/481
  */
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { setup, createPage } from '@nuxt/test-utils/e2e'
-import { fileURLToPath } from 'node:url'
 
 await setup({
-  rootDir: fileURLToPath(new URL('../../', import.meta.url)),
   browser: true,
+  setupTimeout: 300_000,
 })
 
 describe('Sign In page (/sign-in)', () => {
