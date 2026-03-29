@@ -67,14 +67,6 @@ export default defineNuxtConfig({
 
   $test: {
     runtimeConfig: {
-      content: {
-        integrityCheck: true,
-      },
-      hub: {
-        db: {
-          applyMigrationsDuringBuild: false,
-        },
-      },
       session: {
         password: 'test-session-password-that-is-at-least-32-chars!!',
       },
@@ -83,6 +75,13 @@ export default defineNuxtConfig({
     nitro: {
       prerender: {
         failOnError: false,
+      },
+    },
+    hub: {
+      db: {
+        applyMigrationsDuringBuild: false,
+        dialect: 'sqlite',
+        casing: 'snake_case',
       },
     },
     fonts: {

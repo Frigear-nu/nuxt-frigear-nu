@@ -8,5 +8,4 @@ ignoredBuiltDependencies:
   - workerd
 
 onlyBuiltDependencies:
-  - better-sqlite3
   - sharp
