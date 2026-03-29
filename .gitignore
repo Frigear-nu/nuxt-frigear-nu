@@ -47,3 +47,6 @@ supabase/
 
 # Test results
 test-results/
+
+# Large video files – store these outside git (CDN, cloud storage, etc.)
+public/videos/
