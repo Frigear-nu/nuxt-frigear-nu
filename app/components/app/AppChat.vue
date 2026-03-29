@@ -1,25 +1,14 @@
 <script setup lang="ts">
 import type { ChatMessage } from '#shared/schema/chat'
 
-const { locale } = useSiteI18n()
+const { locale, t } = useSiteI18n()
 
-const SUGGESTED_QUESTIONS_DA = [
-  'Hvad er Frigear?',
-  'Hvordan bliver jeg frivillig?',
-  'Hvad koster et medlemskab?',
-  'Hvad er jeres næste arrangement?',
-]
-
-const SUGGESTED_QUESTIONS_EN = [
-  'What is Frigear?',
-  'How do I become a volunteer?',
-  'What does a membership cost?',
-  'What is your next event?',
-]
-
-const suggestedQuestions = computed(() =>
-  locale.value === 'en' ? SUGGESTED_QUESTIONS_EN : SUGGESTED_QUESTIONS_DA,
-)
+const suggestedQuestions = computed(() => [
+  t('chat.suggested.whatIsFrigear'),
+  t('chat.suggested.howToVolunteer'),
+  t('chat.suggested.membershipCost'),
+  t('chat.suggested.nextEvent'),
+])
 
 const isOpen = ref(false)
 const inputMessage = ref('')
@@ -76,10 +65,7 @@ async function sendMessage(content?: string) {
     }
   }
   catch {
-    messages.value[messages.value.length - 1]!.content
-      = locale.value === 'en'
-        ? 'Sorry, something went wrong. Please try again.'
-        : 'Beklager, noget gik galt. Prøv venligst igen.'
+    messages.value[messages.value.length - 1]!.content = t('chat.error')
   }
   finally {
     isLoading.value = false
@@ -130,7 +116,7 @@ watch(isOpen, (open) => {
                 name="i-lucide-sparkles"
                 class="size-5"
               />
-              <span class="font-semibold text-sm">Frie</span>
+              <span class="font-semibold text-sm">{{ $t('chat.title') }}</span>
               <UBadge
                 color="success"
                 variant="subtle"
@@ -139,13 +125,13 @@ watch(isOpen, (open) => {
               />
             </div>
             <div class="flex items-center gap-1">
-              <UTooltip :text="locale === 'en' ? 'New chat' : 'Ny chat'">
+              <UTooltip :text="$t('chat.newChat')">
                 <UButton
                   icon="i-lucide-rotate-ccw"
                   variant="ghost"
                   color="white"
                   size="xs"
-                  :aria-label="locale === 'en' ? 'New chat' : 'Ny chat'"
+                  :aria-label="$t('chat.newChat')"
                   @click="resetChat"
                 />
               </UTooltip>
@@ -154,7 +140,7 @@ watch(isOpen, (open) => {
                 variant="ghost"
                 color="white"
                 size="xs"
-                :aria-label="locale === 'en' ? 'Close chat' : 'Luk chat'"
+                :aria-label="$t('chat.close')"
                 @click="isOpen = false"
               />
             </div>
@@ -170,10 +156,10 @@ watch(isOpen, (open) => {
                   class="size-8 text-(--ui-primary) mx-auto mb-2"
                 />
                 <p class="text-sm font-medium text-(--ui-text-highlighted)">
-                  {{ locale === 'en' ? "Hi! I'm Frie 👋" : 'Hej! Jeg er Frie 👋' }}
+                  {{ $t('chat.greeting') }}
                 </p>
                 <p class="text-xs text-(--ui-text-muted) mt-1">
-                  {{ locale === 'en' ? 'Ask me anything about Frigear' : 'Spørg mig om alt vedrørende Frigear' }}
+                  {{ $t('chat.subtitle') }}
                 </p>
               </div>
               <div class="space-y-2">
@@ -227,7 +213,7 @@ watch(isOpen, (open) => {
             <div class="flex items-end gap-2">
               <UTextarea
                 v-model="inputMessage"
-                :placeholder="locale === 'en' ? 'Ask Frie something...' : 'Spørg Frie om noget...'"
+                :placeholder="$t('chat.placeholder')"
                 :rows="1"
                 autoresize
                 :maxrows="4"
@@ -241,7 +227,7 @@ watch(isOpen, (open) => {
                 size="sm"
                 :disabled="!inputMessage.trim() || isLoading"
                 :loading="isLoading"
-                :aria-label="locale === 'en' ? 'Send message' : 'Send besked'"
+                :aria-label="$t('chat.send')"
                 @click="sendMessage()"
               />
             </div>
@@ -254,7 +240,7 @@ watch(isOpen, (open) => {
         :icon="isOpen ? 'i-lucide-x' : 'i-lucide-sparkles'"
         size="xl"
         :ui="{ base: 'rounded-full shadow-lg size-14' }"
-        :aria-label="isOpen ? (locale === 'en' ? 'Close chat' : 'Luk chat') : (locale === 'en' ? 'Chat with Frie' : 'Chat med Frie')"
+        :aria-label="isOpen ? $t('chat.close') : $t('chat.open')"
         @click="isOpen = !isOpen"
       />
     </div>

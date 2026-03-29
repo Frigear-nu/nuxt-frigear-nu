@@ -521,6 +521,23 @@
       }
     }
   },
+  "chat": {
+    "title": "Frie",
+    "newChat": "Ny chat",
+    "close": "Luk chat",
+    "open": "Chat med Frie",
+    "send": "Send besked",
+    "placeholder": "Spørg Frie om noget...",
+    "greeting": "Hej! Jeg er Frie 👋",
+    "subtitle": "Spørg mig om alt vedrørende Frigear",
+    "error": "Beklager, noget gik galt. Prøv venligst igen.",
+    "suggested": {
+      "whatIsFrigear": "Hvad er Frigear?",
+      "howToVolunteer": "Hvordan bliver jeg frivillig?",
+      "membershipCost": "Hvad koster et medlemskab?",
+      "nextEvent": "Hvad er jeres næste arrangement?"
+    }
+  },
   "zodI18n": {
     "errors": {
       "custom": "Ugyldig værdi",
