@@ -521,6 +521,11 @@
       }
     }
   },
+  "cookieConsent": {
+    "description": "Vi bruger cookies for at forbedre din oplevelse. Ved at fortsætte accepterer du vores brug af cookies.",
+    "accept": "Acceptér",
+    "reject": "Afvis"
+  },
   "zodI18n": {
     "errors": {
       "custom": "Ugyldig værdi",

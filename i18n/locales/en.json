@@ -460,6 +460,11 @@
       }
     }
   },
+  "cookieConsent": {
+    "description": "We use cookies to improve your experience. By continuing, you accept our use of cookies.",
+    "accept": "Accept",
+    "reject": "Reject"
+  },
   "zodI18n": {
     "errors": {
       "too_big": {
