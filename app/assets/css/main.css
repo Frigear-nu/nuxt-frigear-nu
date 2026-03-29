@@ -8,6 +8,10 @@
  **/
 @utility fancy-text {
   @apply bg-linear-to-r from-blue-700 via-25% via-secondary-800 to-purple-600 bg-clip-text text-transparent;
+
+  filter:
+    drop-shadow(0 0 1.5px rgb(124 58 237 / 0.40))
+    drop-shadow(0 0 6px rgb(59 130 246 / 0.18));
 }
 
 @utility gradient-linear-br-teal-purple {
@@ -80,6 +84,11 @@
 }
 
 @utility hero-carousel-frame-fancy {
+  /* Gradient stop colors — change these to retheme the frame and arrows together */
+  --hcf-blue:   37 99 235;
+  --hcf-purple: 124 58 237;
+  --hcf-teal:   20 184 166;
+
   @apply relative isolate rounded-full p-3.5 sm:p-3.75;
 
   transform-style: preserve-3d;
@@ -93,57 +102,82 @@
     box-shadow 220ms ease-out;
 
   background:
+    /* Shine highlight (was ::before — freed up for inner border ring) */
+    linear-gradient(
+      145deg,
+      rgb(255 255 255 / 0.22) 0%,
+      rgb(255 255 255 / 0.08) 14%,
+      transparent 32%,
+      transparent 100%
+    ),
     conic-gradient(
       from 215deg at 50% 50%,
-      rgb(37 99 235 / 0.90) 0deg,
-      rgb(124 58 237 / 0.86) 120deg,
-      rgb(20 184 166 / 0.58) 230deg,
-      rgb(37 99 235 / 0.90) 360deg
+      rgb(var(--hcf-blue)   / 0.90) 0deg,
+      rgb(var(--hcf-purple) / 0.86) 120deg,
+      rgb(var(--hcf-teal)   / 0.58) 230deg,
+      rgb(var(--hcf-blue)   / 0.90) 360deg
     );
 
   box-shadow:
     0 28px 60px -24px rgb(7 15 40 / 0.62),
     0 10px 28px rgb(10 20 40 / 0.32),
-    inset 0 1px 0 rgb(255 255 255 / 0.14);
+    inset 0 1px 0 rgb(255 255 255 / 0.14),
+    /* directional glows echoing the arrow button colours */
+    -8px 0 22px -5px rgb(var(--hcf-purple) / 0.50),
+     8px 0 22px -5px rgb(var(--hcf-teal)   / 0.40);
 
   @variant dark {
     box-shadow:
       0 34px 70px -26px rgb(2 6 23 / 0.78),
       0 14px 32px rgb(2 6 23 / 0.42),
-      inset 0 1px 0 rgb(255 255 255 / 0.12);
+      inset 0 1px 0 rgb(255 255 255 / 0.12),
+      -8px 0 26px -5px rgb(var(--hcf-purple) / 0.60),
+       8px 0 26px -5px rgb(var(--hcf-teal)   / 0.50);
   }
 }
 
+/* Inner gradient border ring — at the inner edge of the frame, on top of the image edge */
 .hero-carousel-frame-fancy::before {
   content: "";
-  @apply pointer-events-none absolute inset-0 rounded-full;
+  @apply pointer-events-none absolute rounded-full;
 
-  background:
-    linear-gradient(
-      145deg,
-      rgb(255 255 255 / 0.30) 0%,
-      rgb(255 255 255 / 0.10) 14%,
-      transparent 34%,
-      transparent 100%
-    );
+  /* inset matches p-3.5 = 0.875rem; at sm+ p-3.75 the 1px diff is negligible */
+  inset: 0.875rem;
+  z-index: 20;
 
-  mix-blend-mode: screen;
-  opacity: 0.72;
+  background: conic-gradient(
+    from 270deg at 50% 50%,
+    rgb(var(--hcf-purple) / 0.90) 0deg,
+    rgb(var(--hcf-blue)   / 0.60) 90deg,
+    rgb(var(--hcf-teal)   / 0.90) 180deg,
+    rgb(var(--hcf-blue)   / 0.60) 270deg,
+    rgb(var(--hcf-purple) / 0.90) 360deg
+  );
+
+  /* Trim to a 2px ring at the outer (= inner-frame) edge */
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), black calc(100% - 2px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 2px), black calc(100% - 2px));
 }
 
-.hero-carousel-frame-fancy::after {
+/* Outer gradient border ring — sits just outside the frame */.hero-carousel-frame-fancy::after {
   content: "";
-  @apply pointer-events-none absolute inset-[-3%] -z-10 rounded-full;
+  @apply pointer-events-none absolute rounded-full;
 
-  background:
-    radial-gradient(
-      circle at 50% 50%,
-      rgb(124 58 237 / 0.16) 0%,
-      rgb(59 130 246 / 0.10) 28%,
-      transparent 64%
-    );
+  inset: -2px;
+  z-index: -1;
 
-  filter: blur(18px);
+  background: conic-gradient(
+    from 270deg at 50% 50%,
+    rgb(var(--hcf-purple) / 0.85) 0deg,
+    rgb(var(--hcf-blue)   / 0.55) 90deg,
+    rgb(var(--hcf-teal)   / 0.85) 180deg,
+    rgb(var(--hcf-blue)   / 0.55) 270deg,
+    rgb(var(--hcf-purple) / 0.85) 360deg
+  );
+
+  /* Trim to a 2px ring at the outer edge */
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), black calc(100% - 2px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 2px), black calc(100% - 2px));
 }
 
 @utility hero-carousel-surface {
@@ -254,7 +288,7 @@
 }
 
 @utility hero-carousel-arrow {
-  @apply absolute top-1/2 z-30 grid size-10 -translate-y-1/2 place-items-center rounded-full border text-white/90 sm:size-11;
+  @apply absolute top-1/2 z-30 grid size-10 -translate-y-1/2 place-items-center rounded-full border sm:size-11;
 
   border-color: rgb(255 255 255 / 0.14);
 
@@ -290,21 +324,87 @@
 }
 
 .hero-carousel-arrow-left {
+  /* Icon colour: purple; button border: purple; icon glow: teal (opposite) */
+  color: rgb(var(--hcf-purple, 124 58 237));
+
   left: -0.45rem;
+  justify-content: center;
+  border: 1.5px solid rgb(var(--hcf-purple, 124 58 237) / 0.70);
+  background:
+    linear-gradient(
+      180deg,
+      rgb(15 23 42 / 0.82) 0%,
+      rgb(2 6 23 / 0.90) 100%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgb(var(--hcf-purple, 124 58 237) / 0.18) 0%,
+      transparent 60%
+    );
+
+  /* Glowing border rings — inner tight halo + outer bloom */
+  box-shadow:
+    0 0 0 1px rgb(var(--hcf-purple, 124 58 237) / 0.55),
+    0 0 8px 1px rgb(var(--hcf-purple, 124 58 237) / 0.35),
+    0 8px 24px rgb(2 6 23 / 0.28),
+    inset 0 1px 0 rgb(255 255 255 / 0.10);
+}
+
+.hero-carousel-arrow-left svg,
+.hero-carousel-arrow-left [class*="i-"] {
+  /* Teal halo — opposite of purple border */
+  filter: drop-shadow(0 0 4px rgb(var(--hcf-teal, 20 184 166) / 0.90));
 }
 
 .hero-carousel-arrow-right {
+  /* Icon colour: teal; button border: teal; icon glow: purple (opposite) */
+  color: rgb(var(--hcf-teal, 20 184 166));
+
   right: -0.45rem;
+  justify-content: center;
+  border: 1.5px solid rgb(var(--hcf-teal, 20 184 166) / 0.70);
+  background:
+    linear-gradient(
+      180deg,
+      rgb(15 23 42 / 0.82) 0%,
+      rgb(2 6 23 / 0.90) 100%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgb(var(--hcf-teal, 20 184 166) / 0.18) 0%,
+      transparent 60%
+    );
+
+  /* Glowing border rings — inner tight halo + outer bloom */
+  box-shadow:
+    0 0 0 1px rgb(var(--hcf-teal, 20 184 166) / 0.55),
+    0 0 8px 1px rgb(var(--hcf-teal, 20 184 166) / 0.35),
+    0 8px 24px rgb(2 6 23 / 0.28),
+    inset 0 1px 0 rgb(255 255 255 / 0.10);
+}
+
+.hero-carousel-arrow-right svg,
+.hero-carousel-arrow-right [class*="i-"] {
+  /* Purple halo — opposite of teal border */
+  filter: drop-shadow(0 0 4px rgb(var(--hcf-purple, 124 58 237) / 0.90));
 }
 
 @media (min-width: 640px) {
   .hero-carousel-arrow-left {
-    left: -0.7rem;
+    left: -1.9rem;
   }
 
   .hero-carousel-arrow-right {
-    right: -0.7rem;
+    right: -1.9rem;
   }
+}
+
+/* Enlarge the chevron icon without touching the button circle */
+.hero-carousel-arrow svg,
+.hero-carousel-arrow [class*="i-"] {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
 }
 
 .hero-carousel-arrow:hover {
@@ -312,36 +412,36 @@
     0 12px 28px rgb(2 6 23 / 0.34),
     inset 0 1px 0 rgb(255 255 255 / 0.14);
 
-  background:
+  /* background:
     linear-gradient(
       180deg,
       rgb(255 255 255 / 0.16) 0%,
       rgb(255 255 255 / 0.06) 100%
-    );
+    ); */
 }
 
 .hero-carousel-arrow-left:hover {
-  transform: translateY(-50%) scale(1.05) translateX(-1px);
+  transform: scale(1.15) translateX(-1px);
 }
 
 .hero-carousel-arrow-right:hover {
-  transform: translateY(-50%) scale(1.05) translateX(1px);
+  transform: scale(1.15) translateX(1px);
 }
 
 .hero-carousel-arrow:focus-visible {
   outline: none;
   box-shadow:
-    0 0 0 2px rgb(255 255 255 / 0.28),
-    0 0 0 6px rgb(59 130 246 / 0.22),
-    0 12px 28px rgb(2 6 23 / 0.34);
+    0 0 0 2px rgba(91, 12, 99, 0.356),
+    0 0 0 6px rgba(25, 88, 190, 0.329),
+    0 12px 28px rgba(49, 4, 51, 0.432);
 }
 
 @keyframes hero-aura-float {
   0% {
-    transform: translate3d(-1.5%, -1%, 0) scale(1.02);
+    transform: translate3d(-2.5%, -1%, 0) scale(1.02);
   }
   100% {
-    transform: translate3d(1.5%, 1%, 0) scale(1.08);
+    transform: translate3d(2.5%, 1%, 0) scale(1.08);
   }
 }
 
