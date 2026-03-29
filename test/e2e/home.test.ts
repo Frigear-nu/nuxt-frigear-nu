@@ -1,10 +1,5 @@
-import { setup, createPage } from '@nuxt/test-utils/e2e'
+import { createPage } from '@nuxt/test-utils/e2e'
 import { describe, expect, it } from 'vitest'
-
-await setup({
-  browser: true,
-  setupTimeout: 300_000,
-})
 
 describe('home page', () => {
   it('has title "Hjem" on the Danish home page', async () => {
