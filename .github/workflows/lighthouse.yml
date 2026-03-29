@@ -1,0 +1,32 @@
+name: Lighthouse
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        required: false
+        description: The URL to run Lighthouse against. If omitted, uses the deployment URL.
+        type: string
+  deployment_status:
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    environment:
+      name: ${{ github.event.deployment.environment || 'production' }}
+      url: ${{ inputs.url || github.event.deployment_status.environment_url }}
+    if: github.event.deployment_status.state == 'success' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12
+        with:
+          urls: ${{ inputs.url || github.event.deployment_status.environment_url }}
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
