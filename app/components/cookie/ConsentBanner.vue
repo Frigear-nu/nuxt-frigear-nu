@@ -58,11 +58,13 @@ watch(scrolledDown, (isDown) => {
               color="neutral"
               variant="outline"
               :label="$t('cookieConsent.reject')"
+              data-testid="cookie-consent-reject"
               @click="reject"
             />
             <UButton
               color="primary"
               :label="$t('cookieConsent.accept')"
+              data-testid="cookie-consent-accept"
               @click="accept"
             />
           </div>

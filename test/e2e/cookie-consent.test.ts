@@ -16,8 +16,8 @@ describe('Cookie consent banner', () => {
     const banner = page.locator('[data-testid="cookie-consent-banner"]')
     await banner.waitFor({ state: 'visible' })
 
-    const acceptBtn = page.getByRole('button', { name: /accept/i })
-    const rejectBtn = page.getByRole('button', { name: /reject/i })
+    const acceptBtn = page.locator('[data-testid="cookie-consent-accept"]')
+    const rejectBtn = page.locator('[data-testid="cookie-consent-reject"]')
 
     expect(await acceptBtn.isVisible()).toBe(true)
     expect(await rejectBtn.isVisible()).toBe(true)
@@ -29,7 +29,7 @@ describe('Cookie consent banner', () => {
     const banner = page.locator('[data-testid="cookie-consent-banner"]')
     await banner.waitFor({ state: 'visible' })
 
-    await page.getByRole('button', { name: /accept/i }).click()
+    await page.locator('[data-testid="cookie-consent-accept"]').click()
     await banner.waitFor({ state: 'hidden' })
     expect(await banner.isVisible()).toBe(false)
     await page.close()
@@ -40,7 +40,7 @@ describe('Cookie consent banner', () => {
     const banner = page.locator('[data-testid="cookie-consent-banner"]')
     await banner.waitFor({ state: 'visible' })
 
-    await page.getByRole('button', { name: /reject/i }).click()
+    await page.locator('[data-testid="cookie-consent-reject"]').click()
     await banner.waitFor({ state: 'hidden' })
     expect(await banner.isVisible()).toBe(false)
     await page.close()
