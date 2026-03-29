@@ -2,54 +2,45 @@
  * E2E tests for the admin area.
  *
  * Covers:
- * - Auth guard: unauthenticated users are redirected to /sign-in for all
- *   protected admin routes.
- * - Admin users page: the page redirects with the correct `redirect` query
- *   param so the user can be returned after sign-in.
+ * - Auth guard: unauthorized access to /admin throws a 403 error and does NOT
+ *   redirect, per the canViewAdminArea ability in shared/abilities/admin/index.ts.
+ * - Admin users page: only accessible for users with the 'admin' role
+ *   (canListUsers ability in shared/abilities/admin/users.ts).
  */
 import { describe, expect, it } from 'vitest'
 import { createPage } from '@nuxt/test-utils/e2e'
 
-describe('Admin area auth guard', () => {
-  it('redirects unauthenticated users from /admin to /sign-in', async () => {
+describe('Admin area (/admin) — canViewAdminArea guard', () => {
+  it('shows a 403 error for unauthenticated users (does not redirect to /sign-in)', async () => {
     const page = await createPage('/admin')
-    await page.waitForURL(/\/sign-in/)
-    expect(page.url()).toContain('/sign-in')
+    await page.waitForLoadState('networkidle')
+    expect(page.url()).not.toContain('/sign-in')
+    const bodyText = await page.textContent('body')
+    expect(bodyText).toContain('403')
     await page.close()
   })
 
-  it('includes a redirect query param pointing back to /admin', async () => {
+  it('stays on the /admin URL and does not redirect away', async () => {
     const page = await createPage('/admin')
-    await page.waitForURL(/\/sign-in/)
-    expect(page.url()).toContain('redirect=')
-    expect(decodeURIComponent(page.url())).toContain('/admin')
-    await page.close()
-  })
-
-  it('redirects unauthenticated users from /admin/users to /sign-in', async () => {
-    const page = await createPage('/admin/users')
-    await page.waitForURL(/\/sign-in/)
-    expect(page.url()).toContain('/sign-in')
+    await page.waitForLoadState('networkidle')
+    expect(page.url()).toContain('/admin')
     await page.close()
   })
 })
 
-describe('Admin users page', () => {
-  it('redirects to /sign-in with redirect param pointing to /admin/users when unauthenticated', async () => {
+describe('Admin users page (/admin/users) — admin role required', () => {
+  it('shows a 403 error for unauthenticated users', async () => {
     const page = await createPage('/admin/users')
-    await page.waitForURL(/\/sign-in/)
-    const url = decodeURIComponent(page.url())
-    expect(url).toContain('/sign-in')
-    expect(url).toContain('/admin/users')
+    await page.waitForLoadState('networkidle')
+    const bodyText = await page.textContent('body')
+    expect(bodyText).toContain('403')
     await page.close()
   })
 
-  it('shows the sign-in form after redirect', async () => {
+  it('does not redirect unauthenticated users to /sign-in', async () => {
     const page = await createPage('/admin/users')
-    await page.waitForURL(/\/sign-in/)
-    const emailInput = page.locator('input[autocomplete="email"]')
-    await emailInput.waitFor()
-    expect(await emailInput.getAttribute('type')).toBe('email')
+    await page.waitForLoadState('networkidle')
+    expect(page.url()).not.toContain('/sign-in')
     await page.close()
   })
 })
