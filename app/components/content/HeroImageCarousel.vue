@@ -182,7 +182,8 @@ const overlayClasses = computed(() => [
 ])
 
 const carouselUi = {
-  item: 'basis-full',
+  container: 'ms-0',
+  item: 'basis-full ps-0',
   controls: 'pointer-events-none absolute inset-0 z-20',
   prev: 'pointer-events-auto',
   next: 'pointer-events-auto',
