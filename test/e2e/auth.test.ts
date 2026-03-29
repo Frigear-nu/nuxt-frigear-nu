@@ -6,12 +6,7 @@
  * mismatches. See: https://github.com/Frigear-nu/nuxt-frigear-nu/issues/481
  */
 import { describe, expect, it } from 'vitest'
-import { setup, createPage } from '@nuxt/test-utils/e2e'
-
-await setup({
-  browser: true,
-  setupTimeout: 300_000,
-})
+import { createPage } from '@nuxt/test-utils/e2e'
 
 describe('Sign In page (/sign-in)', () => {
   it('renders the email input with type="email"', async () => {
