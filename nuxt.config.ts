@@ -216,11 +216,11 @@ export default defineNuxtConfig({
   },
 
   hub: {
-    db: {
-      dialect: 'sqlite',
-      casing: 'snake_case',
-    },
     blob: true,
+    db: {
+      casing: 'snake_case',
+      dialect: 'sqlite',
+    },
   },
   vite: {
     optimizeDeps: {

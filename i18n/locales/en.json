@@ -460,6 +460,23 @@
       }
     }
   },
+  "chat": {
+    "title": "Frie",
+    "newChat": "New chat",
+    "close": "Close chat",
+    "open": "Chat with Frie",
+    "send": "Send message",
+    "placeholder": "Ask Frie something...",
+    "greeting": "Hi! I'm Frie 👋",
+    "subtitle": "Ask me anything about Frigear",
+    "error": "Sorry, something went wrong. Please try again.",
+    "suggested": {
+      "whatIsFrigear": "What is Frigear?",
+      "howToVolunteer": "How do I become a volunteer?",
+      "membershipCost": "What does a membership cost?",
+      "nextEvent": "What is your next event?"
+    }
+  },
   "zodI18n": {
     "errors": {
       "too_big": {

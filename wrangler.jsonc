@@ -29,6 +29,9 @@
       "binding": "BLOB"
     }
   ],
+  "ai": {
+    "binding": "AI"
+  },
   "preview_urls": false,
   "routes": [
     {
