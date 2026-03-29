@@ -66,6 +66,33 @@ export default defineNuxtConfig({
   },
 
   $test: {
+    runtimeConfig: {
+      session: {
+        password: 'test-session-password-that-is-at-least-32-chars!!',
+      },
+    },
+    sourcemap: false,
+    nitro: {
+      prerender: {
+        failOnError: false,
+      },
+    },
+    hub: {
+      db: {
+        applyMigrationsDuringBuild: false,
+        dialect: 'sqlite',
+        casing: 'snake_case',
+      },
+    },
+    fonts: {
+      providers: {
+        bunny: false,
+        fontshare: false,
+        fontsource: false,
+        google: false,
+        googleicons: false,
+      },
+    },
     studio: false,
   },
 
@@ -148,16 +175,15 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/sign-in': { prerender: false },
+    '/sign-up': { prerender: false },
     '/account': { prerender: false },
     '/account/**': { prerender: false },
     '/admin/**': { prerender: false },
-    // Static Redirects
-    '/sign-up': { redirect: { to: '/sign-in?mode=up' } },
     // Temporary Redirects: should be removed in 2027 possibly.
     '/signin/password_signin': { redirect: { to: '/sign-in', statusCode: 301 } },
     '/signin/email_signin': { redirect: { to: '/sign-in?provider=link', statusCode: 301 } },
     '/signin/forgot_password': { redirect: { to: '/forgot-password', statusCode: 301 } },
-    '/signin/signup': { redirect: { to: '/sign-in?mode=up', statusCode: 301 } },
+    '/signin/signup': { redirect: { to: '/sign-up', statusCode: 301 } },
     '/pricing': { redirect: { to: '/membership', statusCode: 301 } },
 
     // API

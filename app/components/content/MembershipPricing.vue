@@ -57,7 +57,7 @@ const onSelectMembership = (price: PublicPrice) => {
 
   //
   if (loggedIn.value) return navigateTo(`/account/membership`)
-  return navigateTo(`/sign-in?mode=up`)
+  return navigateTo(`/sign-up`)
 }
 </script>
 
