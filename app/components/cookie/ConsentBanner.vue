@@ -41,7 +41,7 @@ watch(scrolledDown, (isDown) => {
     >
       <div class="relative w-[92vw] rounded-t-2xl border border-primary/70 bg-(--ui-bg) shadow-xl">
         <!-- Cookie icon badge top-left -->
-        <div class="absolute -top-3.5 left-4 rounded-full border border-primary/70 bg-(--ui-bg) p-1">
+        <div class="absolute -top-3.5 left-4 flex items-center justify-center rounded-full border border-primary/70 bg-(--ui-bg) p-1">
           <UIcon
             name="i-lucide-cookie"
             class="size-5 text-primary"
