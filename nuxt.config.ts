@@ -70,6 +70,7 @@ export default defineNuxtConfig({
       session: {
         password: 'test-session-password-that-is-at-least-32-chars!!',
       },
+      testMode: true,
     },
     sourcemap: false,
     nitro: {
@@ -171,6 +172,7 @@ export default defineNuxtConfig({
     acl: {
       admins: '', // admin1@gmail.com,admin2@gmail.com
     },
+    testMode: false,
   },
 
   routeRules: {
