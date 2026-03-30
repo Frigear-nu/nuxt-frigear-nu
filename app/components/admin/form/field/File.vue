@@ -13,6 +13,7 @@ const props = withDefaults(defineProps<{
 })
 
 const filesPaths = computed(() => {
+  if (!props.file) return []
   if (typeof props.file === 'string') {
     return [props.file]
   }
