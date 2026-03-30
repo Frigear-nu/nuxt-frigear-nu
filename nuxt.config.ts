@@ -233,6 +233,7 @@ export default defineNuxtConfig({
         'zod',
         '@internationalized/date',
         'nuxt-authorization/utils',
+        '@nitrotool/errors',
       ],
     },
   },

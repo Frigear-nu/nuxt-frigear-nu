@@ -50,6 +50,7 @@ export const CollectionFormSchema = z.object({
   form: z.object({
     steps: z.array(ContentStepSchema),
   }),
+  preview: z.array(z.string()).optional(),
   variables: variables.optional(),
   delivery: z.array(z.union([
     z.object({

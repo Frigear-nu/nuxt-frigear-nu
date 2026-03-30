@@ -2,13 +2,16 @@
 import type { ButtonProps } from '@nuxt/ui'
 import useFormAsAdmin from '~/composables/admin/useFormAsAdmin'
 import { withLeadingSlash } from 'ufo'
+import { objectGet } from '#shared/object'
+import { upperFirst } from 'scule'
 
 const route = useRoute()
 const { $api } = useNuxtApp()
+const { t } = useSiteI18n()
 const [{ data: form }, { data: submissions }] = await Promise.all([
   useFormAsAdmin(),
   useAsyncData(() => `admin:form:${route.path}:submissions`, async () => {
-    return $api(`/api/admin/forms${withLeadingSlash(route.params.formPath.join('/'))}`)
+    return $api(`/api/admin/forms${withLeadingSlash(route.params.formPath?.join('/'))}`)
   }),
 ])
 
@@ -27,14 +30,33 @@ const headerLinks = computed<ButtonProps[]>(() => [
   },
 ])
 
-const getPreview = (submission: typeof submissions.value[0]) => {
+const getPreview = (submission: typeof submissions.value[number]) => {
+  if (form.value && form.value.preview) {
+    return Object.fromEntries(form.value.preview.map(key => [key, objectGet(submission.data || {}, key)]))
+  }
   if (submission.data && typeof submission.data === 'object') {
     const { files: _, ...data } = submission.data
-    return Object.values(data).map(v => typeof v === 'object' ? JSON.stringify(v) : v)
-      .slice(0, 3)
+    return Object.fromEntries(Object.keys(data).slice(0, 3).map(key => [key, objectGet(submission.data || {}, key)]))
   }
 
-  return []
+  return {}
+}
+
+const translationKey = (key: string) => {
+  let prefix = `form.${form.value.name}`
+  // TODO: this should follow the form...
+  if (form.value && form.value.name === 'project-application') {
+    prefix = 'form.application'
+  }
+
+  const translateKey = `${prefix}.${key}.label`
+  const translated = t(translateKey)
+
+  if (translated !== translateKey) {
+    return translated
+  }
+
+  return key.split('.').slice(-1)[0].split('_').map(upperFirst).join(' ')
 }
 </script>
 
@@ -52,13 +74,12 @@ const getPreview = (submission: typeof submissions.value[0]) => {
         :to="`/admin/forms${withLeadingSlash(form.path)}/submissions/${submission.id}`"
       >
         <template #description>
-          <b>Preview:</b><br>
           <div class="flex flex-col gap-0">
             <div
-              v-for="item in getPreview(submission)"
-              :key="item"
+              v-for="(value, key) in getPreview(submission)"
+              :key="key"
             >
-              {{ item }}
+              <b>{{ translationKey(key) }}</b>: {{ value || 'n/a' }}
             </div>
           </div>
         </template>

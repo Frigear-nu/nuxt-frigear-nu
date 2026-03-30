@@ -2,8 +2,13 @@ type NestedObject = { [key: string]: unknown | NestedObject }
 type DottedObject = { [key: string]: unknown }
 
 //  objectGet({ a: { b: 1 } }, 'a.b') === 1
-export const objectGet = <T = unknown>(obj: NestedObject, path: string): T =>
-  path.split('.').reduce((o, i) => (o as NestedObject)[i] as NestedObject, obj) as T
+export const objectGet = <T = unknown>(obj: NestedObject, path: string): T | undefined => {
+  if (obj == null || !path) return undefined
+  return path.split('.').reduce<NestedObject | undefined>(
+    (o, i) => (o != null ? (o as NestedObject)[i] as NestedObject : undefined),
+    obj,
+  ) as T | undefined
+}
 
 // objectSet({ a: { b: 1 } }, 'a.b', 2) => { a: { b: 2 } }
 export const objectSet = <T extends NestedObject>(obj: T, path: string, value: unknown): T => {
@@ -36,8 +41,8 @@ export const objectDot = (obj: NestedObject, prefix = '', separator = '.'): Dott
   }, {})
 
 // objectUndot({ 'some.path': true }, '.') === { some: { path: true } }
-export const objectUndot = (obj: DottedObject, separator = '.'): NestedObject =>
+export const objectUndot = (obj: DottedObject): NestedObject =>
   Object.entries(obj).reduce<NestedObject>((acc, [key, value]) => {
-    objectSet(acc, key, value, separator)
+    objectSet(acc, key, value)
     return acc
   }, {})
