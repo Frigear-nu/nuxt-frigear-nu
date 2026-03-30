@@ -1,3 +1,4 @@
+import { execSync } from 'node:child_process'
 import { createTest, exposeContextToEnv } from '@nuxt/test-utils/e2e'
 
 /**
@@ -17,6 +18,19 @@ const hooks = createTest({ setupTimeout: 300_000 })
 
 export const setup = async () => {
   await hooks.beforeAll()
+  // Apply database migrations after the build so that tables created by
+  // custom migrations are available during e2e tests.  The NuxtHub module
+  // copies migration files to .data/hub/db/migrations/ during the build but
+  // intentionally skips applying them (applyMigrationsDuringBuild: false) to
+  // avoid an @nuxt/content integrity-check conflict.  Running the CLI command
+  // here applies any pending migrations to the local SQLite database before
+  // tests start.
+  try {
+    execSync('pnpm db:migrate', { stdio: 'inherit' })
+  }
+  catch (error) {
+    throw new Error(`Failed to apply database migrations before e2e tests: ${error instanceof Error ? error.message : error}`)
+  }
   exposeContextToEnv()
 }
 
