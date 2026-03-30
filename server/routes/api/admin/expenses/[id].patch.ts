@@ -1,4 +1,3 @@
-import { useValidatedBody } from 'h3-zod'
 import { authorize } from 'nuxt-authorization/utils'
 import { db, schema } from '@nuxthub/db'
 import { eq } from 'drizzle-orm'
@@ -12,7 +11,7 @@ export default defineEventHandler(async (event) => {
 
   const id = getRouterParam(event, 'id')
 
-  const { status } = await useValidatedBody(event, updateExpenseStatusSchema)
+  const { status } = await readValidatedBody(event, updateExpenseStatusSchema.parse)
 
   const [updated] = await db
     .update(schema.expenses)
