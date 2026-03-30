@@ -1,6 +1,6 @@
 import { createConfigForNuxt } from '@nuxt/eslint-config/flat'
 
-const ignores = ['./app/components/content/TypewriterEffect.vue']
+const ignores = ['./layers/frigear/app/components/content/TypewriterEffect.vue']
 
 export default createConfigForNuxt({
   features: {

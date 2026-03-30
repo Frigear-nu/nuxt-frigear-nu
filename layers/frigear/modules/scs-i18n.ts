@@ -6,11 +6,11 @@ export default defineNuxtModule({
     configKey: 'scsI18n',
   },
   async setup(_, nuxtApp) {
-    const { resolve } = createResolver(nuxtApp.options.rootDir)
+    const { resolve } = createResolver(import.meta.url)
 
     const filteredLocales = nuxtApp.options.i18n?.locales || []
     nuxtApp.hook('i18n:registerModule', (register) => {
-      const langDir = resolve('./i18n/locales')
+      const langDir = resolve('../i18n/locales')
 
       const locales = filteredLocales?.map((locale) => {
         return typeof locale === 'string'

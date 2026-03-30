@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { objectDot, objectGet, objectSet, objectUndot } from '../../shared/object'
+import { objectDot, objectGet, objectSet, objectUndot } from '../../layers/frigear/shared/object'
 
 describe('objectGet', () => {
   it('retrieves a top-level value', () => {
