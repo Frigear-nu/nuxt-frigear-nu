@@ -7,10 +7,10 @@ import {
   Preview,
   Hr,
 } from '@vue-email/components'
-import { contactSubjectLabels } from '#shared/schema/forms/contact'
-import type { ContactFormSchema } from '#shared/schema/forms/contact'
+import { contactSubjectLabels } from '../../schema/forms/contact'
+import type { ContactFormSchema } from '../../schema/forms/contact'
 import EmailHeader from '../components/EmailHeader.vue'
-import EmailWrapper from '#shared/emails/components/EmailWrapper.vue'
+import EmailWrapper from '../components/EmailWrapper.vue'
 
 const props = defineProps<{
   form: ContactFormSchema

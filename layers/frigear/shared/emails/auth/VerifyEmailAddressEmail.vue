@@ -9,7 +9,7 @@ import {
   Hr,
 } from '@vue-email/components'
 import EmailHeader from '../components/EmailHeader.vue'
-import EmailWrapper from '#shared/emails/components/EmailWrapper.vue'
+import EmailWrapper from '../components/EmailWrapper.vue'
 
 const props = withDefaults(defineProps<{
   mode?: 'verify' | 'verify-change'

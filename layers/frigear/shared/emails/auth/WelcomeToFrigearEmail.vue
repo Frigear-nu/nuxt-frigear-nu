@@ -10,7 +10,7 @@ import {
   Link,
 } from '@vue-email/components'
 import EmailHeader from '../components/EmailHeader.vue'
-import EmailWrapper from '#shared/emails/components/EmailWrapper.vue'
+import EmailWrapper from '../components/EmailWrapper.vue'
 
 withDefaults(defineProps<{
   name?: string

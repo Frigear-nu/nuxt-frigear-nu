@@ -1,8 +1,8 @@
 // shared/schema/forms/applications.ts
 
 import { z } from 'zod/v4'
-import type { UnionFormSteps } from '#shared/types/form'
-import { defineSteppedForm } from '#shared/form'
+import type { UnionFormSteps } from '../../types/form'
+import { defineSteppedForm } from '../../form'
 
 const acceptTerms = z.literal(true).meta({
   type: 'checkbox',
