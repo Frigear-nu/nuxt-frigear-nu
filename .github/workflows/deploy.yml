@@ -86,10 +86,13 @@ jobs:
 
   deploy-staging:
     needs: ci
-    if: github.ref_name == 'staging' || (github.event_name == 'workflow_dispatch' && inputs.environment == 'staging')
+    if: (github.event_name == 'push' && github.ref_name == 'staging') || (github.event_name == 'workflow_dispatch' && inputs.environment == 'staging')
     name: Deploy to staging
     runs-on: ubuntu-22.04
     environment: staging
+    concurrency:
+      group: deploy-staging
+      cancel-in-progress: true
     env:
       CLOUDFLARE_ENV: staging
     steps:
@@ -133,6 +136,9 @@ jobs:
     name: Deploy to production
     runs-on: ubuntu-22.04
     environment: production
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - name: Install pnpm
