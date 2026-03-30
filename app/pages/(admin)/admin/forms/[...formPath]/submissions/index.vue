@@ -12,7 +12,7 @@ const [{ data: form }, { data: submissions }] = await Promise.all([
   useFormAsAdmin(),
   useAsyncData(() => `admin:form:${route.path}:submissions`, async () => {
     return $api(`/api/admin/forms${withLeadingSlash(route.params.formPath?.join('/'))}`)
-  }),
+  }, { watch: [() => route.path] }),
 ])
 
 const headerTitle = computed(() => {
