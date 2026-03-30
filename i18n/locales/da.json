@@ -677,7 +677,10 @@
       "description": "Beskrivelse",
       "attachments": "Bilag",
       "noAttachments": "Ingen bilag",
-      "status": "Status"
+      "status": "Status",
+      "approve": "Godkend",
+      "reject": "Afvis",
+      "updating": "Opdaterer…"
     }
   }
 }

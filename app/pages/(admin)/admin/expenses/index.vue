@@ -2,10 +2,11 @@
 import type { Users, Expense } from '@nuxthub/db/schema'
 
 const { $api } = useNuxtApp()
+const { t } = useSiteI18n()
 
 type ExpenseWithUser = Expense & { user: Pick<Users, 'id' | 'name' | 'email'> }
 
-const { data: expenses } = await useAsyncData<ExpenseWithUser[]>(
+const { data: expenses, refresh } = await useAsyncData<ExpenseWithUser[]>(
   'admin:expenses',
   () => $api('/api/admin/expenses'),
   { default: () => [] },
@@ -13,6 +14,7 @@ const { data: expenses } = await useAsyncData<ExpenseWithUser[]>(
 
 const selectedExpense = ref<ExpenseWithUser | undefined>(undefined)
 const slideoverOpen = ref(false)
+const isUpdating = ref(false)
 
 const onViewExpense = (expense: ExpenseWithUser) => {
   selectedExpense.value = expense
@@ -24,6 +26,22 @@ const statusColor = (status: string) => {
     case 'approved': return 'success'
     case 'rejected': return 'error'
     default: return 'warning'
+  }
+}
+
+const updateStatus = async (status: 'approved' | 'rejected' | 'pending', close: () => void) => {
+  if (!selectedExpense.value) return
+  isUpdating.value = true
+  try {
+    await $api(`/api/admin/expenses/${selectedExpense.value.id}`, {
+      method: 'PATCH',
+      body: { status },
+    })
+    await refresh()
+    close()
+  }
+  finally {
+    isUpdating.value = false
   }
 }
 </script>
@@ -43,6 +61,7 @@ const statusColor = (status: string) => {
           :title="`${expense.amount.toFixed(2)} DKK`"
           :ui="{
             header: 'flex items-start justify-between gap-2',
+            footer: 'flex items-center gap-2',
           }"
         >
           <template #description>
@@ -148,10 +167,27 @@ const statusColor = (status: string) => {
       </template>
       <template #footer="{ close }">
         <UButton
-          :label="$t('common.close')"
-          color="neutral"
+          :label="t('admin.expenses.approve')"
+          color="success"
+          icon="i-lucide-check"
+          :loading="isUpdating"
+          :disabled="selectedExpense?.status === 'approved'"
+          @click="updateStatus('approved', close)"
+        />
+        <UButton
+          :label="t('admin.expenses.reject')"
+          color="error"
           variant="outline"
           icon="i-lucide-x"
+          :loading="isUpdating"
+          :disabled="selectedExpense?.status === 'rejected'"
+          @click="updateStatus('rejected', close)"
+        />
+        <UButton
+          :label="$t('common.close')"
+          color="neutral"
+          variant="ghost"
+          class="ml-auto"
           @click="close"
         />
       </template>

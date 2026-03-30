@@ -509,7 +509,10 @@
       "description": "Description",
       "attachments": "Attachments",
       "noAttachments": "No attachments",
-      "status": "Status"
+      "status": "Status",
+      "approve": "Approve",
+      "reject": "Reject",
+      "updating": "Updating…"
     }
   }
 }
