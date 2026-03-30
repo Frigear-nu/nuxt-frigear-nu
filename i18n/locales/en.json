@@ -512,7 +512,8 @@
       "status": "Status",
       "approve": "Approve",
       "reject": "Reject",
-      "updating": "Updating…"
+      "updating": "Updating…",
+      "reset": "Reset"
     }
   }
 }

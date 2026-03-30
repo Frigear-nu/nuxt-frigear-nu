@@ -680,7 +680,8 @@
       "status": "Status",
       "approve": "Godkend",
       "reject": "Afvis",
-      "updating": "Opdaterer…"
+      "updating": "Opdaterer…",
+      "reset": "Nulstil"
     }
   }
 }
