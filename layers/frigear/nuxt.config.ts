@@ -170,6 +170,10 @@ export default defineNuxtConfig({
     stripeWebhookSecret: '',
   },
 
+  alias: {
+    '#shared': resolve('./shared'),
+  },
+
   routeRules: {
     '/account': { prerender: false },
     '/account/**': { prerender: false },
@@ -190,6 +194,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-12-11',
 
   nitro: {
+    alias: {
+      '#shared': resolve('./shared'),
+    },
     experimental: {
       asyncContext: true,
       tasks: true,
