@@ -317,7 +317,7 @@ const onPurchase = () => {
       <UButton
         v-else
         trailing-icon="i-lucide-arrow-right"
-        :to="localePath(`/sign-in?redirect=${$route.fullPath}`)"
+        :to="localePath(`/sign-in?redirect=${encodeURIComponent($route.path)}`)"
         class="w-full justify-center"
       >
         {{ $t('events.detail.tickets.signInToPurchase') }}

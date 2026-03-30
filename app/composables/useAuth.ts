@@ -1,5 +1,6 @@
 import type { AuthProvider } from '~/types'
 import type { SignUpWithMagicLinkSchema } from '#shared/schema/auth'
+import { computed } from 'vue'
 
 export const useAuth = () => {
   // const nuxtApp = useNuxtApp()
@@ -11,6 +12,10 @@ export const useAuth = () => {
 
   const currentUser = computed(() => {
     return customAuth.currentUser.value
+  })
+
+  const currentUserRole = computed(() => {
+    return currentUser.value?.role
   })
 
   const isLoggedIn = computed(() => {
@@ -87,6 +92,7 @@ export const useAuth = () => {
   return {
     authMode,
     currentUser,
+    currentUserRole,
     isLoggedIn,
     signInWithMagicLink,
     signUpWithMagicLink,

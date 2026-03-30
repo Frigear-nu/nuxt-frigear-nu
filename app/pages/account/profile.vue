@@ -156,7 +156,7 @@ const onEmailAddressChangeError = (err: unknown) => {
       <UButton
         v-if="form"
         form="profile"
-        :label="t('actions.save')"
+        :label="t('account.profile.save')"
         color="neutral"
         size="xl"
         type="submit"

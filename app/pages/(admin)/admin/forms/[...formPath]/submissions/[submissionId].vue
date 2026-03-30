@@ -13,12 +13,12 @@ import { deriveFieldsFromSchema } from '#shared/form'
 const route = useRoute()
 const { $api } = useNuxtApp()
 const { t } = useSiteI18n()
-const submissionId = computed(() => route.params.submissionId)
+const submissionId = computed(() => route.params.submissionId as string)
 const [{ data: form }, { data: submission }] = await Promise.all([
   useFormAsAdmin(),
   useAsyncData(() => `admin:forms:${route.path}:submission:${route.params.submissionId}`, async () => {
     return $api(`/api/admin/forms/submissions/${route.params.submissionId}`)
-  }),
+  }, { watch: [submissionId, () => route.path] }),
 ])
 
 const steppedForm = computed<GenericSteppedForm<FormStep[]>>(() => {
@@ -67,8 +67,14 @@ const headerLinks = computed<ButtonProps[]>(() => {
     <UPageHeader
       :title="submissionId"
       :links="headerLinks"
+      :ui="{
+        title: 'truncate',
+      }"
     />
-    <UPageList class="gap-4">
+    <UPageList
+      v-if="form && submission && submission.data"
+      class="gap-4"
+    >
       <UPageCard
         v-for="(step) in filteredSteps"
         :key="step.id"
@@ -110,7 +116,10 @@ const headerLinks = computed<ButtonProps[]>(() => {
                   <div v-else-if="field.type === 'checkbox'">
                     {{ submission.data[field.name] ? 'Yes' : 'No' }}
                   </div>
-                  <div v-else-if="field.type ==='file'">
+                  <div
+                    v-else-if="field.type ==='file'"
+                    class="max-w-dvw"
+                  >
                     <AdminFormFieldFile
                       :file="submission.data[field.name]"
                       :submission="submission"

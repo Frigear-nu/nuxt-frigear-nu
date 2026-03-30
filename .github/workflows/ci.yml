@@ -37,6 +37,11 @@ jobs:
 
   test:
     runs-on: ubuntu-22.04
+    permissions:
+      checks: write
+      pull-requests: write
+    env:
+      NITRO_PRESET: node-server
     steps:
       - uses: actions/checkout@v4
 
@@ -54,5 +59,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
       - name: Test
         run: pnpm test
+
+      - name: Publish Test Results
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: Test Results
+          path: test-results/junit.xml
+          reporter: java-junit

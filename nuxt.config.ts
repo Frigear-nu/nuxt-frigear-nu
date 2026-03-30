@@ -40,6 +40,11 @@ export default defineNuxtConfig({
           'stripe:sync:subscriptions',
         ],
       },
+      prerender: {
+        routes: ['/', '/en'],
+        failOnError: false, // todo: this should be investigated.
+        crawlLinks: false,
+      },
     },
 
     hub: {
@@ -58,6 +63,37 @@ export default defineNuxtConfig({
         baseURL: process.env.CLOUDFLARE_IMAGE_BASE_URL,
       },
     },
+  },
+
+  $test: {
+    runtimeConfig: {
+      session: {
+        password: 'test-session-password-that-is-at-least-32-chars!!',
+      },
+    },
+    sourcemap: false,
+    nitro: {
+      prerender: {
+        failOnError: false,
+      },
+    },
+    hub: {
+      db: {
+        applyMigrationsDuringBuild: false,
+        dialect: 'sqlite',
+        casing: 'snake_case',
+      },
+    },
+    fonts: {
+      providers: {
+        bunny: false,
+        fontshare: false,
+        fontsource: false,
+        google: false,
+        googleicons: false,
+      },
+    },
+    studio: false,
   },
 
   devtools: {
@@ -139,16 +175,15 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/sign-in': { prerender: false },
+    '/sign-up': { prerender: false },
     '/account': { prerender: false },
     '/account/**': { prerender: false },
     '/admin/**': { prerender: false },
-    // Static Redirects
-    '/sign-up': { redirect: { to: '/sign-in?mode=up' } },
     // Temporary Redirects: should be removed in 2027 possibly.
     '/signin/password_signin': { redirect: { to: '/sign-in', statusCode: 301 } },
     '/signin/email_signin': { redirect: { to: '/sign-in?provider=link', statusCode: 301 } },
     '/signin/forgot_password': { redirect: { to: '/forgot-password', statusCode: 301 } },
-    '/signin/signup': { redirect: { to: '/sign-in?mode=up', statusCode: 301 } },
+    '/signin/signup': { redirect: { to: '/sign-up', statusCode: 301 } },
     '/pricing': { redirect: { to: '/membership', statusCode: 301 } },
 
     // API
@@ -186,6 +221,20 @@ export default defineNuxtConfig({
       casing: 'snake_case',
     },
     blob: true,
+  },
+  vite: {
+    optimizeDeps: {
+      include: [
+        'date-fns',
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+        'zod/v4',
+        '@vueuse/core',
+        'zod',
+        '@internationalized/date',
+        'nuxt-authorization/utils',
+      ],
+    },
   },
   i18n: {
     defaultLocale: 'da',
@@ -228,13 +277,17 @@ export default defineNuxtConfig({
   },
 
   ogImage: {
-    zeroRuntime: true,
-    // @ts-expect-error Not sure why this is not typed: https://nuxtseo.com/docs/og-image/guides/emojis
     emojiStrategy: 'fetch',
   },
 
   resend: {
     apiKey: process.env.NUXT_RESEND_API_KEY!,
+  },
+
+  scs: {
+    experimental: {
+      prerender: false,
+    },
   },
   sentry: {
     authToken: process.env.NUXT_SENTRY_AUTH_TOKEN || process.env.SENTRY_AUTH_TOKEN || '',
