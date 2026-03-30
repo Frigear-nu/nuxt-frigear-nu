@@ -52,7 +52,7 @@ const statusColor = (status: string) => {
               <span><b>{{ $t('admin.expenses.attachments') }}:</b> {{ expense.attachments.length }}</span>
             </div>
           </template>
-          <template #links>
+          <template #footer>
             <UBadge
               :color="statusColor(expense.status)"
               variant="subtle"
