@@ -184,6 +184,14 @@ const updateStatus = async (status: 'approved' | 'rejected' | 'pending', close: 
           @click="updateStatus('rejected', close)"
         />
         <UButton
+          :label="t('admin.expenses.reset')"
+          color="warning"
+          variant="outline"
+          :loading="isUpdating"
+          :disabled="selectedExpense?.status === 'pending'"
+          @click="updateStatus('pending', close)"
+        />
+        <UButton
           :label="$t('common.close')"
           color="neutral"
           variant="ghost"
