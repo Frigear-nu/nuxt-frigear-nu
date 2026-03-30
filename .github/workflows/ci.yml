@@ -72,4 +72,3 @@ jobs:
           name: Test Results
           path: test-results/junit.xml
           reporter: java-junit
-          comment-title: Test Results
