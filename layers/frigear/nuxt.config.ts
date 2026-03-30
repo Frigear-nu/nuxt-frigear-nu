@@ -171,6 +171,7 @@ export default defineNuxtConfig({
   },
 
   alias: {
+    '#server': resolve('./server'),
     '#shared': resolve('./shared'),
   },
 
@@ -195,6 +196,7 @@ export default defineNuxtConfig({
 
   nitro: {
     alias: {
+      '#server': resolve('./server'),
       '#shared': resolve('./shared'),
     },
     experimental: {
