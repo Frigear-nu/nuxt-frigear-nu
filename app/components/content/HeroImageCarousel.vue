@@ -261,12 +261,18 @@ const carouselUi = {
   --hero-aura-x: 50%;
   --hero-aura-y: 42%;
 
-  @apply relative isolate overflow-visible;
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
   perspective: 1400px;
 }
 
 .hero-carousel-aura {
-  @apply pointer-events-none absolute inset-[-8%] -z-10 rounded-full;
+  pointer-events: none;
+  position: absolute;
+  inset: -8%;
+  z-index: -10;
+  border-radius: 9999px;
 
   background:
     radial-gradient(
@@ -374,7 +380,9 @@ const carouselUi = {
 /* Inner gradient border ring — at the inner edge of the frame, on top of the image edge */
 .hero-carousel-frame-fancy::before {
   content: "";
-  @apply pointer-events-none absolute rounded-full;
+  pointer-events: none;
+  position: absolute;
+  border-radius: 9999px;
 
   /* inset matches p-3.5 = 0.875rem; at sm+ p-3.75 the 1px diff is negligible */
   inset: 0.875rem;
@@ -397,7 +405,9 @@ const carouselUi = {
 /* Outer gradient border ring — sits just outside the frame */
 .hero-carousel-frame-fancy::after {
   content: "";
-  @apply pointer-events-none absolute rounded-full;
+  pointer-events: none;
+  position: absolute;
+  border-radius: 9999px;
 
   inset: -2px;
   z-index: -1;
@@ -462,7 +472,10 @@ const carouselUi = {
 
 .hero-carousel-surface::before {
   content: "";
-  @apply pointer-events-none absolute inset-0 rounded-full;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
 
   background:
     linear-gradient(
@@ -479,7 +492,10 @@ const carouselUi = {
 
 .hero-carousel-surface::after {
   content: "";
-  @apply pointer-events-none absolute inset-0 rounded-full;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
 
   background:
     radial-gradient(
@@ -497,7 +513,10 @@ const carouselUi = {
 }
 
 .hero-carousel-glass {
-  @apply pointer-events-none absolute inset-0 rounded-full;
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
   background:
     radial-gradient(
       circle at 26% 18%,
@@ -520,12 +539,29 @@ const carouselUi = {
   aspect-ratio: 1 / 1;
   width: 100%;
   object-fit: cover;
+  border-radius: 9999px;
   transform: scale(1.015);
   will-change: transform;
 }
 
 .hero-carousel-arrow {
-  @apply absolute top-1/2 z-30 grid size-10 -translate-y-1/2 place-items-center rounded-full border sm:size-11;
+  position: absolute;
+  top: 50%;
+  z-index: 30;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  translate: 0 -50%;
+  place-items: center;
+  border-radius: 9999px;
+  border-width: 1px;
+  border-style: solid;
+
+  @media (min-width: 640px) {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
   border-color: rgb(255 255 255 / 0.14);
   background:
     linear-gradient(
@@ -637,18 +673,24 @@ const carouselUi = {
   flex-shrink: 0;
 }
 
-.hero-carousel-arrow:hover {
+.hero-carousel-arrow-left:hover {
+  transform: scale(1.15) translateX(-1px);
   box-shadow:
+    0 0 0 1px rgb(var(--hcf-purple, 124 58 237) / 0.80),
+    0 0 14px 3px rgb(var(--hcf-purple, 124 58 237) / 0.55),
+    0 0 28px 6px rgb(var(--hcf-purple, 124 58 237) / 0.25),
     0 12px 28px rgb(2 6 23 / 0.34),
     inset 0 1px 0 rgb(255 255 255 / 0.14);
 }
 
-.hero-carousel-arrow-left:hover {
-  transform: scale(1.15) translateX(-1px);
-}
-
 .hero-carousel-arrow-right:hover {
   transform: scale(1.15) translateX(1px);
+  box-shadow:
+    0 0 0 1px rgb(var(--hcf-teal, 20 184 166) / 0.80),
+    0 0 14px 3px rgb(var(--hcf-teal, 20 184 166) / 0.55),
+    0 0 28px 6px rgb(var(--hcf-teal, 20 184 166) / 0.25),
+    0 12px 28px rgb(2 6 23 / 0.34),
+    inset 0 1px 0 rgb(255 255 255 / 0.14);
 }
 
 .hero-carousel-arrow:focus-visible {
