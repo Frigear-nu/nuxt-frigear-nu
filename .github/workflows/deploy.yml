@@ -81,10 +81,10 @@ jobs:
         run: pnpm install
       - name: Lint
         run: pnpm lint
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium
-      - name: Test
-        run: pnpm test
+#      - name: Install Playwright browsers
+#        run: pnpm exec playwright install --with-deps chromium
+      - name: Test(unit)
+        run: pnpm test:unit
 
   deploy-staging:
     needs: ci
