@@ -2,6 +2,7 @@ import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
 import { relations } from 'drizzle-orm'
 import { stripeCustomers } from './stripe'
 import { userEventTickets } from './event'
+import { expenses } from './expenses'
 
 export const users = sqliteTable('users', {
   id: integer('id').primaryKey({ autoIncrement: true }),
@@ -33,6 +34,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   oauthApps: many(oauthApps),
   passkeys: many(passkeys),
   tickets: many(userEventTickets),
+  expenses: many(expenses),
 }))
 
 export const sessions = sqliteTable('sessions', {

@@ -1,20 +1,9 @@
 <script setup lang="ts">
+import type { Users, Expense } from '@nuxthub/db/schema'
+
 const { $api } = useNuxtApp()
 
-type ExpenseWithUser = {
-  id: string
-  userId: number
-  amount: number
-  description: string | null
-  attachments: string[]
-  status: 'pending' | 'approved' | 'rejected'
-  createdAt: string
-  user: {
-    id: number
-    name: string
-    email: string
-  }
-}
+type ExpenseWithUser = Expense & { user: Pick<Users, 'id' | 'name' | 'email'> }
 
 const { data: expenses } = await useAsyncData<ExpenseWithUser[]>(
   'admin:expenses',

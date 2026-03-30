@@ -1,19 +1,10 @@
 <script setup lang="ts">
 import { useSiteI18n } from '#imports'
+import type { Expense } from '@nuxthub/db/schema'
 
 const { t } = useSiteI18n()
 const { $api } = useNuxtApp()
 const toast = useToast()
-
-type Expense = {
-  id: string
-  userId: number
-  amount: number
-  description: string | null
-  attachments: string[]
-  status: 'pending' | 'approved' | 'rejected'
-  createdAt: string
-}
 
 const { data: expenses, refresh } = await useAsyncData<Expense[]>(
   'account:expenses',
