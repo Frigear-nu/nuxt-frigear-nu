@@ -32,7 +32,10 @@ const headerLinks = computed<ButtonProps[]>(() => [
 
 const getPreview = (submission: typeof submissions.value[number]) => {
   if (form.value && form.value.preview) {
-    return Object.fromEntries(form.value.preview.map(key => [key, objectGet(submission.data || {}, key)]))
+    // some forms have steps... so we need to flatten the keys:
+    return Object.fromEntries(form.value.preview.map((key) => {
+      return [key, objectGet(submission.data || {}, key.includes('.') ? key.split('.').slice(-1)[0] : key)]
+    }))
   }
   if (submission.data && typeof submission.data === 'object') {
     const { files: _, ...data } = submission.data
@@ -43,7 +46,7 @@ const getPreview = (submission: typeof submissions.value[number]) => {
 }
 
 const translationKey = (key: string) => {
-  let prefix = `form.${form.value.name}`
+  let prefix = `form.${form.value?.name}`
   // TODO: this should follow the form...
   if (form.value && form.value.name === 'project-application') {
     prefix = 'form.application'
