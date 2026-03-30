@@ -107,7 +107,7 @@
     },
     "membership": {
       "subscribe": "Become member",
-      "feeIncluded":"*Payment fees are included in amount"
+      "feeIncluded": "*Payment fees are included in amount"
     }
   },
   "account": {
@@ -186,6 +186,32 @@
       "password": {
         "title": "Password",
         "description": "Change your password."
+      }
+    },
+    "expenses": {
+      "title": "Expenses",
+      "description": "Submit and view your expenses.",
+      "form": {
+        "title": "Submit a new expense",
+        "amount": "Amount (DKK)",
+        "description": "Description",
+        "descriptionPlaceholder": "Briefly describe what the expense covers",
+        "attachments": "Attachments",
+        "attachmentsDescription": "Attach images or PDF files (max. 10 MB per file)",
+        "submit": "Submit expense",
+        "success": "Your expense has been submitted!",
+        "amountRequired": "Amount is required and must be positive",
+        "attachmentRequired": "At least one attachment is required"
+      },
+      "list": {
+        "title": "My expenses",
+        "empty": "You have not submitted any expenses yet.",
+        "attachments": "Attachments"
+      },
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected"
       }
     }
   },
@@ -475,6 +501,15 @@
           "not_inclusive": "Phone must be less than {maximum} characters long."
         }
       }
+    }
+  },
+  "admin": {
+    "expenses": {
+      "user": "User",
+      "description": "Description",
+      "attachments": "Attachments",
+      "noAttachments": "No attachments",
+      "status": "Status"
     }
   }
 }
