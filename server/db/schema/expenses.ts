@@ -7,7 +7,7 @@ const createDomainId = (prefix?: string) => `${prefix || ''}${createId()}`
 
 export const expenses = sqliteTable('expenses', {
   id: text('id').primaryKey().$defaultFn(() => createDomainId('exp_')),
-  userId: integer('user_id').notNull().references(() => users.id),
+  userId: integer('user_id').references(() => users.id, { onDelete: 'set null' }),
   amount: real('amount').notNull(),
   description: text('description'),
   attachments: text('attachments', { mode: 'json' }).notNull().$type<string[]>().$defaultFn(() => []),

@@ -4,7 +4,7 @@ import type { Users, Expense } from '@nuxthub/db/schema'
 const { $api } = useNuxtApp()
 const { t } = useSiteI18n()
 
-type ExpenseWithUser = Expense & { user: Pick<Users, 'id' | 'name' | 'email'> }
+type ExpenseWithUser = Expense & { user: Pick<Users, 'id' | 'name' | 'email'> | null }
 
 const { data: expenses, refresh } = await useAsyncData<ExpenseWithUser[]>(
   'admin:expenses',
@@ -66,7 +66,7 @@ const updateStatus = async (status: 'approved' | 'rejected' | 'pending', close: 
         >
           <template #description>
             <div class="flex flex-col gap-1">
-              <span><b>{{ $t('admin.expenses.user') }}:</b> {{ expense.user.name }} ({{ expense.user.email }})</span>
+              <span><b>{{ $t('admin.expenses.user') }}:</b> {{ expense.user?.name ?? '—' }} ({{ expense.user?.email ?? '—' }})</span>
               <span v-if="expense.description"><b>{{ $t('admin.expenses.description') }}:</b> {{ expense.description }}</span>
               <span><b>{{ $t('admin.expenses.attachments') }}:</b> {{ expense.attachments.length }}</span>
             </div>
@@ -111,10 +111,10 @@ const updateStatus = async (status: 'approved' | 'rejected' | 'pending', close: 
               {{ $t('admin.expenses.user') }}
             </p>
             <p class="font-semibold">
-              {{ selectedExpense.user.name }}
+              {{ selectedExpense.user?.name ?? '—' }}
             </p>
             <p class="text-sm text-muted">
-              {{ selectedExpense.user.email }}
+              {{ selectedExpense.user?.email ?? '—' }}
             </p>
           </div>
 

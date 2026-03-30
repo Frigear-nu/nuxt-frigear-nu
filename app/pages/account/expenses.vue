@@ -17,14 +17,6 @@ const amount = ref<number | undefined>(undefined)
 const description = ref('')
 const files = ref<File[]>([])
 
-const fileInputRef = ref<HTMLInputElement>()
-
-const onFileChange = (e: Event) => {
-  const input = e.target as HTMLInputElement
-  if (!input.files?.length) return
-  files.value = Array.from(input.files)
-}
-
 const onSubmit = async () => {
   if (!amount.value || amount.value <= 0) {
     toast.add(formatToastError(new Error(t('account.expenses.form.amountRequired'))))
@@ -55,7 +47,6 @@ const onSubmit = async () => {
     amount.value = undefined
     description.value = ''
     files.value = []
-    if (fileInputRef.value) fileInputRef.value.value = ''
     await refresh()
   }
   catch (err: unknown) {
@@ -115,13 +106,31 @@ const statusLabel = (status: string) => {
           :description="t('account.expenses.form.attachmentsDescription')"
           required
         >
-          <input
-            ref="fileInputRef"
-            type="file"
+          <UFileUpload
+            v-model="files"
             multiple
             accept="image/jpeg,image/png,image/gif,image/webp,application/pdf"
-            @change="onFileChange"
+            layout="list"
+            :interactive="false"
           >
+            <template #actions="{ open }">
+              <UButton
+                :label="t('actions.selectFiles')"
+                icon="i-lucide-upload"
+                color="neutral"
+                variant="outline"
+                @click="open()"
+              />
+            </template>
+            <template #files-bottom="{ removeFile, files: uploadedFiles }">
+              <UButton
+                v-if="Array.isArray(uploadedFiles) ? uploadedFiles.length > 0 : !!uploadedFiles"
+                :label="t('actions.removeAllFiles')"
+                color="neutral"
+                @click="removeFile()"
+              />
+            </template>
+          </UFileUpload>
         </UFormField>
 
         <div>
