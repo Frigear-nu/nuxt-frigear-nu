@@ -5,6 +5,10 @@ delivery:
   - channel: email
     destination: ["${contact.default}"]
 # Resubmittable means you can start over at the end, possibly with carry-over details.
+preview:
+  - organizationInfo.organizationName
+  - contactInfo.fullName
+  - contactInfo.email
 resubmittable:
   start: contactInfo
   alert:
