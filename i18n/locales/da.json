@@ -187,6 +187,32 @@
         "title": "Password",
         "description": "Skift dit password."
       }
+    },
+    "expenses": {
+      "title": "Udgifter",
+      "description": "Indsend og se dine udgifter.",
+      "form": {
+        "title": "Indsend ny udgift",
+        "amount": "Beløb (DKK)",
+        "description": "Beskrivelse",
+        "descriptionPlaceholder": "Beskriv kort hvad udgiften dækker",
+        "attachments": "Bilag",
+        "attachmentsDescription": "Vedhæft billeder eller PDF-filer (maks. 10 MB pr. fil)",
+        "submit": "Indsend udgift",
+        "success": "Din udgift er indsendt!",
+        "amountRequired": "Beløb er påkrævet og skal være positivt",
+        "attachmentRequired": "Mindst ét bilag er påkrævet"
+      },
+      "list": {
+        "title": "Mine udgifter",
+        "empty": "Du har ikke indsendt nogen udgifter endnu.",
+        "attachments": "Bilag"
+      },
+      "status": {
+        "pending": "Afventer",
+        "approved": "Godkendt",
+        "rejected": "Afvist"
+      }
     }
   },
   "contact": {
@@ -643,6 +669,19 @@
       "regex": "input",
       "url": "URL",
       "uuid": "UUID"
+    }
+  },
+  "admin": {
+    "expenses": {
+      "user": "Bruger",
+      "description": "Beskrivelse",
+      "attachments": "Bilag",
+      "noAttachments": "Ingen bilag",
+      "status": "Status",
+      "approve": "Godkend",
+      "reject": "Afvis",
+      "updating": "Opdaterer…",
+      "reset": "Nulstil"
     }
   }
 }
