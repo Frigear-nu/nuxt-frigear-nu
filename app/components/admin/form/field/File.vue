@@ -110,6 +110,7 @@ const files = computed(() => {
           class="w-full"
           :ui="{ label: 'truncate' }"
           download
+          external
         >
           {{ media.pathname.split('/').pop() }}
         </UButton>
