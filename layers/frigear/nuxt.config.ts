@@ -171,6 +171,7 @@ export default defineNuxtConfig({
   },
 
   alias: {
+    '~': resolve('./app'),
     '#server': resolve('./server'),
     '#shared': resolve('./shared'),
   },
