@@ -11,6 +11,12 @@ const { t, localePath } = useSiteI18n()
 const { isLoggedIn, currentUser } = useAuth()
 const { data: userMemberships } = useUserMemberships({ isEnabled: isLoggedIn })
 const { data: cartItems, hasAnyItems: hasAnyCartItems } = useShoppingCart()
+const { translatedProperty } = useContent()
+
+const firstCartItemTitle = computed(() => {
+  if (!cartItems.value[0]) return undefined
+  return translatedProperty(cartItems.value[0].title)
+})
 
 const cards = computedAsync<PageCardProps[]>(async () => {
   const baseTiles: PageCardProps[] = [
@@ -74,7 +80,7 @@ const membershipActions = ref<ButtonProps[]>([
     <div v-if="hasAnyCartItems && userMemberships && userMemberships.length === 0">
       <UAlert
         title="Almost there!"
-        :description="cartItems[0] ? `Please sign up to continue to payment of ${cartItems[0].title}` : 'Missing details'"
+        :description="firstCartItemTitle ? `Please sign up to continue to payment of ${firstCartItemTitle}` : 'Missing details'"
         icon="i-lucide-info"
         class="my-8"
         :actions="membershipActions"

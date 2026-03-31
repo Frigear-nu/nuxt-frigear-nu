@@ -2,7 +2,6 @@
 import type { PublicPrice } from '#shared/types/membership'
 import { useUserMemberships } from '~/store/queries/user'
 
-const { locale } = useSiteI18n()
 const { loggedIn } = useUserSession()
 const { clearCart, addToCart } = useShoppingCart()
 const fetchUserMemberships = ref(false)
@@ -43,16 +42,22 @@ watch(userMemberships, (memberships) => {
 const onSelectMembership = (price: PublicPrice) => {
   clearCart()
 
+  // Build multilingual title and description records so the cart updates when locale changes
+  const titleRecord: Record<string, string> = { da: price.title, ...(price.title_en ? { en: price.title_en } : {}) }
+
+  const descriptionRecord: Record<string, string> | undefined = price.description
+    ? { da: price.description, ...(price.description_en ? { en: price.description_en } : {}) }
+    : undefined
+
   // we store the item in the localStorage cart - so it will persist as long as it is the same browser.
   addToCart({
     qty: 1,
     maxQty: 1,
+    type: 'membership',
     id: price.id,
     price: price.price,
-    // @ts-expect-error This is not typed
-    title: price?.[`title_${locale.value}`] || price.title,
-    // @ts-expect-error This is not typed
-    description: price?.[`description_${locale.value}`] || price.description || undefined,
+    title: titleRecord,
+    description: descriptionRecord,
   })
 
   //
