@@ -3,6 +3,7 @@ import type { PageCardProps } from '@nuxt/ui'
 import { useSiteI18n } from '#imports'
 import { allows } from 'nuxt-authorization/utils'
 import { canViewForms } from '#shared/abilities/forms'
+import { canViewAllExpenses } from '#shared/abilities/expenses'
 import { computedAsync } from '@vueuse/core'
 import { upperFirst } from 'scule'
 
@@ -31,6 +32,16 @@ const cards = computedAsync<PageCardProps[]>(async () => {
       description: 'See all forms available, and their submissions.',
       icon: 'i-lucide-form',
       to: localePath('/admin/forms'),
+      variant: 'subtle',
+    })
+  }
+
+  if (currentUser.value && await allows(canViewAllExpenses, currentUser.value)) {
+    items.push({
+      title: 'Expenses',
+      description: 'See all member expense submissions.',
+      icon: 'i-lucide-receipt',
+      to: localePath('/admin/expenses'),
       variant: 'subtle',
     })
   }

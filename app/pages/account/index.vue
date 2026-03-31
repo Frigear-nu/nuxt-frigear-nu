@@ -22,6 +22,13 @@ const cards = computedAsync<PageCardProps[]>(async () => {
       variant: 'subtle',
     },
     {
+      title: t('account.expenses.title'),
+      description: t('account.expenses.description'),
+      icon: 'i-lucide-receipt',
+      to: localePath('/account/expenses'),
+      variant: 'subtle',
+    },
+    {
       title: t('account.membership.title'),
       description: t('account.membership.description'),
       icon: 'i-lucide-credit-card',
