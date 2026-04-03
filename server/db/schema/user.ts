@@ -15,6 +15,7 @@ export const users = sqliteTable('users', {
   isMigrated: integer('is_migrated', { mode: 'boolean' }).notNull().default(false),
   supabaseId: text('supabase_id'),
   supabaseProvider: text('supabase_provider'),
+  locale: text('locale'),
 
   //
   lastLoginAt: integer('last_login_at', { mode: 'timestamp' }),

@@ -45,10 +45,10 @@ export const useCustomAuth = () => {
     await refreshSession()
     return true
   }
-  const signUpWithPassword = async (name: string, email: string, password: string, redirect?: string) => {
+  const signUpWithPassword = async (name: string, email: string, password: string, { redirect, locale}: { redirect?: string, locale?: string }) => {
     return $fetch('/api/auth/sign-up', {
       method: 'POST',
-      body: { name, email, password, redirect },
+      body: { name, email, password, redirect, locale },
     })
   }
 
