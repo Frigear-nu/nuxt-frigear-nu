@@ -25,6 +25,7 @@ export default defineEventHandler(async (event) => {
 
   if (existingUser) throw ClientError('errors.auth.signUp.failed')
 
+  //
   const [createdUser] = await db
     .insert(schema.users)
     .values({
