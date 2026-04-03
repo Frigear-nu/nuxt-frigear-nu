@@ -52,10 +52,10 @@ export const useAuth = () => {
         throw new Error(`Auth mode ${authMode.value} not supported.`)
     }
   }
-  const signUpWithPassword = async (email: string, password: string, meta?: { name?: string, redirect?: string }) => {
+  const signUpWithPassword = async (email: string, password: string, meta: { name?: string, redirect?: string, locale?: string } = {}) => {
     switch (authMode.value) {
       case 'custom':
-        return customAuth.signUpWithPassword(meta?.name || email, email, password, meta?.redirect)
+        return customAuth.signUpWithPassword(meta?.name || email, email, password, meta)
       default:
         throw new Error(`Auth mode ${authMode.value} not supported.`)
     }

@@ -44,6 +44,7 @@ export const signUpWithPasswordSchema = signInWithPasswordSchema.extend({
   email: createEmailSchema(),
   password: z.string().min(6),
   redirect: redirectSchema.optional(),
+  locale: z.string().optional(),
   _token: z.string().optional(),
 })
 

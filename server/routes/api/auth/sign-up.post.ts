@@ -19,17 +19,19 @@ export default defineEventHandler(async (event) => {
   if (!signUp) throw createError({ statusCode: 400, message: 'Signup is disabled.' })
 
   // TODO: Add rate-limiting here... and throw the .failed error
-  const { name, email, password, redirect } = await useValidatedBody(event, signUpWithPasswordSchema)
+  const { name, email, password, redirect, locale } = await useValidatedBody(event, signUpWithPasswordSchema)
 
   const existingUser = await findUserByEmail(email)
 
   if (existingUser) throw ClientError('errors.auth.signUp.failed')
 
+  //
   const [createdUser] = await db
     .insert(schema.users)
     .values({
       name,
       email,
+      locale,
       passwordHash: await hashPassword(password),
       emailVerifiedAt: verifyEmail ? null : new Date(),
     })
