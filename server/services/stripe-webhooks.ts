@@ -1,4 +1,4 @@
-import type { NewStripePrices, NewStripeProducts, NewStripeSubscriptions } from '@nuxthub/db/schema'
+import type { NewStripePrice, NewStripeProduct, NewStripeSubscription } from '@nuxthub/db/schema'
 import { eq } from 'drizzle-orm'
 import type Stripe from 'stripe'
 import type { H3Event } from 'h3'
@@ -68,7 +68,7 @@ export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.E
   return { status: 200 }
 }
 
-export const transformStripeProduct = (p: Stripe.Product): NewStripeProducts => {
+export const transformStripeProduct = (p: Stripe.Product): NewStripeProduct => {
   return {
     id: p.id,
     active: p.active,
@@ -110,7 +110,7 @@ const canIngestPrice = (p: Stripe.Price) => {
   return p.type === 'recurring'
 }
 
-export const transformStripePrice = (p: Stripe.Price): NewStripePrices => {
+export const transformStripePrice = (p: Stripe.Price): NewStripePrice => {
   const recurring = p.recurring
 
   // FIXME: In V1 this should probably be reworked
@@ -203,7 +203,7 @@ export const deleteStripeCustomer = async (customer: Stripe.Customer) => {
 
 export const transformStripeSubscription = (
   sub: Stripe.Subscription,
-): NewStripeSubscriptions => {
+): NewStripeSubscription => {
   const items = sub.items?.data || []
 
   if (items.length === 0) {

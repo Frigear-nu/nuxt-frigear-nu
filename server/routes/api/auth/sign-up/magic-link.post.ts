@@ -1,6 +1,6 @@
 import { useValidatedBody } from 'h3-zod'
 import { db, schema } from '@nuxthub/db'
-import type { Users } from '@nuxthub/db/schema'
+import type { User } from '@nuxthub/db/schema'
 import WelcomeToFrigearEmail from '#shared/emails/auth/WelcomeToFrigearEmail.vue'
 import { signUpWithMagicLinkSchema } from '#shared/schema/auth'
 import { ClientError, ServerError } from '@nitrotool/errors'
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
   const { user } = await getUserSession(event)
 
   if (user) {
-    return sendRedirect(event, await getDefaultRedirectForUser(event, user as Users))
+    return sendRedirect(event, await getDefaultRedirectForUser(event, user as User))
   }
 
   const { name, email, redirect } = await useValidatedBody(event, signUpWithMagicLinkSchema)

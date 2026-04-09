@@ -1,14 +1,14 @@
 import { useValidatedBody } from 'h3-zod'
 import { signInWithPasswordSchema } from '#shared/schema/auth'
 import { ServerError, UnauthenticatedError } from '@nitrotool/errors'
-import type { Users } from '@nuxthub/db/schema'
+import type { User } from '@nuxthub/db/schema'
 import { db, schema } from '@nuxthub/db'
 import { eq } from 'drizzle-orm'
 
 export default defineEventHandler(async (event) => {
   const { user } = await getUserSession(event)
   if (user) {
-    return sendRedirect(event, await getDefaultRedirectForUser(event, user as Users))
+    return sendRedirect(event, await getDefaultRedirectForUser(event, user as User))
   }
 
   const { email, password, redirect } = await useValidatedBody(event, signInWithPasswordSchema)

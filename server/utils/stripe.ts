@@ -1,5 +1,5 @@
 import { db, schema } from '@nuxthub/db'
-import type { Users } from '@nuxthub/db/schema'
+import type { User } from '@nuxthub/db/schema'
 import { eq } from 'drizzle-orm'
 import Stripe from 'stripe'
 
@@ -11,7 +11,7 @@ export const useTaskStripe = () => {
 }
 
 // this should only be called on sign-in/up
-export const ensureStripeCustomer = async (user: Users) => {
+export const ensureStripeCustomer = async (user: User) => {
   if (user.isMigrated) return
 
   // ensures we only attempt to migrate users with a stripe customer id in the pw field
@@ -53,7 +53,7 @@ export const ensureStripeCustomer = async (user: Users) => {
   await associateUserWithStripeCustomer(user.id, newStripeCustomer.id)
 }
 
-const associateUserWithStripeCustomer = async (userId: Users['id'], stripeCustomerId: Stripe.Customer['id']) => {
+const associateUserWithStripeCustomer = async (userId: User['id'], stripeCustomerId: Stripe.Customer['id']) => {
   await db
     .insert(schema.stripeCustomers)
     .values({
