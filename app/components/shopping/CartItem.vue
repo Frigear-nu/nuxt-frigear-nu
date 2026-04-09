@@ -4,6 +4,7 @@ const props = defineProps<{
 }>()
 
 const { updateCartItem, removeFromCart } = useShoppingCart()
+const { translatedProperty } = useContent()
 
 const qtyInput = computed({
   get: () => props.item.qty,
@@ -17,7 +18,7 @@ const qtyInput = computed({
   >
     <div class="flex justify-between">
       <div class="text-lg font-semibold">
-        {{ item.title }}
+        {{ translatedProperty(item.title) }}
       </div>
       <div>
         <UButton
@@ -30,18 +31,21 @@ const qtyInput = computed({
       <MDC
         v-slot="{ body, data }"
         class="text-muted"
-        :value="item.description"
+        :value="translatedProperty(item.description)"
         unwrap
       >
         <MDCRenderer
           v-if="body"
           :body="body"
-          :data="{ ...data, ticket: item.title }"
+          :data="{ ...data, ticket: translatedProperty(item.title) }"
           unwrap
         />
       </MDC>
     </div>
-    <div class="flex justify-end">
+    <div
+      v-if="item.type === 'product'"
+      class="flex justify-end"
+    >
       <UInputNumber
         v-model="qtyInput"
       />

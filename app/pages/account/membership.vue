@@ -2,7 +2,6 @@
 import type { PublicPrice } from '#shared/types/membership'
 import { useSiteI18n } from '#imports'
 import { useUserMemberships } from '~/store/queries/user'
-import type { CartItem } from '#shared/types/shopping-cart'
 import { useMemberships } from '~/store/queries/membership'
 import { useStripeBillingPortalUrl, useSubscribeUser } from '~/store/mutations/user'
 import { format } from 'date-fns'
@@ -16,7 +15,7 @@ const { mutateAsync: subscribeUser } = useSubscribeUser()
 const { mutateAsync: getBillingPortalUrl } = useStripeBillingPortalUrl()
 
 //
-const cartSubscribeItem = ref<CartItem | undefined>()
+const cartSubscribeItemId = ref<string | undefined>()
 const displaySubscribeModal = ref(false)
 const isLoading = ref(false)
 
@@ -34,20 +33,26 @@ const activeSubscriptionWillBeCancelled = computed(() => {
 watch([hasAnyCartItems, cartItems], () => {
   if (!hasAnyCartItems.value || activeSubscription.value) return
 
-  cartSubscribeItem.value = cartItems.value[0]
+  cartSubscribeItemId.value = cartItems.value[0]?.id
   displaySubscribeModal.value = true
 }, { immediate: true })
 
 const onSelectMembership = (price: PublicPrice) => {
   // FUTURE: Might wanna try to do some upselling here in case of "abandoned" cart?
   removeFromCart(price.id)
-  cartSubscribeItem.value = price as unknown as CartItem
+  cartSubscribeItemId.value = price.id
   displaySubscribeModal.value = true
 }
 
 const membershipToSubscribe = computed(() => {
-  if (!cartSubscribeItem.value) return undefined
-  return [...availableMemberships.value || []].find(m => m.id === cartSubscribeItem.value?.id) as unknown as CartItem
+  if (!cartSubscribeItemId.value) return undefined
+  const price = [...availableMemberships.value || []].find(m => m.id === cartSubscribeItemId.value)
+  if (!price) return undefined
+  return {
+    ...price,
+    title: (price?.[`title_${locale.value}` as keyof typeof price] || price.title) as string,
+    description: (price?.[`description_${locale.value}` as keyof typeof price] || price.description) as string | null | undefined,
+  }
 })
 
 const subscribeDialogTitle = computed(() => {
@@ -68,12 +73,12 @@ const subscribeDialogDescription = computed(() => {
 
 const onConfirmSubscription = async () => {
   isLoading.value = true
-  if (!cartSubscribeItem.value) {
+  if (!cartSubscribeItemId.value) {
     toast.add(formatToastError(new Error('No item in cart.')))
     isLoading.value = false
     return
   }
-  const checkoutSession = await subscribeUser(cartSubscribeItem.value?.id)
+  const checkoutSession = await subscribeUser(cartSubscribeItemId.value)
 
   isLoading.value = false
 
