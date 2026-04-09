@@ -5,6 +5,8 @@ import type { H3Event } from 'h3'
 import { fromUnixTime } from 'date-fns'
 import { useServerStripe } from '#stripe/server'
 import { db, schema } from '@nuxthub/db'
+import { postToSlack } from '#server/utils/slack'
+import { buildCustomerCreatedMessage, buildPaymentFailedMessage } from '#server/utils/stripe-slack-messages'
 
 const debugPayment = (...args: unknown[]) => {
   if (!import.meta.dev) {
@@ -16,6 +18,7 @@ const debugPayment = (...args: unknown[]) => {
 
 export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.Event) => {
   const stripe = useServerStripe(event)
+  const { slackPaymentsWebhookUrl } = useRuntimeConfig(event)
 
   switch (stripeEvent.type) {
     case 'product.created':
@@ -35,6 +38,9 @@ export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.E
     case 'customer.created':
     case 'customer.updated':
       await upsertStripeCustomer(stripeEvent.data.object)
+      if (slackPaymentsWebhookUrl && stripeEvent.type === 'customer.created') {
+        await onCustomerCreated(slackPaymentsWebhookUrl, stripeEvent.data.object)
+      }
       break
     case 'customer.deleted':
       await deleteStripeCustomer(stripeEvent.data.object)
@@ -60,6 +66,12 @@ export const consumeStripeWebhook = async (event: H3Event, stripeEvent: Stripe.E
       await onCheckoutCompleted(stripeEvent.data.object)
       break
       // This might be for a ticket, so let's make sure tickets are marked as paid
+
+    case 'payment_intent.payment_failed':
+      if (slackPaymentsWebhookUrl) {
+        await onPaymentFailed(slackPaymentsWebhookUrl, stripeEvent.data.object)
+      }
+      break
 
     default:
       return { status: 200 }
@@ -305,4 +317,12 @@ export const onCheckoutCompleted = async (checkout: Stripe.Checkout.Session) => 
         console.log('Unknown checkout status', checkout.status)
     }
   }
+}
+
+export const onPaymentFailed = async (webhookUrl: string, paymentIntent: Stripe.PaymentIntent) => {
+  await postToSlack(webhookUrl, buildPaymentFailedMessage(paymentIntent))
+}
+
+export const onCustomerCreated = async (webhookUrl: string, customer: Stripe.Customer) => {
+  await postToSlack(webhookUrl, buildCustomerCreatedMessage(customer))
 }
