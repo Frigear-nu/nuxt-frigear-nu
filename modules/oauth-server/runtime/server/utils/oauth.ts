@@ -74,6 +74,7 @@ export const STUDIO_CALLBACK_PATH = ''
 export function requireHttps(url: string): boolean {
   if (url.startsWith('https://')) return true
   // Allow http://localhost:{port} for development
+  // eslint-disable-next-line regexp/no-unused-capturing-group
   if (/^http:\/\/localhost(:\d+)?($|\/)/.test(url)) return true
   return false
 }
@@ -155,7 +156,7 @@ export async function verifyClientCredentials(
 // Create authorization code
 export async function createAuthorizationCode(
   clientId: string,
-  userId: string,
+  userId: number,
   redirectUri: string,
   scope: string,
   codeChallenge?: string,
@@ -232,7 +233,7 @@ export async function exchangeAuthorizationCode(
 // Create refresh token
 export async function createRefreshToken(
   clientId: string,
-  userId: string,
+  userId: number,
   scope: string,
   expiresInDays: number = 30,
 ): Promise<string> {
