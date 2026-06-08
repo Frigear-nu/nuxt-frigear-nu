@@ -8,7 +8,7 @@ export const oauthClients = sqliteTable('oauth_clients', {
   redirectUris: text('redirect_uris').notNull(), // JSON array (auto-generated from websiteUrl/previewUrlPattern)
   websiteUrl: text('website_url').notNull(), // Main website URL (e.g., https://docs.example.com)
   previewUrlPattern: text('preview_url_pattern'), // Optional pattern for preview deployments (e.g., https://*.vercel.app)
-  ownerId: text('owner_id').references(() => users.id),
+  ownerId: integer('owner_id').references(() => users.id),
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
   isActive: integer('is_active', { mode: 'boolean' }).default(true),
 })
@@ -17,7 +17,7 @@ export const oauthClients = sqliteTable('oauth_clients', {
 export const authorizationCodes = sqliteTable('authorization_codes', {
   codeHash: text('code').primaryKey(), // SHA-256 hash of the authorization code
   clientId: text('client_id').notNull().references(() => oauthClients.id),
-  userId: text('user_id').notNull().references(() => users.id),
+  userId: integer('user_id').notNull().references(() => users.id),
   redirectUri: text('redirect_uri').notNull(),
   scope: text('scope').notNull(),
   codeChallenge: text('code_challenge'), // PKCE
@@ -30,7 +30,7 @@ export const refreshTokens = sqliteTable('refresh_tokens', {
   id: text('id').primaryKey(),
   tokenHash: text('token_hash').notNull().unique(),
   clientId: text('client_id').notNull().references(() => oauthClients.id),
-  userId: text('user_id').notNull().references(() => users.id),
+  userId: integer('user_id').notNull().references(() => users.id),
   scope: text('scope').notNull(),
   expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
   revokedAt: integer('revoked_at', { mode: 'timestamp' }),
