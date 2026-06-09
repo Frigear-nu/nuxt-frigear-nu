@@ -6,8 +6,6 @@ const ROLE_CLAIM = 'https://frigear.nu/claims/role'
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
 
-  console.log('auth header:', getRequestHeader(event, 'authorization'))
-
   // Get access token from Authorization header
   const authHeader = getRequestHeader(event, 'authorization')
   if (!authHeader?.startsWith('Bearer ')) {

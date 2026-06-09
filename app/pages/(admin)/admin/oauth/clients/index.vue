@@ -55,6 +55,7 @@ function validateUrl(url: string, label: string): string | undefined {
   catch {
     return `Invalid URL format`
   }
+  // eslint-disable-next-line regexp/no-unused-capturing-group
   if (!url.startsWith('https://') && !/^http:\/\/localhost(:\d+)?($|\/)/.test(url)) {
     return 'Must use HTTPS (http://localhost allowed for development)'
   }
@@ -112,7 +113,7 @@ async function createClient() {
       previewUrlPattern: '',
     }
   }
-  catch (error: any) {
+  catch (error: Error | unknown) {
     // Handle server validation errors
     const message = error?.data?.message || error?.message || ''
     if (message.toLowerCase().includes('url')) {

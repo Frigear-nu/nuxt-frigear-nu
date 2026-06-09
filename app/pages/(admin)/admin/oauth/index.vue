@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { ButtonProps } from '@nuxt/ui'
 
-const overlay = useOverlay()
 const { data: websites } = useFetch('/api/admin/websites')
 
 const headerActions = computed<ButtonProps[]>(() => [

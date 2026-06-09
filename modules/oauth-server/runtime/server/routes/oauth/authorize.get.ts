@@ -69,7 +69,7 @@ export default defineEventHandler(async (event) => {
 
   if (!session.user) {
     // Store OAuth parameters in session and redirect to login
-    await setUserSession(event, {
+    await replaceUserSession(event, {
       ...session,
       oauthRequest: {
         clientId,
@@ -86,7 +86,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // User is logged in - store parameters and redirect to consent page
-  await setUserSession(event, {
+  await replaceUserSession(event, {
     ...session,
     oauthRequest: {
       clientId,

@@ -145,15 +145,11 @@ export async function verifyClientCredentials(
   clientId: string,
   clientSecret: string,
 ): Promise<OAuthClient | null> {
-  console.log({ clientId, clientSecret })
   const client = await getOAuthClient(clientId)
   if (!client) return null
 
-  console.log('client:', client)
-
   const isValid = await verifyTokenHash(clientSecret, client.secretHash)
 
-  console.log('isValid:', isValid)
   return isValid ? client : null
 }
 
