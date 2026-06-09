@@ -146,8 +146,6 @@ export async function verifyClientCredentials(
   clientSecret: string,
 ): Promise<OAuthClient | null> {
   console.log({ clientId, clientSecret })
-  console.log('clientId bytes:', [...clientId].map(c => c.charCodeAt(0)))
-  console.log('clientSecret bytes:', [...clientSecret].map(c => c.charCodeAt(0)))
   const client = await getOAuthClient(clientId)
   if (!client) return null
 

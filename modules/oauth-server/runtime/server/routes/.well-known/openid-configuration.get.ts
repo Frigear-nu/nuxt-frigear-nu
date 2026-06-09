@@ -14,7 +14,7 @@ export default defineEventHandler((event) => {
     id_token_signing_alg_values_supported: ['RS256'],
     scopes_supported: ['openid', 'profile', 'email', 'git:github'],
     token_endpoint_auth_methods_supported: ['client_secret_post', 'client_secret_basic'],
-    claims_supported: ['sub', 'name', 'email', 'picture', 'github_token', 'git_provider', 'iss', 'aud', 'exp', 'iat', 'role'],
+    claims_supported: ['sub', 'name', 'email', 'picture', 'github_token', 'git_provider', 'iss', 'aud', 'exp', 'iat'],
     code_challenge_methods_supported: ['S256'],
   }
 })

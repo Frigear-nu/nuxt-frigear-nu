@@ -1,3 +1,5 @@
+import { objectOmit } from '@vueuse/core'
+
 export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event)
 
@@ -14,10 +16,7 @@ export default defineEventHandler(async (event) => {
   const { approved } = body
 
   // Clear OAuth request from session
-  await setUserSession(event, {
-    user: session.user,
-    oauthRequest: undefined,
-  })
+  await setUserSession(event, objectOmit(session, ['oauthRequest']))
 
   // Build redirect URL
   const redirectUrl = new URL(oauthRequest.redirectUri)
@@ -50,6 +49,8 @@ export default defineEventHandler(async (event) => {
     redirectUrl.searchParams.set('state', oauthRequest.state)
   }
 
+  const fullRedirectUrl = redirectUrl.toString()
+
   // Return redirect URL for client-side navigation
-  return { redirectUrl: redirectUrl.toString() }
+  return { redirectUrl: fullRedirectUrl }
 })

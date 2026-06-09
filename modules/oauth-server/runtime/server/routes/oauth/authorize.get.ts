@@ -1,5 +1,5 @@
 // Fixed scope - always return all user info + GitHub token if available
-const DEFAULT_SCOPE = 'openid profile email git:github'
+const DEFAULT_SCOPE = 'openid profile email'
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
@@ -70,6 +70,7 @@ export default defineEventHandler(async (event) => {
   if (!session.user) {
     // Store OAuth parameters in session and redirect to login
     await setUserSession(event, {
+      ...session,
       oauthRequest: {
         clientId,
         redirectUri,

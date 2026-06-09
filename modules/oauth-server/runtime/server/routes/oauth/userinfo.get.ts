@@ -1,6 +1,8 @@
 import { eq } from 'drizzle-orm'
 import { db, schema } from '@nuxthub/db'
 
+const ROLE_CLAIM = 'https://frigear.nu/claims/role'
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
 
@@ -51,11 +53,12 @@ export default defineEventHandler(async (event) => {
 
   // Always return all user information
   const response: Record<string, unknown> = {
-    sub: user.id,
+    sub: `${user.id}`,
     name: user.name,
     email: user.email,
     picture: user.avatarUrl,
     role: user.role,
+    [ROLE_CLAIM]: user.role,
   }
 
   // Include GitHub token if user has one (logged in with GitHub)

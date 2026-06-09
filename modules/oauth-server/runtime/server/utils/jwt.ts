@@ -1,5 +1,6 @@
 import type { Users } from '@nuxthub/db/schema'
 
+const ROLE_CLAIM = 'https://frigear.nu/claims/role'
 interface JWTPayload {
   sub: string
   iss: string
@@ -11,6 +12,8 @@ interface JWTPayload {
   email?: string
   role?: Users['role']
   picture?: string
+  [claim: string]: unknown
+  [ROLE_CLAIM]: Users['role']
 }
 
 interface JWK {
@@ -193,6 +196,7 @@ export async function generateAccessToken(
       name: user.name,
       email: user.email,
       role: user.role,
+      [ROLE_CLAIM]: user.role,
       picture: user.avatarUrl || undefined,
     },
     privateKeyPem,
@@ -209,14 +213,15 @@ export async function generateIdToken(
   expiresInSeconds: number = 3600,
 ): Promise<string> {
   const payload: Record<string, unknown> = {
-    sub: user.id,
+    sub: `${user.id}`,
     iss: issuer,
     aud: clientId,
     exp: Math.floor(Date.now() / 1000) + expiresInSeconds,
     name: user.name,
     email: user.email,
-    role: user.role,
     picture: user.avatarUrl || undefined,
+    role: user.role || 'user',
+    [ROLE_CLAIM]: user.role,
   }
 
   if (nonce) {

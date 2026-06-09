@@ -68,6 +68,8 @@ export default defineEventHandler(async (event) => {
 
     const { user, scope, nonce } = result
 
+    console.log('token.post:scope|user ', result.scope, result.user)
+
     // Generate tokens
     const accessToken = await generateAccessToken(
       user,
