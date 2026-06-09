@@ -115,6 +115,7 @@ async function createClient() {
   }
   catch (error: unknown) {
     // Handle server validation errors
+    // @ts-expect-error Not typed error...
     const message = error?.data?.message || error?.message || ''
     if (message.toLowerCase().includes('url')) {
       errors.value = { websiteUrl: message }
@@ -357,7 +358,7 @@ const headerActions = computed<ButtonProps[]>(() => [
               </span>
             </template>
             <UInput
-              :model-value="createdClientId"
+              :model-value="createdClientId!"
               readonly
               class="font-mono w-full"
               :ui="{ trailing: 'pr-0.5' }"

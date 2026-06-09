@@ -125,6 +125,7 @@ async function saveClient() {
     })
   }
   catch (error: unknown) {
+    // @ts-expect-error Not typed err..
     const message = error?.data?.message || 'Something went wrong while saving the client.'
     // Map server errors to form fields
     if (message.toLowerCase().includes('url')) {
@@ -536,7 +537,7 @@ async function deleteClient() {
               </span>
             </template>
             <UInput
-              :model-value="newSecret"
+              :model-value="newSecret!"
               readonly
               class="font-mono w-full"
               type="text"
