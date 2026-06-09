@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm'
-import { db, schema } from 'hub:db'
+import { db, schema } from '@nuxthub/db'
 import { authorize } from 'nuxt-authorization/utils'
 import { isAdmin } from '#shared/abilities/admin'
 
@@ -7,7 +7,14 @@ export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
   await authorize(isAdmin, user)
 
-  // Get all clients with owner information
+  const clientId = getRouterParam(event, 'id')
+  if (!clientId) {
+    throw createError({
+      statusCode: 400,
+      message: 'Client ID is required',
+    })
+  }
+
   const clients = await db
     .select({
       id: schema.oauthClients.id,
@@ -16,13 +23,21 @@ export default defineEventHandler(async (event) => {
       previewUrlPattern: schema.oauthClients.previewUrlPattern,
       isActive: schema.oauthClients.isActive,
       createdAt: schema.oauthClients.createdAt,
-      ownerName: schema.users.name,
     })
     .from(schema.oauthClients)
-    .leftJoin(schema.users, eq(schema.oauthClients.ownerId, schema.users.id))
+    .where(eq(schema.oauthClients.id, clientId))
+    .limit(1)
 
-  return clients.map(client => ({
+  const client = clients[0]
+  if (!client) {
+    throw createError({
+      statusCode: 404,
+      message: 'Client not found',
+    })
+  }
+
+  return {
     ...client,
     callbackUrl: buildCallbackUrl(client.websiteUrl),
-  }))
+  }
 })

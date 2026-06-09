@@ -9,6 +9,7 @@ interface JWTPayload {
   scope?: string
   name?: string
   email?: string
+  role?: Users['role']
   picture?: string
 }
 
@@ -184,13 +185,14 @@ export async function generateAccessToken(
 ): Promise<string> {
   return generateJWT(
     {
-      sub: user.id,
+      sub: `${user.id}`,
       iss: issuer,
       aud: clientId,
       exp: Math.floor(Date.now() / 1000) + expiresInSeconds,
       scope,
       name: user.name,
       email: user.email,
+      role: user.role,
       picture: user.avatarUrl || undefined,
     },
     privateKeyPem,
@@ -213,6 +215,7 @@ export async function generateIdToken(
     exp: Math.floor(Date.now() / 1000) + expiresInSeconds,
     name: user.name,
     email: user.email,
+    role: user.role,
     picture: user.avatarUrl || undefined,
   }
 

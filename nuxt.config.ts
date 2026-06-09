@@ -150,6 +150,8 @@ export default defineNuxtConfig({
       },
     },
     jwtSecret: 'some-string-longer-than-32-chars-to-issue-jwt',
+    jwtPublicKey: '',
+    jwtPrivateKey: '',
     stripeWebhookSecret: '',
     mail: {
       from: '',

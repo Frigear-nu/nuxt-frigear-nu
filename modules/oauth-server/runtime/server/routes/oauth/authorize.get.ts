@@ -9,6 +9,7 @@ export default defineEventHandler(async (event) => {
   const redirectUri = query.redirect_uri as string
   const responseType = query.response_type as string
   const state = query.state as string
+  const nonce = query.nonce as string | undefined
 
   // PKCE parameters (required per OAuth 2.1)
   const codeChallenge = query.code_challenge as string | undefined
@@ -76,10 +77,11 @@ export default defineEventHandler(async (event) => {
         state,
         codeChallenge,
         codeChallengeMethod,
+        nonce,
       },
     })
 
-    return sendRedirect(event, '/login')
+    return sendRedirect(event, '/sign-in?redirect=/authorize')
   }
 
   // User is logged in - store parameters and redirect to consent page
@@ -93,6 +95,7 @@ export default defineEventHandler(async (event) => {
       codeChallenge,
       codeChallengeMethod,
       clientName: client.name,
+      nonce,
     },
   })
 

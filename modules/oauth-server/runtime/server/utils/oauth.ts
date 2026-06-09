@@ -64,8 +64,7 @@ export async function verifyCodeChallenge(
   return timingSafeEqual(encoder.encode(computed), encoder.encode(challenge))
 }
 
-// The standard Nuxt Studio callback path
-export const STUDIO_CALLBACK_PATH = ''
+export const FRIGEAR_SSO_CALLBACK_PATH = '/auth/frigear'
 
 /**
  * Validate that a URL uses HTTPS, except for localhost (development).
@@ -92,7 +91,7 @@ export function validateRedirectUri(
 ): boolean {
   // Normalize URLs (remove trailing slashes)
   const normalizedWebsiteUrl = websiteUrl.replace(/\/$/, '')
-  const expectedCallbackUrl = `${normalizedWebsiteUrl}${STUDIO_CALLBACK_PATH}`
+  const expectedCallbackUrl = `${normalizedWebsiteUrl}${FRIGEAR_SSO_CALLBACK_PATH}`
 
   // Check exact match with main website URL
   if (redirectUri === expectedCallbackUrl) {
@@ -106,7 +105,7 @@ export function validateRedirectUri(
     // Escape special regex characters except *, then replace * with pattern
     const escaped = normalizedPattern.replace(/[.+?^${}()|[\]\\]/g, '\\$&')
     const regexPattern = escaped.replace(/\*/g, '[^/]+')
-    const expectedPattern = `^${regexPattern}${STUDIO_CALLBACK_PATH.replace(/\//g, '\\/')}$`
+    const expectedPattern = `^${regexPattern}${FRIGEAR_SSO_CALLBACK_PATH.replace(/\//g, '\\/')}$`
 
     try {
       const regex = new RegExp(expectedPattern)
@@ -127,7 +126,7 @@ export function validateRedirectUri(
  */
 export function buildCallbackUrl(websiteUrl: string): string {
   const normalizedUrl = websiteUrl.replace(/\/$/, '')
-  return `${normalizedUrl}${STUDIO_CALLBACK_PATH}`
+  return `${normalizedUrl}${FRIGEAR_SSO_CALLBACK_PATH}`
 }
 
 // Get OAuth client by ID
@@ -146,10 +145,17 @@ export async function verifyClientCredentials(
   clientId: string,
   clientSecret: string,
 ): Promise<OAuthClient | null> {
+  console.log({ clientId, clientSecret })
+  console.log('clientId bytes:', [...clientId].map(c => c.charCodeAt(0)))
+  console.log('clientSecret bytes:', [...clientSecret].map(c => c.charCodeAt(0)))
   const client = await getOAuthClient(clientId)
   if (!client) return null
 
+  console.log('client:', client)
+
   const isValid = await verifyTokenHash(clientSecret, client.secretHash)
+
+  console.log('isValid:', isValid)
   return isValid ? client : null
 }
 
@@ -161,10 +167,11 @@ export async function createAuthorizationCode(
   scope: string,
   codeChallenge?: string,
   codeChallengeMethod?: string,
+  nonce?: string,
 ): Promise<string> {
   const code = generateSecureToken(32)
   const codeHash = await hashToken(code)
-  const expiresAt = new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
+  const expiresAt = new Date(Date.now() + 10 * 60 * 1000)
 
   await db.insert(schema.authorizationCodes).values({
     codeHash,
@@ -174,6 +181,7 @@ export async function createAuthorizationCode(
     scope,
     codeChallenge,
     codeChallengeMethod,
+    nonce,
     expiresAt,
   })
 
@@ -186,7 +194,7 @@ export async function exchangeAuthorizationCode(
   clientId: string,
   redirectUri: string,
   codeVerifier: string,
-): Promise<{ user: Users, scope: string } | null> {
+): Promise<{ user: Users, scope: string, nonce: string | null } | null> {
   const codeHash = await hashToken(code)
 
   // Get and validate the authorization code by hash
@@ -200,7 +208,8 @@ export async function exchangeAuthorizationCode(
   if (!authCode) return null
 
   // Delete the code immediately (single use)
-  await db.delete(schema.authorizationCodes).where(eq(schema.authorizationCodes.codeHash, codeHash))
+  await db.delete(schema.authorizationCodes)
+    .where(eq(schema.authorizationCodes.codeHash, codeHash))
 
   // Validate client ID and redirect URI
   if (authCode.clientId !== clientId || authCode.redirectUri !== redirectUri) {
@@ -227,7 +236,7 @@ export async function exchangeAuthorizationCode(
   const user = userResults[0]
   if (!user) return null
 
-  return { user, scope: authCode.scope }
+  return { user, scope: authCode.scope, nonce: authCode.nonce }
 }
 
 // Create refresh token

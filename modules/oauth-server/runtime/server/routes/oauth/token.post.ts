@@ -66,7 +66,7 @@ export default defineEventHandler(async (event) => {
       }
     }
 
-    const { user, scope } = result
+    const { user, scope, nonce } = result
 
     // Generate tokens
     const accessToken = await generateAccessToken(
@@ -75,7 +75,7 @@ export default defineEventHandler(async (event) => {
       scope,
       baseUrl,
       config.jwtPrivateKey,
-      3600, // 1 hour
+      3600,
     )
 
     const refreshToken = await createRefreshToken(clientId, user.id, scope)
@@ -95,7 +95,7 @@ export default defineEventHandler(async (event) => {
         clientId,
         baseUrl,
         config.jwtPrivateKey,
-        undefined,
+        nonce,
         3600,
       )
     }

@@ -1,24 +1,47 @@
-import { addServerHandler, addServerImportsDir, createResolver, defineNuxtModule, extendPages } from '@nuxt/kit'
-import type { OAuthServerModuleOptions } from './types'
+import { createResolver, defineNuxtModule, extendPages } from '@nuxt/kit'
+import type { OAuthServerModuleOptions, OAuthServerModulePublicOptions } from './types'
 import { defu } from 'defu'
+import { setup } from './internal/setup'
+import { objectPick } from '@vueuse/core'
 
-const { resolve } = createResolver(import.meta.url)
+export type { OAuthServerModuleOptions as ModuleOptions } from './types'
+
+const resolver = createResolver(import.meta.url)
 
 export default defineNuxtModule<OAuthServerModuleOptions>({
   meta: {
     name: 'oauth-server',
-    configKey: 'oauthServer',
+    configKey: 'oAuthServer',
   },
   defaults: {
-    jwtPrivateKey: '',
     jwtPublicKey: '',
+    jwtPrivateKey: '',
+    uiBase: '/app/admin/oauth',
+    apiBase: '/api/admin/oauth',
   },
   async setup(moduleOptions, nuxt) {
-    nuxt.options.runtimeConfig.oauthServer = defu(nuxt.options.runtimeConfig.oauthServer, moduleOptions) as OAuthServerModuleOptions
+    const { resolve } = resolver
+
+    nuxt.options.oAuthServer ||= {} as OAuthServerModuleOptions
+    nuxt.options.runtimeConfig.oAuthServer ||= {} as OAuthServerModuleOptions
+
+    nuxt.options.runtimeConfig.oAuthServer = defu(
+      nuxt.options.runtimeConfig.oAuthServer,
+      nuxt.options.oAuthServer,
+      moduleOptions,
+    ) as OAuthServerModuleOptions
+
+    nuxt.options.runtimeConfig.public.oAuthServer = objectPick(
+      nuxt.options.runtimeConfig.oAuthServer,
+      ['uiBase', 'apiBase'],
+    ) as OAuthServerModulePublicOptions
 
     // App
     extendPages((pages) => {
       if (pages.some(p => p.path === '/authorize')) {
+        if (nuxt.options.dev) {
+          console.warn('OAuth server: /authorize route already exists. Skipping.')
+        }
         return
       }
 
@@ -29,51 +52,6 @@ export default defineNuxtModule<OAuthServerModuleOptions>({
       })
     })
 
-    // Server
-    addServerImportsDir([
-      resolve('./runtime/server/utils'),
-    ])
-
-    addServerHandler({
-      method: 'get',
-      route: '/.well-known/jwks.json',
-      handler: resolve('./runtime/server/routes/.well-known/jwks.json.get.ts'),
-    })
-
-    addServerHandler({
-      method: 'get',
-      route: '/.well-known/openid-configuration',
-      handler: resolve('./runtime/server/routes/.well-known/openid-configuration.get.ts'),
-    })
-
-    addServerHandler({
-      method: 'get',
-      route: '/oauth/authorize',
-      handler: resolve('./runtime/server/routes/oauth/authorize.get.ts'),
-    })
-
-    addServerHandler({
-      method: 'post',
-      route: '/oauth/authorize',
-      handler: resolve('./runtime/server/routes/oauth/authorize.post.ts'),
-    })
-
-    addServerHandler({
-      method: 'post',
-      route: '/oauth/token',
-      handler: resolve('./runtime/server/routes/oauth/token.post.ts'),
-    })
-
-    addServerHandler({
-      method: 'post',
-      route: '/oauth/revoke',
-      handler: resolve('./runtime/server/routes/oauth/revoke.post.ts'),
-    })
-
-    addServerHandler({
-      method: 'get',
-      route: '/oauth/userinfo',
-      handler: resolve('./runtime/server/routes/oauth/userinfo.get.ts'),
-    })
+    await setup(nuxt, resolver)
   },
 })

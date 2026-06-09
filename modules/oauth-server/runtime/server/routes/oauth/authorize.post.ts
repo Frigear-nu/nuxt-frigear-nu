@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event)
 
   // Get OAuth request from session
-  const oauthRequest = (session as { oauthRequest?: { clientId: string, redirectUri: string, scope: string, state?: string, codeChallenge?: string, codeChallengeMethod?: string } }).oauthRequest
+  const oauthRequest = (session as { oauthRequest?: { clientId: string, redirectUri: string, scope: string, state?: string, codeChallenge?: string, codeChallengeMethod?: string, nonce?: string } }).oauthRequest
   if (!oauthRequest) {
     throw createError({
       statusCode: 400,
@@ -36,11 +36,12 @@ export default defineEventHandler(async (event) => {
   // Generate authorization code
   const code = await createAuthorizationCode(
     oauthRequest.clientId,
-    session.user.id as string,
+    session.user.id,
     oauthRequest.redirectUri,
     oauthRequest.scope,
     oauthRequest.codeChallenge,
     oauthRequest.codeChallengeMethod,
+    oauthRequest.nonce,
   )
 
   // Add code and state to redirect URL

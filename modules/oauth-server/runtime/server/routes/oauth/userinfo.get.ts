@@ -1,8 +1,10 @@
 import { eq } from 'drizzle-orm'
-import { db, schema } from 'hub:db'
+import { db, schema } from '@nuxthub/db'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
+
+  console.log('auth header:', getRequestHeader(event, 'authorization'))
 
   // Get access token from Authorization header
   const authHeader = getRequestHeader(event, 'authorization')
@@ -35,7 +37,7 @@ export default defineEventHandler(async (event) => {
   const userResults = await db
     .select()
     .from(schema.users)
-    .where(eq(schema.users.id, payload.sub))
+    .where(eq(schema.users.id, Number(payload.sub)))
     .limit(1)
 
   const user = userResults[0]
@@ -52,7 +54,8 @@ export default defineEventHandler(async (event) => {
     sub: user.id,
     name: user.name,
     email: user.email,
-    picture: user.avatar,
+    picture: user.avatarUrl,
+    role: user.role,
   }
 
   // Include GitHub token if user has one (logged in with GitHub)

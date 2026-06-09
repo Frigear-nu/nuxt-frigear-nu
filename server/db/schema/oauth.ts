@@ -22,6 +22,7 @@ export const authorizationCodes = sqliteTable('authorization_codes', {
   scope: text('scope').notNull(),
   codeChallenge: text('code_challenge'), // PKCE
   codeChallengeMethod: text('code_challenge_method'),
+  nonce: text('nonce'),
   expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
 })
 
