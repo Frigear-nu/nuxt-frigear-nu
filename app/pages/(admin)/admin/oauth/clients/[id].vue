@@ -20,7 +20,7 @@ definePageMeta({
 
 // Redirect non-admins to dashboard
 const { user } = useUserSession()
-if (user.value.role !== 'admin') {
+if (user.value?.role !== 'admin') {
   await navigateTo('/')
 }
 
