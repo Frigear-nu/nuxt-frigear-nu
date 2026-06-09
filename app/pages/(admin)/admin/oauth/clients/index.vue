@@ -113,7 +113,7 @@ async function createClient() {
       previewUrlPattern: '',
     }
   }
-  catch (error: Error | unknown) {
+  catch (error: unknown) {
     // Handle server validation errors
     const message = error?.data?.message || error?.message || ''
     if (message.toLowerCase().includes('url')) {

@@ -124,7 +124,7 @@ async function saveClient() {
       icon: 'i-heroicons-check-circle',
     })
   }
-  catch (error: Error | unknown) {
+  catch (error: unknown) {
     const message = error?.data?.message || 'Something went wrong while saving the client.'
     // Map server errors to form fields
     if (message.toLowerCase().includes('url')) {
