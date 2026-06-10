@@ -123,7 +123,7 @@ const membershipActions = ref<ButtonProps[]>([
               variant="outline"
               color="neutral"
             >
-              {{ card.type && card.type === 'application' ? t('actions.visit') : t('actions.view') }}
+              {{ card?.type && card.type === 'application' ? t('actions.visit') : t('actions.view') }}
             </UButton>
           </div>
         </template>
