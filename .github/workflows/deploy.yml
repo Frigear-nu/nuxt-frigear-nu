@@ -58,6 +58,9 @@ env:
   NUXT_SENTRY_AUTH_TOKEN: ${{ secrets.NUXT_SENTRY_AUTH_TOKEN }}
 #  SENTRY_LOG_LEVEL: debug
 
+  NUXT_JWT_PRIVATE_KEY: ${{ secrets.NUXT_JWT_PRIVATE_KEY }}
+  NUXT_JWT_PUBLIC_KEY: ${{ vars.NUXT_JWT_PUBLIC_KEY }}
+
 jobs:
   ci:
     name: CI (lint + test)
