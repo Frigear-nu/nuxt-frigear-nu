@@ -192,18 +192,12 @@ export async function exchangeAuthorizationCode(
   const codeHash = await hashToken(code)
 
   // Get and validate the authorization code by hash
-  const codes = await db
-    .select()
-    .from(schema.authorizationCodes)
+  const [authCode] = await db
+    .delete(schema.authorizationCodes)
     .where(eq(schema.authorizationCodes.codeHash, codeHash))
-    .limit(1)
+    .returning()
 
-  const authCode = codes[0]
   if (!authCode) return null
-
-  // Delete the code immediately (single use)
-  await db.delete(schema.authorizationCodes)
-    .where(eq(schema.authorizationCodes.codeHash, codeHash))
 
   // Validate client ID and redirect URI
   if (authCode.clientId !== clientId || authCode.redirectUri !== redirectUri) {
