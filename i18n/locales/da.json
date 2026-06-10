@@ -4,7 +4,8 @@
     "close": "Luk",
     "information": "Information",
     "back": "Tilbage",
-    "current": "Nuværende"
+    "current": "Nuværende",
+    "visit": "Besøg"
   },
   "auth": {
     "signIn": "Log ind",

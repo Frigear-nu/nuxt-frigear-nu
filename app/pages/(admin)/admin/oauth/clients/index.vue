@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui'
+import { userRoles } from '#shared/schema/user'
 
 interface OAuthClient {
   id: string
@@ -10,6 +11,7 @@ interface OAuthClient {
   isActive: boolean
   createdAt: string
   ownerName: string | null
+  allowedRoles: string[]
 }
 
 useSeoMeta({
@@ -35,6 +37,7 @@ const newClient = ref({
   name: '',
   websiteUrl: '',
   previewUrlPattern: '',
+  allowedRoles: [] as string[],
 })
 const createdSecret = ref<string | null>(null)
 const createdClientId = ref<string | null>(null)
@@ -43,7 +46,7 @@ const copiedField = ref<string | null>(null)
 const ssoUrl = useRequestURL().origin
 
 // Form validation errors
-const errors = ref<{ name?: string, websiteUrl?: string, previewUrlPattern?: string }>({})
+const errors = ref<{ name?: string, websiteUrl?: string, previewUrlPattern?: string, allowedRoles?: string }>({})
 
 function validateUrl(url: string, label: string): string | undefined {
   try {
@@ -111,6 +114,7 @@ async function createClient() {
       name: '',
       websiteUrl: '',
       previewUrlPattern: '',
+      allowedRoles: [],
     }
   }
   catch (error: unknown) {
@@ -456,6 +460,20 @@ const headerActions = computed<ButtonProps[]>(() => [
               placeholder="My Nuxt Studio Site"
               class="w-full"
               @input="errors.name = undefined"
+            />
+          </UFormField>
+
+          <UFormField
+            label="Allowed Roles"
+            description="All allowed roles that can access this app."
+            required
+            :error="errors.allowedRoles"
+          >
+            <USelectMenu
+              v-model="newClient.allowedRoles"
+              class="w-full"
+              :items="userRoles"
+              multiple
             />
           </UFormField>
 

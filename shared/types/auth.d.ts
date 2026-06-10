@@ -17,6 +17,8 @@ declare module '#auth-utils' {
       codeChallenge?: string
       codeChallengeMethod?: string
       clientName?: string
+      clientLogoUrl?: string
+      clientHost?: string
       nonce?: string
     }
   }

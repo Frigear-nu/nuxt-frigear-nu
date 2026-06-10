@@ -1,0 +1,1 @@
+ALTER TABLE `oauth_clients` ADD `allowed_roles` text;

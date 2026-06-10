@@ -75,7 +75,9 @@ export default defineNuxtConfig({
     sourcemap: false,
     nitro: {
       prerender: {
-        failOnError: false,
+        routes: ['/', '/en'],
+        failOnError: false, // todo: this should be investigated.
+        crawlLinks: false,
       },
     },
     hub: {

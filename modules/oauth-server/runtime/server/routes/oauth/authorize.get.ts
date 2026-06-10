@@ -64,6 +64,12 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  const clientHost = new URL(client.websiteUrl).host
+  const clientMeta = {
+    clientHost,
+    clientName: client.name,
+  }
+
   // Check if user is logged in
   const session = await getUserSession(event)
 
@@ -79,10 +85,19 @@ export default defineEventHandler(async (event) => {
         codeChallenge,
         codeChallengeMethod,
         nonce,
+        ...clientMeta,
       },
     })
 
     return sendRedirect(event, '/sign-in?redirect=/authorize')
+  }
+
+  // check if th euser can access this app:
+  if (client.allowedRoles && !client.allowedRoles.includes(session.user.role)) {
+    throw createError({
+      status: 403,
+      message: 'You do not have permission to access this application.',
+    })
   }
 
   // User is logged in - store parameters and redirect to consent page
@@ -95,8 +110,8 @@ export default defineEventHandler(async (event) => {
       state,
       codeChallenge,
       codeChallengeMethod,
-      clientName: client.name,
       nonce,
+      ...clientMeta,
     },
   })
 

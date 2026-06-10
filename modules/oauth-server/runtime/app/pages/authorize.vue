@@ -60,6 +60,9 @@ if (!oauthRequest.value) {
           <p class="text-sm text-muted mt-1">
             wants to access your account
           </p>
+          <UBadge v-if="oauthRequest.clientHost">
+            {{ oauthRequest.clientHost }}
+          </UBadge>
         </div>
 
         <!-- User card -->
