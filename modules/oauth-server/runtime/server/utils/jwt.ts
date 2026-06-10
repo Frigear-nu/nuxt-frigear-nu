@@ -52,9 +52,21 @@ function pemToArrayBuffer(pem: string): ArrayBuffer {
   const base64 = pem
     .replace(/-----BEGIN [^-]+-----/g, '')
     .replace(/-----END [^-]+-----/g, '')
-    .replace(/[^a-z0-9+/=]/gi, '')
-  return base64UrlToArrayBuffer(base64.replace(/\+/g, '-').replace(/\//g, '_'))
+    .replace(/\s+/g, '') // strip all whitespace including newlines
+  const binary = atob(base64) // atob handles standard base64 directly
+  const bytes = new Uint8Array(binary.length)
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i)
+  }
+  return bytes.buffer
 }
+// function pemToArrayBuffer(pem: string): ArrayBuffer {
+//   const base64 = pem
+//     .replace(/-----BEGIN [^-]+-----/g, '')
+//     .replace(/-----END [^-]+-----/g, '')
+//     .replace(/[^a-z0-9+/=]/gi, '')
+//   return base64UrlToArrayBuffer(base64.replace(/\+/g, '-').replace(/\//g, '_'))
+// }
 
 // Import RSA private key from PEM
 async function importPrivateKey(pem: string): Promise<CryptoKey> {
