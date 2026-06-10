@@ -11,13 +11,10 @@ const { t, localePath } = useSiteI18n()
 const { isLoggedIn, currentUser } = useAuth()
 const { data: userMemberships } = useUserMemberships({ isEnabled: isLoggedIn })
 const { data: cartItems, hasAnyItems: hasAnyCartItems } = useShoppingCart()
-// const { data: availableApps } = useFetch<{ id: string, name: string, websiteUrl: string }[]>('/api/account/websites', {
-//
-// })
+const { data: availableApps } = useFetch<{ id: string, name: string, websiteUrl: string }[]>('/api/account/websites')
 
-const availableApps = ref<any>([])
-
-const appCards = computed(() => {
+type AccountCard = PageCardProps & { type?: 'application' }
+const appCards = computed<AccountCard[]>(() => {
   if (!availableApps.value) {
     return []
   }
@@ -32,7 +29,6 @@ const appCards = computed(() => {
     type: 'application',
   }))
 })
-type AccountCard = PageCardProps & { type?: 'application' }
 const cards = computedAsync<AccountCard[]>(async () => {
   const baseTiles: AccountCard[] = [
     ...appCards.value,
