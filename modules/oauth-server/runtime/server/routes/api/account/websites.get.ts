@@ -1,10 +1,10 @@
-import { db, schema } from '@nuxthub/db'
+import { db } from '@nuxthub/db'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
 
   return db.query.oauthClients.findMany({
-    where: (t, { and, eq, like, ilike }) => {
+    where: (t, { and, eq, like }) => {
       return and(
         eq(t.isActive, true),
         like(t.allowedRoles, `%"${user.role}"%`),
