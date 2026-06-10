@@ -20,7 +20,7 @@ const appCards = computed<AccountCard[]>(() => {
   }
   return availableApps.value?.map(app => ({
     title: app.name,
-    description: app.websiteUrl,
+    description: new URL(app.websiteUrl).host,
     icon: 'i-lucide-globe',
     to: new URL(app.websiteUrl).origin,
     external: true,
