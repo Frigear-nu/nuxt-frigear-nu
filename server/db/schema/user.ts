@@ -2,13 +2,12 @@ import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
 import { relations } from 'drizzle-orm'
 import { stripeCustomers } from './stripe'
 import { userEventTickets } from './event'
-import { userRoles } from '#shared/schema/user'
 
 export const users = sqliteTable('users', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
-  role: text('role', { enum: userRoles }).notNull().default('user'),
+  role: text('role', { enum: ['admin', 'manager', 'coordinator', 'member', 'user'] }).notNull().default('user'),
   passwordHash: text('password_hash'),
   avatarUrl: text('avatar_url'),
 

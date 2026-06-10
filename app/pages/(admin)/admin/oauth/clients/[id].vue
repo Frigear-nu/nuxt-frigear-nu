@@ -215,7 +215,7 @@ async function deleteClient() {
     <!-- Page header -->
     <div class="flex items-center gap-4 mb-8">
       <UButton
-        to="/dashboard/clients"
+        to="/admin/oauth/clients"
         color="neutral"
         variant="ghost"
         icon="i-heroicons-arrow-left"
@@ -232,7 +232,7 @@ async function deleteClient() {
       <UEmpty
         icon="i-heroicons-exclamation-triangle"
         title="Client not found"
-        :actions="[{ label: 'Back to Clients', to: '/dashboard/clients' }]"
+        :actions="[{ label: 'Back to Clients', to: '/admin/oauth/clients' }]"
       />
     </div>
 
