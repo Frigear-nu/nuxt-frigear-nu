@@ -69,7 +69,7 @@ const signIn = async (email: string, password: string) => {
     const signedInUser = await signInWithPassword(email, password, toValue(redirectTo))
     if (!signedInUser) throw createError('Could not load user.')
     // todo: not sure if this redirect is correct.
-    return navigateTo('/account')
+    return navigateTo(redirectTo.value || '/account')
   }
   catch (error) {
     if (error) toast.add(formatError(error))
