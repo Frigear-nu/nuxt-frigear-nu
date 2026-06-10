@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { userRoles } from '#shared/schema/user'
-import { joinURL } from 'ufo'
 
 interface OAuthClient {
   id: string
@@ -201,7 +200,7 @@ const envFormat = computed(() => {
 
 const oidcFormat = computed(() => {
   if (!newSecret.value) return ''
-  return `NUXT_OAUTH_OIDC_REDIRECT_URI=${joinURL(client.value?.websiteUrl || '', '/auth/frigear')}\nNUXT_OAUTH_OIDC_CLIENT_ID=${clientId}\nNUXT_OAUTH_OIDC_CLIENT_SECRET=${newSecret.value}\nNUXT_OAUTH_OIDC_OPENID_CONFIG=${useRequestURL().origin}/.well-known/openid-configuration`
+  return `NUXT_OAUTH_OIDC_CLIENT_ID=${clientId}\nNUXT_OAUTH_OIDC_CLIENT_SECRET=${newSecret.value}\nNUXT_OAUTH_OIDC_OPENID_CONFIG=${useRequestURL().origin}/.well-known/openid-configuration`
 })
 
 async function deleteClient() {

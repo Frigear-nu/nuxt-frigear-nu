@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui'
 import { userRoles } from '#shared/schema/user'
-import { joinURL } from 'ufo'
 
 interface OAuthClient {
   id: string
@@ -42,7 +41,6 @@ const newClient = ref({
 })
 const createdSecret = ref<string | null>(null)
 const createdClientId = ref<string | null>(null)
-const createdClientWebsite = ref<string | null>(null)
 const creating = ref(false)
 const copiedField = ref<string | null>(null)
 const ssoUrl = useRequestURL().origin
@@ -109,7 +107,6 @@ async function createClient() {
 
     createdSecret.value = result.secret
     createdClientId.value = result.id
-    createdClientWebsite.value = result.websiteUrl
     errors.value = {}
     await refresh()
 
@@ -157,7 +154,7 @@ const envFormat = computed(() => {
 
 const oidcFormat = computed(() => {
   if (!createdClientId.value || !createdSecret.value) return ''
-  return `NUXT_OAUTH_OIDC_REDIRECT_URI=${joinURL(createdClientWebsite.value || '', '/auth/frigear')}\nNUXT_OAUTH_OIDC_CLIENT_ID=${createdClientId.value}\nNUXT_OAUTH_OIDC_CLIENT_SECRET=${createdSecret.value}\nNUXT_OAUTH_OIDC_OPENID_CONFIG=${useRequestURL().origin}/.well-known/openid-configuration`
+  return `NUXT_OAUTH_OIDC_CLIENT_ID=${createdClientId.value}\nNUXT_OAUTH_OIDC_CLIENT_SECRET=${createdSecret.value}\nNUXT_OAUTH_OIDC_OPENID_CONFIG=${useRequestURL().origin}/.well-known/openid-configuration`
 })
 
 const confirm = useConfirmDialog()
