@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
   const baseUrl = getRequestURL(event).origin
 
   // Verify the token (validate issuer matches this server)
-  const payload = await verifyJWT(accessToken, config.jwtPublicKey, {
+  const payload = await verifyJWT(accessToken, normalizePemKey(config.jwtPublicKey), {
     issuer: baseUrl,
   })
   if (!payload) {
@@ -60,7 +60,9 @@ export default defineEventHandler(async (event) => {
   }
 
   // Include GitHub token if user has one (logged in with GitHub)
+  // @ts-expect-error Not typed...
   if (user.githubToken) {
+    // @ts-expect-error Not typed...
     const githubToken = await decryptToken(user.githubToken, config.session.password)
     if (githubToken) {
       response.github_token = githubToken

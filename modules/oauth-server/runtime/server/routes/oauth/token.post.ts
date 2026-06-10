@@ -42,6 +42,7 @@ export default defineEventHandler(async (event) => {
 
   const grantType = body.grant_type
   const baseUrl = getRequestURL(event).origin
+  const privateKey = normalizePemKey(config.jwtPrivateKey)
 
   if (grantType === 'authorization_code') {
     const code = body.code
@@ -74,7 +75,7 @@ export default defineEventHandler(async (event) => {
       clientId,
       scope,
       baseUrl,
-      config.jwtPrivateKey,
+      privateKey,
       3600,
     )
 
@@ -95,7 +96,7 @@ export default defineEventHandler(async (event) => {
         clientId,
         baseUrl,
         config.jwtPrivateKey,
-        nonce,
+        nonce || undefined,
         3600,
       )
     }
@@ -131,7 +132,7 @@ export default defineEventHandler(async (event) => {
       clientId,
       scope,
       baseUrl,
-      config.jwtPrivateKey,
+      privateKey,
       3600,
     )
 
@@ -148,7 +149,7 @@ export default defineEventHandler(async (event) => {
         user,
         clientId,
         baseUrl,
-        config.jwtPrivateKey,
+        privateKey,
         undefined,
         3600,
       )

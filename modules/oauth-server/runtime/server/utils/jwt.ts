@@ -25,6 +25,13 @@ interface JWK {
   kid: string
 }
 
+export function normalizePemKey(pem: string): string {
+  return pem
+    .replace(/^["']|["']$/g, '') // strip surrounding quotes
+    .replace(/\\n/g, '\n') // literal \n → real newlines
+    .trim()
+}
+
 // Helper to convert ArrayBuffer to base64url
 function arrayBufferToBase64Url(buffer: ArrayBuffer): string {
   const bytes = new Uint8Array(buffer)
@@ -50,16 +57,31 @@ function base64UrlToArrayBuffer(base64url: string): ArrayBuffer {
 // Convert PEM to ArrayBuffer
 function pemToArrayBuffer(pem: string): ArrayBuffer {
   const base64 = pem
+    .replace(/^["']|["']$/g, '') // strip surrounding quotes
+    .replace(/\\n/g, '\n') // convert literal \n to real newlines
     .replace(/-----BEGIN [^-]+-----/g, '')
     .replace(/-----END [^-]+-----/g, '')
-    .replace(/\s+/g, '') // strip all whitespace including newlines
-  const binary = atob(base64) // atob handles standard base64 directly
+    .replace(/\s+/g, '')
+
+  const binary = atob(base64)
   const bytes = new Uint8Array(binary.length)
   for (let i = 0; i < binary.length; i++) {
     bytes[i] = binary.charCodeAt(i)
   }
   return bytes.buffer
 }
+// function pemToArrayBuffer(pem: string): ArrayBuffer {
+//   const base64 = pem
+//     .replace(/-----BEGIN [^-]+-----/g, '')
+//     .replace(/-----END [^-]+-----/g, '')
+//     .replace(/\s+/g, '') // strip all whitespace including newlines
+//   const binary = atob(base64) // atob handles standard base64 directly
+//   const bytes = new Uint8Array(binary.length)
+//   for (let i = 0; i < binary.length; i++) {
+//     bytes[i] = binary.charCodeAt(i)
+//   }
+//   return bytes.buffer
+// }
 // function pemToArrayBuffer(pem: string): ArrayBuffer {
 //   const base64 = pem
 //     .replace(/-----BEGIN [^-]+-----/g, '')
@@ -114,7 +136,7 @@ async function generateJWT(
   const fullPayload: JWTPayload = {
     ...payload,
     iat: Math.floor(Date.now() / 1000),
-  }
+  } as JWTPayload
 
   const encodedHeader = arrayBufferToBase64Url(
     new TextEncoder().encode(JSON.stringify(header)).buffer,
