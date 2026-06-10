@@ -198,6 +198,11 @@ const envFormat = computed(() => {
   return `FRIGEAR_SSO_URL=${ssoUrl}\nFRIGEAR_SSO_CLIENT_ID=${clientId}\nFRIGEAR_SSO_CLIENT_SECRET=${newSecret.value}`
 })
 
+const oidcFormat = computed(() => {
+  if (!newSecret.value) return ''
+  return `NUXT_OAUTH_OIDC_CLIENT_ID=${clientId}\nNUXT_OAUTH_OIDC_CLIENT_SECRET=${newSecret.value}\nNUXT_OAUTH_OIDC_OPENID_CONFIG=${useRequestURL().origin}/.well-known/openid-configuration`
+})
+
 async function deleteClient() {
   const confirmed = await confirm({
     title: 'Delete client',
@@ -348,7 +353,7 @@ async function deleteClient() {
             <USelectMenu
               v-model="editForm.allowedRoles"
               class="w-full"
-              :items="userRoles"
+              :items="userRoles as unknown as string[]"
               multiple
             />
           </UFormField>
@@ -583,6 +588,22 @@ async function deleteClient() {
 
           <!-- Raw .env format -->
           <USeparator />
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-medium text-muted">
+                .env Nuxt OIDC format
+              </span>
+              <UButton
+                :icon="copiedField === 'oidcEnv' ? 'i-lucide-clipboard-check' : 'i-lucide-clipboard'"
+                :color="copiedField === 'oidcEnv' ? 'success' : 'neutral'"
+                variant="ghost"
+                size="xs"
+                :label="copiedField === 'oidcEnv' ? 'Copied!' : 'Copy all'"
+                @click="copyToClipboard(oidcFormat, 'oidcEnv')"
+              />
+            </div>
+            <pre class="text-xs font-mono bg-elevated rounded-lg p-3 overflow-x-auto select-all">{{ oidcFormat }}</pre>
+          </div>
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-sm font-medium text-muted">

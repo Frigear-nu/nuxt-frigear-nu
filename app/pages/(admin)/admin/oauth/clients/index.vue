@@ -152,6 +152,11 @@ const envFormat = computed(() => {
   return `FRIGEAR_SSO_URL=${ssoUrl}\nFRIGEAR_SSO_CLIENT_ID=${createdClientId.value}\nFRIGEAR_SSO_CLIENT_SECRET=${createdSecret.value}`
 })
 
+const oidcFormat = computed(() => {
+  if (!createdClientId.value || !createdSecret.value) return ''
+  return `NUXT_OAUTH_OIDC_CLIENT_ID=${createdClientId.value}\nNUXT_OAUTH_OIDC_CLIENT_SECRET=${createdSecret.value}\nNUXT_OAUTH_OIDC_OPENID_CONFIG=${useRequestURL().origin}/.well-known/openid-configuration`
+})
+
 const confirm = useConfirmDialog()
 
 async function deleteClient(id: string) {
@@ -429,6 +434,22 @@ const headerActions = computed<ButtonProps[]>(() => [
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-sm font-medium text-muted">
+                .env Nuxt OIDC format
+              </span>
+              <UButton
+                :icon="copiedField === 'oidcEnv' ? 'i-lucide-clipboard-check' : 'i-lucide-clipboard'"
+                :color="copiedField === 'oidcEnv' ? 'success' : 'neutral'"
+                variant="ghost"
+                size="xs"
+                :label="copiedField === 'oidcEnv' ? 'Copied!' : 'Copy all'"
+                @click="copyToClipboard(oidcFormat, 'oidcEnv')"
+              />
+            </div>
+            <pre class="text-xs font-mono bg-elevated rounded-lg p-3 overflow-x-auto select-all">{{ oidcFormat }}</pre>
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm font-medium text-muted">
                 .env format
               </span>
               <UButton
@@ -472,7 +493,7 @@ const headerActions = computed<ButtonProps[]>(() => [
             <USelectMenu
               v-model="newClient.allowedRoles"
               class="w-full"
-              :items="userRoles"
+              :items="userRoles as unknown as string[]"
               multiple
             />
           </UFormField>

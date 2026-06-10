@@ -22,7 +22,7 @@ const appCards = computed<AccountCard[]>(() => {
     title: app.name,
     description: app.websiteUrl,
     icon: 'i-lucide-globe',
-    to: app.websiteUrl,
+    to: new URL(app.websiteUrl).host,
     external: true,
     target: '_blank',
     variant: 'subtle',
@@ -123,7 +123,7 @@ const membershipActions = ref<ButtonProps[]>([
               variant="outline"
               color="neutral"
             >
-              {{ card?.type && card.type === 'application' ? t('actions.visit') : t('actions.view') }}
+              {{ card?.type && card.type === 'application' ? t('common.visit') : t('actions.view') }}
             </UButton>
           </div>
         </template>
