@@ -22,7 +22,7 @@ const appCards = computed<AccountCard[]>(() => {
     title: app.name,
     description: app.websiteUrl,
     icon: 'i-lucide-globe',
-    to: new URL(app.websiteUrl).host,
+    to: new URL(app.websiteUrl).origin,
     external: true,
     target: '_blank',
     variant: 'subtle',
