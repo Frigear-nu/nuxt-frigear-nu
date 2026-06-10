@@ -470,7 +470,7 @@ const headerActions = computed<ButtonProps[]>(() => [
             :error="errors.allowedRoles"
           >
             <USelectMenu
-              v-model="editForm.allowedRoles"
+              v-model="newClient.allowedRoles"
               class="w-full"
               :items="userRoles"
               multiple
