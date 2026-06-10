@@ -16,6 +16,7 @@ export default defineEventHandler(async (event) => {
       previewUrlPattern: schema.oauthClients.previewUrlPattern,
       isActive: schema.oauthClients.isActive,
       createdAt: schema.oauthClients.createdAt,
+      allowedRoles: schema.oauthClients.allowedRoles,
       ownerName: schema.users.name,
     })
     .from(schema.oauthClients)

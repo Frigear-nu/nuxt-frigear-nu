@@ -23,6 +23,7 @@ export default defineEventHandler(async (event) => {
       previewUrlPattern: schema.oauthClients.previewUrlPattern,
       isActive: schema.oauthClients.isActive,
       createdAt: schema.oauthClients.createdAt,
+      allowedRoles: schema.oauthClients.allowedRoles,
     })
     .from(schema.oauthClients)
     .where(eq(schema.oauthClients.id, clientId))

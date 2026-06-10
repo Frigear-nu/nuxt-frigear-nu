@@ -2,13 +2,14 @@ import { db, schema } from 'hub:db'
 import { authorize } from 'nuxt-authorization/utils'
 import { isAdmin } from '#shared/abilities/admin'
 import { FRIGEAR_SSO_CALLBACK_PATH } from '../../../../../utils/oauth'
+import { userRoles } from '#shared/schema/user'
 
 export default defineEventHandler(async (event) => {
   const session = await requireUserSession(event)
   await authorize(isAdmin, session.user)
 
   const body = await readBody(event)
-  const { name, websiteUrl, previewUrlPattern } = body
+  const { name, websiteUrl, previewUrlPattern, allowedRoles } = body
 
   // Validate required fields
   if (!name || !websiteUrl) {
@@ -81,6 +82,7 @@ export default defineEventHandler(async (event) => {
     ownerId: session.user.id,
     createdAt: new Date(),
     isActive: true,
+    allowedRoles: (allowedRoles || []).sort((a: string, b: string) => userRoles.indexOf(a) - userRoles.indexOf(b)),
   })
 
   // Return the client with the secret (only shown once)
@@ -92,5 +94,6 @@ export default defineEventHandler(async (event) => {
     previewUrlPattern: previewUrlPattern || null,
     callbackUrl: buildCallbackUrl(normalizedWebsiteUrl),
     createdAt: new Date().toISOString(),
+    allowedRoles: allowedRoles || [],
   }
 })

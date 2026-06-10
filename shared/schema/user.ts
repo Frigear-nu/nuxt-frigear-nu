@@ -1,6 +1,8 @@
 import { z } from 'zod'
 import { createEmailSchema, createNameSchema } from './shared'
 
+export const userRoles = ['admin', 'manager', 'coordinator', 'member', 'user'] as const
+
 export const updateUserProfileSchema = z.object({
   name: createNameSchema(),
   // We want to have a separate process of changing email.

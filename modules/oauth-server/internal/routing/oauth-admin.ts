@@ -6,6 +6,11 @@ export const setupAdminOAuthApiRoutes = (nuxt: Nuxt, resolver: Resolver) => {
   const { resolve } = resolver
   addServerHandler({
     method: 'get',
+    route: '/api/account/websites',
+    handler: resolve('./runtime/server/routes/api/account/websites.get.ts'),
+  })
+  addServerHandler({
+    method: 'get',
     route: '/api/admin/websites',
     handler: resolve('./runtime/server/routes/api/admin/websites.get.ts'),
   })

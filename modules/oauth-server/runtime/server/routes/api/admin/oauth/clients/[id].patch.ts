@@ -3,6 +3,7 @@ import { db, schema } from 'hub:db'
 import { authorize } from 'nuxt-authorization/utils'
 import { isAdmin } from '#shared/abilities/admin'
 import { FRIGEAR_SSO_CALLBACK_PATH } from '../../../../../utils/oauth'
+import { userRoles } from '#shared/schema/user'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
@@ -17,7 +18,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const body = await readBody(event)
-  const { name, websiteUrl, previewUrlPattern, isActive } = body
+  const { name, websiteUrl, previewUrlPattern, isActive, allowedRoles } = body
 
   // Verify client exists
   const existingClients = await db
@@ -38,6 +39,10 @@ export default defineEventHandler(async (event) => {
 
   if (name !== undefined) {
     updates.name = name
+  }
+
+  if (allowedRoles !== undefined) {
+    updates.allowedRoles = (allowedRoles || []).sort((a: string, b: string) => userRoles.indexOf(a) - userRoles.indexOf(b))
   }
 
   if (websiteUrl !== undefined) {
@@ -119,6 +124,7 @@ export default defineEventHandler(async (event) => {
       previewUrlPattern: schema.oauthClients.previewUrlPattern,
       isActive: schema.oauthClients.isActive,
       createdAt: schema.oauthClients.createdAt,
+      allowedRoles: schema.oauthClients.allowedRoles,
     })
     .from(schema.oauthClients)
     .where(eq(schema.oauthClients.id, clientId))

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { userRoles } from '#shared/schema/user'
+
 interface OAuthClient {
   id: string
   name: string
@@ -7,6 +9,7 @@ interface OAuthClient {
   callbackUrl: string
   isActive: boolean
   createdAt: string
+  allowedRoles: string[]
 }
 
 useSeoMeta({
@@ -34,6 +37,7 @@ const editForm = ref({
   websiteUrl: '',
   previewUrlPattern: '',
   isActive: true,
+  allowedRoles: [] as string[],
 })
 
 const toast = useToast()
@@ -45,7 +49,7 @@ const copiedField = ref<string | null>(null)
 const ssoUrl = useRequestURL().origin
 
 // Form validation errors
-const errors = ref<{ name?: string, websiteUrl?: string, previewUrlPattern?: string }>({})
+const errors = ref<{ name?: string, websiteUrl?: string, previewUrlPattern?: string, allowedRoles?: string }>({})
 
 function validateUrl(url: string, label: string): string | undefined {
   try {
@@ -97,6 +101,7 @@ watch(client, (value) => {
       websiteUrl: value.websiteUrl,
       previewUrlPattern: value.previewUrlPattern || '',
       isActive: value.isActive,
+      allowedRoles: value.allowedRoles,
     }
   }
 }, { immediate: true })
@@ -113,6 +118,7 @@ async function saveClient() {
         websiteUrl: editForm.value.websiteUrl,
         previewUrlPattern: editForm.value.previewUrlPattern || null,
         isActive: editForm.value.isActive,
+        allowedRoles: editForm.value.allowedRoles,
       },
     })
 
@@ -330,6 +336,20 @@ async function deleteClient() {
               v-model="editForm.name"
               class="w-full"
               @input="errors.name = undefined"
+            />
+          </UFormField>
+
+          <UFormField
+            label="Allowed Roles"
+            description="All allowed roles that can access this app."
+            required
+            :error="errors.allowedRoles"
+          >
+            <USelectMenu
+              v-model="editForm.allowedRoles"
+              class="w-full"
+              :items="userRoles"
+              multiple
             />
           </UFormField>
 

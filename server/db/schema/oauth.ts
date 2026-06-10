@@ -11,6 +11,7 @@ export const oauthClients = sqliteTable('oauth_clients', {
   ownerId: integer('owner_id').references(() => users.id),
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
   isActive: integer('is_active', { mode: 'boolean' }).default(true),
+  allowedRoles: text('allowed_roles', { mode: 'json' }).$type<string[]>(),
 })
 
 // Authorization codes - short-lived codes for OAuth flow
