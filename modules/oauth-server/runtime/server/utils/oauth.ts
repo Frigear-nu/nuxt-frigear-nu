@@ -288,6 +288,7 @@ export async function exchangeRefreshToken(
   const user = userResults[0]
   if (!user) return null
 
+  // TODO: Maybe return nonce as well?
   return { user, scope: refreshToken.scope, tokenId: refreshToken.id }
 }
 
