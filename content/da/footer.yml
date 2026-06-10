@@ -39,27 +39,22 @@ right:
     rel: "noopener noreferrer"
     to: https://github.com/frigear-nu/nuxt-frigear-nu
   - icon: i-simple-icons-instagram
-    size: xl
     target: _blank
     rel: "noopener noreferrer"
     to: https://www.instagram.com/frigear.nu 
   - icon: i-simple-icons-facebook
-    size: xl
     target: _blank
     rel: "noopener noreferrer"
     to: https://www.facebook.com/Frigear.nu 
   - icon: i-simple-icons-linkedin
-    size: xl
     target: _blank
     rel: "noopener noreferrer"
     to: https://www.linkedin.com/company/frigear
   - icon: i-simple-icons-tiktok
-    size: xl
     target: _blank
     rel: "noopener noreferrer"
     to: https://www.tiktok.com/@frigear.nu
   - icon: i-simple-icons-youtube
-    size: xl
     target: _blank
     rel: "noopener noreferrer"
     to: https://www.youtube.com/@frigear

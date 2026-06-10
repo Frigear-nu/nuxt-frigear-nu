@@ -23,6 +23,7 @@ export default defineNuxtConfig({
     '@sentry/nuxt/module',
     ...(import.meta.dev ? ['nuxt-component-meta'] : []),
     ...(import.meta.test ? ['@nuxt/test-utils/module'] : []),
+    './modules/oauth-server',
   ],
 
   $production: {
@@ -149,6 +150,8 @@ export default defineNuxtConfig({
       },
     },
     jwtSecret: 'some-string-longer-than-32-chars-to-issue-jwt',
+    jwtPublicKey: '',
+    jwtPrivateKey: '',
     stripeWebhookSecret: '',
     mail: {
       from: '',
