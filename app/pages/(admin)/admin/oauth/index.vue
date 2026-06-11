@@ -4,7 +4,7 @@ import type { ButtonProps } from '@nuxt/ui'
 const { data: websites } = useFetch('/api/admin/websites')
 
 const headerActions = computed<ButtonProps[]>(() => [
-  { label: 'Manage Clients', to: '/admin/oauth/clients', icon: 'i-lucide-plus' },
+  { label: 'Manage Clients', to: '/admin/oauth/clients', icon: 'i-lucide-server-cog' },
 ])
 </script>
 
