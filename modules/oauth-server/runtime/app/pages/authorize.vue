@@ -11,6 +11,7 @@ useSeoMeta({
 
 definePageMeta({
   middleware: 'auth',
+  footer: false,
 })
 
 async function handleAuthorize(approved: boolean) {
@@ -40,7 +41,7 @@ if (!oauthRequest.value) {
 </script>
 
 <template>
-  <div class="absolute inset-0 flex items-center justify-center p-4">
+  <div class="absolute inset-0 flex items-center justify-center p-4 pt-[var(--ui-header-height)]">
     <UCard
       v-if="oauthRequest"
       class="shadow-xl max-w-md"
