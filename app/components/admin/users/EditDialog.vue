@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { z } from 'zod/v4'
-import type { userRoles } from '#shared/schema/user'
 import { useAdminUpdateUser } from '~/store/mutations/admin'
 import { type AdminUpdateUserSchema, adminUpdateUserSchema } from '#shared/schema/admin/user'
 

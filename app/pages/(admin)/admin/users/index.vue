@@ -6,6 +6,7 @@ import { useAdminUsers } from '~/store/queries/admin'
 
 const { users } = useAdminUsers()
 
+// @ts-expect-error Not typed :/...
 const table = useTemplateRef('table')
 const overlay = useOverlay()
 const createUserDialog = overlay.create(LazyAdminUsersCreateDialog)
@@ -29,13 +30,11 @@ const headerActions = computed<ButtonProps[]>(() => [
 ])
 
 const UButton = resolveComponent('UButton')
-const UBadge = resolveComponent('UBadge')
 const UDropdownMenu = resolveComponent('UDropdownMenu')
 const UCheckbox = resolveComponent('UCheckbox')
 
 const { pagination, globalFilter, getPaginationRowModel, getSortedRowModel } = useTablePagination()
 const selectedRows = computed(() => table.value?.tableApi?.getFilteredSelectedRowModel()?.rows || [])
-const hasAnySelected = computed(() => selectedRows.value?.length > 0)
 const allRows = computed(() => table.value?.tableApi?.getFilteredRowModel()?.rows || [])
 
 const columns: TableColumn<typeof users.value[number]>[] = [
