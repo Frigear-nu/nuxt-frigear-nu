@@ -5,7 +5,7 @@ import { allows } from 'nuxt-authorization/utils'
 import { canViewForms } from '#shared/abilities/forms'
 import { computedAsync } from '@vueuse/core'
 import { upperFirst } from 'scule'
-import { isAdmin } from '#shared/abilities/admin'
+import { canViewUsers, isAdmin } from '#shared/abilities/admin'
 
 const { t, localePath } = useSiteI18n()
 const { currentUser, currentUserRole } = useAuth()
@@ -42,6 +42,16 @@ const cards = computedAsync<PageCardProps[]>(async () => {
       description: 'See View, edit and manage OAuth Applications that can sign in with frigear.nu',
       icon: 'i-lucide-server-cog',
       to: localePath('/admin/oauth'),
+      variant: 'subtle',
+    })
+  }
+
+  if (currentUser.value && await allows(canViewUsers, currentUser.value)) {
+    items.push({
+      title: 'Users',
+      description: 'Manage all users in the system.',
+      icon: 'i-lucide-users',
+      to: localePath('/admin/users'),
       variant: 'subtle',
     })
   }

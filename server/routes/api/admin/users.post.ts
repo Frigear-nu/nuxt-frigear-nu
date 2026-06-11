@@ -1,0 +1,68 @@
+import { authorize } from 'nuxt-authorization/utils'
+import { isAdmin } from '#shared/abilities/admin'
+import { db, schema } from '@nuxthub/db'
+import WelcomeToFrigearEmail from '#shared/emails/auth/WelcomeToFrigearEmail.vue'
+import { adminCreateUserSchema } from '#shared/schema/admin/user'
+
+export default defineEventHandler(async (event) => {
+  const {
+    mail: { from, to: replyTo },
+    auth: { verifyEmail },
+  } = useRuntimeConfig(event)
+  const { user } = await requireUserSession(event)
+  await authorize(isAdmin, user)
+
+  const { name, email, role, sendWelcomeEmail, emailVerified } = await readValidatedBody(event, adminCreateUserSchema.parse)
+
+  const existingUser = await db.query.users.findFirst({
+    where: (user, { eq }) => eq(user.email, email),
+  })
+
+  if (existingUser) {
+    throw createError({
+      status: 409,
+      message: 'User already exists.',
+    })
+  }
+
+  const [createdUser] = await db.insert(schema.users)
+    .values({
+      name,
+      email,
+      role,
+      emailVerifiedAt: emailVerified ? new Date() : null,
+    }).returning()
+
+  if (!createdUser) {
+    throw createError({
+      status: 500,
+      message: 'Failed to create user.',
+    })
+  }
+
+  if (verifyEmail && sendWelcomeEmail) {
+    // This will mark the email address as verified if it was not from before.
+    const { url } = await createMagicLinkForUser({
+      userId: createdUser.id,
+      redirectUrl: '/account',
+    })
+
+    if (import.meta.dev) {
+      console.log(`Verify email with this URL: ${url}`)
+    }
+
+    await sendEmailTemplate(event, {
+      from,
+      replyTo,
+      to: email,
+      subject: 'Welcome to Frigear!',
+      component: WelcomeToFrigearEmail,
+      props: {
+        verifyUrl: url,
+        requireEmailVerification: verifyEmail,
+      },
+    })
+  }
+
+  return createdUser
+})

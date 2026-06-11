@@ -6,6 +6,7 @@ interface OAuthClient {
   id: string
   name: string
   websiteUrl: string
+  loginUrl: string
   previewUrlPattern: string | null
   callbackUrl: string
   isActive: boolean
@@ -36,6 +37,7 @@ const showCreateModal = ref(false)
 const newClient = ref({
   name: '',
   websiteUrl: '',
+  loginUrl: '',
   previewUrlPattern: '',
   allowedRoles: [] as string[],
 })
@@ -101,6 +103,7 @@ async function createClient() {
       body: {
         name: newClient.value.name,
         websiteUrl: newClient.value.websiteUrl,
+        loginUrl: newClient.value.loginUrl,
         previewUrlPattern: newClient.value.previewUrlPattern || undefined,
       },
     })
@@ -113,6 +116,7 @@ async function createClient() {
     newClient.value = {
       name: '',
       websiteUrl: '',
+      loginUrl: '',
       previewUrlPattern: '',
       allowedRoles: [],
     }
@@ -510,6 +514,17 @@ const headerActions = computed<ButtonProps[]>(() => [
               type="url"
               class="w-full"
               @input="errors.websiteUrl = undefined"
+            />
+          </UFormField>
+
+          <UFormField
+            label="Login URL"
+            description="The page to redirect OAuth users to if directly logging in e.g /login or /sign-in"
+            required
+          >
+            <UInput
+              v-model="newClient.loginUrl"
+              class="w-full"
             />
           </UFormField>
 

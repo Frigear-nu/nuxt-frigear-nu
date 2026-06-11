@@ -11,7 +11,7 @@ const { t, localePath } = useSiteI18n()
 const { isLoggedIn, currentUser } = useAuth()
 const { data: userMemberships } = useUserMemberships({ isEnabled: isLoggedIn })
 const { data: cartItems, hasAnyItems: hasAnyCartItems } = useShoppingCart()
-const { data: availableApps } = await useFetch<{ id: string, name: string, websiteUrl: string }[]>('/api/account/websites')
+const { data: availableApps } = await useFetch<{ id: string, name: string, websiteUrl: string, loginUrl?: string }[]>('/api/account/websites')
 
 type AccountCard = PageCardProps & { type?: 'application' }
 const appCards = computed<AccountCard[]>(() => {
@@ -22,7 +22,7 @@ const appCards = computed<AccountCard[]>(() => {
     title: app.name,
     description: new URL(app.websiteUrl).host,
     icon: 'i-lucide-globe',
-    to: new URL(app.websiteUrl).origin,
+    to: app.loginUrl ? app.loginUrl : new URL(app.websiteUrl).origin,
     external: true,
     target: '_blank',
     variant: 'subtle',

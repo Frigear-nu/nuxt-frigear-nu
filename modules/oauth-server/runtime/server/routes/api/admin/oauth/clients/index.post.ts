@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   await authorize(isAdmin, session.user)
 
   const body = await readBody(event)
-  const { name, websiteUrl, previewUrlPattern, allowedRoles } = body
+  const { name, websiteUrl, loginUrl, previewUrlPattern, allowedRoles } = body
 
   // Validate required fields
   if (!name || !websiteUrl) {
@@ -77,12 +77,13 @@ export default defineEventHandler(async (event) => {
     secretHash,
     name,
     websiteUrl: normalizedWebsiteUrl,
+    loginUrl: loginUrl || null,
     previewUrlPattern: previewUrlPattern || null,
     redirectUris: JSON.stringify(redirectUris),
     ownerId: session.user.id,
     createdAt: new Date(),
     isActive: true,
-    allowedRoles: (allowedRoles || []).sort((a: string, b: string) => userRoles.indexOf(a) - userRoles.indexOf(b)),
+    allowedRoles: (allowedRoles || []).sort((a: typeof userRoles[number], b: typeof userRoles[number]) => userRoles.indexOf(a) - userRoles.indexOf(b)),
   })
 
   // Return the client with the secret (only shown once)

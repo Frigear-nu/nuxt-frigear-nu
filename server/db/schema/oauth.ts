@@ -7,6 +7,7 @@ export const oauthClients = sqliteTable('oauth_clients', {
   name: text('name').notNull(),
   redirectUris: text('redirect_uris').notNull(), // JSON array (auto-generated from websiteUrl/previewUrlPattern)
   websiteUrl: text('website_url').notNull(), // Main website URL (e.g., https://docs.example.com)
+  loginUrl: text('login_url'), // defaults to the websiteUrl
   previewUrlPattern: text('preview_url_pattern'), // Optional pattern for preview deployments (e.g., https://*.vercel.app)
   ownerId: integer('owner_id').references(() => users.id),
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),

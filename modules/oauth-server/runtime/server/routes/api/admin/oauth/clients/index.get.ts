@@ -13,6 +13,7 @@ export default defineEventHandler(async (event) => {
       id: schema.oauthClients.id,
       name: schema.oauthClients.name,
       websiteUrl: schema.oauthClients.websiteUrl,
+      loginUrl: schema.oauthClients.loginUrl,
       previewUrlPattern: schema.oauthClients.previewUrlPattern,
       isActive: schema.oauthClients.isActive,
       createdAt: schema.oauthClients.createdAt,

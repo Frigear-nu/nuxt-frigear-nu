@@ -16,6 +16,7 @@ export default defineEventHandler(async (event) => {
     .select({
       name: schema.oauthClients.name,
       websiteUrl: schema.oauthClients.websiteUrl,
+      loginUrl: schema.oauthClients.loginUrl,
     })
     .from(schema.oauthClients)
     .where(eq(schema.oauthClients.isActive, true))
