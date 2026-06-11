@@ -27,6 +27,7 @@
     "@libsql/client": "^0.17.0",
     "@nitrotool/errors": "^1.0.4",
     "@nitrotool/jwt": "^1.0.4",
+    "@norbiros/nuxt-auto-form": "0.6.2",
     "@nuxt/fonts": "0.14.0",
     "@nuxthub/core": "^0.10.6",
     "@nuxtjs/device": "4.0.0",
@@ -49,6 +50,7 @@
     "drizzle-kit": "^0.31.8",
     "drizzle-orm": "^0.45.1",
     "escape-html": "^1.0.3",
+    "h3": "^1.15.10",
     "h3-zod": "^0.5.3",
     "minimatch": "^10.1.1",
     "nuxt": "^4.4.2",
@@ -59,8 +61,7 @@
     "nuxt-zod-i18n": "1.12.1",
     "satori": "^0.26.0",
     "simple-content-site": "^3.1.4",
-    "zod": "^3.25.76",
-    "h3": "^1.15.10"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.12.1",
