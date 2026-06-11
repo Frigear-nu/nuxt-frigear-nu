@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const body = await readBody(event)
-  const { name, websiteUrl, previewUrlPattern, isActive, allowedRoles } = body
+  const { name, websiteUrl, loginUrl, previewUrlPattern, isActive, allowedRoles } = body
 
   // Verify client exists
   const existingClients = await db
@@ -42,7 +42,11 @@ export default defineEventHandler(async (event) => {
   }
 
   if (allowedRoles !== undefined) {
-    updates.allowedRoles = (allowedRoles || []).sort((a: string, b: string) => userRoles.indexOf(a) - userRoles.indexOf(b))
+    updates.allowedRoles = (allowedRoles || []).sort((a: typeof userRoles[number], b: typeof userRoles[number]) => userRoles.indexOf(a) - userRoles.indexOf(b))
+  }
+
+  if (loginUrl !== undefined) {
+    updates.loginUrl = loginUrl || null
   }
 
   if (websiteUrl !== undefined) {

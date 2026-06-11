@@ -14,6 +14,7 @@ export default defineEventHandler(async (event) => {
       id: true,
       name: true,
       websiteUrl: true,
+      loginUrl: true,
     },
   })
 })

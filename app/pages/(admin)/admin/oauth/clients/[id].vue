@@ -5,6 +5,7 @@ interface OAuthClient {
   id: string
   name: string
   websiteUrl: string
+  loginUrl: string
   previewUrlPattern: string | null
   callbackUrl: string
   isActive: boolean
@@ -35,6 +36,7 @@ const { data: client, refresh } = await useFetch<OAuthClient>(`/api/admin/oauth/
 const editForm = ref({
   name: '',
   websiteUrl: '',
+  loginUrl: '',
   previewUrlPattern: '',
   isActive: true,
   allowedRoles: [] as string[],
@@ -98,6 +100,7 @@ watch(client, (value) => {
   if (value) {
     editForm.value = {
       name: value.name,
+      loginUrl: value.loginUrl,
       websiteUrl: value.websiteUrl,
       previewUrlPattern: value.previewUrlPattern || '',
       isActive: value.isActive,
@@ -116,6 +119,7 @@ async function saveClient() {
       body: {
         name: editForm.value.name,
         websiteUrl: editForm.value.websiteUrl,
+        loginUrl: editForm.value.loginUrl,
         previewUrlPattern: editForm.value.previewUrlPattern || null,
         isActive: editForm.value.isActive,
         allowedRoles: editForm.value.allowedRoles,
@@ -368,6 +372,17 @@ async function deleteClient() {
               v-model="editForm.websiteUrl"
               class="w-full"
               @input="errors.websiteUrl = undefined"
+            />
+          </UFormField>
+
+          <UFormField
+            label="Login URL"
+            description="The page to redirect OAuth users to if directly logging in e.g /login or /sign-in"
+            required
+          >
+            <UInput
+              v-model="editForm.loginUrl"
+              class="w-full"
             />
           </UFormField>
 
