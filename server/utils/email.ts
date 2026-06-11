@@ -45,6 +45,11 @@ export const sendEmailTemplate = async <T extends Component>(
   options?: Omit<Options, 'plainText'>,
 ) => {
   const { component, props, ...envelope } = message
+  const { resend: { apiKey } } = useRuntimeConfig(event)
+  // we silently log this in dev if there are no config...
+  if (!apiKey && import.meta.dev) {
+    return console.log(`New email, to: ${message.to}, subject: ${message.subject}`, message.props)
+  }
   await sendEmail(event, {
     ...envelope,
     html: await render(component, props, options),
