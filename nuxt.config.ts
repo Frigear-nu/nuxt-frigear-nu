@@ -21,10 +21,15 @@ export default defineNuxtConfig({
     './modules/scs-i18n',
     'nuxt-qrcode',
     '@sentry/nuxt/module',
-    ...(import.meta.dev ? ['nuxt-component-meta'] : []),
-    ...(import.meta.test ? ['@nuxt/test-utils/module'] : []),
     './modules/oauth-server',
+    '@norbiros/nuxt-auto-form',
   ],
+
+  $development: {
+    modules: [
+      'nuxt-component-meta',
+    ],
+  },
 
   $production: {
     nitro: {
@@ -67,6 +72,9 @@ export default defineNuxtConfig({
   },
 
   $test: {
+    modules: [
+      '@nuxt/test-utils/module',
+    ],
     runtimeConfig: {
       session: {
         password: 'test-session-password-that-is-at-least-32-chars!!',
@@ -182,8 +190,8 @@ export default defineNuxtConfig({
     '/sign-in': { prerender: false },
     '/sign-up': { prerender: false },
     '/account': { prerender: false },
-    '/account/**': { prerender: false },
-    '/admin/**': { prerender: false },
+    '/account/**': { prerender: false, appMiddleware: ['auth'] },
+    '/admin/**': { prerender: false, appMiddleware: ['auth', 'is-admin'] },
     // Temporary Redirects: should be removed in 2027 possibly.
     '/signin/password_signin': { redirect: { to: '/sign-in', statusCode: 301 } },
     '/signin/email_signin': { redirect: { to: '/sign-in?provider=link', statusCode: 301 } },
