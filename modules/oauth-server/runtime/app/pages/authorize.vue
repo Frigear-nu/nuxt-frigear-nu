@@ -41,7 +41,7 @@ if (!oauthRequest.value) {
 </script>
 
 <template>
-  <div class="absolute inset-0 flex items-center justify-center p-4 pt-[var(--ui-header-height)]">
+  <div class="absolute inset-0 flex items-center justify-center p-4 pt-(--ui-header-height)">
     <UCard
       v-if="oauthRequest"
       class="shadow-xl max-w-md"
