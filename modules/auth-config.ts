@@ -19,9 +19,9 @@ export default defineNuxtModule({
 
       // Somehow we cannot read this directly from runtimeConfig from the nuxt instance...
       const rc = useRuntimeConfig()
-      if (rc?.oauth?.google?.clientId) {
-        runtimeConfig.public.auth.providers.push('google')
-      }
+
+      // We always have google auth...?
+      runtimeConfig.public.auth.providers.push('google')
 
       if (rc?.oauth?.facebook?.clientId) {
         runtimeConfig.public.auth.providers.push('facebook')
