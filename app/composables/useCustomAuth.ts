@@ -30,6 +30,7 @@ export const useCustomAuth = () => {
   const signInWithProvider = async (provider: AuthProvider) => {
     switch (provider) {
       case 'google':
+      case 'facebook':
         return openInPopup(`/auth/${provider}`)
 
       default:

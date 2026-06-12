@@ -57,8 +57,10 @@ const providers = buildProviders((provider) => {
       displayMagicLinkModal.value = true
       break
     case 'google':
+    case 'facebook':
       // case 'github':
       return signInWithProvider(provider)
+
     default:
       toast.add(formatError(new Error(`Provider '${provider}', is not implemented.`)))
   }

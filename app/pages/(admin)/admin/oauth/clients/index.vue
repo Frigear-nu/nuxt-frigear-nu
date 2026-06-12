@@ -186,7 +186,7 @@ const headerActions = computed<ButtonProps[]>(() => [
 </script>
 
 <template>
-  <UContainer class="py-8">
+  <UContainer>
     <UPageHeader
       title="OAuth Clients"
       description="Manage your registered OAuth client applications."
@@ -205,7 +205,7 @@ const headerActions = computed<ButtonProps[]>(() => [
     <!-- Client list -->
     <UPageBody
       v-else
-      class="grid gap-4"
+      class="flex flex-col gap-0"
     >
       <UCard
         v-for="client in clients"
