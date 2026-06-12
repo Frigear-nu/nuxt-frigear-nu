@@ -1,4 +1,4 @@
-import { createOrUpdateUser } from '#server/utils/user'
+import { createOrFindUser } from '#server/utils/user'
 
 export default defineOAuthFacebookEventHandler({
   config: {
@@ -7,14 +7,13 @@ export default defineOAuthFacebookEventHandler({
   },
   async onSuccess(event, { user }) {
     if (!user.email) {
-      console.log('No email found for Facebook user', user)
       throw createError({
         statusCode: 400,
         statusMessage: 'Email is required',
       })
     }
 
-    const frigearUser = await createOrUpdateUser(user.email, {
+    const frigearUser = await createOrFindUser(user.email, {
       role: 'user',
       name: user.name,
       emailVerifiedAt: new Date(),
@@ -23,6 +22,6 @@ export default defineOAuthFacebookEventHandler({
 
     await ensureStripeCustomer(frigearUser)
 
-    return authenticateUser(event, frigearUser)
+    return authenticateUser(event, frigearUser, await getDefaultRedirectForUser(event, frigearUser))
   },
 })
