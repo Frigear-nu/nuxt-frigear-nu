@@ -1,4 +1,4 @@
-import { createOrUpdateUser } from '#server/utils/user'
+import { createOrFindUser } from '#server/utils/user'
 
 export default defineOAuthFacebookEventHandler({
   config: {
@@ -13,7 +13,7 @@ export default defineOAuthFacebookEventHandler({
       })
     }
 
-    const frigearUser = await createOrUpdateUser(user.email, {
+    const frigearUser = await createOrFindUser(user.email, {
       role: 'user',
       name: user.name,
       emailVerifiedAt: new Date(),

@@ -1,4 +1,4 @@
-import { createOrUpdateUser } from '#server/utils/user'
+import { createOrFindUser } from '#server/utils/user'
 
 export default defineOAuthGoogleEventHandler({
   config: {
@@ -9,7 +9,7 @@ export default defineOAuthGoogleEventHandler({
   async onSuccess(event, { user }) {
     const email: string = user.email || ''
 
-    const dbUser = await createOrUpdateUser(email, {
+    const dbUser = await createOrFindUser(email, {
       name: user?.name || email,
       avatarUrl: user.picture,
       emailVerifiedAt: new Date(),

@@ -31,7 +31,7 @@ export const findUserById = (id: Users['id']): Promise<Users | undefined> => {
   })
 }
 
-export const createOrUpdateUser = async (
+export const createOrFindUser = async (
   email: Users['email'],
   fields: Partial<Omit<NewUsers, 'email'>>,
 ) => {
@@ -43,16 +43,16 @@ export const createOrUpdateUser = async (
     throw new Error('Name is required')
   }
 
-  const [user] = await db.insert(schema.users)
-    .values({
-      ...fields,
-      email: email.toLowerCase(),
-    } as NewUsers)
-    .onConflictDoUpdate({
-      target: schema.users.email,
-      set: fields,
-    })
-    .returning()
+  let user = await findUserByEmail(email.toLowerCase())
+
+  if (!user) {
+    [user] = await db.insert(schema.users)
+      .values({
+        ...fields,
+        email: email.toLowerCase(),
+      } as NewUsers)
+      .returning()
+  }
 
   if (!user) {
     throw new Error('Could not create user')
