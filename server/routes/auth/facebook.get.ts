@@ -6,7 +6,10 @@ export default defineOAuthFacebookEventHandler({
     fields: ['id', 'email', 'name'],
   },
   async onSuccess(event, { user }) {
-    user.email = String(user.email).replace('\u0040', '@').toLowerCase()
+    if (typeof user === 'string') {
+      console.log('FB Auth User', typeof user)
+      user = JSON.parse(user)
+    }
 
     if (!user.email) {
       console.log('FB Auth Failed', user)
