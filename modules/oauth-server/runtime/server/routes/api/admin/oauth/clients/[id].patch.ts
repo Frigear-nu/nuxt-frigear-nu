@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const body = await readBody(event)
-  const { name, websiteUrl, loginUrl, previewUrlPattern, isActive, allowedRoles } = body
+  const { name, websiteUrl, loginUrl, previewUrlPattern, isActive, allowedRoles, tags } = body
 
   // Verify client exists
   const existingClients = await db
@@ -107,6 +107,10 @@ export default defineEventHandler(async (event) => {
     updates.isActive = isActive
   }
 
+  if (tags && Array.isArray(tags)) {
+    updates.tags = tags
+  }
+
   if (Object.keys(updates).length === 0) {
     throw createError({
       statusCode: 400,
@@ -129,6 +133,7 @@ export default defineEventHandler(async (event) => {
       isActive: schema.oauthClients.isActive,
       createdAt: schema.oauthClients.createdAt,
       allowedRoles: schema.oauthClients.allowedRoles,
+      tags: schema.oauthClients.tags,
     })
     .from(schema.oauthClients)
     .where(eq(schema.oauthClients.id, clientId))

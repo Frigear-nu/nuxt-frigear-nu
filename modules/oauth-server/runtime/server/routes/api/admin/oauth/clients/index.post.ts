@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   await authorize(isAdmin, session.user)
 
   const body = await readBody(event)
-  const { name, websiteUrl, loginUrl, previewUrlPattern, allowedRoles } = body
+  const { name, websiteUrl, loginUrl, previewUrlPattern, allowedRoles, tags } = body
 
   // Validate required fields
   if (!name || !websiteUrl) {
@@ -84,6 +84,7 @@ export default defineEventHandler(async (event) => {
     createdAt: new Date(),
     isActive: true,
     allowedRoles: (allowedRoles || []).sort((a: typeof userRoles[number], b: typeof userRoles[number]) => userRoles.indexOf(a) - userRoles.indexOf(b)),
+    tags: tags || [],
   })
 
   // Return the client with the secret (only shown once)
@@ -96,5 +97,6 @@ export default defineEventHandler(async (event) => {
     callbackUrl: buildCallbackUrl(normalizedWebsiteUrl),
     createdAt: new Date().toISOString(),
     allowedRoles: allowedRoles || [],
+    tags,
   }
 })
