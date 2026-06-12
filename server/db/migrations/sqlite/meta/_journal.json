@@ -50,6 +50,13 @@
       "when": 1781198887446,
       "tag": "0006_clean_thunderbird",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1781298317915,
+      "tag": "0007_bizarre_stature",
+      "breakpoints": true
     }
   ]
 }
