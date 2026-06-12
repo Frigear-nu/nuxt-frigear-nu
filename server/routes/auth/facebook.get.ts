@@ -7,7 +7,6 @@ export default defineOAuthFacebookEventHandler({
   },
   async onSuccess(event, { user }) {
     if (!user.email) {
-      console.log('No email found for Facebook user', user, typeof user, user.email)
       throw createError({
         statusCode: 400,
         statusMessage: 'Email is required',
