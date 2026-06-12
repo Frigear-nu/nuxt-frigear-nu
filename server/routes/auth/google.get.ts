@@ -1,5 +1,3 @@
-import { ServerError } from '@nitrotool/errors'
-import { eq } from 'drizzle-orm'
 import { createOrUpdateUser } from '#server/utils/user'
 
 export default defineOAuthGoogleEventHandler({
