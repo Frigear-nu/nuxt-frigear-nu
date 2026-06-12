@@ -41,7 +41,10 @@ export const createOrUpdateUser = async (
   }
 
   const [user] = await db.insert(schema.users)
-    .values({ email, ...fields } as NewUsers)
+    .values({
+      ...fields,
+      email: email.toLowerCase(),
+    } as NewUsers)
     .onConflictDoUpdate({
       target: schema.users.email,
       set: fields,
