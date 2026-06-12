@@ -6,11 +6,13 @@ export default defineOAuthFacebookEventHandler({
     fields: ['id', 'email', 'name'],
   },
   async onSuccess(event, { user }) {
-    console.log('FB Auth', user)
+    user.email = String(user.email).replace('\u0040', '@').toLowerCase()
+
     if (!user.email) {
+      console.log('FB Auth Failed', user)
       throw createError({
-        statusCode: 400,
-        statusMessage: 'Email is required',
+        status: 400,
+        message: 'Missing email',
       })
     }
 
