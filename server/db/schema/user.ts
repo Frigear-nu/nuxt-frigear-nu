@@ -7,7 +7,18 @@ export const users = sqliteTable('users', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
-  role: text('role', { enum: ['admin', 'manager', 'coordinator', 'member', 'user'] }).notNull().default('user'),
+  role: text('role', { enum: [
+    'admin',
+    'manager',
+    'coordinator',
+    'eventmanager',
+    'barmanager',
+    'crew',
+    'member',
+    'supplier',
+    'partner',
+    'user',
+  ] }).notNull().default('user'),
   passwordHash: text('password_hash'),
   avatarUrl: text('avatar_url'),
 
@@ -20,6 +31,7 @@ export const users = sqliteTable('users', {
   lastLoginAt: integer('last_login_at', { mode: 'timestamp' }),
   emailVerifiedAt: integer('email_verified_at', { mode: 'timestamp' }),
   createdAt: integer('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
+  accessTags: text('accessTags', { mode: 'json' }).$type<string[]>().default([]),
 })
 
 export type Users = typeof users.$inferSelect

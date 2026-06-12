@@ -11,9 +11,27 @@ const { t, localePath } = useSiteI18n()
 const { isLoggedIn, currentUser } = useAuth()
 const { data: userMemberships } = useUserMemberships({ isEnabled: isLoggedIn })
 const { data: cartItems, hasAnyItems: hasAnyCartItems } = useShoppingCart()
+const { data: availableApps } = await useFetch<{ id: string, name: string, websiteUrl: string, loginUrl?: string }[]>('/api/account/websites')
 
-const cards = computedAsync<PageCardProps[]>(async () => {
-  const baseTiles: PageCardProps[] = [
+type AccountCard = PageCardProps & { type?: 'application' }
+const appCards = computed<AccountCard[]>(() => {
+  if (!availableApps.value) {
+    return []
+  }
+  return availableApps.value?.map(app => ({
+    title: app.name,
+    description: new URL(app.websiteUrl).host,
+    icon: 'i-lucide-globe',
+    to: app.loginUrl ? app.loginUrl : new URL(app.websiteUrl).origin,
+    external: true,
+    target: '_blank',
+    variant: 'subtle',
+    type: 'application',
+  }))
+})
+const cards = computedAsync<AccountCard[]>(async () => {
+  const baseTiles: AccountCard[] = [
+    ...appCards.value,
     {
       title: t('account.tickets.title'),
       description: t('account.tickets.description'),
@@ -105,7 +123,7 @@ const membershipActions = ref<ButtonProps[]>([
               variant="outline"
               color="neutral"
             >
-              {{ t('actions.view') }}
+              {{ card?.type && card.type === 'application' ? t('common.visit') : t('actions.view') }}
             </UButton>
           </div>
         </template>

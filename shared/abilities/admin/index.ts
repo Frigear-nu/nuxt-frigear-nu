@@ -6,5 +6,13 @@ export const isAdmin = defineAbility((user: Users) => {
 })
 
 export const canViewAdminArea = defineAbility((user: Users) => {
+  return ['admin', 'manager', 'coordinator'].includes(user.role)
+})
+
+export const canViewUsers = defineAbility((user: Users) => {
+  return ['admin', 'manager', 'coordinator'].includes(user.role)
+})
+
+export const canManageUsers = defineAbility((user: Users) => {
   return ['admin', 'manager'].includes(user.role)
 })

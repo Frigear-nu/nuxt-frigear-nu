@@ -8,9 +8,20 @@ declare module '#auth-utils' {
     sbId?: string
   }
   //
-  // interface UserSession {
-  //   // Add your own fields
-  // }
+  interface UserSession {
+    oauthRequest?: {
+      clientId: string
+      redirectUri: string
+      scope: string
+      state?: string
+      codeChallenge?: string
+      codeChallengeMethod?: string
+      clientName?: string
+      clientLogoUrl?: string
+      clientHost?: string
+      nonce?: string
+    }
+  }
   // interface SecureSessionData {
   //   // Add your own fields
   // }

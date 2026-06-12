@@ -39,18 +39,41 @@ const useAuthForm = () => {
     ]
   })
 
-  const providers = ref<Provider[]>([
-    {
-      id: 'google',
-      label: 'auth.provider.google',
-      icon: 'i-simple-icons-google',
-    },
-    {
-      id: 'link',
-      label: 'auth.provider.link',
-      icon: 'i-lucide-at-sign',
-    },
-  ])
+  const enabledProviders = computed<string[]>(() => useRuntimeConfig().public.auth?.providers || [])
+  const providers = computed<Provider[]>(() => {
+    const enabled = enabledProviders.value
+    const items: Provider[] = [
+      {
+        id: 'link',
+        label: 'auth.provider.link',
+        icon: 'i-lucide-at-sign',
+      },
+    ]
+
+    if (enabled.includes('apple')) {
+      items.unshift({
+        id: 'apple',
+        label: 'Apple',
+        icon: 'i-simple-icons-apple',
+      })
+    }
+    if (enabled.includes('facebook')) {
+      items.unshift({
+        id: 'facebook',
+        label: 'Facebook',
+        icon: 'i-simple-icons-facebook',
+      })
+    }
+    if (enabled.includes('google')) {
+      items.unshift({
+        id: 'google',
+        label: 'auth.provider.google',
+        icon: 'i-simple-icons-google',
+      })
+    }
+
+    return items
+  })
 
   const buildProviders = (handler: ProviderHandler): ButtonProps[] => {
     return toValue(providers).map((provider) => {

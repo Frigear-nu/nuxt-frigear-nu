@@ -12,6 +12,7 @@ UI [nuxt-content/studio](https://github.com/nuxt-content/studio).
 - [Stripe](./docs/10.stripe.md)
 - [Forms](./docs/20.forms.md)
 - [Events](./docs/100.events.md)
+- [OAuth Server](./docs/101.oauth-server.md)
 
 ## Structure
 

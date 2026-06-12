@@ -1,5 +1,4 @@
-import { ServerError } from '@nitrotool/errors'
-import { eq } from 'drizzle-orm'
+import { createOrFindUser } from '#server/utils/user'
 
 export default defineOAuthGoogleEventHandler({
   config: {
@@ -9,30 +8,14 @@ export default defineOAuthGoogleEventHandler({
   },
   async onSuccess(event, { user }) {
     const email: string = user.email || ''
-    let dbUser = await findUserByEmail(email)
 
-    if (!dbUser) {
-      [dbUser] = await db
-        .insert(schema.users)
-        .values({
-          email,
-          name: user?.name || email,
-          avatarUrl: user?.picture,
-          // user.email_verified could be false - TBA
-          emailVerifiedAt: new Date(),
-          lastLoginAt: new Date(),
-        })
-        .returning()
-    }
-    else {
-      [dbUser] = await db
-        .update(schema.users)
-        .set({ lastLoginAt: new Date() })
-        .where(eq(schema.users.id, dbUser.id))
-        .returning()
-    }
+    const dbUser = await createOrFindUser(email, {
+      name: user?.name || email,
+      avatarUrl: user.picture,
+      emailVerifiedAt: new Date(),
+      lastLoginAt: new Date(),
+    })
 
-    if (!dbUser) throw ServerError('Could find user.')
     await ensureStripeCustomer(dbUser)
 
     return authenticateUser(event, dbUser, await getDefaultRedirectForUser(event, dbUser))

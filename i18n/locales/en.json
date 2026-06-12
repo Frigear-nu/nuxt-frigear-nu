@@ -4,7 +4,8 @@
     "close": "Close",
     "information": "Information",
     "back": "Back",
-    "current": "Current"
+    "current": "Current",
+    "visit": "Visit"
   },
   "auth": {
     "signIn": "Sign In",

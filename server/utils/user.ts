@@ -1,7 +1,6 @@
 import type { H3Event } from 'h3'
-import type { Users } from '@nuxthub/db/schema'
+import type { Users, NewUsers } from '@nuxthub/db/schema'
 import { db, schema } from '@nuxthub/db'
-import { eq } from 'drizzle-orm'
 
 export const getDefaultRedirectForUser = async (
   event: H3Event,
@@ -21,9 +20,43 @@ export const getDefaultRedirectForUser = async (
 }
 
 export const findUserByEmail = (email: Users['email']): Promise<Users | undefined> => {
-  return db.query.users.findFirst({ where: () => eq(schema.users.email, email) })
+  return db.query.users.findFirst({
+    where: (t, { eq }) => eq(t.email, email),
+  })
 }
 
 export const findUserById = (id: Users['id']): Promise<Users | undefined> => {
-  return db.query.users.findFirst({ where: () => eq(schema.users.id, id) })
+  return db.query.users.findFirst({
+    where: (t, { eq }) => eq(t.id, id),
+  })
+}
+
+export const createOrFindUser = async (
+  email: Users['email'],
+  fields: Partial<Omit<NewUsers, 'email'>>,
+) => {
+  if (!email) {
+    throw new Error('Email is required')
+  }
+
+  if (!fields.name) {
+    throw new Error('Name is required')
+  }
+
+  let user = await findUserByEmail(email.toLowerCase())
+
+  if (!user) {
+    [user] = await db.insert(schema.users)
+      .values({
+        ...fields,
+        email: email.toLowerCase(),
+      } as NewUsers)
+      .returning()
+  }
+
+  if (!user) {
+    throw new Error('Could not create user')
+  }
+
+  return user
 }
