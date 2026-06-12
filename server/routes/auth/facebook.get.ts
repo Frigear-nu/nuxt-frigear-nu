@@ -23,6 +23,6 @@ export default defineOAuthFacebookEventHandler({
 
     await ensureStripeCustomer(frigearUser)
 
-    return authenticateUser(event, frigearUser)
+    return authenticateUser(event, frigearUser, await getDefaultRedirectForUser(event, frigearUser))
   },
 })
