@@ -73,7 +73,7 @@
     "@types/escape-html": "^1.0.4",
     "@vue/compiler-sfc": "^3.5.31",
     "@vue/test-utils": "^2.4.6",
-    "baseline-browser-mapping": "^2.9.19",
+    "baseline-browser-mapping": "^2.10.37",
     "eslint": "^9.39.2",
     "happy-dom": "^20.8.3",
     "nuxt-component-meta": "^0.17.2",
