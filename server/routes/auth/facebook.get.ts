@@ -6,6 +6,7 @@ export default defineOAuthFacebookEventHandler({
     fields: ['id', 'email', 'name'],
   },
   async onSuccess(event, { user }) {
+    console.log('FB Auth', user)
     if (!user.email) {
       throw createError({
         statusCode: 400,
