@@ -13,6 +13,7 @@ interface OAuthClient {
   createdAt: string
   ownerName: string | null
   allowedRoles: string[]
+  tags: string[]
 }
 
 useSeoMeta({
@@ -40,7 +41,10 @@ const newClient = ref({
   loginUrl: '',
   previewUrlPattern: '',
   allowedRoles: [] as string[],
+  tags: [] as string[],
 })
+
+const defaultTags = ref(['member', 'shared', 'bar', 'all'])
 const createdSecret = ref<string | null>(null)
 const createdClientId = ref<string | null>(null)
 const creating = ref(false)
@@ -48,7 +52,7 @@ const copiedField = ref<string | null>(null)
 const ssoUrl = useRequestURL().origin
 
 // Form validation errors
-const errors = ref<{ name?: string, websiteUrl?: string, previewUrlPattern?: string, allowedRoles?: string }>({})
+const errors = ref<{ name?: string, websiteUrl?: string, previewUrlPattern?: string, allowedRoles?: string, tags?: string[] }>({})
 
 function validateUrl(url: string, label: string): string | undefined {
   try {
@@ -103,7 +107,9 @@ async function createClient() {
       body: {
         name: newClient.value.name,
         websiteUrl: newClient.value.websiteUrl,
+        allowedRoles: newClient.value.allowedRoles,
         loginUrl: newClient.value.loginUrl,
+        tags: newClient.value.tags,
         previewUrlPattern: newClient.value.previewUrlPattern || undefined,
       },
     })
@@ -119,6 +125,7 @@ async function createClient() {
       loginUrl: '',
       previewUrlPattern: '',
       allowedRoles: [],
+      tags: [],
     }
   }
   catch (error: unknown) {
@@ -499,6 +506,20 @@ const headerActions = computed<ButtonProps[]>(() => [
               class="w-full"
               :items="userRoles as unknown as string[]"
               multiple
+            />
+          </UFormField>
+
+          <UFormField
+            label="Tags"
+            description="Group by multiple tags."
+            required
+          >
+            <USelectMenu
+              v-model="newClient.tags"
+              class="w-full"
+              multiple
+              create-item="always"
+              :items="defaultTags"
             />
           </UFormField>
 

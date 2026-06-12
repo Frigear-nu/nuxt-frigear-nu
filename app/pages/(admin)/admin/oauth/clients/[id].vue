@@ -11,6 +11,7 @@ interface OAuthClient {
   isActive: boolean
   createdAt: string
   allowedRoles: string[]
+  tags: string[]
 }
 
 useSeoMeta({
@@ -40,8 +41,10 @@ const editForm = ref({
   previewUrlPattern: '',
   isActive: true,
   allowedRoles: [] as string[],
+  tags: [] as string[],
 })
 
+const defaultTags = ref(['member', 'shared', 'bar', 'all'])
 const toast = useToast()
 const saving = ref(false)
 const showSecretModal = ref(false)
@@ -51,7 +54,13 @@ const copiedField = ref<string | null>(null)
 const ssoUrl = useRequestURL().origin
 
 // Form validation errors
-const errors = ref<{ name?: string, websiteUrl?: string, previewUrlPattern?: string, allowedRoles?: string }>({})
+const errors = ref<{
+  name?: string
+  websiteUrl?: string
+  previewUrlPattern?: string
+  allowedRoles?: string
+  tags?: string[]
+}>({})
 
 function validateUrl(url: string, label: string): string | undefined {
   try {
@@ -105,6 +114,7 @@ watch(client, (value) => {
       previewUrlPattern: value.previewUrlPattern || '',
       isActive: value.isActive,
       allowedRoles: value.allowedRoles,
+      tags: [],
     }
   }
 }, { immediate: true })
@@ -123,6 +133,7 @@ async function saveClient() {
         previewUrlPattern: editForm.value.previewUrlPattern || null,
         isActive: editForm.value.isActive,
         allowedRoles: editForm.value.allowedRoles,
+        tags: editForm.value.tags,
       },
     })
 
@@ -359,6 +370,20 @@ async function deleteClient() {
               class="w-full"
               :items="userRoles as unknown as string[]"
               multiple
+            />
+          </UFormField>
+
+          <UFormField
+            label="Tags"
+            description="Group by multiple tags."
+            required
+          >
+            <USelectMenu
+              v-model="editForm.tags"
+              class="w-full"
+              multiple
+              create-item="always"
+              :items="defaultTags"
             />
           </UFormField>
 
