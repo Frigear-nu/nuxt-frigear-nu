@@ -36,12 +36,7 @@ export const useAuth = () => {
   }
 
   const signInWithProvider = async (provider: AuthProvider) => {
-    switch (authMode.value) {
-      case 'custom':
-        return customAuth.signInWithProvider(provider)
-      default:
-        throw new Error(`Auth mode ${authMode.value} not supported.`)
-    }
+    return customAuth.signInWithProvider(provider)
   }
 
   const signInWithPassword = async (email: string, password: string, redirect?: string) => {

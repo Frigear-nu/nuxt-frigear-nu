@@ -46,6 +46,11 @@ const useAuthForm = () => {
       icon: 'i-simple-icons-google',
     },
     {
+      id: 'facebook',
+      label: 'Facebook',
+      icon: 'i-simple-icons-facebook',
+    },
+    {
       id: 'link',
       label: 'auth.provider.link',
       icon: 'i-lucide-at-sign',
