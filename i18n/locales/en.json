@@ -5,7 +5,9 @@
     "information": "Information",
     "back": "Back",
     "current": "Current",
-    "visit": "Visit"
+    "visit": "Visit",
+    "refresh": "Refresh",
+    "expiresIn": "Expires in {time}s"
   },
   "auth": {
     "signIn": "Sign In",
@@ -115,6 +117,10 @@
     "title": "Account",
     "menu": {
       "label": "@:auth.dashboard Menu"
+    },
+    "identificationCode": {
+      "title": "Account ID",
+      "description": "Press here to show your Frigear ID."
     },
     "profile": {
       "title": "Profile",

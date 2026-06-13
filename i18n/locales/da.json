@@ -5,7 +5,9 @@
     "information": "Information",
     "back": "Tilbage",
     "current": "Nuværende",
-    "visit": "Besøg"
+    "visit": "Besøg",
+    "refresh": "Opdater",
+    "expiresIn": "Udløber om {time}s"
   },
   "auth": {
     "signIn": "Log ind",
@@ -115,6 +117,10 @@
     "title": "Konto",
     "menu": {
       "label": "@:auth.dashboard Menu"
+    },
+    "identificationCode": {
+      "title": "Konto ID",
+      "description": "Tryk her for at vise din Frigear ID."
     },
     "profile": {
       "title": "Profil",

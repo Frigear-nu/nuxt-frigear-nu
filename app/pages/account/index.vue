@@ -6,9 +6,12 @@ import { canViewAdminArea } from '#shared/abilities/admin'
 import { allows } from 'nuxt-authorization/utils'
 import { computedAsync } from '@vueuse/core'
 import { upperFirst } from 'scule'
+import { LazyAccountIdentificationCodeDialog } from '#components'
 
 const { t, localePath } = useSiteI18n()
 const { isLoggedIn, currentUser } = useAuth()
+const overlay = useOverlay()
+const accountIdCodeDialog = overlay.create(LazyAccountIdentificationCodeDialog)
 const { data: userMemberships } = useUserMemberships({ isEnabled: isLoggedIn })
 const { data: cartItems, hasAnyItems: hasAnyCartItems } = useShoppingCart()
 const { data: availableApps } = await useFetch<{ id: string, name: string, websiteUrl: string, loginUrl?: string }[]>('/api/account/websites')
@@ -29,9 +32,19 @@ const appCards = computed<AccountCard[]>(() => {
     type: 'application',
   }))
 })
+
 const cards = computedAsync<AccountCard[]>(async () => {
   const baseTiles: AccountCard[] = [
     ...appCards.value,
+    {
+      title: t('account.identificationCode.title'),
+      description: t('account.identificationCode.description'),
+      icon: 'i-lucide-id-card-lanyard',
+      onClick() {
+        accountIdCodeDialog.open()
+      },
+      variant: 'subtle',
+    },
     {
       title: t('account.tickets.title'),
       description: t('account.tickets.description'),
