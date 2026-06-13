@@ -27,14 +27,11 @@ useIntervalFn(async () => {
     isRefreshing.value = true
     try {
       await refresh()
-    } finally {
+    }
+    finally {
       isRefreshing.value = false
     }
     return
-  }
-
-  expiresInSeconds.value -= 1
-}, 1000)
   }
 
   expiresInSeconds.value -= 1
