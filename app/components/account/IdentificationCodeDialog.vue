@@ -18,11 +18,23 @@ watch(data, () => {
   expiresInSeconds.value = expiresInSecondsInitial.value
 }, { immediate: true })
 
+const isRefreshing = ref(false)
+
 useIntervalFn(async () => {
   if (expiresInSecondsInitial.value === undefined || typeof expiresInSeconds.value !== 'number') return
   if (expiresInSeconds.value <= 0) {
-    await refresh()
+    if (isRefreshing.value) return
+    isRefreshing.value = true
+    try {
+      await refresh()
+    } finally {
+      isRefreshing.value = false
+    }
     return
+  }
+
+  expiresInSeconds.value -= 1
+}, 1000)
   }
 
   expiresInSeconds.value -= 1
