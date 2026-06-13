@@ -39,7 +39,7 @@ const cards = computedAsync<AccountCard[]>(async () => {
     {
       title: t('account.identificationCode.title'),
       description: t('account.identificationCode.description'),
-      icon: 'i-lucide-id-card-lanyard',
+      icon: 'i-lucide-fingerprint-pattern',
       onClick() {
         accountIdCodeDialog.open()
       },
