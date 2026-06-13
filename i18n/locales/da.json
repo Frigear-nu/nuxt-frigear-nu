@@ -119,8 +119,8 @@
       "label": "@:auth.dashboard Menu"
     },
     "identificationCode": {
-      "title": "Konto ID",
-      "description": "Tryk her for at vise din Frigear ID."
+      "title": "Frigear ID",
+      "description": "Tryk her for at vise dit ID."
     },
     "profile": {
       "title": "Profil",
