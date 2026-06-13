@@ -7,12 +7,10 @@ export default defineOAuthFacebookEventHandler({
   },
   async onSuccess(event, { user }) {
     if (typeof user === 'string') {
-      console.log('FB Auth User', typeof user)
       user = JSON.parse(user)
     }
 
     if (!user.email) {
-      console.log('FB Auth Failed', user)
       throw createError({
         status: 400,
         message: 'Missing email',
