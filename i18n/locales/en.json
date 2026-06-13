@@ -119,8 +119,8 @@
       "label": "@:auth.dashboard Menu"
     },
     "identificationCode": {
-      "title": "Account ID",
-      "description": "Press here to show your Frigear ID."
+      "title": "Frigear ID",
+      "description": "Press here to show your ID."
     },
     "profile": {
       "title": "Profile",
