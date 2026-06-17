@@ -247,6 +247,7 @@ export default defineNuxtConfig({
         '@internationalized/date',
         'nuxt-authorization/utils',
         '@nitrotool/errors',
+        '@tanstack/vue-table',
       ],
     },
   },

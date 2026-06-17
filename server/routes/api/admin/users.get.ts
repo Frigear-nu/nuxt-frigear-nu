@@ -12,6 +12,8 @@ export default defineEventHandler(async (event) => {
       email: true,
       name: true,
       role: true,
+      phone: true,
+      roskildePeopleId: true,
       emailVerifiedAt: true,
       createdAt: true,
     },

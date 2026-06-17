@@ -14,20 +14,32 @@ const overlay = useOverlay()
 const accountIdCodeDialog = overlay.create(LazyAccountIdentificationCodeDialog)
 const { data: userMemberships } = useUserMemberships({ isEnabled: isLoggedIn })
 const { data: cartItems, hasAnyItems: hasAnyCartItems } = useShoppingCart()
-const { data: availableApps } = await useFetch<{ id: string, name: string, websiteUrl: string, loginUrl?: string }[]>('/api/account/websites')
+const { data: availableApps } = await useFetch<{ id: string, name: string, description: string, icon: string, priority: number, websiteUrl: string, loginUrl?: string }[]>('/api/account/websites')
 
 type AccountCard = PageCardProps & { type?: 'application' }
 const appCards = computed<AccountCard[]>(() => {
   if (!availableApps.value) {
     return []
   }
-  return availableApps.value?.map(app => ({
+  return [...availableApps.value || []].sort((a, b) => {
+    if (a.priority === undefined || b.priority === undefined) {
+      return 0
+    }
+
+    if (a.priority === b.priority) {
+      return 0
+    }
+    if (a.priority > b.priority) {
+      return 1
+    }
+
+    return -1
+  }).map(app => ({
     title: app.name,
-    description: new URL(app.websiteUrl).host,
-    icon: 'i-lucide-globe',
+    description: app.description || new URL(app.websiteUrl).host,
+    icon: app?.icon || 'i-lucide-globe',
     to: app.loginUrl ? app.loginUrl : new URL(app.websiteUrl).origin,
     external: true,
-    target: '_blank',
     variant: 'subtle',
     type: 'application',
   }))

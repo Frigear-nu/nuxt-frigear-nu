@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
   await authorize(isAdmin, user)
 
-  const { name, email, role, sendWelcomeEmail, emailVerified } = await readValidatedBody(event, adminCreateUserSchema.parse)
+  const { name, email, role, phone, roskildePeopleId, sendWelcomeEmail, emailVerified } = await readValidatedBody(event, adminCreateUserSchema.parse)
 
   const existingUser = await db.query.users.findFirst({
     where: (user, { eq }) => eq(user.email, email),
@@ -30,6 +30,8 @@ export default defineEventHandler(async (event) => {
       name,
       email,
       role,
+      phone,
+      roskildePeopleId,
       emailVerifiedAt: emailVerified ? new Date() : null,
     }).returning()
 
