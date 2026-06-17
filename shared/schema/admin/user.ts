@@ -1,7 +1,13 @@
 import { z } from 'zod/v4'
 import { userRoles } from '#shared/schema/user'
 
+const phone = z.string().optional().meta({
+  description: 'Phone number in format +4512345678',
+})
+
 const roskildePeopleId = z.coerce.number().optional().meta({
+  title: 'Roskilde People ID',
+  description: 'Exactly as shown in People Vol.',
   input: {
     props: {
       increment: false,
@@ -14,7 +20,7 @@ export const adminCreateUserSchema = z.object({
   name: z.string(),
   email: z.email().toLowerCase(),
   role: z.enum(userRoles).default('user'),
-  phone: z.string().optional(),
+  phone,
   roskildePeopleId,
   sendWelcomeEmail: z.boolean().default(true),
   emailVerified: z.boolean().default(false),
@@ -26,7 +32,7 @@ export const adminUpdateUserSchema = z.object({
   name: z.string(),
   email: z.email(),
   role: z.enum(userRoles),
-  phone: z.string().optional(),
+  phone,
   roskildePeopleId,
 })
 
