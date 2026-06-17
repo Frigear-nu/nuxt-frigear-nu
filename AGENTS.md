@@ -2,7 +2,7 @@ This project is based on [Nuxt v4](https://nuxt.com), [Nitro v2](https://v2.nitr
 
 
 
-Refer to `node_modules/nuxt/dist/README.md` when working on nuxt code.
+Refer to [Nuxt documentation](https://nuxt.com) when working on Nuxt code.
 
 
 ## Project Structure
