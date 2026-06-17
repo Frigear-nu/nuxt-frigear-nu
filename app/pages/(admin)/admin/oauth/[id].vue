@@ -137,6 +137,9 @@ async function saveClient() {
       method: 'PATCH',
       body: {
         name: editForm.value.name,
+        description: editForm.value.description,
+        icon: editForm.value.icon,
+        priority: editForm.value.priority,
         websiteUrl: editForm.value.websiteUrl,
         loginUrl: editForm.value.loginUrl,
         previewUrlPattern: editForm.value.previewUrlPattern || null,
@@ -235,7 +238,7 @@ async function deleteClient() {
   })
   if (!confirmed) return
   await $fetch(`/api/admin/oauth/clients/${clientId}`, { method: 'DELETE' })
-  navigateTo('/admin/oauth/clients')
+  navigateTo('/admin/oauth')
 }
 </script>
 
@@ -244,7 +247,7 @@ async function deleteClient() {
     <!-- Page header -->
     <div class="flex items-center gap-4 mb-8">
       <UButton
-        to="/admin/oauth/clients"
+        to="/admin/oauth"
         color="neutral"
         variant="ghost"
         icon="i-heroicons-arrow-left"
@@ -261,7 +264,7 @@ async function deleteClient() {
       <UEmpty
         icon="i-heroicons-exclamation-triangle"
         title="Client not found"
-        :actions="[{ label: 'Back to Clients', to: '/admin/oauth/clients' }]"
+        :actions="[{ label: 'Back to Clients', to: '/admin/oauth' }]"
       />
     </div>
 
