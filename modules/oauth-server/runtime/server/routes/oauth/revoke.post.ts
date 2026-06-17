@@ -59,5 +59,5 @@ export default defineEventHandler(async (event) => {
   }
 
   // Always return 200 OK per RFC 7009
-  return {}
+  return sendNoContent(event, 200)
 })
