@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text, integer, uniqueIndex } from 'drizzle-orm/sqlite-core'
 import { relations } from 'drizzle-orm'
 import { stripeCustomers } from './stripe'
 import { userEventTickets } from './event'
@@ -7,6 +7,7 @@ export const users = sqliteTable('users', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
+  phone: text('phone').unique(),
   role: text('role', { enum: [
     'admin',
     'manager',
@@ -22,6 +23,7 @@ export const users = sqliteTable('users', {
   passwordHash: text('password_hash'),
   avatarUrl: text('avatar_url'),
 
+  roskildePeopleId: text('roskilde_people_id').unique(),
   // For migration from supabase (will be removed in the future)
   isMigrated: integer('is_migrated', { mode: 'boolean' }).notNull().default(false),
   supabaseId: text('supabase_id'),
@@ -45,30 +47,34 @@ export const usersRelations = relations(users, ({ many }) => ({
   oauthApps: many(oauthApps),
   passkeys: many(passkeys),
   tickets: many(userEventTickets),
-  roskildeIds: many(userRoskildeId, { relationName: 'roskilde_id_user' }),
-  createdRoskildeIds: many(userRoskildeId, { relationName: 'roskilde_id_addedBy' }),
+  roskildeWristbands: many(userRoskildeWristband, { relationName: 'roskilde_wristband_user' }),
+  createdRoskildeWristbands: many(userRoskildeWristband, { relationName: 'roskilde_wristband_addedBy' }),
 }))
 
-export const userRoskildeId = sqliteTable('user_roskilde_id', {
+export const userRoskildeWristband = sqliteTable('user_roskilde_wristband', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   addedBy: integer('added_by').references(() => users.id, { onDelete: 'set null' }),
   userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   year: integer().$defaultFn(() => (new Date()).getFullYear()),
   bandId: text('band_id'),
   bandSerial: text('band_serial'),
-  createdAt: integer({ mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
-  updatedAt: integer({ mode: 'timestamp' }).$onUpdateFn(() => new Date()),
-})
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().$defaultFn(() => new Date()),
+  updatedAt: integer('updated_at', { mode: 'timestamp' }).$onUpdateFn(() => new Date()),
+}, t => [
+  uniqueIndex('urwidx').on(t.userId, t.year),
+  uniqueIndex('urwbidx').on(t.bandId),
+  uniqueIndex('urwbsidx').on(t.bandSerial),
+])
 
-export const userRoskildeIdRelations = relations(userRoskildeId, ({ one }) => ({
+export const userRoskildeIdRelations = relations(userRoskildeWristband, ({ one }) => ({
   user: one(users, {
-    relationName: 'roskilde_id_user',
-    fields: [userRoskildeId.userId],
+    relationName: 'roskilde_wristband_user',
+    fields: [userRoskildeWristband.userId],
     references: [users.id],
   }),
   addedBy: one(users, {
-    relationName: 'roskilde_id_addedBy',
-    fields: [userRoskildeId.addedBy],
+    relationName: 'roskilde_wristband_addedBy',
+    fields: [userRoskildeWristband.addedBy],
     references: [users.id],
   }),
 }))
