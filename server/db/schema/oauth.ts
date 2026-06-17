@@ -5,6 +5,9 @@ export const oauthClients = sqliteTable('oauth_clients', {
   id: text('id').primaryKey(), // client_id
   secretHash: text('secret_hash').notNull(),
   name: text('name').notNull(),
+  description: text('description'),
+  icon: text('icon'),
+  priority: integer('priority').notNull().default(0),
   redirectUris: text('redirect_uris').notNull(), // JSON array (auto-generated from websiteUrl/previewUrlPattern)
   websiteUrl: text('website_url').notNull(), // Main website URL (e.g., https://docs.example.com)
   loginUrl: text('login_url'), // defaults to the websiteUrl

@@ -4,6 +4,8 @@ import { userRoles } from '#shared/schema/user'
 interface OAuthClient {
   id: string
   name: string
+  description: string
+  icon: string
   websiteUrl: string
   loginUrl: string
   previewUrlPattern: string | null
@@ -12,6 +14,7 @@ interface OAuthClient {
   createdAt: string
   allowedRoles: string[]
   tags: string[]
+  priority: number
 }
 
 useSeoMeta({
@@ -42,6 +45,9 @@ const editForm = ref({
   isActive: true,
   allowedRoles: [] as string[],
   tags: [] as string[],
+  description: '',
+  icon: 'i-lucide-globe',
+  priority: 0,
 })
 
 const defaultTags = ref(['member', 'shared', 'bar', 'all'])
@@ -115,6 +121,9 @@ watch(client, (value) => {
       isActive: value.isActive,
       allowedRoles: value.allowedRoles,
       tags: [],
+      description: value.description,
+      icon: value.icon,
+      priority: value.priority,
     }
   }
 }, { immediate: true })
@@ -128,6 +137,9 @@ async function saveClient() {
       method: 'PATCH',
       body: {
         name: editForm.value.name,
+        description: editForm.value.description,
+        icon: editForm.value.icon,
+        priority: editForm.value.priority,
         websiteUrl: editForm.value.websiteUrl,
         loginUrl: editForm.value.loginUrl,
         previewUrlPattern: editForm.value.previewUrlPattern || null,
@@ -226,7 +238,7 @@ async function deleteClient() {
   })
   if (!confirmed) return
   await $fetch(`/api/admin/oauth/clients/${clientId}`, { method: 'DELETE' })
-  navigateTo('/admin/oauth/clients')
+  navigateTo('/admin/oauth')
 }
 </script>
 
@@ -235,7 +247,7 @@ async function deleteClient() {
     <!-- Page header -->
     <div class="flex items-center gap-4 mb-8">
       <UButton
-        to="/admin/oauth/clients"
+        to="/admin/oauth"
         color="neutral"
         variant="ghost"
         icon="i-heroicons-arrow-left"
@@ -252,7 +264,7 @@ async function deleteClient() {
       <UEmpty
         icon="i-heroicons-exclamation-triangle"
         title="Client not found"
-        :actions="[{ label: 'Back to Clients', to: '/admin/oauth/clients' }]"
+        :actions="[{ label: 'Back to Clients', to: '/admin/oauth' }]"
       />
     </div>
 
@@ -356,6 +368,39 @@ async function deleteClient() {
               v-model="editForm.name"
               class="w-full"
               @input="errors.name = undefined"
+            />
+          </UFormField>
+
+          <UFormField
+            label="Client Description"
+            hint="This is shown under 'account'"
+          >
+            <UTextarea
+              v-model="editForm.description"
+              class="w-full"
+            />
+          </UFormField>
+
+          <UFormField
+            label="Icon"
+            required
+          >
+            <UFieldGroup>
+              <UInput
+                v-model="editForm.icon"
+                class="w-full"
+              />
+              <UIcon
+                :name="editForm.icon"
+                class="w-6 h-6"
+              />
+            </UFieldGroup>
+          </UFormField>
+
+          <UFormField label="Priority">
+            <UInputNumber
+              v-model="editForm.priority"
+              class="w-full"
             />
           </UFormField>
 

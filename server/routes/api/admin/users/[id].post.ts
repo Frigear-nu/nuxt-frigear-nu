@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   await authorize(isAdmin, user)
 
   const { id: userId } = await getValidatedRouterParams(event, routeSchema.parse)
-  const { name, email, role } = await readValidatedBody(event, adminCreateUserSchema.parse)
+  const { name, email, role, phone, roskildePeopleId } = await readValidatedBody(event, adminCreateUserSchema.parse)
 
   const existingUser = await db.query.users.findFirst({
     where: (user, { eq }) => eq(user.id, userId),
@@ -30,9 +30,11 @@ export default defineEventHandler(async (event) => {
   // do the update...
   const [updatedUser] = await db.update(schema.users)
     .set({
-      name: name,
-      email: email,
-      role: role,
+      name,
+      email,
+      role,
+      phone,
+      roskildePeopleId,
     })
     .where(eq(schema.users.id, userId))
     .returning()

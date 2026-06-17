@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   await authorize(isAdmin, session.user)
 
   const body = await readBody(event)
-  const { name, websiteUrl, loginUrl, previewUrlPattern, allowedRoles, tags } = body
+  const { name, description, icon, priority, websiteUrl, loginUrl, previewUrlPattern, allowedRoles, tags } = body
 
   // Validate required fields
   if (!name || !websiteUrl) {
@@ -76,6 +76,9 @@ export default defineEventHandler(async (event) => {
     id: clientId,
     secretHash,
     name,
+    description,
+    icon,
+    priority,
     websiteUrl: normalizedWebsiteUrl,
     loginUrl: loginUrl || null,
     previewUrlPattern: previewUrlPattern || null,
@@ -92,6 +95,9 @@ export default defineEventHandler(async (event) => {
     id: clientId,
     secret: clientSecret,
     name,
+    description,
+    icon,
+    priority,
     websiteUrl: normalizedWebsiteUrl,
     previewUrlPattern: previewUrlPattern || null,
     callbackUrl: buildCallbackUrl(normalizedWebsiteUrl),
