@@ -4,6 +4,8 @@ import { userRoles } from '#shared/schema/user'
 interface OAuthClient {
   id: string
   name: string
+  description: string
+  icon: string
   websiteUrl: string
   loginUrl: string
   previewUrlPattern: string | null
@@ -12,6 +14,7 @@ interface OAuthClient {
   createdAt: string
   allowedRoles: string[]
   tags: string[]
+  priority: number
 }
 
 useSeoMeta({
@@ -42,6 +45,9 @@ const editForm = ref({
   isActive: true,
   allowedRoles: [] as string[],
   tags: [] as string[],
+  description: '',
+  icon: 'i-lucide-globe',
+  priority: 0,
 })
 
 const defaultTags = ref(['member', 'shared', 'bar', 'all'])
@@ -115,6 +121,9 @@ watch(client, (value) => {
       isActive: value.isActive,
       allowedRoles: value.allowedRoles,
       tags: [],
+      description: value.description,
+      icon: value.icon,
+      priority: value.priority,
     }
   }
 }, { immediate: true })
@@ -356,6 +365,39 @@ async function deleteClient() {
               v-model="editForm.name"
               class="w-full"
               @input="errors.name = undefined"
+            />
+          </UFormField>
+
+          <UFormField
+            label="Client Description"
+            hint="This is shown under 'account'"
+          >
+            <UTextarea
+              v-model="editForm.description"
+              class="w-full"
+            />
+          </UFormField>
+
+          <UFormField
+            label="Icon"
+            required
+          >
+            <UFieldGroup>
+              <UInput
+                v-model="editForm.icon"
+                class="w-full"
+              />
+              <UIcon
+                :name="editForm.icon"
+                class="w-6 h-6"
+              />
+            </UFieldGroup>
+          </UFormField>
+
+          <UFormField label="Priority">
+            <UInputNumber
+              v-model="editForm.priority"
+              class="w-full"
             />
           </UFormField>
 

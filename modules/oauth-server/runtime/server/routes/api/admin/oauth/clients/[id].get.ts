@@ -19,6 +19,9 @@ export default defineEventHandler(async (event) => {
     .select({
       id: schema.oauthClients.id,
       name: schema.oauthClients.name,
+      description: schema.oauthClients.description,
+      icon: schema.oauthClients.icon,
+      priority: schema.oauthClients.priority,
       websiteUrl: schema.oauthClients.websiteUrl,
       loginUrl: schema.oauthClients.loginUrl,
       previewUrlPattern: schema.oauthClients.previewUrlPattern,

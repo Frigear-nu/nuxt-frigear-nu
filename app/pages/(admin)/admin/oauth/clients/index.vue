@@ -4,16 +4,19 @@ import { userRoles } from '#shared/schema/user'
 
 interface OAuthClient {
   id: string
+  ownerName?: string
   name: string
+  description: string
+  icon: string
   websiteUrl: string
   loginUrl: string
   previewUrlPattern: string | null
   callbackUrl: string
   isActive: boolean
   createdAt: string
-  ownerName: string | null
   allowedRoles: string[]
   tags: string[]
+  priority: number
 }
 
 useSeoMeta({
@@ -42,6 +45,9 @@ const newClient = ref({
   previewUrlPattern: '',
   allowedRoles: [] as string[],
   tags: [] as string[],
+  description: '',
+  icon: 'i-lucide-globe',
+  priority: 0,
 })
 
 const defaultTags = ref(['member', 'shared', 'bar', 'all'])
@@ -106,11 +112,14 @@ async function createClient() {
       method: 'POST',
       body: {
         name: newClient.value.name,
+        description: newClient.value.description,
+        icon: newClient.value.icon,
         websiteUrl: newClient.value.websiteUrl,
         allowedRoles: newClient.value.allowedRoles,
         loginUrl: newClient.value.loginUrl,
         tags: newClient.value.tags,
         previewUrlPattern: newClient.value.previewUrlPattern || undefined,
+        priority: newClient.value.priority || 0,
       },
     })
 
@@ -121,6 +130,9 @@ async function createClient() {
 
     newClient.value = {
       name: '',
+      description: '',
+      icon: 'i-lucide-globe',
+      priority: 0,
       websiteUrl: '',
       loginUrl: '',
       previewUrlPattern: '',
@@ -489,9 +501,42 @@ const headerActions = computed<ButtonProps[]>(() => [
           >
             <UInput
               v-model="newClient.name"
-              placeholder="My Nuxt Studio Site"
+              placeholder="e.g Docs or Vouchers"
               class="w-full"
               @input="errors.name = undefined"
+            />
+          </UFormField>
+
+          <UFormField
+            label="Client Description"
+            hint="This is shown under 'account'"
+          >
+            <UTextarea
+              v-model="newClient.description"
+              class="w-full"
+            />
+          </UFormField>
+
+          <UFormField
+            label="Icon"
+            required
+          >
+            <UFieldGroup>
+              <UInput
+                v-model="newClient.icon"
+                class="w-full"
+              />
+              <UIcon
+                :name="newClient.icon"
+                class="w-6 h-6"
+              />
+            </UFieldGroup>
+          </UFormField>
+
+          <UFormField label="Priority">
+            <UInputNumber
+              v-model="newClient.priority"
+              class="w-full"
             />
           </UFormField>
 

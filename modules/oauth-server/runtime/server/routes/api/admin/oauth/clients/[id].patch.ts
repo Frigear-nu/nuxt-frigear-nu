@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const body = await readBody(event)
-  const { name, websiteUrl, loginUrl, previewUrlPattern, isActive, allowedRoles, tags } = body
+  const { name, description, icon, priority, websiteUrl, loginUrl, previewUrlPattern, isActive, allowedRoles, tags } = body
 
   // Verify client exists
   const existingClients = await db
@@ -39,6 +39,18 @@ export default defineEventHandler(async (event) => {
 
   if (name !== undefined) {
     updates.name = name
+  }
+
+  if (description !== undefined) {
+    updates.description = description
+  }
+
+  if (icon !== undefined) {
+    updates.icon = icon
+  }
+
+  if (priority !== undefined) {
+    updates.priority = priority
   }
 
   if (allowedRoles !== undefined) {
@@ -128,6 +140,9 @@ export default defineEventHandler(async (event) => {
     .select({
       id: schema.oauthClients.id,
       name: schema.oauthClients.name,
+      description: schema.oauthClients.description,
+      icon: schema.oauthClients.icon,
+      priority: schema.oauthClients.priority,
       websiteUrl: schema.oauthClients.websiteUrl,
       previewUrlPattern: schema.oauthClients.previewUrlPattern,
       isActive: schema.oauthClients.isActive,

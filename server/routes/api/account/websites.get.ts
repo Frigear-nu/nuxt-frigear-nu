@@ -13,6 +13,9 @@ export default defineEventHandler(async (event) => {
     columns: {
       id: true,
       name: true,
+      description: true,
+      icon: true,
+      priority: true,
       websiteUrl: true,
       loginUrl: true,
     },

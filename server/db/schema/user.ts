@@ -23,7 +23,7 @@ export const users = sqliteTable('users', {
   passwordHash: text('password_hash'),
   avatarUrl: text('avatar_url'),
 
-  roskildePeopleId: text('roskilde_people_id').unique(),
+  roskildePeopleId: integer('roskilde_people_id').unique(),
   // For migration from supabase (will be removed in the future)
   isMigrated: integer('is_migrated', { mode: 'boolean' }).notNull().default(false),
   supabaseId: text('supabase_id'),

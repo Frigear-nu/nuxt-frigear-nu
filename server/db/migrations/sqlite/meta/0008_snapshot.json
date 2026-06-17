@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "85f69123-5688-45d5-9fea-78a448896ab0",
+  "id": "6bc56f60-08de-4aa7-823d-95206a247d33",
   "prevId": "073de10e-156e-4826-85b5-3ad5f46f7815",
   "tables": {
     "authorization_codes": {
@@ -1440,7 +1440,7 @@
         },
         "roskilde_people_id": {
           "name": "roskilde_people_id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
