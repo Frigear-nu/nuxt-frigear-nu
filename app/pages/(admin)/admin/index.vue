@@ -109,6 +109,7 @@ const { data: newMembers } = useLazyFetch('/api/admin/dashboard/new-members')
           </UPageCard>
         </UPageGrid>
         <UPageCard
+          v-if="newMembers && newMembers.length > 0"
           :ui="{
             wrapper: 'flex flex-col flex-1',
             header: 'mb-4 flex flex-col gap-2 md:flex-row md:items-center md:justify-between w-full',
