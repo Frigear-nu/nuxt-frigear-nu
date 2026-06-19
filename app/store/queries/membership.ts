@@ -14,8 +14,8 @@ export const useMemberships = () => {
 
   // TODO: This should probably be a config on the product/price in stripe via metadata...
   const roskildeSeasonGap = computed(() => [
-    new Date(`06-15-${new Date().getFullYear()}`),
-    new Date(`07-07-${new Date().getFullYear()}`),
+    new Date(`06-10-${new Date().getFullYear()}`),
+    new Date(`07-10-${new Date().getFullYear()}`),
   ])
 
   const isWithinRoskildeSeason = computed(() => {
