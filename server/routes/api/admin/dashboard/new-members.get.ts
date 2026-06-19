@@ -10,6 +10,8 @@ export default defineEventHandler(async (event) => {
 
   return db.select({
     id: schema.users.id,
+    name: schema.users.name,
+    email: schema.users.email,
     interval: schema.stripePrices.interval,
     subscription: sql<string>`COALESCE(
       json_extract(${schema.stripeProducts.metadata}, '$.title_en'),
@@ -21,8 +23,8 @@ export default defineEventHandler(async (event) => {
     .orderBy(desc(schema.users.createdAt))
     .where(gte(schema.users.createdAt, subDays(new Date(), 30)))
     .limit(20)
-    .innerJoin(schema.stripeCustomers, eq(schema.stripeCustomers.userId, schema.users.id))
-    .innerJoin(schema.stripeSubscriptions, eq(schema.stripeSubscriptions.customerId, schema.stripeCustomers.id))
-    .innerJoin(schema.stripePrices, eq(schema.stripePrices.id, schema.stripeSubscriptions.priceId))
-    .innerJoin(schema.stripeProducts, eq(schema.stripeProducts.id, schema.stripePrices.productId))
+    .leftJoin(schema.stripeCustomers, eq(schema.stripeCustomers.userId, schema.users.id))
+    .leftJoin(schema.stripeSubscriptions, eq(schema.stripeSubscriptions.customerId, schema.stripeCustomers.id))
+    .leftJoin(schema.stripePrices, eq(schema.stripePrices.id, schema.stripeSubscriptions.priceId))
+    .leftJoin(schema.stripeProducts, eq(schema.stripeProducts.id, schema.stripePrices.productId))
 })

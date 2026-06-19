@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { PageCardProps } from '@nuxt/ui'
+import type { PageCardProps, TableColumn } from '@nuxt/ui'
 import { useSiteI18n } from '#imports'
-import { allows } from 'nuxt-authorization/utils'
+import { allows, authorize } from 'nuxt-authorization/utils'
 import { canViewForms } from '#shared/abilities/forms'
 import { computedAsync } from '@vueuse/core'
 import { upperFirst } from 'scule'
-import { canViewUsers, isAdmin } from '#shared/abilities/admin'
+import { canViewAdminArea, canViewUsers, isAdmin } from '#shared/abilities/admin'
 
 const { t, localePath } = useSiteI18n()
 const { currentUser, currentUserRole } = useAuth()
@@ -59,7 +59,54 @@ const cards = computedAsync<PageCardProps[]>(async () => {
   return items
 })
 
-const { data: newMembers } = useLazyFetch('/api/admin/dashboard/new-members')
+type NewMember = { id: number, name: string, email: string, interval?: string, subscription?: string, price?: number, signedUpAt: string }
+const { data: newMembers, execute: fetchNewMembers } = useLazyFetch<NewMember[]>('/api/admin/dashboard/new-members')
+
+watch(currentUser, async () => {
+  if (currentUser.value && await authorize(canViewAdminArea, currentUser.value)) {
+    await fetchNewMembers()
+  }
+})
+
+const UBadge = resolveComponent('UBadge')
+
+const newMembersTableColumns: TableColumn<NewMember>[] = [
+  {
+    id: 'id',
+    header: 'ID',
+    cell: ({ row }) => row.original.id,
+  },
+  {
+    id: 'name',
+    header: 'Name',
+    cell: ({ row }) => row.original.name,
+  },
+  {
+    id: 'email',
+    header: 'Email',
+    cell: ({ row }) => row.original.email,
+  },
+  {
+    id: 'subscription',
+    header: 'Subscription',
+    cell: ({ row }) => h(UBadge, {
+      variant: 'subtle',
+      color: row.original.subscription && row.original.interval
+        ? 'success'
+        : 'neutral',
+    }, () => {
+      if (!row.original.subscription || !row.original.interval) {
+        return 'None'
+      }
+      return [row.original.subscription, row.original.interval].join(' / ')
+    }),
+  },
+  {
+    id: 'signedUpAt',
+    header: 'Signed Up At',
+    cell: ({ row }) => new Date(row.original.signedUpAt).toLocaleString(),
+  },
+]
 </script>
 
 <template>
@@ -127,7 +174,10 @@ const { data: newMembers } = useLazyFetch('/api/admin/dashboard/new-members')
               All Users
             </UButton>
           </template>
-          <UTable :data="newMembers" />
+          <UTable
+            :columns="newMembersTableColumns"
+            :data="newMembers"
+          />
         </UPageCard>
       </UPageBody>
     </UContainer>
