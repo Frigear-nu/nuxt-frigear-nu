@@ -12,6 +12,9 @@ const roskildePeopleId = z.coerce.number().optional().nullish().meta({
     props: {
       increment: false,
       decrement: false,
+      formatOptions: {
+        useGrouping: false,
+      },
     },
   },
 })
