@@ -537,6 +537,7 @@ const headerActions = computed<ButtonProps[]>(() => [
             <UInputNumber
               v-model="newClient.priority"
               class="w-full"
+              :format-options="{ useGrouping: false }"
             />
           </UFormField>
 
