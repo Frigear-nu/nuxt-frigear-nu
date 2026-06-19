@@ -58,53 +58,77 @@ const cards = computedAsync<PageCardProps[]>(async () => {
 
   return items
 })
+
+const { data: newMembers } = useLazyFetch('/api/admin/dashboard/new-members')
 </script>
 
 <template>
   <div>
     <UContainer>
-      <UPageHeader
-        title="Admin Area"
-        :description="pageHeaderDescription"
-      >
-        <template #links>
-          <div
-            v-if="currentUser"
-            class="flex flex-col"
-          >
-            <div class="text-sm text-muted">
-              {{ $t('auth.signedInAs') }}:
-            </div>
-            <div class="text-primary">
-              {{ currentUser.email }}
-            </div>
-          </div>
-        </template>
-      </UPageHeader>
-      <UPageGrid class="lg:grid-cols-2 mt-4">
-        <UPageCard
-          v-for="card in cards"
-          :key="card.title"
-          v-bind="card"
-          orientation="horizontal"
+      <UPageBody>
+        <UPageHeader
+          title="Admin Area"
+          :description="pageHeaderDescription"
         >
-          <template #default>
-            <div class="flex justify-between items-center gap-4">
-              <div class="hidden lg:block" />
-              <UButton
-                :to="card.to"
-                size="xl"
-                trailing-icon="i-lucide-arrow-right"
-                class="justify-between gap-4 lg:w-auto hidden lg:flex"
-                variant="outline"
-                color="neutral"
-              >
-                {{ t('actions.view') }}
-              </UButton>
+          <template #links>
+            <div
+              v-if="currentUser"
+              class="flex flex-col"
+            >
+              <div class="text-sm text-muted">
+                {{ $t('auth.signedInAs') }}:
+              </div>
+              <div class="text-primary">
+                {{ currentUser.email }}
+              </div>
             </div>
           </template>
+        </UPageHeader>
+        <UPageGrid class="lg:grid-cols-2 mt-4">
+          <UPageCard
+            v-for="card in cards"
+            :key="card.title"
+            v-bind="card"
+            orientation="horizontal"
+          >
+            <template #default>
+              <div class="flex justify-between items-center gap-4">
+                <div class="hidden lg:block" />
+                <UButton
+                  :to="card.to"
+                  size="xl"
+                  trailing-icon="i-lucide-arrow-right"
+                  class="justify-between gap-4 lg:w-auto hidden lg:flex"
+                  variant="outline"
+                  color="neutral"
+                >
+                  {{ t('actions.view') }}
+                </UButton>
+              </div>
+            </template>
+          </UPageCard>
+        </UPageGrid>
+        <UPageCard
+          :ui="{
+            wrapper: 'flex flex-col flex-1',
+            header: 'mb-4 flex flex-col gap-2 md:flex-row md:items-center md:justify-between w-full',
+          }"
+        >
+          <template #header>
+            <div>New Members</div>
+            <UButton
+              to="/admin/users"
+              variant="outline"
+              color="neutral"
+              size="xs"
+              trailing-icon="i-lucide-arrow-right"
+            >
+              All Users
+            </UButton>
+          </template>
+          <UTable :data="newMembers" />
         </UPageCard>
-      </UPageGrid>
+      </UPageBody>
     </UContainer>
   </div>
 </template>
