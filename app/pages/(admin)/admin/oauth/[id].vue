@@ -401,6 +401,7 @@ async function deleteClient() {
             <UInputNumber
               v-model="editForm.priority"
               class="w-full"
+              :format-options="{ useGrouping: false }"
             />
           </UFormField>
 
