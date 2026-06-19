@@ -19,6 +19,7 @@ export default defineEventHandler(async (event) => {
     )`,
     price: schema.stripePrices.unitAmount,
     signedUpAt: schema.users.createdAt,
+    user: schema.users,
   }).from(schema.users)
     .orderBy(desc(schema.users.createdAt))
     .where(gte(schema.users.createdAt, subDays(new Date(), 30)))

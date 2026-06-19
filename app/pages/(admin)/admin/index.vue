@@ -6,9 +6,14 @@ import { canViewForms } from '#shared/abilities/forms'
 import { computedAsync } from '@vueuse/core'
 import { upperFirst } from 'scule'
 import { canViewAdminArea, canViewUsers, isAdmin } from '#shared/abilities/admin'
+import { LazyAdminUsersEditDialog } from '#components'
+import type { Row } from '@tanstack/vue-table'
+import type { AdminUpdateUserSchema } from '#shared/schema/admin/user'
 
 const { t, localePath } = useSiteI18n()
 const { currentUser, currentUserRole } = useAuth()
+const overlay = useOverlay()
+const editUserDialog = overlay.create(LazyAdminUsersEditDialog)
 
 const pageHeaderDescription = computed(() => {
   if (!currentUserRole.value) return undefined
@@ -59,7 +64,16 @@ const cards = computedAsync<PageCardProps[]>(async () => {
   return items
 })
 
-type NewMember = { id: number, name: string, email: string, interval?: string, subscription?: string, price?: number, signedUpAt: string }
+type NewMember = {
+  id: number
+  name: string
+  email: string
+  interval?: string
+  subscription?: string
+  price?: number
+  signedUpAt: string
+  user: AdminUpdateUserSchema & { id: number }
+}
 const { data: newMembers, execute: fetchNewMembers } = useLazyFetch<NewMember[]>('/api/admin/dashboard/new-members')
 
 watch(currentUser, async () => {
@@ -107,6 +121,15 @@ const newMembersTableColumns: TableColumn<NewMember>[] = [
     cell: ({ row }) => new Date(row.original.signedUpAt).toLocaleString(),
   },
 ]
+
+const onSelectRow = (_: unknown, row: Row<NewMember>) => {
+  editUserDialog.open({
+    user: row.original.user,
+    async onClose() {
+      await fetchNewMembers()
+    },
+  })
+}
 </script>
 
 <template>
@@ -163,7 +186,9 @@ const newMembersTableColumns: TableColumn<NewMember>[] = [
           }"
         >
           <template #header>
-            <div>New Members</div>
+            <div class="text-lg font-bold">
+              New Members
+            </div>
             <UButton
               to="/admin/users"
               variant="outline"
@@ -177,6 +202,7 @@ const newMembersTableColumns: TableColumn<NewMember>[] = [
           <UTable
             :columns="newMembersTableColumns"
             :data="newMembers"
+            @select="onSelectRow"
           />
         </UPageCard>
       </UPageBody>
