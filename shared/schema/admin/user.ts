@@ -1,11 +1,11 @@
 import { z } from 'zod/v4'
 import { userRoles } from '#shared/schema/user'
 
-const phone = z.string().optional().meta({
+const phone = z.string().optional().nullish().meta({
   description: 'Phone number in format +4512345678',
 })
 
-const roskildePeopleId = z.coerce.number().optional().meta({
+const roskildePeopleId = z.coerce.number().optional().nullish().meta({
   title: 'Roskilde People ID',
   description: 'Exactly as shown in People Vol.',
   input: {
