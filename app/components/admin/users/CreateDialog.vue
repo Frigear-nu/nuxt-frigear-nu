@@ -47,7 +47,7 @@ const onSubmit = async (payload: AdminCreateUserSchema) => {
     <template #body>
       <AutoForm
         ref="form"
-        :schema="adminCreateUserSchema "
+        :schema="adminCreateUserSchema"
         @submit="onSubmit"
       />
     </template>
