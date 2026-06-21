@@ -24,7 +24,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@libsql/client": "^0.17.0",
+    "@libsql/client": "^0.17.3",
     "@nitrotool/errors": "^1.0.4",
     "@nitrotool/jwt": "^1.0.4",
     "@norbiros/nuxt-auto-form": "0.6.2",
