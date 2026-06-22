@@ -36,9 +36,7 @@ const subscriptions = computed<PricingPlanProps & { interval: string, id: string
       interval = 'quarter'
       billingCycle = `/ ${t('payment.interval.quarter')}`
     }
-    if (!price.price) {
-      price.price = 0
-    }
+
     return {
       billingCycle,
       interval,
