@@ -59,12 +59,35 @@ const onSelectMembership = (price: PublicPrice) => {
   if (loggedIn.value) return navigateTo(`/account/membership`)
   return navigateTo(`/sign-up`)
 }
+
+const transformPrices = (prices: PublicPrice[]): PublicPrice[] => {
+  return prices.filter((price) => {
+    if (!price.disabledRanges || (price.disabledRanges && price.disabledRanges.length === 0)) {
+      return true
+    }
+
+    const now = new Date()
+
+    // remove the items if inside the range:
+    return price.disabledRanges.some((range) => {
+      const [type, start, end] = [
+        range[0],
+        new Date(range[1]),
+        new Date(range[2]),
+      ]
+
+      console.log({ type, start, end, now })
+      return start <= now && now <= end
+    })
+  })
+}
 </script>
 
 <template>
   <MembershipTypes
     :mode="mode"
     :orientation="orientation"
+    :transform="transformPrices"
     @select="onSelectMembership"
   >
     <template

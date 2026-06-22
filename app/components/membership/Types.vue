@@ -5,23 +5,30 @@ import { useMemberships } from '~/store/queries/membership'
 import { useSiteI18n } from '#imports'
 import type { PublicPrice } from '#shared/types/membership'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   mode: 'list' | 'tabs'
   orientation?: 'horizontal' | 'vertical'
   button?: ButtonProps | string
-}>()
+  transform?: (plans: PublicPrice[]) => PublicPrice[]
+}>(), {
+})
 
 const $emits = defineEmits<{
   (e: 'select', price: PublicPrice): void
 }>()
 
-const { data: availableMemberships } = await useMemberships()
+const { data: availableMemberships } = useMemberships()
 
 const { t, locale } = useSiteI18n()
 
-const subscriptions = computed<(PricingPlanProps & { interval: string, id: string })[]>(() => {
+const subscriptions = computed<PricingPlanProps & { interval: string, id: string }[]>(() => {
   if (!availableMemberships.value) return []
-  return availableMemberships.value.map((price) => {
+  let items = availableMemberships.value
+
+  if (props.transform && typeof props.transform === 'function') {
+    items = props.transform(items)
+  }
+  return items.map((price) => {
     let interval = price.interval
     let billingCycle = `/ ${t(`payment.interval.${price.interval}`)}`
 
@@ -29,13 +36,16 @@ const subscriptions = computed<(PricingPlanProps & { interval: string, id: strin
       interval = 'quarter'
       billingCycle = `/ ${t('payment.interval.quarter')}`
     }
+    if (!price.price) {
+      price.price = 0
+    }
     return {
       billingCycle,
       interval,
       id: price.id,
       title: (price?.[`title_${locale.value}` as keyof typeof price] || price.title) as string | undefined,
       description: (price?.[`description_${locale.value}` as keyof typeof price] || price.description) as string | undefined,
-      price: `${price.price / 100} ${price.currency.toUpperCase()}`,
+      price: price.price ? `${price.price / 100} ${price.currency?.toUpperCase()}` : undefined,
       terms: t('payment.membership.feeIncluded'),
       ui: {
         billingCycle: 'uppercase ml-1',
@@ -65,6 +75,7 @@ const items = computed(() => {
 
   return subscriptions.value.map(sub => ({
     ...sub,
+    // @ts-expect-error Not typed...
     value: sub.interval,
     label: withoutLeadingSlash(sub.billingCycle),
   }))

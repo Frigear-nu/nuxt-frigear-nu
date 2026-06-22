@@ -22,6 +22,7 @@ const isLoading = ref(false)
 
 const activeSubscription = computed(() => {
   if (!currentMemberships.value) return null
+  if (currentMemberships.value.length === 0) return null
   return currentMemberships.value[0]
 })
 
@@ -109,6 +110,33 @@ const navigateToStripeDashboard = async () => {
     external: true,
   })
 }
+
+const transformMemberships = (memberships: PublicPrice[]): PublicPrice[] => {
+  return memberships
+    .filter((m) => {
+      if (!m.disabledRanges || (m.disabledRanges && m.disabledRanges.length === 0)) {
+        return true
+      }
+
+      // if user has any subscription, they can see it:
+      if (currentMemberships.value && currentMemberships.value.length > 0) {
+        return true
+      }
+
+      const now = new Date()
+
+      // remove the items if inside the range:
+      return m.disabledRanges.some((range) => {
+        const [_type, start, end] = [
+          range[0],
+          new Date(range[1]),
+          new Date(range[2]),
+        ]
+
+        return start <= now && now <= end
+      })
+    })
+}
 </script>
 
 <template>
@@ -125,7 +153,9 @@ const navigateToStripeDashboard = async () => {
               {{ $t('account.membership.currentPlan') }}
             </span>
             <span class="text-lg font-semibold capitalize">
-              {{ activeSubscription.price?.metadata?.['title_' + locale] || activeSubscription.price?.metadata?.title || activeSubscription.price.title }}
+              {{
+                activeSubscription.price?.metadata?.['title_' + locale] || activeSubscription.price?.metadata?.title || activeSubscription.price.title
+              }}
             </span>
           </div>
 
@@ -134,9 +164,10 @@ const navigateToStripeDashboard = async () => {
             variant="soft"
             :icon="activeSubscriptionWillBeCancelled ? 'i-lucide-battery-warning' : 'i-lucide-shield-check'"
           >
-            {{ activeSubscriptionWillBeCancelled
-              ? $t('account.membership.cancelling')
-              : $t('account.membership.active')
+            {{
+              activeSubscriptionWillBeCancelled
+                ? $t('account.membership.cancelling')
+                : $t('account.membership.active')
             }}
           </UBadge>
         </div>
@@ -147,15 +178,19 @@ const navigateToStripeDashboard = async () => {
           class="rounded-md bg-muted/50 px-4 py-3 text-sm"
         >
           <template v-if="activeSubscriptionWillBeCancelled">
-            {{ $t('account.membership.cancelsAt', {
-              date: format(activeSubscription.currentPeriodEnd, 'yyyy-MM-dd HH:mm:ss'),
-            }) }}
+            {{
+              $t('account.membership.cancelsAt', {
+                date: format(activeSubscription.currentPeriodEnd, 'yyyy-MM-dd HH:mm:ss'),
+              })
+            }}
           </template>
 
           <template v-else>
-            {{ $t('account.membership.renewsAutomaticallyAt', {
-              date: format(activeSubscription.currentPeriodEnd, 'yyyy-MM-dd HH:mm:ss'),
-            }) }}
+            {{
+              $t('account.membership.renewsAutomaticallyAt', {
+                date: format(activeSubscription.currentPeriodEnd, 'yyyy-MM-dd HH:mm:ss'),
+              })
+            }}
           </template>
         </div>
 
@@ -200,6 +235,7 @@ const navigateToStripeDashboard = async () => {
     />
     <MembershipTypes
       :mode="$device.isDesktopOrTablet ? 'list' : 'tabs'"
+      :transform="transformMemberships"
       @select="onSelectMembership"
     >
       <template
@@ -212,7 +248,9 @@ const navigateToStripeDashboard = async () => {
           :variant="activeSubscription && activeSubscription.priceId === item.id ? 'subtle' : undefined"
           @click="onSelectMembership(item as PublicPrice)"
         >
-          {{ activeSubscription && activeSubscription.priceId === item.id ? $t('common.current') : $t('actions.select') }}
+          {{
+            activeSubscription && activeSubscription.priceId === item.id ? $t('common.current') : $t('actions.select')
+          }}
         </UButton>
       </template>
     </MembershipTypes>
@@ -246,7 +284,7 @@ const navigateToStripeDashboard = async () => {
             :loading="isLoading"
             @click="onConfirmSubscription"
           >
-            {{ activeSubscription ? $t('account.membership.update.title') :$t('account.membership.subscribe.action') }}
+            {{ activeSubscription ? $t('account.membership.update.title') : $t('account.membership.subscribe.action') }}
           </UButton>
         </div>
       </template>

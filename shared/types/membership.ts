@@ -1,3 +1,4 @@
+export type ParsedDisabledRange = [string, Date, Date]
 export type PublicPrice = {
   id: string
   images: string[] | null
@@ -9,4 +10,5 @@ export type PublicPrice = {
   currency: string
   interval: string | 'month' | 'year'
   intervalCount: number
+  disabledRanges: ParsedDisabledRange[]
 }

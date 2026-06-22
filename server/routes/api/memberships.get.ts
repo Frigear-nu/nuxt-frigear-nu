@@ -1,17 +1,39 @@
 import { db, schema } from '@nuxthub/db'
 import { eq, and } from 'drizzle-orm'
+import type { ParsedDisabledRange, PublicPrice } from '#shared/types/membership'
 
-type PublicPrice = {
-  id: string
-  images: string[] | null
-  title: string
-  title_en?: string
-  description: string | null
-  description_en?: string
-  price: number
-  currency: string
-  interval: string | 'month' | 'year'
-  intervalCount: number
+type DisabledRangeType = [string, string, string]
+
+const replacers = {
+  fullYear: () => new Date().getFullYear(),
+}
+const parseDisabledRangeDate = (text?: string): Date => {
+  if (!text) {
+    return new Date()
+  }
+  // Replace all items: e.g {fullYear} or other dynamic inserts.:
+  return new Date(text.replaceAll(/\{(\w+)\}/g, (_, key) => {
+    return replacers[key as keyof typeof replacers]?.() || key
+  }))
+}
+
+const parseDisabledRanges = (rangeText: string): ParsedDisabledRange[] => {
+  try {
+    const parsed = JSON.parse(rangeText) as DisabledRangeType[]
+    return parsed.map(([type, start, end]) => {
+      return [
+        type,
+        parseDisabledRangeDate(start),
+        parseDisabledRangeDate(end),
+      ]
+    })
+  }
+  catch (err) {
+    if (import.meta.dev) {
+      console.error('Failed to parse disabled ranges', err, rangeText)
+    }
+    return []
+  }
 }
 
 export default defineCachedEventHandler(async () => {
@@ -48,10 +70,11 @@ export default defineCachedEventHandler(async () => {
           images: price.images,
           interval: price.interval || 'month',
           intervalCount: price.intervalCount,
+          disabledRanges: parseDisabledRanges(price.metadata?.disabled_ranges || '[]'),
         }
       }),
     }
   })
     .flatMap(({ prices }) => prices)
     .sort((a, b) => a.price < b.price ? -1 : 1)
-}, { maxAge: 60 * 10 }) // 10 min
+}, { maxAge: import.meta.dev ? 15 : 60 * 10, swr: true }) // 10 min
