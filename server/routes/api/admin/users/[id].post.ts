@@ -1,5 +1,5 @@
 import { authorize } from 'nuxt-authorization/utils'
-import { isAdmin } from '#shared/abilities/admin'
+import { canManageUsers } from '#shared/abilities/admin'
 import { db, schema } from '@nuxthub/db'
 import { z } from 'zod/v4'
 import { adminCreateUserSchema } from '#shared/schema/admin/user'
@@ -11,7 +11,7 @@ const routeSchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
-  await authorize(isAdmin, user)
+  await authorize(canManageUsers, user)
 
   const { id: userId } = await getValidatedRouterParams(event, routeSchema.parse)
   const { name, email, role, phone, roskildePeopleId } = await readValidatedBody(event, adminCreateUserSchema.parse)

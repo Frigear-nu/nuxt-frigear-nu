@@ -1,10 +1,10 @@
 import { authorize } from 'nuxt-authorization/utils'
-import { isAdmin } from '#shared/abilities/admin'
+import { canViewUsers } from '#shared/abilities/admin'
 import { db } from '@nuxthub/db'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
-  await authorize(isAdmin, user)
+  await authorize(canViewUsers, user)
 
   return db.query.users.findMany({
     columns: {

@@ -77,7 +77,7 @@ type NewMember = {
 const { data: newMembers, execute: fetchNewMembers } = useLazyFetch<NewMember[]>('/api/admin/dashboard/new-members')
 
 watch(currentUser, async () => {
-  if (currentUser.value && await authorize(canViewAdminArea, currentUser.value)) {
+  if (currentUser.value && await authorize(canViewUsers, currentUser.value)) {
     await fetchNewMembers()
   }
 })

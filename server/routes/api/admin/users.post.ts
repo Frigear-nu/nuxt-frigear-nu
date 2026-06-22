@@ -1,5 +1,5 @@
 import { authorize } from 'nuxt-authorization/utils'
-import { isAdmin } from '#shared/abilities/admin'
+import { canManageUsers } from '#shared/abilities/admin'
 import { db, schema } from '@nuxthub/db'
 import WelcomeToFrigearEmail from '#shared/emails/auth/WelcomeToFrigearEmail.vue'
 import { adminCreateUserSchema } from '#shared/schema/admin/user'
@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     auth: { verifyEmail },
   } = useRuntimeConfig(event)
   const { user } = await requireUserSession(event)
-  await authorize(isAdmin, user)
+  await authorize(canManageUsers, user)
 
   const { name, email, role, phone, roskildePeopleId, sendWelcomeEmail, emailVerified } = await readValidatedBody(event, adminCreateUserSchema.parse)
 
