@@ -87,32 +87,29 @@ const carouselLoop = computed(() => props.loop && hasMultipleSlides.value)
 const carouselArrows = computed(() => props.showArrows && hasMultipleSlides.value)
 const carouselDots = computed(() => props.showDots && hasMultipleSlides.value)
 
-const failedImages = ref<Record<string, boolean>>({})
+const failedImages = ref<string[]>([])
 const route = useRoute()
 
 const activeImages = computed(() =>
-  normalizedImages.value.filter(image => !failedImages.value[image.src]),
+  normalizedImages.value.filter(image => !failedImages.value.includes(image.src)),
 )
 
 const handleImageError = (src: string) => {
-  failedImages.value[src] = true
-  console.warn(`Image failed to load: ${src}`)
-
-  try {
-    if (Sentry && typeof Sentry.captureException === 'function') {
-      Sentry.captureException(new Error(`HeroImageCarousel image load failed: ${src}`), {
-        extra: {
-          src,
-          page: route.fullPath,
-          component: 'HeroImageCarousel',
-        },
-      })
-    }
-  }
-  catch (sentryError) {
-    console.warn('Sentry capture failed', sentryError)
-  }
+  failedImages.value.push(src)
 }
+
+onMounted(() => {
+  if (!failedImages.value || failedImages.value.length === 0) {
+    return
+  }
+  Sentry?.captureException(new Error(`HeroImageCarousel image(s) load failed: ${failedImages.value.join(', ')}`), {
+    extra: {
+      failedImages: failedImages.value,
+      page: route.fullPath,
+      component: 'HeroImageCarousel',
+    },
+  })
+})
 
 const stageRef = ref<HTMLElement | null>(null)
 
