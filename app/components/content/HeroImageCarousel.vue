@@ -3,6 +3,8 @@ import * as Sentry from '@sentry/nuxt'
 import { useRoute } from '#imports'
 import { computed, reactive, ref } from 'vue'
 
+const { user, loggedIn } = useUserSession()
+
 type HeroCarouselImage = {
   src: string
   alt?: string
@@ -88,13 +90,16 @@ const carouselArrows = computed(() => props.showArrows && hasMultipleSlides.valu
 const carouselDots = computed(() => props.showDots && hasMultipleSlides.value)
 
 const failedImages = ref<string[]>([])
+const lastImageError = ref<unknown | undefined>(undefined)
 const route = useRoute()
 
 const activeImages = computed(() =>
   normalizedImages.value.filter(image => !failedImages.value.includes(image.src)),
 )
 
-const handleImageError = (src: string) => {
+const handleImageError = ($event: Event, src: string) => {
+  lastImageError.value = $event
+  console.error(`HeroImageCarousel image load failed: ${src}`, $event)
   failedImages.value.push(src)
 }
 
@@ -102,11 +107,14 @@ onMounted(() => {
   if (!failedImages.value || failedImages.value.length === 0) {
     return
   }
-  Sentry?.captureException(new Error(`HeroImageCarousel image(s) load failed: ${failedImages.value.join(', ')}`), {
+  Sentry?.captureException(lastImageError.value || new Error(`HeroImageCarousel image(s) load failed: ${failedImages.value.join(', ')}`), {
+    user: loggedIn.value && user.value
+      ? { id: user.value.id }
+      : undefined,
     extra: {
-      failedImages: failedImages.value,
-      page: route.fullPath,
       component: 'HeroImageCarousel',
+      route: route.fullPath,
+      failedImages: failedImages.value,
     },
   })
 })
@@ -234,7 +242,7 @@ const carouselUi = {
               :sizes="sizes"
               :loading="item.src === firstImageSrc ? 'eager' : 'lazy'"
               class="hero-carousel-media"
-              @error="handleImageError(item.src)"
+              @error="handleImageError($event, item.src)"
             />
 
             <div
