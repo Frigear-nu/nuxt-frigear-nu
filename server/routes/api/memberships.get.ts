@@ -1,18 +1,9 @@
 import { db, schema } from '@nuxthub/db'
 import { eq, and } from 'drizzle-orm'
-
-type PublicPrice = {
-  id: string
-  images: string[] | null
-  title: string
-  title_en?: string
-  description: string | null
-  description_en?: string
-  price: number
-  currency: string
-  interval: string | 'month' | 'year'
-  intervalCount: number
-}
+import {
+  parseDisabledRangesFromJsonString,
+  type PublicPrice,
+} from '#shared/types/membership'
 
 export default defineCachedEventHandler(async () => {
   const products = await db.query.stripeProducts.findMany({
@@ -22,7 +13,7 @@ export default defineCachedEventHandler(async () => {
         where: () => {
           return and(
             eq(schema.stripePrices.active, true),
-            eq(schema.stripePrices.type, 'recurring'), // TODO: Figure out how we do not add more stuff here randomly :)
+            eq(schema.stripePrices.type, 'recurring'),
           )
         },
       },
@@ -45,13 +36,14 @@ export default defineCachedEventHandler(async () => {
           description_en: price.metadata?.description_en || price.metadata?.description || price.description || undefined,
           price: price.unitAmount,
           currency: price.currency,
-          images: price.images,
+          images: price.images || product.images,
           interval: price.interval || 'month',
           intervalCount: price.intervalCount,
+          disabledRanges: parseDisabledRangesFromJsonString(price.metadata?.disabled_ranges || '[]'),
         }
       }),
     }
   })
     .flatMap(({ prices }) => prices)
     .sort((a, b) => a.price < b.price ? -1 : 1)
-}, { maxAge: 60 * 10 }) // 10 min
+}, { maxAge: import.meta.dev ? 15 : 60 * 10, swr: true }) // 10 min
