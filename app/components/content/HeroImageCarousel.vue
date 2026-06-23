@@ -2,6 +2,7 @@
 import * as Sentry from '@sentry/nuxt'
 import { useRoute } from '#imports'
 import { computed, reactive, ref } from 'vue'
+import { useTimeoutFn } from '@vueuse/core'
 
 const { user, loggedIn } = useUserSession()
 
@@ -122,11 +123,8 @@ const handleMissingImages = () => {
   })
 }
 
-onMounted(() => {
-  setTimeout(handleMissingImages, 1500)
-})
-
-onBeforeRouteLeave(() => handleMissingImages())
+useTimeoutFn(handleMissingImages, 1500)
+onBeforeRouteLeave(handleMissingImages)
 
 const stageRef = ref<HTMLElement | null>(null)
 
