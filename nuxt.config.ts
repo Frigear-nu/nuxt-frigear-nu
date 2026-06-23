@@ -191,7 +191,7 @@ export default defineNuxtConfig({
     '/sign-up': { prerender: false },
     '/account': { prerender: false },
     '/account/**': { prerender: false, appMiddleware: ['auth'] },
-    '/admin/**': { prerender: false, appMiddleware: ['auth', 'is-admin'] },
+    '/admin/**': { prerender: false, appMiddleware: ['auth', 'can-view-admin-area'] },
     // Temporary Redirects: should be removed in 2027 possibly.
     '/signin/password_signin': { redirect: { to: '/sign-in', statusCode: 301 } },
     '/signin/email_signin': { redirect: { to: '/sign-in?provider=link', statusCode: 301 } },

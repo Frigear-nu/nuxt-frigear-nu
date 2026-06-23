@@ -1,9 +1,11 @@
 import { authorize } from 'nuxt-authorization/utils'
-import { isAdmin } from '#shared/abilities/admin'
+import { canManageUsers } from '#shared/abilities/admin'
 import { db, schema } from '@nuxthub/db'
 import { z } from 'zod/v4'
 import { adminCreateUserSchema } from '#shared/schema/admin/user'
 import { eq } from 'drizzle-orm'
+import { roleIsHigherOrEqual } from '#shared/acl'
+import { userRoles } from '#shared/schema/user'
 
 const routeSchema = z.object({
   id: z.coerce.number(),
@@ -11,7 +13,7 @@ const routeSchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
-  await authorize(isAdmin, user)
+  await authorize(canManageUsers, user)
 
   const { id: userId } = await getValidatedRouterParams(event, routeSchema.parse)
   const { name, email, role, phone, roskildePeopleId } = await readValidatedBody(event, adminCreateUserSchema.parse)
@@ -24,6 +26,14 @@ export default defineEventHandler(async (event) => {
     throw createError({
       status: 404,
       message: 'User not found.',
+    })
+  }
+
+  // ensure user cannot create higher than themselves:
+  if (!roleIsHigherOrEqual(userRoles, user.role, role)) {
+    throw createError({
+      status: 403,
+      message: 'You cannot assign a role higher than your own.',
     })
   }
 

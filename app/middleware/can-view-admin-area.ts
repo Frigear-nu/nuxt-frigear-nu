@@ -1,11 +1,11 @@
 import { useUserSession } from '#imports'
 import { authorize } from 'nuxt-authorization/utils'
-import { isAdmin } from '#shared/abilities/admin'
+import { canViewAdminArea } from '#shared/abilities/admin'
 
 export default defineNuxtRouteMiddleware(async () => {
   const { user } = useUserSession()
 
-  if (user.value && await authorize(isAdmin, user.value)) {
+  if (user.value && await authorize(canViewAdminArea, user.value)) {
     return
   }
 

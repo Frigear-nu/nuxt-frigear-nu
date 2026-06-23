@@ -1,12 +1,12 @@
 import { db, schema } from '@nuxthub/db'
 import { authorize } from 'nuxt-authorization/utils'
-import { canViewAdminArea } from '#shared/abilities/admin'
+import { canViewUsers } from '#shared/abilities/admin'
 import { desc, eq, gte, sql } from 'drizzle-orm'
 import { subDays } from 'date-fns'
 
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
-  await authorize(canViewAdminArea, user)
+  await authorize(canViewUsers, user)
 
   return db.select({
     id: schema.users.id,
