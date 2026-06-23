@@ -5,7 +5,7 @@ import { allows, authorize } from 'nuxt-authorization/utils'
 import { canViewForms } from '#shared/abilities/forms'
 import { computedAsync } from '@vueuse/core'
 import { upperFirst } from 'scule'
-import { canViewAdminArea, canViewUsers, isAdmin } from '#shared/abilities/admin'
+import { canViewUsers, isAdmin } from '#shared/abilities/admin'
 import { LazyAdminUsersEditDialog } from '#components'
 import type { Row } from '@tanstack/vue-table'
 import type { AdminUpdateUserSchema } from '#shared/schema/admin/user'
@@ -77,7 +77,7 @@ type NewMember = {
 const { data: newMembers, execute: fetchNewMembers } = useLazyFetch<NewMember[]>('/api/admin/dashboard/new-members')
 
 watch(currentUser, async () => {
-  if (currentUser.value && await authorize(canViewAdminArea, currentUser.value)) {
+  if (currentUser.value && await authorize(canViewUsers, currentUser.value)) {
     await fetchNewMembers()
   }
 })

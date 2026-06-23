@@ -1,8 +1,10 @@
 import { authorize } from 'nuxt-authorization/utils'
-import { isAdmin } from '#shared/abilities/admin'
+import { canManageUsers } from '#shared/abilities/admin'
 import { db, schema } from '@nuxthub/db'
 import WelcomeToFrigearEmail from '#shared/emails/auth/WelcomeToFrigearEmail.vue'
 import { adminCreateUserSchema } from '#shared/schema/admin/user'
+import { roleIsHigherOrEqual } from '#shared/acl'
+import { userRoles } from '#shared/schema/user'
 
 export default defineEventHandler(async (event) => {
   const {
@@ -10,7 +12,7 @@ export default defineEventHandler(async (event) => {
     auth: { verifyEmail },
   } = useRuntimeConfig(event)
   const { user } = await requireUserSession(event)
-  await authorize(isAdmin, user)
+  await authorize(canManageUsers, user)
 
   const { name, email, role, phone, roskildePeopleId, sendWelcomeEmail, emailVerified } = await readValidatedBody(event, adminCreateUserSchema.parse)
 
@@ -22,6 +24,14 @@ export default defineEventHandler(async (event) => {
     throw createError({
       status: 409,
       message: 'User already exists.',
+    })
+  }
+
+  // ensure user cannot create higher than themselves:
+  if (!roleIsHigherOrEqual(userRoles, user.role, role)) {
+    throw createError({
+      status: 403,
+      message: 'You cannot assign a role higher than your own.',
     })
   }
 

@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { createEmailSchema, createNameSchema } from './shared'
 
+// in hierarchy: admin > manager > coordinator...
 export const userRoles = [
   'admin',
   'manager',

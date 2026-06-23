@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PublicPrice } from '#shared/types/membership'
+import { isDateWithinDisabledRange, parseDisabledRange, type PublicPrice } from '#shared/types/membership'
 import { useUserMemberships } from '~/store/queries/user'
 
 const { locale } = useSiteI18n()
@@ -59,12 +59,27 @@ const onSelectMembership = (price: PublicPrice) => {
   if (loggedIn.value) return navigateTo(`/account/membership`)
   return navigateTo(`/sign-up`)
 }
+
+const transformPrices = (prices: PublicPrice[]): PublicPrice[] => {
+  return prices.filter((price) => {
+    if (!price.disabledRanges || (price.disabledRanges && price.disabledRanges.length === 0)) {
+      return true
+    }
+
+    const matchedAnyWithinRange = price.disabledRanges.some((range) => {
+      return isDateWithinDisabledRange(new Date(), parseDisabledRange(range))
+    })
+
+    return !matchedAnyWithinRange
+  })
+}
 </script>
 
 <template>
   <MembershipTypes
     :mode="mode"
     :orientation="orientation"
+    :transform="transformPrices"
     @select="onSelectMembership"
   >
     <template
