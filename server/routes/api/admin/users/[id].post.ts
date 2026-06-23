@@ -4,6 +4,7 @@ import { db, schema } from '@nuxthub/db'
 import { z } from 'zod/v4'
 import { adminCreateUserSchema } from '#shared/schema/admin/user'
 import { eq } from 'drizzle-orm'
+import { userRoles } from '#shared/schema/user'
 
 const routeSchema = z.object({
   id: z.coerce.number(),
@@ -24,6 +25,14 @@ export default defineEventHandler(async (event) => {
     throw createError({
       status: 404,
       message: 'User not found.',
+    })
+  }
+
+  // ensure user cannot create higher than themselves:
+  if (userRoles.indexOf(role) > userRoles.indexOf(user.role)) {
+    throw createError({
+      status: 403,
+      message: 'You cannot assign a role higher than your own.',
     })
   }
 
