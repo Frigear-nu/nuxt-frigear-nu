@@ -103,10 +103,13 @@ const handleImageError = ($event: Event, src: string) => {
   failedImages.value.push(src)
 }
 
-onMounted(() => {
-  if (!failedImages.value || failedImages.value.length === 0) {
+const handleMissingImagesWasCalled = ref(false)
+
+const handleMissingImages = () => {
+  if (handleMissingImagesWasCalled.value || !failedImages.value || failedImages.value.length === 0) {
     return
   }
+  handleMissingImagesWasCalled.value = true
   Sentry?.captureException(lastImageError.value || new Error(`HeroImageCarousel image(s) load failed: ${failedImages.value.join(', ')}`), {
     user: loggedIn.value && user.value
       ? { id: user.value.id }
@@ -117,7 +120,13 @@ onMounted(() => {
       failedImages: failedImages.value,
     },
   })
+}
+
+onMounted(() => {
+  setTimeout(handleMissingImages, 1500)
 })
+
+onBeforeRouteLeave(() => handleMissingImages())
 
 const stageRef = ref<HTMLElement | null>(null)
 
