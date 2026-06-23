@@ -70,5 +70,7 @@ export default defineEventHandler(async (event) => {
     }
   }
 
+  setResponseHeader(event, 'Content-Type', 'application/json')
+
   return response
 })
