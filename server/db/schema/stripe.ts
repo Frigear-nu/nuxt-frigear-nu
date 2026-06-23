@@ -41,9 +41,8 @@ export const stripePrices = sqliteTable('stripe_prices', {
     title_en?: string
     description?: string
     description_en?: string
-    // @ts-expect-error Not typed...
     disabled_ranges?: DisabledRange[]
-    [key: string]: string | undefined
+    [key: string]: string | DisabledRange[] | undefined
   }>(),
 })
 
