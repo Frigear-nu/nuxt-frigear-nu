@@ -36,7 +36,15 @@ export const stripePrices = sqliteTable('stripe_prices', {
   trialPeriodDays: integer('trial_period_days').notNull(),
   lookupKey: text('lookup_key'),
   images: text({ mode: 'json' }).$type<string[]>(),
-  metadata: text({ mode: 'json' }).$type<{ title?: string, title_en?: string, description?: string, description_en?: string, [key: string]: string | undefined }>(),
+  metadata: text({ mode: 'json' }).$type<{
+    title?: string
+    title_en?: string
+    description?: string
+    description_en?: string
+    // @ts-expect-error Not typed...
+    disabled_ranges?: DisabledRange[]
+    [key: string]: string | undefined
+  }>(),
 })
 
 export type StripePrices = typeof stripePrices.$inferSelect

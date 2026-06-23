@@ -24,6 +24,21 @@ export default defineEventHandler(async (event) => {
     `Could not find stripe price with id ${priceId}`,
   )
 
+  // handle seasonal availability
+  if (priceWithProduct.metadata && priceWithProduct.metadata.disabled_ranges) {
+    const disabledRanges = priceWithProduct.metadata.disabled_ranges?.map(parseDisabledRange) as ParsedDisabledRange[]
+    const isWithinAnyDisabledRange = disabledRanges.some((range) => {
+      return isDateWithinDisabledRange(new Date(), range)
+    })
+
+    if (isWithinAnyDisabledRange) {
+      throw createError({
+        status: 403,
+        message: 'This product is not available for purchase at this time.',
+      })
+    }
+  }
+
   const stripeCustomers = await db.query.stripeCustomers.findMany({
     where: () => eq(schema.stripeCustomers.userId, userId),
     with: {
