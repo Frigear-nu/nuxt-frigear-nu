@@ -10,6 +10,6 @@ export const useMemberships = () => {
     query: async () => {
       return $api<PublicPrice[]>('/api/memberships')
     },
-    staleTime: 360,
+    staleTime: 30,
   })
 }
