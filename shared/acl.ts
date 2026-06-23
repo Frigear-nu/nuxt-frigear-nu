@@ -1,9 +1,9 @@
-import { userRoles } from '#shared/schema/user'
-
-export const userRoleIsHigher = (
-  baseRole: typeof userRoles[number],
-  targetRole: typeof userRoles[number],
+export const roleIsHigher = <T>(
+  roles: T[] | readonly T[],
+  sourceRole: T,
+  compareRole: T,
 ) => {
-  if (!baseRole || !targetRole) return false
-  return userRoles.indexOf(baseRole) > userRoles.indexOf(targetRole)
+  if (!sourceRole || !compareRole) return false
+  if (!roles.includes(sourceRole) || !roles.includes(compareRole)) return false
+  return roles.indexOf(sourceRole) < roles.indexOf(compareRole)
 }

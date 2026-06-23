@@ -3,7 +3,8 @@ import { canManageUsers } from '#shared/abilities/admin'
 import { db, schema } from '@nuxthub/db'
 import WelcomeToFrigearEmail from '#shared/emails/auth/WelcomeToFrigearEmail.vue'
 import { adminCreateUserSchema } from '#shared/schema/admin/user'
-import { userRoleIsHigher } from '#shared/acl'
+import { roleIsHigher } from '#shared/acl'
+import { userRoles } from '#shared/schema/user'
 
 export default defineEventHandler(async (event) => {
   const {
@@ -27,7 +28,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // ensure user cannot create higher than themselves:
-  if (!userRoleIsHigher(user.role, role)) {
+  if (!roleIsHigher(userRoles, user.role, role)) {
     throw createError({
       status: 403,
       message: 'You cannot assign a role higher than your own.',
