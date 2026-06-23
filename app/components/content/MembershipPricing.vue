@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PublicPrice } from '#shared/types/membership'
+import { isDateWithinDisabledRange, parseDisabledRange, type PublicPrice } from '#shared/types/membership'
 import { useUserMemberships } from '~/store/queries/user'
 
 const { locale } = useSiteI18n()
@@ -66,19 +66,11 @@ const transformPrices = (prices: PublicPrice[]): PublicPrice[] => {
       return true
     }
 
-    const now = new Date()
-
-    // remove the items if inside the range:
-    return price.disabledRanges.some((range) => {
-      const [type, start, end] = [
-        range[0],
-        new Date(range[1]),
-        new Date(range[2]),
-      ]
-
-      console.log({ type, start, end, now })
-      return start <= now && now <= end
+    const matchedAnyWithinRange = price.disabledRanges.some((range) => {
+      return isDateWithinDisabledRange(new Date(), parseDisabledRange(range))
     })
+
+    return !matchedAnyWithinRange
   })
 }
 </script>
