@@ -2,6 +2,8 @@ import { db, schema } from '@nuxthub/db'
 import { eq } from 'drizzle-orm'
 import { useValidatedBody } from 'h3-zod'
 import { z } from 'zod'
+import type { ParsedDisabledRange } from '#shared/types/membership'
+import { parseDisabledRange, isDateWithinDisabledRange } from '#shared/types/membership'
 
 export default defineEventHandler(async (event) => {
   const userId = await requireUserId(event)
