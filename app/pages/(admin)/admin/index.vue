@@ -15,11 +15,6 @@ const { currentUser, currentUserRole } = useAuth()
 const overlay = useOverlay()
 const editUserDialog = overlay.create(LazyAdminUsersEditDialog)
 
-const pageHeaderDescription = computed(() => {
-  if (!currentUserRole.value) return undefined
-  return `Role: ${upperFirst(currentUserRole.value)}`
-})
-
 const cards = computedAsync<PageCardProps[]>(async () => {
   const items: PageCardProps[] = [
     {
@@ -139,7 +134,7 @@ const onSelectRow = (_: unknown, row: Row<NewMember>) => {
       <UPageBody>
         <UPageHeader
           title="Admin Area"
-          :description="pageHeaderDescription"
+          :ui="{ description: 'flex flex-row gap-2 items-center' }"
         >
           <template #links>
             <div
@@ -153,6 +148,17 @@ const onSelectRow = (_: unknown, row: Row<NewMember>) => {
                 {{ currentUser.email }}
               </div>
             </div>
+          </template>
+          <template #description>
+            <div class="font-bold">
+              Role:
+            </div>
+            <UBadge
+              variant="subtle"
+              class="font-bold"
+            >
+              {{ upperFirst(currentUserRole!) }}
+            </UBadge>
           </template>
         </UPageHeader>
         <UPageGrid class="lg:grid-cols-2 mt-4">
