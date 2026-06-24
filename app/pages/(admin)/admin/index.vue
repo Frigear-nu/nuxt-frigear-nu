@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PageCardProps, TableColumn } from '@nuxt/ui'
 import { useSiteI18n } from '#imports'
-import { allows, authorize } from 'nuxt-authorization/utils'
+import { allows } from 'nuxt-authorization/utils'
 import { canViewForms } from '#shared/abilities/forms'
 import { computedAsync } from '@vueuse/core'
 import { upperFirst } from 'scule'
@@ -74,10 +74,11 @@ type NewMember = {
   signedUpAt: string
   user: AdminUpdateUserSchema & { id: number }
 }
+
 const { data: newMembers, execute: fetchNewMembers } = useLazyFetch<NewMember[]>('/api/admin/dashboard/new-members')
 
 watch(currentUser, async () => {
-  if (currentUser.value && await authorize(canViewUsers, currentUser.value)) {
+  if (currentUser.value && await allows(canViewUsers, currentUser.value)) {
     await fetchNewMembers()
   }
 })
@@ -180,6 +181,7 @@ const onSelectRow = (_: unknown, row: Row<NewMember>) => {
         </UPageGrid>
         <UPageCard
           v-if="newMembers && newMembers.length > 0"
+          variant="subtle"
           :ui="{
             container: 'overflow-x-auto',
             wrapper: 'flex flex-col flex-1',
