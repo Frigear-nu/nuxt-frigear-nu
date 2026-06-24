@@ -2,6 +2,9 @@
 import * as Sentry from '@sentry/nuxt'
 import { useRoute } from '#imports'
 import { computed, reactive, ref } from 'vue'
+import { useTimeoutFn } from '@vueuse/core'
+
+const { user, loggedIn } = useUserSession()
 
 type HeroCarouselImage = {
   src: string
@@ -87,32 +90,41 @@ const carouselLoop = computed(() => props.loop && hasMultipleSlides.value)
 const carouselArrows = computed(() => props.showArrows && hasMultipleSlides.value)
 const carouselDots = computed(() => props.showDots && hasMultipleSlides.value)
 
-const failedImages = ref<Record<string, boolean>>({})
+const failedImages = ref<string[]>([])
+const lastImageError = ref<unknown | undefined>(undefined)
 const route = useRoute()
 
 const activeImages = computed(() =>
-  normalizedImages.value.filter(image => !failedImages.value[image.src]),
+  normalizedImages.value.filter(image => !failedImages.value.includes(image.src)),
 )
 
-const handleImageError = (src: string) => {
-  failedImages.value[src] = true
-  console.warn(`Image failed to load: ${src}`)
-
-  try {
-    if (Sentry && typeof Sentry.captureException === 'function') {
-      Sentry.captureException(new Error(`HeroImageCarousel image load failed: ${src}`), {
-        extra: {
-          src,
-          page: route.fullPath,
-          component: 'HeroImageCarousel',
-        },
-      })
-    }
-  }
-  catch (sentryError) {
-    console.warn('Sentry capture failed', sentryError)
-  }
+const handleImageError = ($event: Event, src: string) => {
+  lastImageError.value = $event
+  console.error(`HeroImageCarousel image load failed: ${src}`, $event)
+  failedImages.value.push(src)
 }
+
+const handleMissingImagesWasCalled = ref(false)
+
+const handleMissingImages = () => {
+  if (handleMissingImagesWasCalled.value || !failedImages.value || failedImages.value.length === 0) {
+    return
+  }
+  handleMissingImagesWasCalled.value = true
+  Sentry?.captureException(lastImageError.value || new Error(`HeroImageCarousel image(s) load failed: ${failedImages.value.join(', ')}`), {
+    user: loggedIn.value && user.value
+      ? { id: user.value.id }
+      : undefined,
+    extra: {
+      component: 'HeroImageCarousel',
+      route: route.fullPath,
+      failedImages: failedImages.value,
+    },
+  })
+}
+
+useTimeoutFn(handleMissingImages, 1500)
+onBeforeRouteLeave(handleMissingImages)
 
 const stageRef = ref<HTMLElement | null>(null)
 
@@ -237,7 +249,7 @@ const carouselUi = {
               :sizes="sizes"
               :loading="item.src === firstImageSrc ? 'eager' : 'lazy'"
               class="hero-carousel-media"
-              @error="handleImageError(item.src)"
+              @error="handleImageError($event, item.src)"
             />
 
             <div
