@@ -15,6 +15,16 @@ const { currentUser, currentUserRole } = useAuth()
 const overlay = useOverlay()
 const editUserDialog = overlay.create(LazyAdminUsersEditDialog)
 
+const signInWithUrl = computed(() => {
+  const url = useRequestURL()
+
+  if (url.origin.includes('localhost')) {
+    return `frigear.nu (${url.origin})`
+  }
+
+  return url.origin
+})
+
 const cards = computedAsync<PageCardProps[]>(async () => {
   const items: PageCardProps[] = [
     {
@@ -39,7 +49,7 @@ const cards = computedAsync<PageCardProps[]>(async () => {
   if (currentUser.value && await allows(isAdmin, currentUser.value)) {
     items.push({
       title: 'OAuth',
-      description: 'See View, edit and manage OAuth Applications that can sign in with frigear.nu',
+      description: `View, edit and manage OAuth Applications that can sign in with ${toValue(signInWithUrl)}`,
       icon: 'i-lucide-server-cog',
       to: localePath('/admin/oauth'),
       variant: 'subtle',
