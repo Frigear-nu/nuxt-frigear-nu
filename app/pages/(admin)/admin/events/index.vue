@@ -9,10 +9,7 @@ const { translatedProperty } = useContent()
 <template>
   <div>
     <UContainer class="flex flex-col gap-8">
-      <UPageHeader
-        title="Events"
-        :links="[{ label: 'Admin', to: $localePath('/admin'), icon: 'i-lucide-home' }]"
-      />
+      <AdminPageHeader title="Events" />
       <UPageGrid v-if="events && events.length">
         <UPageCard
           v-for="event in events"
