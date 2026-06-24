@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { LazyAdminUsersCreateDialog, LazyAdminUsersEditDialog, UTable } from '#components'
-import type { Row } from '@tanstack/vue-table'
-import type { ButtonProps, TableColumn } from '@nuxt/ui'
+import type { Table } from '@tanstack/vue-table'
+import type { ButtonProps, TableColumn, TableRow } from '@nuxt/ui'
 import { useAdminUsers } from '~/store/queries/admin'
 
 const { users } = useAdminUsers()
 
 // @ts-expect-error Not typed :/...
-const table = useTemplateRef('table')
+const table = useTemplateRef<{ tableApi: Table }>('table')
 const overlay = useOverlay()
 const createUserDialog = overlay.create(LazyAdminUsersCreateDialog)
 const editUserDialog = overlay.create(LazyAdminUsersEditDialog)
 const confirmAction = useConfirmDialog()
 
-const onSelectRow = (_, user: Row<never>) => {
+const onSelectRow = (_: Event, row: TableRow<never>) => {
   editUserDialog.open({
-    user: toRaw(user.original),
+    user: toRaw(row.original),
   })
 }
 
@@ -131,7 +131,7 @@ const columns: TableColumn<typeof users.value[number]>[] = [
 
 <template>
   <UContainer>
-    <UPageHeader
+    <AdminPageHeader
       title="Users"
       :links="headerActions"
     />
@@ -160,6 +160,7 @@ const columns: TableColumn<typeof users.value[number]>[] = [
       </div>
       <UPageCard
         v-if="users && users.length > 0"
+        variant="subtle"
         :ui="{ container: 'p-0 sm:p-0' }"
       >
         <div class="w-full space-y-4 pb-4">
@@ -174,7 +175,7 @@ const columns: TableColumn<typeof users.value[number]>[] = [
               getSortedRowModel: getSortedRowModel(),
             }"
             class="flex-1"
-            @select="onSelectRow"
+            @select="onSelectRow as never"
           />
           <div class="flex justify-between border-t border-accented">
             <div class="px-4 py-3.5 text-sm text-muted">

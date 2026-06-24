@@ -206,7 +206,7 @@ const headerActions = computed<ButtonProps[]>(() => [
 
 <template>
   <UContainer>
-    <UPageHeader
+    <AdminPageHeader
       title="OAuth Clients"
       description="Manage your registered OAuth client applications."
       :links="headerActions"
@@ -229,6 +229,7 @@ const headerActions = computed<ButtonProps[]>(() => [
       <UCard
         v-for="client in clients"
         :key="client.id"
+        variant="subtle"
       >
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div class="flex-1 min-w-0">

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PageCardProps, TableColumn } from '@nuxt/ui'
 import { useSiteI18n } from '#imports'
-import { allows, authorize } from 'nuxt-authorization/utils'
+import { allows } from 'nuxt-authorization/utils'
 import { canViewForms } from '#shared/abilities/forms'
 import { computedAsync } from '@vueuse/core'
 import { upperFirst } from 'scule'
@@ -15,9 +15,14 @@ const { currentUser, currentUserRole } = useAuth()
 const overlay = useOverlay()
 const editUserDialog = overlay.create(LazyAdminUsersEditDialog)
 
-const pageHeaderDescription = computed(() => {
-  if (!currentUserRole.value) return undefined
-  return `Role: ${upperFirst(currentUserRole.value)}`
+const signInWithUrl = computed(() => {
+  const url = useRequestURL()
+
+  if (url.origin.includes('localhost')) {
+    return `frigear.nu (${url.origin})`
+  }
+
+  return url.origin
 })
 
 const cards = computedAsync<PageCardProps[]>(async () => {
@@ -44,7 +49,7 @@ const cards = computedAsync<PageCardProps[]>(async () => {
   if (currentUser.value && await allows(isAdmin, currentUser.value)) {
     items.push({
       title: 'OAuth',
-      description: 'See View, edit and manage OAuth Applications that can sign in with frigear.nu',
+      description: `View, edit and manage OAuth Applications that can sign in with ${toValue(signInWithUrl)}`,
       icon: 'i-lucide-server-cog',
       to: localePath('/admin/oauth'),
       variant: 'subtle',
@@ -74,10 +79,11 @@ type NewMember = {
   signedUpAt: string
   user: AdminUpdateUserSchema & { id: number }
 }
+
 const { data: newMembers, execute: fetchNewMembers } = useLazyFetch<NewMember[]>('/api/admin/dashboard/new-members')
 
 watch(currentUser, async () => {
-  if (currentUser.value && await authorize(canViewUsers, currentUser.value)) {
+  if (currentUser.value && await allows(canViewUsers, currentUser.value)) {
     await fetchNewMembers()
   }
 })
@@ -138,7 +144,7 @@ const onSelectRow = (_: unknown, row: Row<NewMember>) => {
       <UPageBody>
         <UPageHeader
           title="Admin Area"
-          :description="pageHeaderDescription"
+          :ui="{ description: 'flex flex-row gap-2 items-center' }"
         >
           <template #links>
             <div
@@ -152,6 +158,17 @@ const onSelectRow = (_: unknown, row: Row<NewMember>) => {
                 {{ currentUser.email }}
               </div>
             </div>
+          </template>
+          <template #description>
+            <div class="font-bold">
+              Role:
+            </div>
+            <UBadge
+              variant="subtle"
+              class="font-bold"
+            >
+              {{ upperFirst(currentUserRole!) }}
+            </UBadge>
           </template>
         </UPageHeader>
         <UPageGrid class="lg:grid-cols-2 mt-4">
@@ -180,6 +197,7 @@ const onSelectRow = (_: unknown, row: Row<NewMember>) => {
         </UPageGrid>
         <UPageCard
           v-if="newMembers && newMembers.length > 0"
+          variant="subtle"
           :ui="{
             container: 'overflow-x-auto',
             wrapper: 'flex flex-col flex-1',
