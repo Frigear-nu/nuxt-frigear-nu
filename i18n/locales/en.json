@@ -143,6 +143,10 @@
       },
       "save": "Save profile"
     },
+    "documents": {
+      "title": "Documents",
+      "description": "Your documents."
+    },
     "tickets": {
       "title": "Tickets",
       "description": "See your event tickets and payments.",
