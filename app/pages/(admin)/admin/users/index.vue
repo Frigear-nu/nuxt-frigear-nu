@@ -63,6 +63,12 @@ const columns: TableColumn<typeof users.value[number]>[] = [
     cell: ({ row }) => row.original.id,
   },
   {
+    id: 'peopleNumber',
+    header: 'People Number',
+    accessorKey: 'roskildePeopleId',
+    cell: ({ row }) => row.original.roskildePeopleId || 'n/a',
+  },
+  {
     id: 'email',
     header: 'Email',
     accessorKey: 'email',
