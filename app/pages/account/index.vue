@@ -49,6 +49,13 @@ const cards = computedAsync<AccountCard[]>(async () => {
   const baseTiles: AccountCard[] = [
     ...appCards.value,
     {
+      title: t('account.documents.title'),
+      description: t('account.documents.description'),
+      icon: 'i-lucide-file',
+      variant: 'subtle',
+      to: '/account/documents',
+    },
+    {
       title: t('account.identificationCode.title'),
       description: t('account.identificationCode.description'),
       icon: 'i-lucide-fingerprint-pattern',

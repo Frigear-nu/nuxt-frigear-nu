@@ -143,6 +143,11 @@
       },
       "save": "Gem profil"
     },
+    "documents": {
+      "title": "Dokumenter",
+      "description": "Dine dokumenter.",
+      "download": "Download"
+    },
     "tickets": {
       "title": "Billetter",
       "description": "Se dine billetter og betalinger.",
