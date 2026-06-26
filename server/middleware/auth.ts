@@ -1,5 +1,4 @@
 import { extractApiToken } from '@nitrotool/jwt/h3'
-import { db } from '@nuxthub/db'
 
 export default defineEventHandler(async (event) => {
   const requestPath = event.path
@@ -21,12 +20,7 @@ export default defineEventHandler(async (event) => {
     queryKey: 'access_token',
   })
 
-  if (!accessToken) {
-    throw createError({
-      status: 401,
-      message: 'Missing token.',
-    })
+  if (accessToken) {
+    event.context.$jwt = await decodeJwt(accessToken)
   }
-
-  event.context.$jwt = await decodeJwt(accessToken)
 })
