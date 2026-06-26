@@ -145,7 +145,8 @@
     },
     "documents": {
       "title": "Dokumenter",
-      "description": "Dine dokumenter."
+      "description": "Dine dokumenter.",
+      "download": "Download"
     },
     "tickets": {
       "title": "Billetter",

@@ -145,7 +145,8 @@
     },
     "documents": {
       "title": "Documents",
-      "description": "Your documents."
+      "description": "Your documents.",
+      "download": "Download"
     },
     "tickets": {
       "title": "Tickets",
