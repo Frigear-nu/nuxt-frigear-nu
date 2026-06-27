@@ -10,6 +10,7 @@ export default defineEventHandler(async (event) => {
   ) {
     return
   }
+
   const { user } = await getUserSession(event)
 
   if (user && user.id) {
@@ -21,6 +22,10 @@ export default defineEventHandler(async (event) => {
   })
 
   if (accessToken) {
-    event.context.$jwt = await decodeJwt(accessToken)
+    const config = useRuntimeConfig(event)
+    const baseUrl = getRequestURL(event).origin
+    event.context.$jwt = await verifyJWT(accessToken, normalizePemKey(config.jwtPublicKey), {
+      issuer: baseUrl,
+    }) as never
   }
 })
