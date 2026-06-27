@@ -26,21 +26,6 @@ export default defineEventHandler(async (event) => {
     `Could not find stripe price with id ${priceId}`,
   )
 
-  // handle seasonal availability
-  if (priceWithProduct.metadata && priceWithProduct.metadata.disabled_ranges) {
-    const disabledRanges = priceWithProduct.metadata.disabled_ranges?.map(parseDisabledRange) as ParsedDisabledRange[]
-    const isWithinAnyDisabledRange = disabledRanges.some((range) => {
-      return isDateWithinDisabledRange(new Date(), range)
-    })
-
-    if (isWithinAnyDisabledRange) {
-      throw createError({
-        status: 403,
-        message: 'This product is not available for purchase at this time.',
-      })
-    }
-  }
-
   const stripeCustomers = await db.query.stripeCustomers.findMany({
     where: () => eq(schema.stripeCustomers.userId, userId),
     with: {
@@ -56,6 +41,21 @@ export default defineEventHandler(async (event) => {
   if (!stripeCustomers || !stripeCustomers[0]) throw new Error('No customer')
   const hasActiveSubscription = stripeCustomers.some(({ subscriptions }) => subscriptions.some(({ status }) => status === 'active'))
   const [activeSubscription] = stripeCustomers.flatMap(({ subscriptions }) => subscriptions.filter(({ status }) => status === 'active'))
+
+  // handle seasonal availability
+  if (priceWithProduct.metadata && priceWithProduct.metadata.disabled_ranges) {
+    const disabledRanges = priceWithProduct.metadata.disabled_ranges?.map(parseDisabledRange) as ParsedDisabledRange[]
+    const isWithinAnyDisabledRange = disabledRanges.some((range) => {
+      return isDateWithinDisabledRange(new Date(), range)
+    })
+
+    if (isWithinAnyDisabledRange && !hasActiveSubscription) {
+      throw createError({
+        status: 403,
+        message: 'This product is not available for purchase unless you already have an active subscription.',
+      })
+    }
+  }
 
   if (hasActiveSubscription && activeSubscription) {
     const stripeSubscription = await stripe.subscriptions.retrieve(activeSubscription.id)

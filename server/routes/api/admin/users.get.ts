@@ -1,9 +1,10 @@
 import { authorize } from 'nuxt-authorization/utils'
 import { canViewUsers } from '#shared/abilities/admin'
 import { db } from '@nuxthub/db'
+import { requireUser } from '#server/utils/auth'
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
+  const user = await requireUser(event)
   await authorize(canViewUsers, user)
 
   return db.query.users.findMany({

@@ -1,20 +1,31 @@
 import { extractApiToken } from '@nitrotool/jwt/h3'
 
 export default defineEventHandler(async (event) => {
-  if (event.path.startsWith('/oauth')) return
-  // FIXME: This should only be triggered if there isa  valid token...
-  // This still will trigger on the ?token items we have - they should be renamed to code
+  const requestPath = event.path
+
+  //
+  if (requestPath.startsWith('/oauth')
+    || !requestPath.startsWith('/api/')
+    || requestPath.startsWith('/api/_')
+  ) {
+    return
+  }
+
+  const { user } = await getUserSession(event)
+
+  if (user && user.id) {
+    event.context.$user = user
+  }
+
   const accessToken = extractApiToken(event, {
     queryKey: 'access_token',
   })
 
   if (accessToken) {
-    event.context.$jwt = await decodeJwt(accessToken)
-  }
-
-  const { user } = await getUserSession(event)
-
-  if (user) {
-    event.context.$user = user
+    const config = useRuntimeConfig(event)
+    const baseUrl = getRequestURL(event).origin
+    event.context.$jwt = await verifyJWT(accessToken, normalizePemKey(config.jwtPublicKey), {
+      issuer: baseUrl,
+    }) as never
   }
 })
