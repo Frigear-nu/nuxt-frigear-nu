@@ -70,8 +70,14 @@ function validateUrl(url: string, label: string): string | undefined {
   catch {
     return `Invalid URL format`
   }
-  // eslint-disable-next-line regexp/no-unused-capturing-group
-  if (!url.startsWith('https://') && !/^http:\/\/localhost(:\d+)?($|\/)/.test(url)) {
+
+  if (
+    !url.startsWith('https://')
+    // eslint-disable-next-line regexp/no-unused-capturing-group
+    && !/^http:\/\/localhost(:\d+)?(\/|$)/.test(url)
+    // eslint-disable-next-line regexp/no-unused-capturing-group
+    && !/^http:\/\/(\d{1,3}\.){3}\d{1,3}(:\d+)?(\/|$)/.test(url)
+  ) {
     return 'Must use HTTPS (http://localhost allowed for development)'
   }
 }

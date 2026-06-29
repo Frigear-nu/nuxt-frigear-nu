@@ -72,9 +72,10 @@ export const FRIGEAR_SSO_CALLBACK_PATH = '/auth/frigear'
  */
 export function requireHttps(url: string): boolean {
   if (url.startsWith('https://')) return true
-  // Allow http://localhost:{port} for development
   // eslint-disable-next-line regexp/no-unused-capturing-group
-  if (/^http:\/\/localhost(:\d+)?($|\/)/.test(url)) return true
+  if (/^http:\/\/localhost(:\d+)?(\/|$)/.test(url)) return true
+  // eslint-disable-next-line regexp/no-unused-capturing-group
+  if (/^http:\/\/(\d{1,3}\.){3}\d{1,3}(:\d+)?(\/|$)/.test(url)) return true
   return false
 }
 
