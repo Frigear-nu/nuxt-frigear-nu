@@ -63,6 +63,13 @@ const headerDescription = computed(() => {
             <div class="text-primary">
               {{ currentUser.email }}
             </div>
+            <div class="flex justify-end mt-1">
+              <UBadge
+                variant="soft"
+              >
+                Frigear ID: <code>{{ currentUser.id }}</code>
+              </UBadge>
+            </div>
           </div>
         </template>
       </UPageHeader>
