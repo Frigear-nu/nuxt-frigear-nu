@@ -3,7 +3,9 @@ import { useWindowScroll } from '@vueuse/core'
 
 const { hasResponded, accept, reject } = useCookieConsent()
 
-const open = computed(() => !hasResponded.value)
+const route = useRoute()
+const oAuthRoute = computed(() => route.path === '/authorize')
+const open = computed(() => !hasResponded.value && !oAuthRoute.value)
 
 const { y } = useWindowScroll()
 const scrolledDown = computed(() => y.value > 80)

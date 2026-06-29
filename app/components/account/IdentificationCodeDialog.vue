@@ -8,6 +8,7 @@ defineEmits<{
 
 const isOpen = ref(false)
 const { locale } = useSiteI18n()
+const { currentUser } = useAuth()
 const { data, refresh, status } = useFetch('/api/account/id-code')
 const { data: memberships } = useUserMemberships()
 
@@ -72,19 +73,28 @@ useIntervalFn(async () => {
           <div class="flex justify-center">
             <UBadge
               color="warning"
-              size="xl"
               class="text-2xl font-bold"
             >
               {{ $t('common.expiresIn', { time: expiresInSeconds }) }}
             </UBadge>
           </div>
-          <div
-            v-if="currentMembership"
-            class="flex justify-center"
-          >
-            <UBadge size="xl">
-              {{ currentMembership }}
-            </UBadge>
+          <div class="flex flex-row justify-center gap-2">
+            <div
+              v-if="currentMembership"
+              class="flex justify-center"
+            >
+              <UBadge size="xl">
+                {{ currentMembership }}
+              </UBadge>
+            </div>
+            <div
+              v-if="currentUser"
+              class="flex justify-center"
+            >
+              <UBadge size="xl">
+                Frigear ID: {{ currentUser.id }}
+              </UBadge>
+            </div>
           </div>
         </div>
         <UEmpty v-else>

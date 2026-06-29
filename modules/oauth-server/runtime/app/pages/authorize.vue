@@ -41,19 +41,16 @@ if (!oauthRequest.value) {
 </script>
 
 <template>
-  <div class="absolute inset-0 flex items-center justify-center p-4 pt-(--ui-header-height)">
+  <div class="absolute inset-0 flex items-center justify-center p-4 pt-[var(--ui-header-height)]">
     <UCard
       v-if="oauthRequest"
-      class="shadow-xl max-w-md"
+      class="shadow-xl max-w-md mt-6 md:mt-0"
     >
       <div class="space-y-6">
         <!-- App requesting access -->
         <div class="text-center">
           <div class="w-16 h-16 bg-muted rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <UIcon
-              name="i-heroicons-globe-alt"
-              class="size-8 text-muted"
-            />
+            <AppHeaderLogo />
           </div>
           <h1 class="text-xl font-bold text-highlighted">
             {{ oauthRequest.clientName || 'An application' }}
