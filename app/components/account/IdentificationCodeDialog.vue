@@ -1,13 +1,24 @@
 <script lang="ts" setup>
 import { useIntervalFn } from '@vueuse/core'
+import { useUserMemberships } from '~/store/queries/user'
 
 defineEmits<{
   close: []
 }>()
 
 const isOpen = ref(false)
-
+const { locale } = useSiteI18n()
 const { data, refresh, status } = useFetch('/api/account/id-code')
+const { data: memberships } = useUserMemberships()
+
+const currentMembership = computed(() => {
+  const meta = memberships.value?.[0]?.price?.metadata
+
+  if (!meta) {
+    return null
+  }
+  return meta?.[`title_${locale.value as string}`] || meta?.title || 'Unknown'
+})
 
 const idString = computed(() => data.value?.idCode || '')
 const expiresInSecondsInitial = computed(() => data.value?.expiresIn)
@@ -52,9 +63,12 @@ useIntervalFn(async () => {
           v-if="idString"
           class="flex flex-col gap-2"
         >
-          <LazyQrcode
-            :value="`urn:frigear:id:${idString || 'undefined'}`"
-          />
+          <div class="flex justify-center">
+            <LazyQrcode
+              :value="`urn:frigear:id:${idString || 'undefined'}`"
+              class="size-80"
+            />
+          </div>
           <div class="flex justify-center">
             <UBadge
               color="warning"
@@ -62,6 +76,14 @@ useIntervalFn(async () => {
               class="text-2xl font-bold"
             >
               {{ $t('common.expiresIn', { time: expiresInSeconds }) }}
+            </UBadge>
+          </div>
+          <div
+            v-if="currentMembership"
+            class="flex justify-center"
+          >
+            <UBadge size="xl">
+              {{ currentMembership }}
             </UBadge>
           </div>
         </div>
