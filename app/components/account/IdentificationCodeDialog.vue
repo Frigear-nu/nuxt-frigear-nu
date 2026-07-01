@@ -64,6 +64,23 @@ useIntervalFn(async () => {
           v-if="idString"
           class="flex flex-col gap-2"
         >
+          <div
+            v-if="!currentMembership"
+            class="flex justify-center"
+          >
+            <UAlert
+              size="sm"
+              color="error"
+              icon="i-lucide-triangle-alert"
+            >
+              <template #title>
+                NOTICE
+              </template>
+              <template #description>
+                NO ACTIVE SUBSCRIPTION = NO DISCOUNT
+              </template>
+            </UAlert>
+          </div>
           <div class="flex justify-center">
             <LazyQrcode
               :value="`urn:frigear:id:${idString || 'undefined'}`"
