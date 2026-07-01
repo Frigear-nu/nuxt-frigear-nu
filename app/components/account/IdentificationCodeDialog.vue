@@ -79,7 +79,7 @@ useIntervalFn(async () => {
                 BTW
               </template>
               <template #description>
-                NO ACTIVE SUBSCRIPTION = NO DISCOUNT
+                NO SUBSCRIPTION = NO DISCOUNT
               </template>
             </UAlert>
             <UAlert
