@@ -14,7 +14,6 @@ const allowedBARoles = [
 
 const documents = computedAsync(async () => {
   const items = [
-
     {
       path: '/assets/files/Frivillig håndbog.docx',
       name: 'Frivillig Håndbog',
@@ -25,6 +24,11 @@ const documents = computedAsync(async () => {
 
   if (currentUserRole.value && allowedBARoles.includes(currentUserRole.value)) {
     items.unshift({
+      path: '/assets/files/BA-mappe.pdf',
+      name: 'BA-mappe.pdf',
+      nameEn: 'BA-folder.pdf',
+      icon: 'i-lucide-file',
+    }, {
       path: '/assets/files/BA-Koordinatormøde-2503-2026.docx',
       name: 'BA Koordinatormøde 25.03.2026',
       nameEn: 'BA Coordinatormeeting 25.03.2026',
