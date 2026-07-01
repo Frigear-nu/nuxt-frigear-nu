@@ -8,7 +8,7 @@ defineEmits<{
 
 const isOpen = ref(false)
 const { locale } = useSiteI18n()
-const { currentUser } = useAuth()
+const { currentUser, currentUserRole } = useAuth()
 const { data, refresh, status } = useFetch('/api/account/id-code')
 const { data: memberships } = useUserMemberships()
 
@@ -110,6 +110,11 @@ useIntervalFn(async () => {
             >
               <UBadge size="xl">
                 Frigear ID: {{ currentUser.id }}
+              </UBadge>
+            </div>
+            <div class="flex justify-center">
+              <UBadge size="xl">
+                Role: {{ currentUserRole?.toUpperCase() }}
               </UBadge>
             </div>
           </div>
