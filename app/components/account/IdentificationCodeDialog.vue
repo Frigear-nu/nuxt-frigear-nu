@@ -71,11 +71,12 @@ useIntervalFn(async () => {
           >
             <UAlert
               size="sm"
-              color="error"
+              color="warning"
+              variant="subtle"
               icon="i-lucide-triangle-alert"
             >
               <template #title>
-                NOTICE
+                BTW
               </template>
               <template #description>
                 NO ACTIVE SUBSCRIPTION = NO DISCOUNT
