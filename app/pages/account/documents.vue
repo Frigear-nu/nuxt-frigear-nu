@@ -29,6 +29,11 @@ const documents = computedAsync(async () => {
       nameEn: 'BA-folder.pdf',
       icon: 'i-lucide-file',
     }, {
+      path: '/assets/files/Vagtoversigt.pdf',
+      name: 'Vagtoversigt.pdf',
+      nameEn: 'Vagtoversigt.pdf',
+      icon: 'i-lucide-file',
+    }, {
       path: '/assets/files/BA-Koordinatormøde-2503-2026.docx',
       name: 'BA Koordinatormøde 25.03.2026',
       nameEn: 'BA Coordinatormeeting 25.03.2026',
