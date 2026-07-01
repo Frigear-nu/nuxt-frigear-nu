@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useIntervalFn } from '@vueuse/core'
 import { useUserMemberships } from '~/store/queries/user'
+import { upperFirst } from 'scule'
 
 defineEmits<{
   close: []
@@ -112,11 +113,14 @@ useIntervalFn(async () => {
                 Frigear ID: {{ currentUser.id }}
               </UBadge>
             </div>
-            <div class="flex justify-center">
-              <UBadge size="xl">
-                Role: {{ currentUserRole?.toUpperCase() }}
-              </UBadge>
-            </div>
+          </div>
+          <div class="flex justify-center">
+            <UBadge
+              size="xl"
+              color="success"
+            >
+              Role: {{ upperFirst(currentUserRole || 'user') }}
+            </UBadge>
           </div>
         </div>
         <UEmpty v-else>
