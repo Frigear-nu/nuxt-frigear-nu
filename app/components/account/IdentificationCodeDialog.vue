@@ -117,7 +117,7 @@ useIntervalFn(async () => {
           <div class="flex justify-center">
             <UBadge
               size="xl"
-              color="info"
+              color="success"
             >
               Role: {{ upperFirst(currentUserRole || 'user') }}
             </UBadge>
