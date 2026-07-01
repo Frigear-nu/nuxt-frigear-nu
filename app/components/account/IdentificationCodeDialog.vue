@@ -8,7 +8,7 @@ defineEmits<{
 
 const isOpen = ref(false)
 const { locale } = useSiteI18n()
-const { currentUser } = useAuth()
+const { currentUser, currentUserRole } = useAuth()
 const { data, refresh, status } = useFetch('/api/account/id-code')
 const { data: memberships } = useUserMemberships()
 
@@ -64,6 +64,23 @@ useIntervalFn(async () => {
           v-if="idString"
           class="flex flex-col gap-2"
         >
+          <div
+            v-if="!currentMembership"
+            class="flex justify-center"
+          >
+            <UAlert
+              size="sm"
+              color="error"
+              icon="i-lucide-triangle-alert"
+            >
+              <template #title>
+                NOTICE
+              </template>
+              <template #description>
+                NO ACTIVE SUBSCRIPTION = NO DISCOUNT
+              </template>
+            </UAlert>
+          </div>
           <div class="flex justify-center">
             <LazyQrcode
               :value="`urn:frigear:id:${idString || 'undefined'}`"
@@ -93,6 +110,11 @@ useIntervalFn(async () => {
             >
               <UBadge size="xl">
                 Frigear ID: {{ currentUser.id }}
+              </UBadge>
+            </div>
+            <div class="flex justify-center">
+              <UBadge size="xl">
+                Role: {{ currentUserRole?.toUpperCase() }}
               </UBadge>
             </div>
           </div>
