@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useIntervalFn } from '@vueuse/core'
 import { useUserMemberships } from '~/store/queries/user'
+import { upperFirst } from 'scule'
 
 defineEmits<{
   close: []
@@ -65,26 +66,40 @@ useIntervalFn(async () => {
           class="flex flex-col gap-2"
         >
           <div
-            v-if="!currentMembership"
             class="flex justify-center"
           >
             <UAlert
+              v-if="!currentMembership"
               size="sm"
-              color="error"
+              color="warning"
+              variant="subtle"
               icon="i-lucide-triangle-alert"
             >
               <template #title>
-                NOTICE
+                BTW
               </template>
               <template #description>
-                NO ACTIVE SUBSCRIPTION = NO DISCOUNT
+                NO SUBSCRIPTION = NO DISCOUNT
+              </template>
+            </UAlert>
+            <UAlert
+              v-else
+              icon="i-lucide-check"
+              color="success"
+              variant="subtle"
+            >
+              <template #title>
+                AWESOME!
+              </template>
+              <template #description>
+                You're good for full Frigear.
               </template>
             </UAlert>
           </div>
           <div class="flex justify-center">
             <LazyQrcode
               :value="`urn:frigear:id:${idString || 'undefined'}`"
-              class="size-80"
+              class="size-60"
             />
           </div>
           <div class="flex justify-center">
@@ -112,11 +127,14 @@ useIntervalFn(async () => {
                 Frigear ID: {{ currentUser.id }}
               </UBadge>
             </div>
-            <div class="flex justify-center">
-              <UBadge size="xl">
-                Role: {{ currentUserRole?.toUpperCase() }}
-              </UBadge>
-            </div>
+          </div>
+          <div class="flex justify-center">
+            <UBadge
+              size="xl"
+              color="success"
+            >
+              Role: {{ upperFirst(currentUserRole || 'user') }}
+            </UBadge>
           </div>
         </div>
         <UEmpty v-else>
