@@ -11,7 +11,6 @@ import EmailHeader from './components/EmailHeader.vue'
 import EmailWrapper from '#shared/emails/components/EmailWrapper.vue'
 
 defineProps<{
-  signInUrl: string
   subject: string
   message: string
 }>()
