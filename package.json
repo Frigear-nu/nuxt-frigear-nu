@@ -38,7 +38,7 @@
     "@pinia/nuxt": "^0.11.3",
     "@resvg/resvg-js": "^2.6.2",
     "@resvg/resvg-wasm": "^2.6.2",
-    "@sentry/nuxt": "^10.44.0",
+    "@sentry/nuxt": "^10.74.0",
     "@takumi-rs/core": "^0.73.1",
     "@takumi-rs/wasm": "^0.73.1",
     "@unlok-co/nuxt-stripe": "6.0.2",
