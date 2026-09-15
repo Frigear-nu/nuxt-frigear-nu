@@ -29,7 +29,7 @@
     "@nitrotool/jwt": "^1.0.4",
     "@norbiros/nuxt-auto-form": "0.6.2",
     "@nuxt/fonts": "0.14.0",
-    "@nuxthub/core": "^0.10.6",
+    "@nuxthub/core": "^0.10.8",
     "@nuxtjs/device": "4.0.0",
     "@nuxtjs/i18n": "^10.2.1",
     "@paralleldrive/cuid2": "^3.3.0",
