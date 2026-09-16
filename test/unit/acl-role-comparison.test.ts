@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { roleIsHigher, roleIsHigherOrEqual } from '../../shared/acl'
+import { canAssignRole, roleIsHigher, roleIsHigherOrEqual } from '../../shared/acl'
 
 describe('roleComparison', () => {
   const roles = ['highest', 'medium', 'low', 'lowest'] as const
@@ -37,6 +37,19 @@ describe('roleComparison', () => {
       expect(roleIsHigherOrEqual(roles, lowestRole, highestRole)).toBe(false)
       expect(roleIsHigherOrEqual(roles, highestRole, lowestRole)).toBe(true)
       expect(roleIsHigherOrEqual(roles, highestRole, highestRole)).toBe(true)
+    })
+  })
+
+  describe('canAssignRole', () => {
+    it('should block same-role assignment for non-admin users but allow admin-tier users to keep same-or-lower assignments', () => {
+      const adminRoles = ['admin++', 'admin+', 'admin', 'manager', 'crew', 'user'] as const
+
+      expect(canAssignRole(adminRoles, 'manager', 'manager')).toBe(false)
+      expect(canAssignRole(adminRoles, 'manager', 'crew')).toBe(true)
+      expect(canAssignRole(adminRoles, 'admin', 'admin')).toBe(true)
+      expect(canAssignRole(adminRoles, 'admin+', 'admin+')).toBe(true)
+      expect(canAssignRole(adminRoles, 'admin+', 'admin++')).toBe(false)
+      expect(canAssignRole(adminRoles, 'admin++', 'admin+')).toBe(true)
     })
   })
 })
