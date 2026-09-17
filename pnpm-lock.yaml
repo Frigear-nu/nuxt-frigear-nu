@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  nuxt-og-image: ^6.8.0
+  nuxt-og-image: 6.8.0
 
 importers:
 
