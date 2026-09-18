@@ -83,7 +83,7 @@ export default defineNuxtConfig({
     sourcemap: false,
     nitro: {
       prerender: {
-        routes: ['/', '/en'],
+        routes: [],
         failOnError: false, // todo: this should be investigated.
         crawlLinks: false,
       },
