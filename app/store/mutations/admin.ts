@@ -28,7 +28,7 @@ export const useAdminUpdateUser = defineMutation(() => {
   const queryCache = useQueryCache()
 
   const { mutateAsync, ...mutation } = useMutation({
-    mutation: ({ userId, user}: { userId: number, user: AdminUpdateUserSchema }) => $api(`/api/admin/users/${userId}`, {
+    mutation: ({ userId, user }: { userId: number, user: AdminUpdateUserSchema }) => $api(`/api/admin/users/${userId}`, {
       method: 'post',
       body: user,
     }),
