@@ -1,7 +1,7 @@
 import { USER_KEYS } from '~/store/queryKeys'
 import { useQuery } from '@pinia/colada'
 
-export const useUserMemberships = ({ isEnabled}: { isEnabled?: MaybeRefOrGetter<boolean> } = {}) => {
+export const useUserMemberships = ({ isEnabled }: { isEnabled?: MaybeRefOrGetter<boolean> } = {}) => {
   const { $api } = useNuxtApp()
 
   return useQuery({
