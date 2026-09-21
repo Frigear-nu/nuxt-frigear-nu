@@ -8,6 +8,11 @@ if (sentryDsn) {
     dsn: sentryDsn,
     sendDefaultPii: true,
     tracesSampleRate: useRuntimeConfig().public?.sentry?.tracesSampleRate ?? 1.0,
+    integrations: [
+      Sentry.httpIntegration({
+        dropSpansForIncomingRequestStatusCodes: [404],
+      }),
+    ],
   })
 }
 else if (import.meta.dev) {
