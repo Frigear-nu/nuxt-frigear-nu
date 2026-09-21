@@ -40,6 +40,9 @@ export default defineConfig({
           name: 'nuxt',
           include: ['test/nuxt/*.{test,spec}.ts'],
           environment: 'nuxt',
+          // Building the Nuxt app for the test environment can take
+          // longer than the default 10s hook timeout, especially in CI.
+          hookTimeout: 120000,
         },
       }),
     ],
