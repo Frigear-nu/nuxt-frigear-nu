@@ -81,13 +81,6 @@ export default defineNuxtConfig({
       },
     },
     sourcemap: false,
-    nitro: {
-      prerender: {
-        routes: [],
-        failOnError: false, // todo: this should be investigated.
-        crawlLinks: false,
-      },
-    },
     hub: {
       db: {
         applyMigrationsDuringBuild: false,
