@@ -1,6 +1,6 @@
 import { createConfigForNuxt } from '@nuxt/eslint-config/flat'
 
-const ignores = ['./app/components/content/TypewriterEffect.vue']
+const ignores = ['./app/components/content/TypewriterEffect.vue', './extract-members-from-html.mjs']
 
 export default createConfigForNuxt({
   features: {

@@ -30,8 +30,8 @@ export default defineNuxtConfig({
       'nuxt-component-meta',
     ],
   },
-
   $production: {
+
     nitro: {
       scheduledTasks: {
         // at minute 0 every 2 hours
@@ -81,13 +81,6 @@ export default defineNuxtConfig({
       },
     },
     sourcemap: false,
-    nitro: {
-      prerender: {
-        routes: ['/', '/en'],
-        failOnError: false, // todo: this should be investigated.
-        crawlLinks: false,
-      },
-    },
     hub: {
       db: {
         applyMigrationsDuringBuild: false,

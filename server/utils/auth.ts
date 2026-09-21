@@ -77,7 +77,12 @@ export const requireUser = async (event: H3Event) => {
   throw UnauthenticatedError('User required')
 }
 
-export const createMagicLinkForUser = async ({ userId, expiresAt, redirectUrl, code}: {
+export const createMagicLinkForUser = async ({
+  userId,
+  expiresAt,
+  redirectUrl,
+  code,
+}: {
   userId: MagicLinks['userId']
   redirectUrl?: MagicLinks['redirectUrl']
   expiresAt?: MagicLinks['expiresAt']
