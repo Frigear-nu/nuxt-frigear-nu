@@ -20,8 +20,8 @@ Frigear branding kit, PR og SoMe informationer.
   icon: i-lucide-cog
   variant: subtle
   class: min-w-48
+  label: Se vores projekter
   ---
-  Se vores projekter
   :::
   :::u-button
   ---
@@ -30,9 +30,9 @@ Frigear branding kit, PR og SoMe informationer.
   to: /teams
   trailingIcon: i-lucide-users
   variant: subtle
-  class: min-w-48 
+  class: min-w-48
+  label: Mød vores teams
   ---
-  Mød vores teams
   :::
 ::
 
@@ -47,25 +47,25 @@ Branding Magoo!
 #description
 Brand materiale, logoer og SoMe kanaler
 #features
-:::u-page-card
----
-icon: i-lucide-package-open
-class: object-cover object-top w-full h-full shadow-2xl ring ring-default
----
+  :::u-page-card
+  ---
+  icon: i-lucide-package-open
+  class: object-cover object-top w-full h-full shadow-2xl ring ring-default
+  ---
 
-#title
-Fang os omkring promo og branding stuff
+  #title
+  Fang os omkring promo og branding stuff
 
-#description
-Informationer om hvordan vi syns i skal bruge vores logoer og brandmateriale på diverse medier.
+  #description
+  Informationer om hvordan vi syns i skal bruge vores logoer og brandmateriale på diverse medier.
 
-::::contact-form-modal
----
-label: Kontakt os om PR
-initial: 
-  subject: other
-  subjectOther: Om branding og promo
----
-::::
-:::
+  ::::contact-form-modal
+  ---
+  label: Kontakt os om PR
+  initial:
+    subject: other
+    subjectOther: Om branding og promo
+  ---
+  ::::
+  :::
 ::

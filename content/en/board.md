@@ -19,28 +19,25 @@ cards:
 ::
 
 
-::card{.shadow-2xl}
-:::u-page-section
+::u-page-section
 ---
 icon: i-lucide-message-circle-question-mark
 id: good-to-know
 ---
 #title
-A few things, -before you apply . . .
+A few things, before you apply . . .
 
 #description
 
 Anyone can apply to join the board.
 
 #features
-::::faq-section-list{:items='meta.cards'}
-::::
-:::
+  :::faq-section-list{:items='meta.cards'}
+  :::
 ::
 
 
-::card{.shadow-2xl}
-:::u-page-section
+::u-page-section
 ---
 icon: i-lucide-check-circle
 id: project-application
@@ -50,16 +47,15 @@ id: project-application
 Are you ready to apply?
 
 #links
-::::u-button
----
-color: primary
-size: xl
-to: /en/forms/board-member-application
-trailingIcon: i-lucide-arrow-right
-variant: subtle
-class: mt-12
----
-Jump to the board application form
-::::
-:::
+  :::u-button
+  ---
+  color: primary
+  size: xl
+  to: /en/forms/board-member-application
+  trailingIcon: i-lucide-arrow-right
+  variant: subtle
+  class: mt-12
+  label: Jump to the board application form
+  ---
+  :::
 ::

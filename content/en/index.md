@@ -82,8 +82,8 @@ images:
   to: /en/#contact
   variant: subtle
   class: flex-1 justify-center
+  label: Get in touch
   ---
-  Get in touch
   :::
 
   :::u-button
@@ -93,8 +93,8 @@ images:
   to: /en/membership
   trailing-icon: i-lucide-arrow-right
   class: flex-1 justify-center
+  label: Membership
   ---
-  Membership
   :::
 ::
 
