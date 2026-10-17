@@ -65,7 +65,7 @@ images:
   :::typewriter-effect{.mt-0 .block .leading-tight .min-h-[2.4em] .sm:min-h-[1.1em] .text-wrap .sm:text-nowrap}
   Nonprofit
   Frivilligdrevet
-  Projekstøtte
+  Projektstøtte
   Frivilligforening
   Event produktion
   Almennyttigt
@@ -82,8 +82,8 @@ images:
   to: /#contact
   variant: subtle
   class: flex-1 justify-center
+  label: Kontakt os
   ---
-  Kontakt os
   :::
 
   :::u-button
@@ -93,8 +93,8 @@ images:
   to: /membership
   trailing-icon: i-lucide-arrow-right
   class: flex-1 justify-center
+  label: Bliv medlem
   ---
-  Bliv medlem
   :::
 ::
 
