@@ -253,6 +253,8 @@ export async function generateIdToken(
     exp: Math.floor(Date.now() / 1000) + expiresInSeconds,
     name: user.name,
     email: user.email,
+    // Relying parties link an existing account by email only when the address is proven.
+    email_verified: !!user.emailVerifiedAt,
     picture: user.avatarUrl || undefined,
     role: user.role || 'user',
     [ROLE_CLAIM]: user.role,
