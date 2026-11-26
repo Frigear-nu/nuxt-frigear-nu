@@ -37,11 +37,16 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  // A new address is unproven: OAuth clients must not see it as verified (`email_verified`) until the user signs in
+  // with a link sent to it.
+  const emailChanged = email.trim().toLowerCase() !== existingUser.email.trim().toLowerCase()
+
   // do the update...
   const [updatedUser] = await db.update(schema.users)
     .set({
       name,
       email,
+      ...(emailChanged ? { emailVerifiedAt: null } : {}),
       role,
       phone,
       roskildePeopleId,
