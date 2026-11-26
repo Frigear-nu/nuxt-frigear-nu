@@ -31,7 +31,9 @@ export default defineEventHandler(async (event) => {
       name,
       email,
       passwordHash: await hashPassword(password),
-      emailVerifiedAt: verifyEmail ? null : new Date(),
+      // Unproven until the user follows a link sent to the address (magic-link.get.ts sets it). With verifyEmail off the
+      // user still gets in (getDefaultRedirectForUser), but the address is not vouched for to OAuth clients (`email_verified`).
+      emailVerifiedAt: null,
     })
     .returning()
 

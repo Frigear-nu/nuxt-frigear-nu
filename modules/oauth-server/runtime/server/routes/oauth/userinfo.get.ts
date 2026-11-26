@@ -54,6 +54,7 @@ export default defineEventHandler(async (event) => {
     sub: `${user.id}`,
     name: user.name,
     email: user.email,
+    email_verified: !!user.emailVerifiedAt,
     picture: user.avatarUrl,
     role: user.role,
     [ROLE_CLAIM]: user.role,
